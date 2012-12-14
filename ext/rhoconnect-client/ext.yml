@@ -1,0 +1,4 @@
+entry: Init_Rhoconnect-client_extension	
+javaentry: com.rhoconnect-client.Rhoconnect-client
+android_additional_sources_list: ext/rhoconnect-client/platform/android/ext_build.files
+libraries: ["Rhoconnect-client"]

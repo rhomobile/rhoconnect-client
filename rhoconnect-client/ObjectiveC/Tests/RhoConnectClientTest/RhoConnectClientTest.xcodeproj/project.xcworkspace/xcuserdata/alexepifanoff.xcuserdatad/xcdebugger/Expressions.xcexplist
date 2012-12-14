@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "rho::sync::CSyncNotify::callNotify(rho::sync::CSyncNotification const&amp;, std::string const&amp;):SyncNotify.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "rho_connectclient_parsenotify:RhoConnectClient.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "msg">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "rho::sync::CSyncThread::getRetValue():SyncThread.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(char*)ret">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[RhoConnectNotify init:]:RhoConnectNotify.m">
+      </ContextState>
+      <ContextState
+         contextName = "shouldCreateNewProduct:main.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

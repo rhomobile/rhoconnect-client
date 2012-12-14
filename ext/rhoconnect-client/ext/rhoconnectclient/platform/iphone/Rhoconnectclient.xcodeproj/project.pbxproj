@@ -1,0 +1,370 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C57A9CDA167B50340015DD38 /* rhoconnectclient.c in Sources */ = {isa = PBXBuildFile; fileRef = C57A9CD9167B50340015DD38 /* rhoconnectclient.c */; };
+		C57A9CDD167B50440015DD38 /* syncengine_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = C57A9CDC167B50440015DD38 /* syncengine_wrap.c */; };
+		C5FA6031167B510700F5838A /* ClientRegister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5FA6024167B510700F5838A /* ClientRegister.cpp */; };
+		C5FA6032167B510700F5838A /* ClientRegister.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA6025167B510700F5838A /* ClientRegister.h */; };
+		C5FA6033167B510700F5838A /* ILoginListener.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA6026167B510700F5838A /* ILoginListener.h */; };
+		C5FA6034167B510700F5838A /* ISyncProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA6027167B510700F5838A /* ISyncProtocol.h */; };
+		C5FA6035167B510700F5838A /* SyncEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5FA6028167B510700F5838A /* SyncEngine.cpp */; };
+		C5FA6036167B510700F5838A /* SyncEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA6029167B510700F5838A /* SyncEngine.h */; };
+		C5FA6037167B510700F5838A /* SyncNotify.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5FA602A167B510700F5838A /* SyncNotify.cpp */; };
+		C5FA6038167B510700F5838A /* SyncNotify.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA602B167B510700F5838A /* SyncNotify.h */; };
+		C5FA6039167B510700F5838A /* SyncProtocol_3.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA602C167B510700F5838A /* SyncProtocol_3.h */; };
+		C5FA603A167B510700F5838A /* SyncSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5FA602D167B510700F5838A /* SyncSource.cpp */; };
+		C5FA603B167B510700F5838A /* SyncSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA602E167B510700F5838A /* SyncSource.h */; };
+		C5FA603C167B510700F5838A /* SyncThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5FA602F167B510700F5838A /* SyncThread.cpp */; };
+		C5FA603D167B510700F5838A /* SyncThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C5FA6030167B510700F5838A /* SyncThread.h */; };
+		C5FA6040167B512D00F5838A /* Rhoconnect-client_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = C5FA603F167B512D00F5838A /* Rhoconnect-client_Prefix.pch */; };
+		FAC155EE145855CF0016F3BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		FAC155EF145855CF0016F3BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD4602C12260A8500141873 /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C57A9CD9167B50340015DD38 /* rhoconnectclient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rhoconnectclient.c; path = ../../shared/src/rhoconnectclient.c; sourceTree = "<group>"; };
+		C57A9CDC167B50440015DD38 /* syncengine_wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = syncengine_wrap.c; path = ../../shared/ruby/syncengine_wrap.c; sourceTree = "<group>"; };
+		C5FA6024167B510700F5838A /* ClientRegister.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRegister.cpp; path = ../../../../../../platform/shared/sync/ClientRegister.cpp; sourceTree = "<group>"; };
+		C5FA6025167B510700F5838A /* ClientRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientRegister.h; path = ../../../../../../platform/shared/sync/ClientRegister.h; sourceTree = "<group>"; };
+		C5FA6026167B510700F5838A /* ILoginListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ILoginListener.h; path = ../../../../../../platform/shared/sync/ILoginListener.h; sourceTree = "<group>"; };
+		C5FA6027167B510700F5838A /* ISyncProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISyncProtocol.h; path = ../../../../../../platform/shared/sync/ISyncProtocol.h; sourceTree = "<group>"; };
+		C5FA6028167B510700F5838A /* SyncEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncEngine.cpp; path = ../../../../../../platform/shared/sync/SyncEngine.cpp; sourceTree = "<group>"; };
+		C5FA6029167B510700F5838A /* SyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncEngine.h; path = ../../../../../../platform/shared/sync/SyncEngine.h; sourceTree = "<group>"; };
+		C5FA602A167B510700F5838A /* SyncNotify.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncNotify.cpp; path = ../../../../../../platform/shared/sync/SyncNotify.cpp; sourceTree = "<group>"; };
+		C5FA602B167B510700F5838A /* SyncNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncNotify.h; path = ../../../../../../platform/shared/sync/SyncNotify.h; sourceTree = "<group>"; };
+		C5FA602C167B510700F5838A /* SyncProtocol_3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncProtocol_3.h; path = ../../../../../../platform/shared/sync/SyncProtocol_3.h; sourceTree = "<group>"; };
+		C5FA602D167B510700F5838A /* SyncSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncSource.cpp; path = ../../../../../../platform/shared/sync/SyncSource.cpp; sourceTree = "<group>"; };
+		C5FA602E167B510700F5838A /* SyncSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncSource.h; path = ../../../../../../platform/shared/sync/SyncSource.h; sourceTree = "<group>"; };
+		C5FA602F167B510700F5838A /* SyncThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncThread.cpp; path = ../../../../../../platform/shared/sync/SyncThread.cpp; sourceTree = "<group>"; };
+		C5FA6030167B510700F5838A /* SyncThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncThread.h; path = ../../../../../../platform/shared/sync/SyncThread.h; sourceTree = "<group>"; };
+		C5FA603F167B512D00F5838A /* Rhoconnect-client_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Rhoconnect-client_Prefix.pch"; sourceTree = "<group>"; };
+		FAC155F3145855CF0016F3BD /* libRhoconnect-client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libRhoconnect-client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAD4602C12260A8500141873 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FAC155ED145855CF0016F3BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAC155EE145855CF0016F3BD /* Foundation.framework in Frameworks */,
+				FAC155EF145855CF0016F3BD /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAC155F3145855CF0016F3BD /* libRhoconnect-client.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* Barcode */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AEFE84172EC02AAC07 /* Classes */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = Barcode;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+				FAD4602C12260A8500141873 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FAC155DD1458511E0016F3BD /* iOS_specific */,
+				FAC155DA145850EB0016F3BD /* Shared */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C5FA603F167B512D00F5838A /* Rhoconnect-client_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		FAC155DA145850EB0016F3BD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				FAC155DC145851020016F3BD /* src */,
+				FAC155DB145850F80016F3BD /* Ruby */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		FAC155DB145850F80016F3BD /* Ruby */ = {
+			isa = PBXGroup;
+			children = (
+				C57A9CDC167B50440015DD38 /* syncengine_wrap.c */,
+			);
+			name = Ruby;
+			sourceTree = "<group>";
+		};
+		FAC155DC145851020016F3BD /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C5FA6024167B510700F5838A /* ClientRegister.cpp */,
+				C5FA6025167B510700F5838A /* ClientRegister.h */,
+				C5FA6026167B510700F5838A /* ILoginListener.h */,
+				C5FA6027167B510700F5838A /* ISyncProtocol.h */,
+				C5FA6028167B510700F5838A /* SyncEngine.cpp */,
+				C5FA6029167B510700F5838A /* SyncEngine.h */,
+				C5FA602A167B510700F5838A /* SyncNotify.cpp */,
+				C5FA602B167B510700F5838A /* SyncNotify.h */,
+				C5FA602C167B510700F5838A /* SyncProtocol_3.h */,
+				C5FA602D167B510700F5838A /* SyncSource.cpp */,
+				C5FA602E167B510700F5838A /* SyncSource.h */,
+				C5FA602F167B510700F5838A /* SyncThread.cpp */,
+				C5FA6030167B510700F5838A /* SyncThread.h */,
+				C57A9CD9167B50340015DD38 /* rhoconnectclient.c */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		FAC155DD1458511E0016F3BD /* iOS_specific */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iOS_specific;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FAC155E6145855CF0016F3BD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5FA6032167B510700F5838A /* ClientRegister.h in Headers */,
+				C5FA6033167B510700F5838A /* ILoginListener.h in Headers */,
+				C5FA6034167B510700F5838A /* ISyncProtocol.h in Headers */,
+				C5FA6036167B510700F5838A /* SyncEngine.h in Headers */,
+				C5FA6038167B510700F5838A /* SyncNotify.h in Headers */,
+				C5FA6039167B510700F5838A /* SyncProtocol_3.h in Headers */,
+				C5FA603B167B510700F5838A /* SyncSource.h in Headers */,
+				C5FA603D167B510700F5838A /* SyncThread.h in Headers */,
+				C5FA6040167B512D00F5838A /* Rhoconnect-client_Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		FAC155E5145855CF0016F3BD /* Rhoconnect-client */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAC155F0145855CF0016F3BD /* Build configuration list for PBXNativeTarget "Rhoconnect-client" */;
+			buildPhases = (
+				FAC155E6145855CF0016F3BD /* Headers */,
+				FAC155E9145855CF0016F3BD /* Sources */,
+				FAC155ED145855CF0016F3BD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rhoconnect-client";
+			productName = Barcode;
+			productReference = FAC155F3145855CF0016F3BD /* libRhoconnect-client.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "Rhoconnectclient" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* Barcode */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FAC155E5145855CF0016F3BD /* Rhoconnect-client */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FAC155E9145855CF0016F3BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57A9CDA167B50340015DD38 /* rhoconnectclient.c in Sources */,
+				C57A9CDD167B50440015DD38 /* syncengine_wrap.c in Sources */,
+				C5FA6031167B510700F5838A /* ClientRegister.cpp in Sources */,
+				C5FA6035167B510700F5838A /* SyncEngine.cpp in Sources */,
+				C5FA6037167B510700F5838A /* SyncNotify.cpp in Sources */,
+				C5FA603A167B510700F5838A /* SyncSource.cpp in Sources */,
+				C5FA603C167B510700F5838A /* SyncThread.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(RHO_ROOT)/platform/shared/common",
+					"$(RHO_ROOT)/platform/shared/rubyext",
+					"$(RHO_ROOT)/platform/shared/ruby/include",
+					"$(RHO_ROOT)/platform/shared/ruby/iphone",
+					"$(RHO_ROOT)/platform/shared",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SDKROOT = iphonesimulator4.1;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(RHO_ROOT)/platform/shared/common",
+					"$(RHO_ROOT)/platform/shared/rubyext",
+					"$(RHO_ROOT)/platform/shared/ruby/include",
+					"$(RHO_ROOT)/platform/shared/ruby/iphone",
+					"$(RHO_ROOT)/platform/shared",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SDKROOT = iphonesimulator4.1;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+			};
+			name = Release;
+		};
+		FAC155F1145855CF0016F3BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = "/tmp/Rhoconnect-client.dst";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Rhoconnect-client_Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(RHO_ROOT)/platform/shared/common",
+					"$(RHO_ROOT)/platform/shared/rubyext",
+					"$(RHO_ROOT)/platform/shared/ruby/include",
+					"$(RHO_ROOT)/platform/shared/ruby/iphone",
+					"$(RHO_ROOT)/platform/shared",
+					./../../../../../../../rhodes/platform/shared,
+					./../../../../../../platform/shared,
+					./../../../../../../../rhodes/platform/shared/rubyext,
+					./../../../../../../../rhodes/platform/shared/common,
+					./../../../../../../../rhodes/platform/shared/ruby/iphone,
+					./../../../../../../../rhodes/platform/shared/ruby/include,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "Rhoconnect-client";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv7";
+			};
+			name = Debug;
+		};
+		FAC155F2145855CF0016F3BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = "/tmp/Rhoconnect-client.dst";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Rhoconnect-client_Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(RHO_ROOT)/platform/shared/common",
+					"$(RHO_ROOT)/platform/shared/rubyext",
+					"$(RHO_ROOT)/platform/shared/ruby/include",
+					"$(RHO_ROOT)/platform/shared/ruby/iphone",
+					"$(RHO_ROOT)/platform/shared",
+					./../../../../../../../rhodes/platform/shared,
+					./../../../../../../platform/shared,
+					./../../../../../../../rhodes/platform/shared/rubyext,
+					./../../../../../../../rhodes/platform/shared/common,
+					./../../../../../../../rhodes/platform/shared/ruby/iphone,
+					./../../../../../../../rhodes/platform/shared/ruby/include,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "Rhoconnect-client";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386  armv7";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "Rhoconnectclient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAC155F0145855CF0016F3BD /* Build configuration list for PBXNativeTarget "Rhoconnect-client" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAC155F1145855CF0016F3BD /* Debug */,
+				FAC155F2145855CF0016F3BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
