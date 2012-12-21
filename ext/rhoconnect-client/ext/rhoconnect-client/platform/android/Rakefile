@@ -31,6 +31,10 @@ def build_extension(name, arch, src_files)
     args << "-I\"#{$rootdir}/platform/shared/ruby/android\""
     args << "-I\"#{$rootdir}/platform/shared/ruby/generated\""
 
+    curdir = pwd
+    rhoconnectclientdir = curdir.gsub('/ext/rhoconnect-client/platform/android','');
+    args << "-I\"#{rhoconnectclientdir}/ext/rhoconnect-client/shared/src\""
+
     cc_compile f, $tempdir, args or exit 1
 
   end
@@ -44,7 +48,7 @@ end
 namespace "build" do
   task :config do
     curdir = pwd
-    $rhoconnect-clientdir = curdir.gsub('/ext/rhoconnect-client/platform/android','');
+    $rhoconnectclientdir = curdir.gsub('/ext/rhoconnect-client/platform/android','');
     $targetdir = ENV['TARGET_TEMP_DIR']
     raise "TARGET_TEMP_DIR is not set" if $targetdir.nil?
     $tempdir = ENV['TEMP_FILES_DIR']
@@ -62,9 +66,15 @@ namespace "build" do
 
     src_files = []
 
-    src_files << $rhoconnect-clientdir + '/ext/rhoconnect-client/platform/android/jni/src/rhoconnect-client.cpp'
-    src_files << $rhoconnect-clientdir + '/ext/rhoconnect-client/shared/ruby/rhoconnect-client_wrap.c'
-    src_files << $rhoconnect-clientdir + '/ext/rhoconnect-client/shared/src/rhoconnect-client.c'
+    #src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/platform/android/jni/src/rhoconnect-client.cpp'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/ruby/syncengine_wrap.c'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/rhoconnectclient.c'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/initRhoconnectClient.cpp'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/ClientRegister.cpp'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncEngine.cpp'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncNotify.cpp'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncSource.cpp'
+    src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncThread.cpp'
 
     # build native part
     build_extension('Rhoconnect-client', $arch, src_files)
