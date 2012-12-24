@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="Rhoconnect-client"
 	ProjectGUID="{93453E28-E84A-40C4-BD6A-51A8373D7044}"
 	Keyword="Win32Proj"
@@ -166,6 +166,83 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|MC3000c50b (ARMV4I)"
+			OutputDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
+			IntermediateDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
+			ConfigurationType="4"
+			InheritedPropertySheets=".\Rhoconnect-client.vsprops"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(RHO_ROOT)\platform\shared\ruby\wince&quot;;&quot;$(RHO_ROOT)\platform\shared\ruby\include&quot;;&quot;$(RHO_ROOT)\platform\shared&quot;;&quot;$(RHO_ROOT)\platform\shared\common&quot;;..\..\shared\src"
+				PreprocessorDefinitions="OS_PLATFORM_MOTCE=5;_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;_LIB;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
+				MinimalRebuild="true"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES)"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+				AdditionalOptions=" /subsystem:windowsce,5.00"
+				OutputFile="$(OutDir)/Rhoconnect-client.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release|Windows Mobile 6 Professional SDK (ARMV4I)"
 			OutputDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
 			IntermediateDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
@@ -303,83 +380,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|MC3000c50b (ARMV4I)"
-			OutputDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
-			IntermediateDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
-			ConfigurationType="4"
-			InheritedPropertySheets=".\Rhoconnect-client.vsprops"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="1"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				ExecutionBucket="7"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(RHO_ROOT)\platform\shared\ruby\wince;$(RHO_ROOT)\platform\shared\ruby\include;$(RHO_ROOT)\platform\shared;$(RHO_ROOT)\platform\shared\common"
-				PreprocessorDefinitions="OS_PLATFORM_MOTCE=5;_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;_LIB;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
-				MinimalRebuild="true"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES)"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-				AdditionalOptions=" /subsystem:windowsce,5.00"
-				OutputFile="$(OutDir)/Rhoconnect-client.lib"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCCodeSignTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-			<DeploymentTool
-				ForceDirty="-1"
-				RemoteDirectory=""
-				RegisterOutput="0"
-				AdditionalFiles=""
-			/>
-			<DebuggerTool
 			/>
 		</Configuration>
 		<Configuration
@@ -621,25 +621,73 @@
 			UniqueIdentifier="{9FC737FA-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\shared\src\Rhoconnect-client.c"
+				RelativePath="..\..\shared\src\sync\ClientRegister.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Rhoconnect-client_wm.cpp"
+				RelativePath="..\..\shared\src\sync\ClientRegister.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\shared\ruby\Rhoconnect-client_wrap.c"
+				RelativePath="..\..\shared\src\sync\ILoginListener.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\initRhoconnectClient.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\ISyncProtocol.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\Rhoconnectclient.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncEngine.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncEngine.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\ruby\syncengine_wrap.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncNotify.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncNotify.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncProtocol_3.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncSource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncSource.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncThread.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\src\sync\SyncThread.h"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Headers"
 			>
-			<File
-				RelativePath=".\src\Rhoconnect-client.h"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
