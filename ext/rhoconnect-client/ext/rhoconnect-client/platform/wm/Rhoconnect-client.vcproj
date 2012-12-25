@@ -125,7 +125,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(RHO_ROOT)\platform\shared\ruby\win32;$(RHO_ROOT)\platform\shared\ruby\include;$(RHO_ROOT)\platform\shared;$(RHO_ROOT)\platform\shared\common"
+				AdditionalIncludeDirectories="&quot;$(RHO_ROOT)\platform\shared\ruby\win32&quot;;&quot;$(RHO_ROOT)\platform\shared\ruby\include&quot;;&quot;$(RHO_ROOT)\platform\shared&quot;;&quot;$(RHO_ROOT)\platform\shared\common&quot;;..\..\shared\src"
 				PreprocessorDefinitions="_DEBUG;WIN32;WINDOWS;DEBUG;_LIB;_UNICODE;UNICODE"
 				MinimalRebuild="true"
 				RuntimeLibrary="1"
