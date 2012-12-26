@@ -105,6 +105,9 @@ void rho_free_callbackdata(void* pData)
 - (id) init
 {
 	self = [super init];
+	
+	initRhoconnectClient();
+	
 	return self;
 }
 

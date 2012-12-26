@@ -51,6 +51,16 @@ public:
 		rho::sync::CSyncThread::Destroy();
 	}
 	
+	virtual bool haveSyncThread() {
+		return rho::sync::CSyncThread::getInstance() != 0;
+	}
+	
+	virtual unsigned int syncThreadGetThreadID() {
+		rho::sync::CSyncThread* t = rho::sync::CSyncThread::getInstance();
+		return (t!=0)?t->getThreadID():((unsigned int)-1);
+		
+	}
+	
 	virtual bool syncEngineNotifyIsReportingEnabled() {
 		return rho::sync::CSyncThread::getInstance()->getSyncEngine().getNotify().isReportingEnabled();
 	}

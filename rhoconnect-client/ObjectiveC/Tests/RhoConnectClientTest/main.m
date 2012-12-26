@@ -914,7 +914,7 @@ int shouldBulkSyncWithCreate()
     
     [sclient database_full_reset_and_logout];
     
-    RhoConnectNotify* res = [sclient loginWithUser:@"" pwd:@""];
+    RhoConnectNotify* res = [sclient loginWithUser:@"test" pwd:@""];
 	int nErr = res.error_code;
 	if ( nErr!= RHO_ERR_NONE || ![sclient is_logged_in]) {
 		return 0;
