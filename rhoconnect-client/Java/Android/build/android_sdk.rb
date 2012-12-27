@@ -394,7 +394,7 @@ def cc_build(sources, buildpath, additional = nil)
   # Ruby 1.8 has problems with Thread.join on Windows
   if RUBY_PLATFORM =~ /w(in)?32/ and RUBY_VERSION =~ /^1\.8\./
     sources.each do |src|
-      f = File.join $rootpath, src
+      f = File.join $rhodespath, src
       return false unless cc_compile f, buildpath, additional
     end
     true
@@ -408,7 +408,7 @@ def cc_build(sources, buildpath, additional = nil)
     end
 
     sources.each do |src|
-      f = File.join $rootpath, src
+      f = File.join $rhodespath, src
       puts "job for: #{f}" if USE_TRACES
 
       idx = sources.index(src)%jobs

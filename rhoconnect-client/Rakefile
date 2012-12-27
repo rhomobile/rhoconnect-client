@@ -1,12 +1,13 @@
 
+$rhodespath = File.expand_path '../../rhodes'
 $rootpath = File.expand_path '..'
-$sharedpath = File.join $rootpath, 'platform', 'shared'
+$sharedpath = File.join $rhodespath, 'platform', 'shared'
 
-require File.join($rootpath, "lib", "build", "jake.rb")
+require File.join($rhodespath, "lib", "build", "jake.rb")
 
 task :config
 
-rhobuildyml = File.join $rootpath, 'rhobuild.yml'
+rhobuildyml = File.join $rhodespath, 'rhobuild.yml'
 rhobuildyml = ENV["RHOBUILD"] unless ENV["RHOBUILD"].nil?
 
 $rhoconfig = Jake.config(File.open(rhobuildyml))

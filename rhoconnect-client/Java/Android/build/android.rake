@@ -49,7 +49,7 @@ else
   end
 end
 $basepath = File.expand_path File.dirname(__FILE__)
-$androidpath = File.join $rootpath, "platform", "android"
+$androidpath = File.join $rhodespath, "platform", "android"
 
 require File.join($basepath, 'android_sdk.rb')
 
@@ -75,7 +75,8 @@ BUILDARGS = {
               "libsync" => ["-DRHO_NO_RUBY",
                            "-I#{File.join($sharedpath, "sync")}",
                            "-I#{$sharedpath}",
-                           "-I#{File.join($sharedpath, "sqlite")}"],
+                           "-I#{File.join($sharedpath, "sqlite")}",
+                           "-I#{File.join($rootpath, "ext", "rhoconnect-client", "ext", "rhoconnect-client", "shared", "src")}"],
               "librhoimpl" => ["-DRHO_NO_RUBY",
                            "-I#{File.join($androidpath, "Rhodes", "jni", "include")}",
                            "-I#{File.join("Java", "RhoConnect", "jni", "include")}",
@@ -86,7 +87,8 @@ BUILDARGS = {
               "rhoconnectclient" => ["-DRHO_NO_RUBY",
                            "-I#{File.join("Java", "RhoConnect", "jni", "include")}",
                            "-I#{$sharedpath}",
-                           "-I#{File.join($androidpath, "Rhodes", "jni", "include")}"],
+                           "-I#{File.join($androidpath, "Rhodes", "jni", "include")}",
+                           "-I#{File.join($rootpath, "ext", "rhoconnect-client", "ext", "rhoconnect-client", "shared", "src")}"],
               "libcurl" =>   ["-DHAVE_CONFIG_H",
                            "-I#{File.join($sharedpath, "curl", "include")}",
                            "-I#{File.join($sharedpath, "curl")}",

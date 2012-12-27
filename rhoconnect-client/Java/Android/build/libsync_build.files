@@ -1,6 +1,7 @@
-../platform/shared/sync/ClientRegister.cpp
-../platform/shared/sync/SyncEngine.cpp
-../platform/shared/sync/SyncNotify.cpp
-../platform/shared/sync/SyncSource.cpp
-../platform/shared/sync/SyncThread.cpp
+../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/ClientRegister.cpp
+../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncEngine.cpp
+../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncNotify.cpp
+../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncSource.cpp
+../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncThread.cpp
+../../rhodes/platform/shared/sync/RhoconnectClientManager.cpp
 ../platform/shared/RhoConnectClient/RhoConnectClient.cpp

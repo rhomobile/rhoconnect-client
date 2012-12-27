@@ -1,13 +1,13 @@
-../platform/android/Rhodes/jni/src/RhoClassFactory.cpp
-../platform/android/Rhodes/jni/src/logconf.cpp
-../platform/android/Rhodes/jni/src/logger.cpp
-../platform/android/Rhodes/jni/src/rhoconf.cpp
-../platform/android/Rhodes/jni/src/rhodes.cpp
-../platform/android/Rhodes/jni/src/rhodessystem.cpp
-../platform/android/Rhodes/jni/src/socketimpl.cpp
-../platform/android/Rhodes/jni/src/sslimpl.cpp
-../platform/android/Rhodes/jni/src/rhocryptimpl.cpp
-../platform/android/Rhodes/jni/src/fileapi.cpp
+../../rhodes/platform/android/Rhodes/jni/src/RhoClassFactory.cpp
+../../rhodes/platform/android/Rhodes/jni/src/logconf.cpp
+../../rhodes/platform/android/Rhodes/jni/src/logger.cpp
+../../rhodes/platform/android/Rhodes/jni/src/rhoconf.cpp
+../../rhodes/platform/android/Rhodes/jni/src/rhodes.cpp
+../../rhodes/platform/android/Rhodes/jni/src/rhodessystem.cpp
+../../rhodes/platform/android/Rhodes/jni/src/socketimpl.cpp
+../../rhodes/platform/android/Rhodes/jni/src/sslimpl.cpp
+../../rhodes/platform/android/Rhodes/jni/src/rhocryptimpl.cpp
+../../rhodes/platform/android/Rhodes/jni/src/fileapi.cpp
 Java/RhoConnect/jni/src/RhoConnectUtil.cpp
 Java/RhoConnect/jni/src/RhodesApp.cpp
 
