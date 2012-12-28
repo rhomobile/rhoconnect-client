@@ -1,3 +1,7 @@
 *~
 *.iseq
 .DS_Store
+
+/rhoconnect-client/build
+/rhoconnect-client/Java/Android/test/gen
+/rhoconnect-client/Java/Android/test/bin

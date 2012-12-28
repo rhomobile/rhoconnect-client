@@ -23,6 +23,7 @@ def build_extension(name, arch, src_files)
     args << "-I\"#{$rootdir}/platform/shared/ruby/include\""
     args << "-I\"#{$rootdir}/platform/shared\""
     args << "-I\"#{$rootdir}/platform/shared/common\""
+    args << "-I\"#{$rootdir}/platform/shared/sync\""
 
     args << "-I\"#{$std_includes}\"" unless $std_includes.nil?
     args << "-D__NEW__" if use_own_stlport

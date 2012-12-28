@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;../../../../platform/wm/rhodes;../../../../platform/shared"
+				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;RHO_NO_RUBY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -104,7 +104,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".;../../../../platform/wm/rhodes;../../../../platform/shared"
+				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;RHO_NO_RUBY"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -148,137 +148,137 @@
 			Name="rho"
 			>
 			<File
-				RelativePath="..\..\..\..\platform\shared\common\RhodesAppBase.cpp"
+				RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhodesAppBase.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\platform\shared\common\RhodesAppBase.h"
+				RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhodesAppBase.h"
 				>
 			</File>
 			<Filter
 				Name="common"
 				>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\AutoPointer.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\AutoPointer.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\InputStream.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\InputStream.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\IRhoClassFactory.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\IRhoClassFactory.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\IRhoThreadImpl.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\IRhoThreadImpl.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoConf.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoConf.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoConf.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoDefs.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoDefs.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoFatalError.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoFatalError.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoFile.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoFile.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoFile.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoFile.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoFilePath.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoFilePath.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoMutexLock.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoMutexLock.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoPort.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoPort.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\push\RhoPushManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoStd.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoStd.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoSystem.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoSystem.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoThread.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoThread.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoThread.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoThread.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\RhoTime.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoTime.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\stat.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\stat.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\StringConverter.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\StringConverter.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\ThreadQueue.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\ThreadQueue.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\ThreadQueue.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\ThreadQueue.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\Tokenizer.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\Tokenizer.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\common\Tokenizer.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\Tokenizer.h"
 					>
 				</File>
 				<Filter
 					Name="win"
 					>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\common\RhoClassFactory.cpp"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\common\RhoClassFactory.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\common\RhoClassFactory.h"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\common\RhoClassFactory.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\common\RhoCryptImpl.cpp"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\common\RhoCryptImpl.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\common\RhoCryptImpl.h"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\common\RhoCryptImpl.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\common\RhoThreadImpl.cpp"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\common\RhoThreadImpl.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\common\RhoThreadImpl.h"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\common\RhoThreadImpl.h"
 						>
 					</File>
 				</Filter>
@@ -287,30 +287,30 @@
 				Name="net"
 				>
 				<File
-					RelativePath="..\..\..\..\platform\shared\net\INetRequest.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\net\INetRequest.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\net\INetRequest.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\net\INetRequest.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\net\URI.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\net\URI.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\net\URI.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\net\URI.h"
 					>
 				</File>
 				<Filter
 					Name="win"
 					>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\net\NetRequestImpl.cpp"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\net\NetRequestImpl.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\..\platform\wm\rhodes\rho\net\NetRequestImpl.h"
+						RelativePath="..\..\..\..\..\rhodes\platform\wm\rhodes\rho\net\NetRequestImpl.h"
 						>
 					</File>
 				</Filter>
@@ -319,39 +319,39 @@
 				Name="logging"
 				>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoATLTrace.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoATLTrace.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoLog.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoLog.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoLog.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoLog.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoLogCat.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoLogCat.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoLogConf.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoLogConf.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoLogConf.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoLogConf.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoLogSink.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoLogSink.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoLogSink.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoLogSink.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\logging\RhoPlainLog.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\logging\RhoPlainLog.cpp"
 					>
 				</File>
 			</Filter>
@@ -359,27 +359,43 @@
 				Name="db"
 				>
 				<File
-					RelativePath="..\..\..\..\platform\shared\db\DBAdapter.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBAdapter.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\db\DBAdapter.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBAdapter.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\db\DBAttrManager.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBAttrManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\db\DBAttrManager.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBAttrManager.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\db\DBResult.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBImportTransaction.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\db\DBResult.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBImportTransaction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBRequestHelper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBRequestHelper.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBResult.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\db\DBResult.h"
 					>
 				</File>
 			</Filter>
@@ -387,75 +403,75 @@
 				Name="json"
 				>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\arraylist.c"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\arraylist.c"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\arraylist.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\arraylist.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\bits.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\bits.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\config.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\config.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json_object.c"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json_object.c"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json_object.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json_object.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json_object_private.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json_object_private.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json_tokener.c"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json_tokener.c"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json_tokener.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json_tokener.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json_util.c"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json_util.c"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\json_util.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\json_util.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\JSONIterator.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\JSONIterator.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\JSONIterator.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\JSONIterator.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\linkhash.c"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\linkhash.c"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\linkhash.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\linkhash.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\printbuf.c"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\printbuf.c"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\json\printbuf.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\json\printbuf.h"
 					>
 				</File>
 			</Filter>
@@ -463,51 +479,67 @@
 				Name="sync"
 				>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\ClientRegister.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ClientRegister.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\ClientRegister.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ClientRegister.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\ISyncProtocol.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ILoginListener.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncEngine.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\initRhoconnectClient.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncEngine.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ISyncProtocol.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncNotify.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\sync\RhoconnectClientManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncNotify.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\sync\RhoconnectClientManager.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncProtocol_3.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncEngine.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncSource.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncEngine.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncSource.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncNotify.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncThread.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncNotify.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\sync\SyncThread.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncProtocol_3.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncSource.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncSource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncThread.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncThread.h"
 					>
 				</File>
 			</Filter>
@@ -515,17 +547,33 @@
 				Name="unzip"
 				>
 				<File
-					RelativePath="..\..\..\..\platform\shared\unzip\unzip.cpp"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\unzip\unzip.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\platform\shared\unzip\unzip.h"
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\unzip\unzip.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\unzip\zip.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\unzip\zip.h"
 					>
 				</File>
 			</Filter>
 			<Filter
 				Name="rubyext"
 				>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\rubyext\System.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\rubyext\ZipFiles.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="RhoConnectClient"
@@ -541,7 +589,7 @@
 			</Filter>
 		</Filter>
 		<File
-			RelativePath="..\..\..\..\platform\shared\sqlite\sqlite3.c"
+			RelativePath="..\..\..\..\..\rhodes\platform\shared\sqlite\sqlite3.c"
 			>
 		</File>
 	</Files>

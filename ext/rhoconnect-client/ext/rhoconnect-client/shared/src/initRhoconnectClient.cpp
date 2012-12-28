@@ -1,5 +1,6 @@
 
 #include "sync/RhoconnectClientManager.h"
+#include "sync/ILoginListener.h"
 #include "sync/SyncThread.h"
 #include "sync/ClientRegister.h"
 
@@ -21,6 +22,22 @@ public:
 
 	virtual void clientRegisterDestroy() {
 		rho::sync::CClientRegister::Destroy();
+	}
+
+        virtual bool clientRegisterHaveInstance() {
+		return rho::sync::CClientRegister::getInstance() != 0;
+	}
+
+	virtual void clientRegisterCreate( ) {
+		rho::sync::CClientRegister::Create();
+	}
+
+	virtual void clientRegisterAddLoginListener( rho::sync::ILoginListener* listener ) {
+		rho::sync::CClientRegister::AddLoginListener(listener);
+	}
+
+        virtual void clientRegisterSetDevicePin(const char* pin ) {
+		rho::sync::CClientRegister::Get()->setDevicehPin(pin);
 	}
 	
 	virtual void rho_sync_addobjectnotify_bysrcname(const char* szSrcName, const char* szObject) {

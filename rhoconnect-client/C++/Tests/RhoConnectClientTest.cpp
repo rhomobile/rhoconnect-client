@@ -344,7 +344,7 @@ TEST(SyncClient, shouldCreateNewProductWithCustomers)
     rho_connectclient_hash_put(item, "sku", rho_connectclient_hash_get(cust2, "object"));
     rho_connectclient_create_object(g_szProduct, item);
 
-    char* szRes = (char*)rho_sync_doSyncAllSources(0,0);
+    char* szRes = (char*)rho_sync_doSyncAllSources(0,0,false);
     RHO_CONNECT_NOTIFY oNotify = {0};
     rho_connectclient_parsenotify(szRes, &oNotify);
 
@@ -452,8 +452,8 @@ unsigned long beforeProcessCreateError1(RHO_CONNECT_NOTIFY& oNotify)
 
     EXPECT_EQ(String(oNotify.status), "error");
     EXPECT_EQ(oNotify.error_code, RHO_ERR_CUSTOMSYNCSERVER);
-    EXPECT_NE(oNotify.create_errors, 0);
-    EXPECT_NE( rho_connectclient_hash_get(oNotify.create_errors, rho_connectclient_hash_get(item,"object")), (char*)0);
+    EXPECT_NE(oNotify.create_errors_messages, 0);
+    EXPECT_NE( rho_connectclient_hash_get(oNotify.create_errors_messages, rho_connectclient_hash_get(item,"object")), (char*)0);
 
     records = rho_connectclient_findbysql(g_szProduct, "SELECT * FROM changed_values WHERE update_type='create'", 0 );
     EXPECT_NE( records, 0 );

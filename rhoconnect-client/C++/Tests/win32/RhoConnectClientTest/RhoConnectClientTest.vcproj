@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../../../platform/shared;../../../../../platform/shared/test/gtest/include;../../../../../platform/shared/test/gtest"
+				AdditionalIncludeDirectories="&quot;../../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;;../../../../../../rhodes/platform/shared;../../../../../platform/shared;../../../../../../rhodes/platform/shared/test/gtest/include;../../../../../../rhodes/platform/shared/test/gtest"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -117,7 +117,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../../platform/shared;../../../../../platform/shared/test/gtest/include;../../../../../platform/shared/test/gtest"
+				AdditionalIncludeDirectories="&quot;../../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;;../../../../../../rhodes/platform/shared;../../../../../platform/shared;../../../../../../rhodes/platform/shared/test/gtest/include;../../../../../../rhodes/platform/shared/test/gtest"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -179,31 +179,31 @@
 				Name="gtest"
 				>
 				<File
-					RelativePath="..\..\..\..\..\platform\shared\test\gtest\src\gtest-death-test.cc"
+					RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\gtest\src\gtest-death-test.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\platform\shared\test\gtest\src\gtest-filepath.cc"
+					RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\gtest\src\gtest-filepath.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\platform\shared\test\gtest\src\gtest-internal-inl.h"
+					RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\gtest\src\gtest-internal-inl.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\platform\shared\test\gtest\src\gtest-port.cc"
+					RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\gtest\src\gtest-port.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\platform\shared\test\gtest\src\gtest-test-part.cc"
+					RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\gtest\src\gtest-test-part.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\platform\shared\test\gtest\src\gtest-typed-test.cc"
+					RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\gtest\src\gtest-typed-test.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\platform\shared\test\gtest\src\gtest.cc"
+					RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\gtest\src\gtest.cc"
 					>
 				</File>
 			</Filter>
@@ -213,7 +213,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\..\..\platform\shared\test\test_helper.cpp"
+			RelativePath="..\..\..\..\..\..\rhodes\platform\shared\test\test_helper.cpp"
 			>
 		</File>
 	</Files>
