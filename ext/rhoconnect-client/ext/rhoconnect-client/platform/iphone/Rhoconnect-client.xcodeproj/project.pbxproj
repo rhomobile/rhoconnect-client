@@ -11,7 +11,6 @@
 		C54164671682735000EBD3A5 /* initRhoconnectClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C54164661682735000EBD3A5 /* initRhoconnectClient.cpp */; };
 		C54164751682735F00EBD3A5 /* ClientRegister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C54164681682735F00EBD3A5 /* ClientRegister.cpp */; };
 		C54164761682735F00EBD3A5 /* ClientRegister.h in Headers */ = {isa = PBXBuildFile; fileRef = C54164691682735F00EBD3A5 /* ClientRegister.h */; };
-		C54164771682735F00EBD3A5 /* ILoginListener.h in Headers */ = {isa = PBXBuildFile; fileRef = C541646A1682735F00EBD3A5 /* ILoginListener.h */; };
 		C54164781682735F00EBD3A5 /* ISyncProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = C541646B1682735F00EBD3A5 /* ISyncProtocol.h */; };
 		C54164791682735F00EBD3A5 /* SyncEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C541646C1682735F00EBD3A5 /* SyncEngine.cpp */; };
 		C541647A1682735F00EBD3A5 /* SyncEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = C541646D1682735F00EBD3A5 /* SyncEngine.h */; };
@@ -34,7 +33,6 @@
 		C54164661682735000EBD3A5 /* initRhoconnectClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = initRhoconnectClient.cpp; path = ../../shared/src/initRhoconnectClient.cpp; sourceTree = "<group>"; };
 		C54164681682735F00EBD3A5 /* ClientRegister.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRegister.cpp; path = ../../shared/src/sync/ClientRegister.cpp; sourceTree = "<group>"; };
 		C54164691682735F00EBD3A5 /* ClientRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientRegister.h; path = ../../shared/src/sync/ClientRegister.h; sourceTree = "<group>"; };
-		C541646A1682735F00EBD3A5 /* ILoginListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ILoginListener.h; path = ../../shared/src/sync/ILoginListener.h; sourceTree = "<group>"; };
 		C541646B1682735F00EBD3A5 /* ISyncProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISyncProtocol.h; path = ../../shared/src/sync/ISyncProtocol.h; sourceTree = "<group>"; };
 		C541646C1682735F00EBD3A5 /* SyncEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncEngine.cpp; path = ../../shared/src/sync/SyncEngine.cpp; sourceTree = "<group>"; };
 		C541646D1682735F00EBD3A5 /* SyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncEngine.h; path = ../../shared/src/sync/SyncEngine.h; sourceTree = "<group>"; };
@@ -77,7 +75,6 @@
 			children = (
 				C54164681682735F00EBD3A5 /* ClientRegister.cpp */,
 				C54164691682735F00EBD3A5 /* ClientRegister.h */,
-				C541646A1682735F00EBD3A5 /* ILoginListener.h */,
 				C541646B1682735F00EBD3A5 /* ISyncProtocol.h */,
 				C541646C1682735F00EBD3A5 /* SyncEngine.cpp */,
 				C541646D1682735F00EBD3A5 /* SyncEngine.h */,
@@ -140,7 +137,6 @@
 			files = (
 				C5FA6040167B512D00F5838A /* Rhoconnect-client_Prefix.pch in Headers */,
 				C54164761682735F00EBD3A5 /* ClientRegister.h in Headers */,
-				C54164771682735F00EBD3A5 /* ILoginListener.h in Headers */,
 				C54164781682735F00EBD3A5 /* ISyncProtocol.h in Headers */,
 				C541647A1682735F00EBD3A5 /* SyncEngine.h in Headers */,
 				C541647C1682735F00EBD3A5 /* SyncNotify.h in Headers */,

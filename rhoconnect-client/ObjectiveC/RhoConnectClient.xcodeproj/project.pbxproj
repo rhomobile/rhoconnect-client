@@ -1297,6 +1297,8 @@
 					../../../rhodes/platform/shared,
 					../../../rhodes/platform/shared/curl/include,
 					"../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src",
+					../../platform/shared,
+					../../../rhodes/platform/shared/sync,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1306,7 +1308,7 @@
 				RHO_NO_RUBY = 1;
 				SDKROOT = iphoneos;
 				SYMROOT = ../build;
-				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src";
+				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src ../../platform/shared ../../../rhodes/platform/shared/sync";
 			};
 			name = Debug;
 		};
@@ -1328,6 +1330,8 @@
 					../../../rhodes/platform/shared,
 					../../../rhodes/platform/shared/curl/include,
 					"../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src",
+					../../platform/shared,
+					../../../rhodes/platform/shared/sync,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1337,7 +1341,7 @@
 				RHO_NO_RUBY = 1;
 				SDKROOT = iphoneos;
 				SYMROOT = ../build;
-				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src";
+				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src ../../platform/shared ../../../rhodes/platform/shared/sync";
 			};
 			name = Release;
 		};
