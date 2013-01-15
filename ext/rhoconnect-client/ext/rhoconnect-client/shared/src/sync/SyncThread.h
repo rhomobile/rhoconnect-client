@@ -194,7 +194,6 @@ int rho_sync_get_pagesize();
 void rho_sync_set_pagesize(int nPageSize);
 
 unsigned long rho_sync_get_attrs(const char* szPartition, int nSrcID);
-unsigned long rho_sync_is_blob_attr(const char* szPartition, int source_id, const char* szAttrName);
 int rho_sync_get_lastsync_objectcount(int nSrcID);
 
 void rho_sync_set_threaded_mode(int b);

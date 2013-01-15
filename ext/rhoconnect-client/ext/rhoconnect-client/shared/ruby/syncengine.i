@@ -29,11 +29,6 @@
 	#define set_syncserver rho_sync_set_syncserver
 	extern VALUE rho_sync_get_attrs(const char* szPartition, int source_id);
 	#define get_src_attrs rho_sync_get_attrs
-	extern VALUE rho_sync_is_blob_attr(const char* szPartition, int source_id, const char* szAttrName);
-	#define is_blob_attr rho_sync_is_blob_attr
-
-	extern void rho_sync_update_blob_attribs(const char* szPartition, int source_id);
-	#define update_blob_attribs rho_sync_update_blob_attribs
 	
     extern void  rho_sync_setobjectnotify_url(const char* szUrl);
     #define set_objectnotify_url rho_sync_setobjectnotify_url
@@ -108,7 +103,6 @@ extern int set_pollinterval(int interval);
 extern int get_pollinterval();
 extern void set_syncserver(char* syncserver);
 extern VALUE get_src_attrs(const char* szPartition, int source_id);
-extern VALUE is_blob_attr(const char* szPartition, int source_id, const char* szAttrName);
 extern void  set_objectnotify_url(const char* szUrl);
 extern void  add_objectnotify(int nSrcID, const char* szObject);
 extern void  clean_objectnotify();
@@ -120,6 +114,5 @@ extern void  enable_status_popup(bool b);
 extern void  set_source_property(int nSrcID, const char* szPropName, const char* szPropValue);
 extern VALUE  get_source_property(int nSrcID, const char* szPropName);
 extern void  set_ssl_verify_peer(bool b);
-extern void  update_blob_attribs(const char* szPartition, int source_id);
 extern VALUE is_syncing();
 extern void  register_push();

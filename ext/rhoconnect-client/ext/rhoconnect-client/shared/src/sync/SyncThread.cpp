@@ -426,10 +426,6 @@ unsigned long rho_sync_get_attrs(const char* szPartition, int nSrcID)
     return 0;//(VALUE)CDBAdapter::getDB(szPartition).getAttrMgr().getAttrsBySrc(nSrcID);
 }
 
-unsigned long rho_sync_is_blob_attr(const char* szPartition, int nSrcID, const char* szAttrName)
-{
-    return rho_ruby_create_boolean( CDBAdapter::getDB(szPartition).getAttrMgr().isBlobAttr(nSrcID, szAttrName) );
-}
 #endif //RHO_NO_RUBY
 
 void rho_sync_setobjectnotify_url(const char* szUrl)
