@@ -13,28 +13,26 @@ def build_extension(name, arch)
     args = []
     args << "/M4"
     args << name + ".sln"
-    args << "\"Release|#{$sdk}\""
+    args << "\"#{ENV['RHO_BUILD_CONFIG']}|#{$sdk}\""
     cmdline = "\"" + $vcbuild + "\"" + ' ' + args.join(' ')
     puts cmdline
     puts `#{cmdline}`
     exit unless $? == 0
 
-    cp_r File.join($tempdir, "Release", name + ".lib"), $targetdir
+    cp_r File.join($tempdir, "#{ENV['RHO_BUILD_CONFIG']}", name + ".lib"), $targetdir
 
   elsif ENV['RHO_PLATFORM'] == 'win32'
     args = []
     args << "/M4"
     args << name + ".sln"
-    args << "\"Debug|Win32\""
+    args << "\"#{ENV['RHO_BUILD_CONFIG']}|Win32\""
     cmdline = "\"" + $vcbuild + "\"" + ' ' + args.join(' ')
     puts cmdline
     puts `#{cmdline}`
     exit unless $? == 0
 
-    cp_r File.join($tempdir, "Debug", name + ".lib"), $targetdir
+    cp_r File.join($tempdir, "#{ENV['RHO_BUILD_CONFIG']}", name + ".lib"), $targetdir
   end
-
-    cp_r File.join($tempdir, "Release", name + ".lib"), $targetdir
 end
 
 namespace "build" do
