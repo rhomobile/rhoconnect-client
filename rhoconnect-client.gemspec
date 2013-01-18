@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 	s.require_paths = ["lib"]
 	s.rubyforge_project = %q{rhodes}
 	s.rubygems_version = %q{1.3.5}
-	s.add_dependency('rhodes', '>= 3.5.0')
+#	s.add_dependency('rhodes', '>= 3.5.0')
 
 	s.summary = %q{Rhoconnect client}
 end
