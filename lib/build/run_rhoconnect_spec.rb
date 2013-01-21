@@ -1,6 +1,6 @@
 require 'fileutils'
 
-require File.join(ENV['RHO_ROOT'],'lib','build','jake.rb')
+require File.join($rho_root,'lib','build','jake.rb')
 
 	def reset_rhoconnect_server(host,port)
 		require 'rest_client'
@@ -33,7 +33,7 @@ require File.join(ENV['RHO_ROOT'],'lib','build','jake.rb')
 		server_pid = nil
 		resque_pid = nil
 
-		rhobuildyml = File.join(ENV['RHO_ROOT'],'rhobuild.yml')
+		rhobuildyml = File.join($rho_root,'rhobuild.yml')
 		$app_path = File.expand_path(File.join(File.dirname(__FILE__),'..','..','spec',appname))
                 puts "app path: #{$app_path}"
 
@@ -107,7 +107,7 @@ require File.join(ENV['RHO_ROOT'],'lib','build','jake.rb')
 		end
 
 		puts "run specs"
-		chdir ENV['RHO_ROOT']
+		chdir $rho_root
 		Rake::Task.tasks.each { |t| t.reenable }
 		Rake::Task['run:' + platform + ':spec'].invoke
 

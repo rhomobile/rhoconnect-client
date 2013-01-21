@@ -30,9 +30,13 @@ if RUBY_VERSION.to_s > "1.9.0"
   require 'psych'
 end
 
-require File.join(ENV['RHO_ROOT'],'lib','build','jake.rb')
+config = YAML::load_file(File.join(File.dirname(__FILE__),'config.yml'))
 
-load File.join(ENV['RHO_ROOT'],'Rakefile')
+$rho_root = config["rhodes"]
+
+require File.join($rho_root,'lib','build','jake.rb')
+
+load File.join($rho_root,'Rakefile')
 
 #$app_basedir = pwd
 #$curr_project = "rhowebkit"
