@@ -13,20 +13,6 @@ rake --trace
 
 )
 
-if "%RHO_PLATFORM%" == "wm" (
-
-cd rhoconnect-client\platform\wm
-rake --trace
-
-)
-
-if "%RHO_PLATFORM%" == "win32" (
-
-cd rhoconnect-client\platform\wm
-rake --trace
-
-)
-
 if "%RHO_PLATFORM%" == "bb" (
 
 cd rhoconnect-client\platform\bb
