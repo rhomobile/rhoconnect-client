@@ -23,6 +23,7 @@
 # 
 # http://rhomobile.com
 #------------------------------------------------------------------------
+require 'yaml'
 
 puts 'RUBY VERSION: ' + RUBY_VERSION.to_s  
 
