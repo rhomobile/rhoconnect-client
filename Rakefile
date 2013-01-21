@@ -30,9 +30,9 @@ if RUBY_VERSION.to_s > "1.9.0"
   require 'psych'
 end
 
-require File.join(pwd, '../rhodes/lib/build/jake.rb')
+require File.join(ENV['RHO_ROOT'],'lib','build','jake.rb')
 
-load File.join(pwd, '../rhodes/Rakefile')
+load File.join(ENV['RHO_ROOT'],'Rakefile')
 
 #$app_basedir = pwd
 #$curr_project = "rhowebkit"
@@ -121,5 +121,41 @@ namespace "gem" do
     puts "Building gem"
     gemfile = Gem::Builder.new(spec).build
 
+  end
+end
+
+require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+
+namespace "run" do
+  namespace "android" do
+    task :rhoconnect_spec => "rhoconnect_spec:emulator"
+
+
+    namespace "rhoconnect_spec" do
+      task :device do
+        $device_flag = '-d'
+        run_rhoconnect_spec('android')
+        unless $dont_exit_on_failure
+          exit 1 if $total.to_i==0
+          exit $failed.to_i 
+        end
+      end
+
+      task :emulator do
+        $device_flag = '-e'
+        run_rhoconnect_spec('android')
+        unless $dont_exit_on_failure
+          exit 1 if $total.to_i==0
+          exit $failed.to_i 
+        end
+      end
+    end
+
+  end
+
+  namespace "iphone" do
+    task :rhoconnect_spec do
+      run_rhoconnect_spec('iphone')
+    end
   end
 end

@@ -1,6 +1,6 @@
 require 'fileutils'
 
-require File.join(File.dirname(__FILE__),'..','..','..','rhodes','lib','build','jake.rb')
+require File.join(ENV['RHO_ROOT'],'lib','build','jake.rb')
 
 	def reset_rhoconnect_server(host,port)
 		require 'rest_client'
@@ -33,18 +33,19 @@ require File.join(File.dirname(__FILE__),'..','..','..','rhodes','lib','build','
 		server_pid = nil
 		resque_pid = nil
 
-		rhobuildyml = File.join(basedir,'rhobuild.yml')
-		$app_path = File.expand_path(File.join(basedir,'spec',appname))
+		rhobuildyml = File.join(ENV['RHO_ROOT'],'rhobuild.yml')
+		$app_path = File.expand_path(File.join(File.dirname(__FILE__),'..','..','spec',appname))
+                puts "app path: #{$app_path}"
+
 		$app_config = Jake.config(File.open(File.join($app_path, "build.yml")))
 		config = Jake.config(File.open(rhobuildyml,'r'))
 
-		server_path = File.expand_path(File.join(basedir,'spec',appname,'server'))
+		server_path = File.expand_path(File.join($app_path,'server'))
 		puts "server path: #{server_path}"
 
 		rc_out = File.open( File.join($app_path, "rhoconnect.log" ), "w")
 		redis_out = File.open( File.join($app_path, "redis.log" ), "w")
 		resque_out = File.open( File.join($app_path, "resque.log" ), "w")
-		
 		
 		puts "update bundle"
 		Kernel.system("bundle","update",:chdir => server_path)
@@ -73,6 +74,21 @@ require File.join(File.dirname(__FILE__),'..','..','..','rhodes','lib','build','
 
 		puts "run rhoconnect"
 		server_pid = Kernel.spawn("rhoconnect","startbg",:chdir => server_path, :out => rc_out )
+
+=begin
+		rc_started = false
+		while(!rc_started)
+                  puts 'waiting Rhoconnect to start'
+                  File.readlines(rc_out).each do |s|
+                    puts s
+                    if s =~ /^.*Rhoconnect Server.*started.*$/
+                      rc_started = true
+                      break
+		    end
+		  end
+		  sleep(1)
+                end
+=end
 		sleep(10)
 
 		puts "reset rhoconnect"
@@ -90,13 +106,10 @@ require File.join(File.dirname(__FILE__),'..','..','..','rhodes','lib','build','
 			f.puts "SYNC_SERVER_PORT = #{port}"
 		end
 
-
 		puts "run specs"
+		chdir ENV['RHO_ROOT']
 		Rake::Task.tasks.each { |t| t.reenable }
 		Rake::Task['run:' + platform + ':spec'].invoke
-
-		sleep(10)
-
 
 ensure
 		puts "stop resque"

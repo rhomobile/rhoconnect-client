@@ -5,3 +5,4 @@
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
 /rhoconnect-client/Java/Android/test/bin
+/rhoconnect-client/C++/Tests/win32/bin
