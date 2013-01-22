@@ -163,4 +163,20 @@ namespace "run" do
       run_rhoconnect_spec('iphone')
     end
   end
+
+  namespace "wm" do
+    task :rhoconnect_spec do
+      run_rhoconnect_spec('wm')
+      exit 1 if $total.to_i==0
+      exit $failed.to_i
+    end
+  end
+
+  namespace "win32" do
+    task :rhoconnect_spec do
+      run_rhoconnect_spec('win32')
+      exit 1 if $total.to_i==0
+      exit $failed.to_i
+    end
+  end
 end
