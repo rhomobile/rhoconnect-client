@@ -156,7 +156,6 @@ end
 
 it "should export database after blob bulk sync" do
 	Rhom::Rhom.database_full_reset
-	SyncEngine.set_syncserver('http://store-bulk.rhohub.com/application')
 	login_name = System.get_property('platform') + System.get_property('device_name')
 	res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('login_name', '', "/app/Settings/login_callback")
 	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
