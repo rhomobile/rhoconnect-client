@@ -31,9 +31,21 @@ if RUBY_VERSION.to_s > "1.9.0"
   require 'psych'
 end
 
-config = YAML::load_file(File.join(File.dirname(__FILE__),'config.yml'))
 
-$rho_root = config["rhodes"]
+cfgfilename = File.join(File.dirname(__FILE__),'config.yml')
+
+$rho_root = nil
+
+if File.file?(cfgfilename)
+  config = YAML::load_file(cfgfilename)
+  $rho_root = config["rhodes"]
+end
+
+unless $rho_root
+  $rho_root = `get-rhodes-info --rhodes-path`.chomp
+end
+
+puts "$rho_root is #{$rho_root}"
 
 require File.join($rho_root,'lib','build','jake.rb')
 
