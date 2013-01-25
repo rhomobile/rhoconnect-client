@@ -23,12 +23,9 @@
 		C54164811682735F00EBD3A5 /* SyncThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C54164741682735F00EBD3A5 /* SyncThread.h */; };
 		C56989231682152A0064AE81 /* syncengine_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = C56989221682152A0064AE81 /* syncengine_wrap.c */; };
 		C5FA6040167B512D00F5838A /* Rhoconnect-client_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = C5FA603F167B512D00F5838A /* Rhoconnect-client_Prefix.pch */; };
-		FAC155EE145855CF0016F3BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
-		FAC155EF145855CF0016F3BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD4602C12260A8500141873 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C541645B16822D4A00EBD3A5 /* rhoconnectclient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rhoconnectclient.c; path = ../../shared/src/rhoconnectclient.c; sourceTree = "<group>"; };
 		C54164661682735000EBD3A5 /* initRhoconnectClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = initRhoconnectClient.cpp; path = ../../shared/src/initRhoconnectClient.cpp; sourceTree = "<group>"; };
 		C54164681682735F00EBD3A5 /* ClientRegister.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRegister.cpp; path = ../../shared/src/sync/ClientRegister.cpp; sourceTree = "<group>"; };
@@ -46,7 +43,6 @@
 		C56989221682152A0064AE81 /* syncengine_wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = syncengine_wrap.c; path = ../../shared/ruby/syncengine_wrap.c; sourceTree = "<group>"; };
 		C5FA603F167B512D00F5838A /* Rhoconnect-client_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Rhoconnect-client_Prefix.pch"; sourceTree = "<group>"; };
 		FAC155F3145855CF0016F3BD /* libRhoconnect-client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libRhoconnect-client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAD4602C12260A8500141873 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +50,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAC155EE145855CF0016F3BD /* Foundation.framework in Frameworks */,
-				FAC155EF145855CF0016F3BD /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,8 +93,6 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
-				FAD4602C12260A8500141873 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
