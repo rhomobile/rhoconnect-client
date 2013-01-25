@@ -36,9 +36,12 @@ cfgfilename = File.join(File.dirname(__FILE__),'config.yml')
 
 $rho_root = nil
 
+chdir File.dirname(__FILE__)
+
 if File.file?(cfgfilename)
   config = YAML::load_file(cfgfilename)
   $rho_root = config["rhodes"]
+  $rho_root = File.expand_path($rho_root) if $rho_root
 end
 
 unless $rho_root
