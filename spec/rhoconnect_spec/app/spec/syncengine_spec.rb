@@ -125,9 +125,9 @@ describe "SyncEngine_test" do
   end
 
   it "should not connect to self signed SSL with enabled peer check" do
-	  SyncEngine.set_syncserver('https://www.pcwebshop.co.uk/application')
+	  SyncEngine.set_syncserver('https://nagios.rhomobile.com/application')
 	  SyncEngine.set_ssl_verify_peer(true)
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('lars', 'larspass', "/app/Settings/login_callback")
+	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('test', 'test', "/app/Settings/login_callback")
 	  code = res['error_code'].to_i
 	  have_error = (code == ::Rho::RhoError::ERR_NETWORK) || (code == ::Rho::RhoError::ERR_REMOTESERVER )
 	  have_error.should == true
@@ -137,7 +137,7 @@ describe "SyncEngine_test" do
   it "should connect and get error from non-rhoconnect SSL server with disabled peer check" do
 	  SyncEngine.set_syncserver('https://www.pcwebshop.co.uk/application')
 	  SyncEngine.set_ssl_verify_peer(false)
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('lars', 'larspass', "/app/Settings/login_callback")
+	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('test', 'test', "/app/Settings/login_callback")
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_REMOTESERVER
   end
 
@@ -244,7 +244,7 @@ end
 
   it "should login" do
     
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('lars', 'larspass', "/app/Settings/login_callback")
+    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('test', 'test', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
     SyncEngine.logged_in.should == 1
@@ -661,7 +661,7 @@ end
     SyncEngine.logout
     SyncEngine.logged_in.should == 0
     
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('lars1', 'larspass', "/app/Settings/login_callback")
+    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('test1', 'test', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     SyncEngine.logged_in.should == 1
     

@@ -47,7 +47,7 @@ describe "BulkSync_test" do
   end
 
   it "should login" do
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("la rs", "", "/app/Settings/login_callback")
+    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("te st", "test", "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
     SyncEngine.logged_in.should == 1
@@ -79,7 +79,7 @@ describe "BulkSync_test" do
     SyncEngine.logged_in.should == 1
     ::Rhom::Rhom.database_full_reset_and_logout
     
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("la rs", "", "/app/Settings/login_callback")
+    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("te st", "test", "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     SyncEngine.logged_in.should == 1
 
@@ -143,7 +143,7 @@ end
   it "should do selective bulk sync" do
 	  
 	  
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("la rs", "", "/app/Settings/login_callback")
+	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("te st", "test", "/app/Settings/login_callback")
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  SyncEngine.logged_in.should == 1
 	  
