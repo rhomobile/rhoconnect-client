@@ -1,7 +1,7 @@
 require 'image_base'
-class BlobBulkTest_s < ImageBase  
+class BlobBulkTest_s < ImageBase
 
-  def initialize(source,credential)
+  def initialize(source)
     AWS::S3::Base.establish_connection!(
       :access_key_id      => ENV['AMAZON_ACCESS_KEY_ID'],
       :secret_access_key  => ENV['AMAZON_SECRET_ACCESS_KEY']
@@ -9,12 +9,12 @@ class BlobBulkTest_s < ImageBase
     @baseurl = 'http://s3.amazonaws.com/'
 #    @bucket = 'rhodes-system-samples-images-auto'
     @bucket = 'rhodes-store-bulk-blobs-scheme'
-    super(source,credential)
+    super(source)
   end
 
   def query(params=nil)
    puts "BlobBulkTest_s query params = #{params}"
- 
+
    @result={}
 
     Bucket.find(@bucket).objects.each do |entry|
