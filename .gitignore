@@ -12,6 +12,7 @@ project.xcworkspace/
 sync_server*
 bin/
 tmp/
+config.yml
 
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
