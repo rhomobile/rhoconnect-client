@@ -11,6 +11,8 @@ Build gem using "rake gem:make_gem".
 
 ##Running specs
 
+Copy `config.yml.sample` to `config.yml` and edit it with the path to your rhodes and rhoconnect workspaces.
+
 Use "rake run:android:rhoconnect_spec", "rake run:iphone:rhoconnect_spec" or "rake run:win32:rhoconnect_spec" to run specs on respective platform.
 
 ##Creating Rhodes application that uses Rhoconnect client
