@@ -135,7 +135,7 @@ describe "SyncEngine_test" do
   end
 	
   it "should connect and get error from non-rhoconnect SSL server with disabled peer check" do
-	  SyncEngine.set_syncserver('https://www.pcwebshop.co.uk/application')
+	  SyncEngine.set_syncserver('https://nagios.rhomobile.com/application')
 	  SyncEngine.set_ssl_verify_peer(false)
 	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('test', 'test', "/app/Settings/login_callback")
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_REMOTESERVER
