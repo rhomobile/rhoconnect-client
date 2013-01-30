@@ -45,14 +45,22 @@ require File.join($rho_root,'lib','build','jake.rb')
 		tmp_path = File.join(File.dirname(__FILE__),'..','..','tmp')
 		FileUtils.mkdir_p File.expand_path(tmp_path)
 		server_path = File.expand_path(File.join(tmp_path,'testapp'))
-		puts "server path: #{server_path}"
+		rhoconnect_bin = "#{$rhoconnect_root}/bin/rhoconnect"
+
+		puts "rhoconnect_bin: #{rhoconnect_bin}"
 
 		rc_out = File.open( File.join($app_path, "rhoconnect.log" ), "w")
 		redis_out = File.open( File.join($app_path, "redis.log" ), "w")
 		resque_out = File.open( File.join($app_path, "resque.log" ), "w")
 
 		puts "generate app"
-		res = Kernel.system("#{$rhoconnect_root}/bin/rhoconnect","app",test_appname,:chdir => tmp_path, :out => rc_out)
+		res = Kernel.system(rhoconnect_bin,"app",test_appname,:chdir => tmp_path, :out => rc_out)
+
+		puts "patching Gemfile with correct rhoconnect path"
+		target_gemfile = File.join(server_path, 'Gemfile')
+		file = File.read(target_gemfile)
+		file.gsub!(/(gem 'rhoconnect'*.*)/, "gem 'rhoconnect', :path => '#{$rhoconnect_root}'")
+		File.open(target_gemfile, 'w') {|f| f.write file}
 
 		puts "patching Gemfile with aws-s3"
 		Kernel.system("echo \"gem 'aws-s3', '>= 0.6.3'\" >> Gemfile", :chdir => server_path, :out => rc_out)
@@ -71,11 +79,11 @@ require File.join($rho_root,'lib','build','jake.rb')
 		sleep(10)
 
 		puts "stop rhoconnect"
-		Kernel.spawn("rhoconnect","stop",:chdir => server_path, :out => rc_out )
+		Kernel.spawn(rhoconnect_bin,"stop",:chdir => server_path, :out => rc_out )
 		sleep(10)
 
 		puts "stop redis"
-		Kernel.spawn("rhoconnect","redis-stop",:chdir => server_path, :out => redis_out )
+		Kernel.spawn(rhoconnect_bin,"redis-stop",:chdir => server_path, :out => redis_out )
 		sleep(10)
 
 
@@ -84,11 +92,11 @@ require File.join($rho_root,'lib','build','jake.rb')
 
 
 		puts "run redis"
-		Kernel.spawn("rhoconnect","redis-startbg",:chdir => server_path, :out => redis_out )
+		Kernel.spawn(rhoconnect_bin,"redis-startbg",:chdir => server_path, :out => redis_out )
 		sleep(10)
 
 		puts "run rhoconnect"
-		server_pid = Kernel.spawn("rhoconnect","startbg",:chdir => server_path, :out => rc_out )
+		server_pid = Kernel.spawn(rhoconnect_bin,"startbg",:chdir => server_path, :out => rc_out )
 
 =begin
 		rc_started = false
@@ -132,11 +140,11 @@ require File.join($rho_root,'lib','build','jake.rb')
 		sleep(5)
 
 		puts "stop rhoconnect"
-		Process.spawn("rhoconnect","stop",:chdir => server_path, :out => rc_out )
+		Process.spawn(rhoconnect_bin,"stop",:chdir => server_path, :out => rc_out )
 		sleep(5)
 
 		puts "stop redis"
-		Process.spawn("rhoconnect","redis-stop",:chdir => server_path, :out => redis_out )
+		Process.spawn(rhoconnect_bin,"redis-stop",:chdir => server_path, :out => redis_out )
 		sleep(5)
 
 		puts "cleanup"
