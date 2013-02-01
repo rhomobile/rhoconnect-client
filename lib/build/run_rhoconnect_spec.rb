@@ -36,7 +36,7 @@ require File.join($rho_root,'lib','build','jake.rb')
 
 		rhobuildyml = File.join($rho_root,'rhobuild.yml')
 		$app_path = File.expand_path(File.join(File.dirname(__FILE__),'..','..','spec',appname))
-    puts "app path: #{$app_path}"
+		puts "app path: #{$app_path}"
 
 		$app_config = Jake.config(File.open(File.join($app_path, "build.yml")))
 		config = Jake.config(File.open(rhobuildyml,'r'))
@@ -45,6 +45,7 @@ require File.join($rho_root,'lib','build','jake.rb')
 		tmp_path = File.join(File.dirname(__FILE__),'..','..','tmp')
 		FileUtils.mkdir_p File.expand_path(tmp_path)
 		server_path = File.expand_path(File.join(tmp_path,'testapp'))
+		
 		rhoconnect_bin = "#{$rhoconnect_root}/bin/rhoconnect"
 
 		puts "rhoconnect_bin: #{rhoconnect_bin}"
@@ -52,7 +53,7 @@ require File.join($rho_root,'lib','build','jake.rb')
 		rc_out = File.open( File.join($app_path, "rhoconnect.log" ), "w")
 		redis_out = File.open( File.join($app_path, "redis.log" ), "w")
 		resque_out = File.open( File.join($app_path, "resque.log" ), "w")
-
+		
 		puts "generate app"
 		res = Kernel.system(rhoconnect_bin,"app",test_appname,:chdir => tmp_path, :out => rc_out)
 
@@ -98,20 +99,6 @@ require File.join($rho_root,'lib','build','jake.rb')
 		puts "run rhoconnect"
 		server_pid = Kernel.spawn(rhoconnect_bin,"startbg",:chdir => server_path, :out => rc_out )
 
-=begin
-		rc_started = false
-		while(!rc_started)
-                  puts 'waiting Rhoconnect to start'
-                  File.readlines(rc_out).each do |s|
-                    puts s
-                    if s =~ /^.*Rhoconnect Server.*started.*$/
-                      rc_started = true
-                      break
-		    end
-		  end
-		  sleep(1)
-                end
-=end
 		sleep(10)
 
 		puts "reset rhoconnect"
@@ -151,4 +138,5 @@ require File.join($rho_root,'lib','build','jake.rb')
 		FileUtils.rm_r File.expand_path(tmp_path)
 
 		puts "run_spec_app(#{platform},#{appname}) done"
+
 	end

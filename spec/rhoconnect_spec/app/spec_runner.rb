@@ -19,6 +19,8 @@ if !defined?(RHO_WP7)
 end
 	config[:files] << "spec/blob_bulksync_spec"
 
+	config[:files] << "spec/ssl_spec"
+
   end
 
   def run
