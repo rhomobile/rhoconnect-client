@@ -23,7 +23,7 @@ require File.join($rho_root,'lib','build','jake.rb')
 
 	require 'socket'
 
-        def execute_rhoconnect(out,*args)
+        def execute_rhoconnect(out,workdir,*args)
 		cmd = ""
 
 		if RUBY_PLATFORM =~ /(win|w)32$/
@@ -37,7 +37,7 @@ require File.join($rho_root,'lib','build','jake.rb')
 		end
 
 		puts cmd
-		Kernel.system(cmd,:chdir => $tmp_path, :out => out)
+		Kernel.system(cmd,:chdir => workdir, :out => out)
         end
 
 	def run_rhoconnect_spec(platform)
@@ -59,11 +59,11 @@ require File.join($rho_root,'lib','build','jake.rb')
 		config = Jake.config(File.open(rhobuildyml,'r'))
 
 		source_path = File.expand_path(File.join($app_path,'server'))
-		$tmp_path = File.join(File.dirname(__FILE__),'..','..','tmp')
-		FileUtils.mkdir_p File.expand_path($tmp_path)
-		server_path = File.expand_path(File.join($tmp_path,'testapp'))
+		tmp_path = File.join(File.dirname(__FILE__),'..','..','tmp')
+		FileUtils.mkdir_p File.expand_path(tmp_path)
+		server_path = File.expand_path(File.join(tmp_path,'testapp'))
 
-                $rhoconnect_bin = "#{$rhoconnect_root}/bin/rhoconnect"
+		$rhoconnect_bin = "#{$rhoconnect_root}/bin/rhoconnect"
 		puts "$rhoconnect_bin: #{$rhoconnect_bin}"
 
 		rc_out = File.open( File.join($app_path, "rhoconnect.log" ), "w")
@@ -71,7 +71,7 @@ require File.join($rho_root,'lib','build','jake.rb')
 		resque_out = File.open( File.join($app_path, "resque.log" ), "w")
 		
 		puts "generate app"
-		res = execute_rhoconnect(rc_out,"app",test_appname)
+		res = execute_rhoconnect(rc_out,tmp_path,"app",test_appname)
 
 		puts "patching Gemfile with correct rhoconnect path"
 		target_gemfile = File.join(server_path, 'Gemfile')
@@ -96,11 +96,11 @@ require File.join($rho_root,'lib','build','jake.rb')
 		sleep(10)
 
 		puts "stop rhoconnect"
-		execute_rhoconnect(rc_out,"stop")
+		execute_rhoconnect(rc_out,server_path,"stop")
 		sleep(10)
 
 		puts "stop redis"
-		execute_rhoconnect(redis_out,"redis-stop")
+		execute_rhoconnect(redis_out,server_path,"redis-stop")
 		sleep(10)
 
 
@@ -108,11 +108,11 @@ require File.join($rho_root,'lib','build','jake.rb')
 		FileUtils.rm_r(File.join(server_path,"data")) if File.directory?(File.join(server_path,"data"))
 
 		puts "run redis"
-		execute_rhoconnect(redis_out,"redis-startbg")
+		execute_rhoconnect(redis_out,server_path,"redis-startbg")
 
 		sleep(10)
 		puts "run rhoconnect"
-		server_pid = execute_rhoconnect(rc_out,"startbg")
+		server_pid = execute_rhoconnect(rc_out,server_path,"startbg")
 
 		sleep(10)
 
@@ -142,15 +142,15 @@ require File.join($rho_root,'lib','build','jake.rb')
 		sleep(5)
 
 		puts "stop rhoconnect"
-		execute_rhoconnect(rc_out,"stop")
+		execute_rhoconnect(rc_out,server_path,"stop")
 		sleep(5)
 
 		puts "stop redis"
-		execute_rhoconnect(redis_out,"redis-stop")
+		execute_rhoconnect(redis_out,server_path,"redis-stop")
 		sleep(5)
 
 		puts "cleanup"
-		FileUtils.rm_r File.expand_path($tmp_path)
+		FileUtils.rm_r File.expand_path(tmp_path)
 
 		puts "run_spec_app(#{platform},#{appname}) done"
 	end
