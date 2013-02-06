@@ -80,10 +80,10 @@ require File.join($rho_root,'lib','build','jake.rb')
 		File.open(target_gemfile, 'w') {|f| f.write file}
 
 		puts "patching Gemfile with aws-s3"
-		Kernel.system("echo \"gem 'aws-s3', '>= 0.6.3'\" >> Gemfile", :chdir => server_path, :out => rc_out)
+		File.open(target_gemfile, 'a') {|f| f.puts "gem 'aws-s3', '>= 0.6.3'" }
 
 		puts "patching Gemfile with sqlite3"
-		Kernel.system("echo \"gem 'sqlite3', '>= 1.3.3'\" >> Gemfile", :chdir => server_path, :out => rc_out)
+		File.open(target_gemfile, 'a') {|f| f.puts "gem 'sqlite3', '>= 1.3.3'" }
 
 		puts "bundle install"
 		Kernel.system("bundle","install",:chdir => server_path)
@@ -108,11 +108,16 @@ require File.join($rho_root,'lib','build','jake.rb')
 		FileUtils.rm_r(File.join(server_path,"data")) if File.directory?(File.join(server_path,"data"))
 
 		puts "run redis"
+
 		execute_rhoconnect(redis_out,server_path,"redis-startbg")
 
 		sleep(10)
 		puts "run rhoconnect"
-		server_pid = execute_rhoconnect(rc_out,server_path,"startbg")
+		if RUBY_PLATFORM =~ /(win|w)32$/
+			Kernel.spawn("ruby",$rhoconnect_bin,"start",:chdir=>server_path,:out => rc_out)
+		else
+			server_pid = execute_rhoconnect(rc_out,server_path,"startbg")
+		end
 
 		sleep(10)
 
@@ -135,6 +140,11 @@ require File.join($rho_root,'lib','build','jake.rb')
 		chdir $rho_root
 		Rake::Task.tasks.each { |t| t.reenable }
 		Rake::Task['run:' + platform + ':spec'].invoke
+
+	rescue Exception => e
+		puts "exception caught: #{e.inspect}"
+		puts e.backtrace
+
 
 	ensure
 		puts "stop resque"
