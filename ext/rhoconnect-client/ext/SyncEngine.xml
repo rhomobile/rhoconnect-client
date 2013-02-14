@@ -1,0 +1,423 @@
+<?xml version = "1.0"?>
+<?xml-stylesheet type="text/xsl" href="pb_help.xsl"?>
+<API>
+    <MODULE name="SyncEngine" parent="Rho">
+        <HELP_OVERVIEW>is used for syncronization with Rhoconnect servers.</HELP_OVERVIEW>
+        <MORE_HELP>For further documentations please refer to <a href="http://docs.rhomobile.com/rhodes/synchronization"/>.</MORE_HELP>
+    
+        <METHODS>
+            <METHOD name="GetUserName">
+                <DESC>This is documentation</DESC>
+				<RETURN>
+					<TYPE>STRING</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="OnSyncCreateError">
+                <DESC>This is documentation</DESC>
+				
+				<PARAMS>
+					<PARAM name="srcName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="objects" type="ARRAY">
+						<DESC></DESC>
+					</PARAM>
+
+					<PARAM name="action" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+
+			<METHOD name="PushChanges">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="srcName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>				
+            </METHOD>
+
+			<METHOD name="OnSyncUpdateError">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="srcName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="objects" type="ARRAY">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="action" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="rollbackData" type="STRING">
+						<DESC></DESC>
+						<CAN_BE_NIL/>
+					</PARAM>
+
+				</PARAMS>
+
+            </METHOD>
+
+			<METHOD name="OnSyncDeleteError">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="srcName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="objects" type="ARRAY">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="action" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+
+            </METHOD>
+
+			<METHOD name="Search">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="args" type="HASH">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN>
+					<TYPE>HASH</TYPE>
+				</RETURN>
+            </METHOD>
+
+			<METHOD name="DoSync">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="showStatusPopup" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+
+					<PARAM name="queryParams" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="syncOnlyChangedSources" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN>
+					<TYPE>HASH</TYPE>
+				</RETURN>
+
+            </METHOD>
+
+			<METHOD name="DoSyncSource">
+                <DESC>This is documentation</DESC>
+				
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="showStatusPopup" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="queryParams" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+
+				</PARAMS>
+				
+				<RETURN>
+					<TYPE>HASH</TYPE>
+				</RETURN>
+
+            </METHOD>
+
+			<METHOD name="DoSearch" hasCallback="mandatory">
+                <DESC>This is documentation</DESC>
+				
+				<PARAMS>
+					<PARAM name="arSources" type="ARRAY">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="from" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="params" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="syncChanges" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="nProgressStep" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="callback" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="callbackParams" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+
+				</PARAMS>
+				
+				<RETURN>
+					<TYPE>HASH</TYPE>
+				</RETURN>
+
+            </METHOD>
+
+			<METHOD name="Login" hasCallback="mandatory">
+                <DESC>This is documentation</DESC>
+				
+				<PARAMS>
+					<PARAM name="login" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="password" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="callback" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+
+				</PARAMS>
+				
+				<RETURN>
+					<TYPE>INTEGER</TYPE>
+				</RETURN>
+
+            </METHOD>
+			
+			<METHOD name="LoggedIn">
+                <DESC>This is documentation</DESC>
+				<RETURN>
+					<TYPE>BOOLEAN</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="Logout">
+                <DESC>This is documentation</DESC>
+            </METHOD>
+			
+			<METHOD name="StopSync">
+                <DESC>This is documentation</DESC>
+            </METHOD>
+			
+			<METHOD name="SetNotification">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+
+					<PARAM name="url" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+
+					<PARAM name="params" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="ClearNotification">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="SetPollInterval">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="interval" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN>
+					<TYPE>INTEGER</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="GetPollInterval">
+                <DESC>This is documentation</DESC>
+				<RETURN>
+					<TYPE>INTEGER</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="SetSyncServer">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="syncServer" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="GetSourceAttributes">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="partition" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN>
+					<TYPE>ARRAY</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="SetObjectNotifyUrl">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="url" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+
+            </METHOD>
+			
+			<METHOD name="AddObjectNotify">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					<PARAM name="object" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+
+            </METHOD>
+			
+			<METHOD name="CleanObjectNotify">
+                <DESC>This is documentation</DESC>
+            </METHOD>
+			
+			<METHOD name="GetLastSyncObjectCount">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN>
+					<TYPE>INTEGER</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="GetPageSize">
+                <DESC>This is documentation</DESC>
+				<RETURN>
+					<TYPE>INTEGER</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="SetPageSize">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="pageSize" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="SetThreadedMode">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="threadedModeEnabled" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="EnableStatusPopup">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="statusPopupEnabled" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="SetSourceProperty">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="propertyName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="propertyValue" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="GetSourceProperty">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="propertyName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN>
+					<TYPE>STRING</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="SetSslVerifyPeer">
+                <DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="verifyPeer" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="IsSyncing">
+                <DESC>This is documentation</DESC>
+				<RETURN>
+					<TYPE>BOOLEAN</TYPE>
+				</RETURN>
+            </METHOD>
+			
+			<METHOD name="RegisterPush">
+                <DESC>This is documentation</DESC>
+            </METHOD>
+    
+        </METHODS>
+		<VER_INTRODUCED>1.0.0</VER_INTRODUCED>
+        <PLATFORM>
+            <!--  This section is used for the supported platform images at the top -->
+        </PLATFORM>
+    </MODULE>
+</API>    
