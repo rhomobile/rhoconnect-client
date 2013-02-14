@@ -82,11 +82,6 @@ require File.join($rho_root,'lib','build','rhoconnect_helper.rb')
 		Rake::Task.tasks.each { |t| t.reenable }
 		Rake::Task['run:' + platform + ':spec'].invoke
 
-	rescue Exception => e
-		puts "exception caught: #{e.inspect}"
-		puts e.backtrace
-
-
 	ensure
 		RhoconnectHelper.stop_rhoconnect_stack
 		cleanup_apps
