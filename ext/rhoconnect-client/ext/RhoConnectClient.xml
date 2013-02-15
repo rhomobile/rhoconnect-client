@@ -7,12 +7,12 @@
 		
         <METHODS access="STATIC">
             <METHOD name="GetUserName">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<RETURN type="STRING"/>
             </METHOD>
 			
 			<METHOD name="OnSyncCreateError">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
@@ -22,24 +22,24 @@
 					<PARAM name="objects" type="ARRAY">
 						<DESC></DESC>
 					</PARAM>
-
+					
 					<PARAM name="action" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
             </METHOD>
-
+			
 			<METHOD name="PushChanges">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
-				</PARAMS>				
+				</PARAMS>
             </METHOD>
-
+			
 			<METHOD name="OnSyncUpdateError">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
 						<DESC></DESC>
@@ -57,13 +57,13 @@
 						<DESC></DESC>
 						<CAN_BE_NIL/>
 					</PARAM>
-
+					
 				</PARAMS>
-
+				
             </METHOD>
-
+			
 			<METHOD name="OnSyncDeleteError">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
 						<DESC></DESC>
@@ -78,9 +78,9 @@
 					</PARAM>
 				</PARAMS>
             </METHOD>
-
+			
 			<METHOD name="Search">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="args" type="HASH">
 						<DESC></DESC>
@@ -88,14 +88,14 @@
 				</PARAMS>
 				<RETURN type="HASH"/>
             </METHOD>
-
+			
 			<METHOD name="DoSync">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="showStatusPopup" type="BOOLEAN">
 						<DESC></DESC>
 					</PARAM>
-
+					
 					<PARAM name="queryParams" type="STRING">
 						<DESC></DESC>
 					</PARAM>
@@ -105,11 +105,11 @@
 					</PARAM>
 				</PARAMS>
 				<RETURN type="HASH"/>
-
+				
             </METHOD>
-
+			
 			<METHOD name="DoSyncSource">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
@@ -123,15 +123,15 @@
 					<PARAM name="queryParams" type="STRING">
 						<DESC></DESC>
 					</PARAM>
-
+					
 				</PARAMS>
 				
 				<RETURN type="HASH"/>
-
+				
             </METHOD>
-
+			
 			<METHOD name="DoSearch" hasCallback="mandatory">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
 					<PARAM name="arSources" type="ARRAY">
@@ -161,15 +161,15 @@
 					<PARAM name="callbackParams" type="STRING">
 						<DESC></DESC>
 					</PARAM>
-
+					
 				</PARAMS>
 				
 				<RETURN type="HASH"/>
-
+				
             </METHOD>
-
+			
 			<METHOD name="Login" hasCallback="mandatory">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
 					<PARAM name="login" type="STRING">
@@ -183,46 +183,46 @@
 					<PARAM name="callback" type="STRING">
 						<DESC></DESC>
 					</PARAM>
-
+					
 				</PARAMS>
 				
 				<RETURN type="INTEGER"/>
-
+				
             </METHOD>
 			
 			<METHOD name="LoggedIn">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<RETURN type="BOOLEAN"/>
             </METHOD>
 			
 			<METHOD name="Logout">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
             </METHOD>
 			
 			<METHOD name="StopSync">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
             </METHOD>
 			
 			<METHOD name="SetNotification">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
 					</PARAM>
-
+					
 					<PARAM name="url" type="STRING">
 						<DESC></DESC>
 					</PARAM>
-
+					
 					<PARAM name="params" type="STRING">
 						<DESC></DESC>
 					</PARAM>
-
+					
 				</PARAMS>
             </METHOD>
 			
 			<METHOD name="ClearNotification">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -231,7 +231,7 @@
             </METHOD>
 			
 			<METHOD name="SetPollInterval">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="interval" type="INTEGER">
 						<DESC></DESC>
@@ -241,12 +241,12 @@
             </METHOD>
 			
 			<METHOD name="GetPollInterval">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<RETURN type="INTEGER"/>
             </METHOD>
 			
 			<METHOD name="SetSyncServer">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="syncServer" type="STRING">
 						<DESC></DESC>
@@ -255,7 +255,7 @@
             </METHOD>
 			
 			<METHOD name="GetSourceAttributes">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="partition" type="STRING">
 						<DESC></DESC>
@@ -269,17 +269,17 @@
             </METHOD>
 			
 			<METHOD name="SetObjectNotifyUrl">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="url" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-
+				
             </METHOD>
 			
 			<METHOD name="AddObjectNotify">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -288,15 +288,15 @@
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-
+				
             </METHOD>
 			
 			<METHOD name="CleanObjectNotify">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
             </METHOD>
 			
 			<METHOD name="GetLastSyncObjectCount">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -306,12 +306,12 @@
             </METHOD>
 			
 			<METHOD name="GetPageSize">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<RETURN type="INTEGER"/>
             </METHOD>
 			
 			<METHOD name="SetPageSize">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="pageSize" type="INTEGER">
 						<DESC></DESC>
@@ -320,7 +320,7 @@
             </METHOD>
 			
 			<METHOD name="SetThreadedMode">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="threadedModeEnabled" type="BOOLEAN">
 						<DESC></DESC>
@@ -329,7 +329,7 @@
             </METHOD>
 			
 			<METHOD name="EnableStatusPopup">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="statusPopupEnabled" type="BOOLEAN">
 						<DESC></DESC>
@@ -338,7 +338,7 @@
             </METHOD>
 			
 			<METHOD name="SetSourceProperty">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -355,7 +355,7 @@
             </METHOD>
 			
 			<METHOD name="GetSourceProperty">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -369,7 +369,7 @@
             </METHOD>
 			
 			<METHOD name="SetSslVerifyPeer">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="verifyPeer" type="BOOLEAN">
 						<DESC></DESC>
@@ -378,19 +378,19 @@
             </METHOD>
 			
 			<METHOD name="IsSyncing">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
 				<RETURN type="BOOLEAN"/>
             </METHOD>
 			
 			<METHOD name="RegisterPush">
-                <DESC>This is documentation</DESC>
+				<DESC>This is documentation</DESC>
             </METHOD>
-    
+			
         </METHODS>
-						
+		
 		<VER_INTRODUCED>1.0.0</VER_INTRODUCED>
         <PLATFORM>
             <!--  This section is used for the supported platform images at the top -->
         </PLATFORM>
     </MODULE>
-</API>    
+</API>
