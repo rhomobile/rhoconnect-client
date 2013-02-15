@@ -1,16 +1,14 @@
 <?xml version = "1.0"?>
 <?xml-stylesheet type="text/xsl" href="pb_help.xsl"?>
 <API>
-    <MODULE name="SyncEngine" parent="Rho">
+    <MODULE name="RhoConnectClient" parent="Rho">
         <HELP_OVERVIEW>is used for syncronization with Rhoconnect servers.</HELP_OVERVIEW>
         <MORE_HELP>For further documentations please refer to <a href="http://docs.rhomobile.com/rhodes/synchronization"/>.</MORE_HELP>
-    
-        <METHODS>
+		
+        <METHODS access="STATIC">
             <METHOD name="GetUserName">
                 <DESC>This is documentation</DESC>
-				<RETURN>
-					<TYPE>STRING</TYPE>
-				</RETURN>
+				<RETURN type="STRING"/>
             </METHOD>
 			
 			<METHOD name="OnSyncCreateError">
@@ -78,7 +76,7 @@
 					<PARAM name="action" type="STRING">
 						<DESC></DESC>
 					</PARAM>
-
+				</PARAMS>
             </METHOD>
 
 			<METHOD name="Search">
@@ -88,9 +86,7 @@
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-				<RETURN>
-					<TYPE>HASH</TYPE>
-				</RETURN>
+				<RETURN type="HASH"/>
             </METHOD>
 
 			<METHOD name="DoSync">
@@ -108,9 +104,7 @@
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-				<RETURN>
-					<TYPE>HASH</TYPE>
-				</RETURN>
+				<RETURN type="HASH"/>
 
             </METHOD>
 
@@ -132,9 +126,7 @@
 
 				</PARAMS>
 				
-				<RETURN>
-					<TYPE>HASH</TYPE>
-				</RETURN>
+				<RETURN type="HASH"/>
 
             </METHOD>
 
@@ -172,9 +164,7 @@
 
 				</PARAMS>
 				
-				<RETURN>
-					<TYPE>HASH</TYPE>
-				</RETURN>
+				<RETURN type="HASH"/>
 
             </METHOD>
 
@@ -196,17 +186,13 @@
 
 				</PARAMS>
 				
-				<RETURN>
-					<TYPE>INTEGER</TYPE>
-				</RETURN>
+				<RETURN type="INTEGER"/>
 
             </METHOD>
 			
 			<METHOD name="LoggedIn">
                 <DESC>This is documentation</DESC>
-				<RETURN>
-					<TYPE>BOOLEAN</TYPE>
-				</RETURN>
+				<RETURN type="BOOLEAN"/>
             </METHOD>
 			
 			<METHOD name="Logout">
@@ -251,16 +237,12 @@
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-				<RETURN>
-					<TYPE>INTEGER</TYPE>
-				</RETURN>
+				<RETURN type="INTEGER"/>
             </METHOD>
 			
 			<METHOD name="GetPollInterval">
                 <DESC>This is documentation</DESC>
-				<RETURN>
-					<TYPE>INTEGER</TYPE>
-				</RETURN>
+				<RETURN type="INTEGER"/>
             </METHOD>
 			
 			<METHOD name="SetSyncServer">
@@ -283,9 +265,7 @@
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-				<RETURN>
-					<TYPE>ARRAY</TYPE>
-				</RETURN>
+				<RETURN type="ARRAY"/>
             </METHOD>
 			
 			<METHOD name="SetObjectNotifyUrl">
@@ -322,16 +302,12 @@
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-				<RETURN>
-					<TYPE>INTEGER</TYPE>
-				</RETURN>
+				<RETURN type="INTEGER"/>
             </METHOD>
 			
 			<METHOD name="GetPageSize">
                 <DESC>This is documentation</DESC>
-				<RETURN>
-					<TYPE>INTEGER</TYPE>
-				</RETURN>
+				<RETURN type="INTEGER"/>
             </METHOD>
 			
 			<METHOD name="SetPageSize">
@@ -389,9 +365,7 @@
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
-				<RETURN>
-					<TYPE>STRING</TYPE>
-				</RETURN>
+				<RETURN type="STRING"/>
             </METHOD>
 			
 			<METHOD name="SetSslVerifyPeer">
@@ -405,9 +379,7 @@
 			
 			<METHOD name="IsSyncing">
                 <DESC>This is documentation</DESC>
-				<RETURN>
-					<TYPE>BOOLEAN</TYPE>
-				</RETURN>
+				<RETURN type="BOOLEAN"/>
             </METHOD>
 			
 			<METHOD name="RegisterPush">
@@ -415,6 +387,7 @@
             </METHOD>
     
         </METHODS>
+						
 		<VER_INTRODUCED>1.0.0</VER_INTRODUCED>
         <PLATFORM>
             <!--  This section is used for the supported platform images at the top -->
