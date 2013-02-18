@@ -211,35 +211,6 @@
 				
             </METHOD>
 			
-			<METHOD name="doSearch" runInThread="none" hasCallback="mandatory">
-				
-				<PARAMS>
-					<PARAM name="arSources" type="ARRAY">
-						<DESC></DESC>
-					</PARAM>
-					
-					<PARAM name="from" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
-					<PARAM name="params" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
-					<PARAM name="syncChanges" type="BOOLEAN">
-						<DESC></DESC>
-					</PARAM>
-					
-					<PARAM name="nProgressStep" type="INTEGER">
-						<DESC></DESC>
-					</PARAM>
-										
-				</PARAMS>
-				
-				<RETURN type="HASH"/>
-				
-            </METHOD>
-			
 			<METHOD name="login" runInThread="none" hasCallback="mandatory">
 				<DESC>This is documentation</DESC>
 				
