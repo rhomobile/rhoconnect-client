@@ -56,17 +56,17 @@
 				<ALIAS new="is_syncing" existing="syncing?" deprecated="true"/>
 			</ALIASES>
 			
-			<METHOD name="loggedIn?" runInThread="none">
+			<METHOD name="loggedIn?">
 				<DESC>This is documentation</DESC>
 				<RETURN type="BOOLEAN"/>
 			</METHOD>
 			
-			<METHOD name="syncing?" runInThread="none">
+			<METHOD name="syncing?">
 				<DESC>This is documentation</DESC>
 				<RETURN type="BOOLEAN"/>
 			</METHOD>
 			
-			<METHOD name="onSyncCreateError" runInThread="none">
+			<METHOD name="onSyncCreateError">
 				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
@@ -84,7 +84,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="pushChanges" runInThread="none">
+			<METHOD name="pushChanges">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
@@ -93,7 +93,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="onSyncUpdateError" runInThread="none">
+			<METHOD name="onSyncUpdateError">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
@@ -117,7 +117,7 @@
 				
             </METHOD>
 			
-			<METHOD name="onSyncDeleteError" runInThread="none">
+			<METHOD name="onSyncDeleteError">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
@@ -134,7 +134,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="search" runInThread="none">
+			<METHOD name="search">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="args" type="HASH">
@@ -144,7 +144,7 @@
 				<RETURN type="HASH"/>
             </METHOD>
 			
-			<METHOD name="doSync" runInThread="none">
+			<METHOD name="doSync">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="showStatusPopup" type="BOOLEAN">
@@ -163,7 +163,7 @@
 				
             </METHOD>
 			
-			<METHOD name="doSyncSource" runInThread="none">
+			<METHOD name="doSyncSource">
 				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
@@ -232,33 +232,24 @@
 				
             </METHOD>
 						
-			<METHOD name="logout" runInThread="none">
+			<METHOD name="logout">
 				<DESC>This is documentation</DESC>
             </METHOD>
 			
-			<METHOD name="stopSync" runInThread="none">
+			<METHOD name="stopSync">
 				<DESC>This is documentation</DESC>
             </METHOD>
 			
-			<METHOD name="setNotification" runInThread="none">
+			<METHOD name="setNotification" hasCallback="mandatory">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
 					</PARAM>
-					
-					<PARAM name="url" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
-					<PARAM name="params" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="clearNotification" runInThread="none">
+			<METHOD name="clearNotification">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
@@ -268,17 +259,11 @@
             </METHOD>
 			
 			
-			<METHOD name="setObjectNotifyUrl" runInThread="none">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="url" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-				
+			<METHOD name="setObjectNotification" hasCallback="mandatory">
+				<DESC>This is documentation</DESC>s
             </METHOD>
 			
-			<METHOD name="addObjectNotify" runInThread="none">
+			<METHOD name="addObjectNotify">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
@@ -291,7 +276,7 @@
 				
             </METHOD>
 			
-			<METHOD name="cleanObjectNotify" runInThread="none">
+			<METHOD name="cleanObjectNotify">
 				<DESC>This is documentation</DESC>
             </METHOD>
 			
@@ -305,7 +290,7 @@
 				<RETURN type="INTEGER"/>
             </METHOD>
 												
-			<METHOD name="setSourceProperty" runInThread="none">
+			<METHOD name="setSourceProperty">
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -321,7 +306,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="getSourceProperty" runInThread="none">
+			<METHOD name="getSourceProperty">
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
