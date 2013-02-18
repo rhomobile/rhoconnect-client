@@ -1,17 +1,72 @@
 <?xml version = "1.0"?>
 <?xml-stylesheet type="text/xsl" href="pb_help.xsl"?>
 <API>
-    <MODULE name="RhoConnectClient" parent="Rho">
+    <MODULE name="RhoConnectClient" parent="Rho" generateUnderscoreRubyNames="true">
         <HELP_OVERVIEW>is used for syncronization with Rhoconnect servers.</HELP_OVERVIEW>
-        <MORE_HELP>For further documentations please refer to <a href="http://docs.rhomobile.com/rhodes/synchronization"/>.</MORE_HELP>
+				
+		<PROPERTIES access="STATIC">
+			
+			<ALIASES>
+				<ALIAS new="user_name" existing="userName" deprecated="true"/>
+				<ALIAS new="poll_interval" existing="pollInterval" deprecated="true"/>
+				<ALIAS new="sync_server" existing="syncServer" deprecated="true"/>
+				<ALIAS new="page_size" existing="pageSize" deprecated="true"/>
+				<ALIAS new="threaded_mode" existing="threadedMode?" deprecated="true"/>
+				<ALIAS new="show_status_popup" existing="showStatusPopup?" deprecated="true"/>
+				<ALIAS new="ssl_verify_peer" existing="sslVerifyPeer?" deprecated="true"/>
+			</ALIASES>
+
+			
+			<PROPERTY name="userName" type="STRING" readOnly="true">
+				<DESC>This is documentation</DESC>
+			</PROPERTY>
+			
+			<PROPERTY name="pollInterval" type="INTEGER" default="60">
+				<DESC>This is documentation</DESC>
+			</PROPERTY>
+			
+			<PROPERTY name="syncServer" type="STRING">
+				<DESC>This is documentation</DESC>
+			</PROPERTY>
+			
+			<PROPERTY name="pageSize" type="INTEGER">
+				<DESC>This is documentation</DESC>
+			</PROPERTY>
+			
+			<PROPERTY name="threadedMode?" type="BOOLEAN" default="true">
+				<DESC>This is documentation</DESC>
+			</PROPERTY>
+			
+			<PROPERTY name="showStatusPopup?" type="BOOLEAN" default="true">
+				<DESC>This is documentation</DESC>
+			</PROPERTY>
+
+			<PROPERTY name="sslVerifyPeer?" type="BOOLEAN" default="true">
+				<DESC>This is documentation</DESC>
+			</PROPERTY>
+			
+		</PROPERTIES>
 		
         <METHODS access="STATIC">
-            <METHOD name="getUserName">
-				<DESC>This is documentation</DESC>
-				<RETURN type="STRING"/>
-            </METHOD>
 			
-			<METHOD name="onSyncCreateError">
+			<ALIASES>
+				<ALIAS new="dosync" existing="doSync" deprecated="true"/>
+				<ALIAS new="dosync_source" existing="doSyncSource" deprecated="true"/>
+				<ALIAS new="logged_in" existing="loggedIn?" deprecated="true"/>
+				<ALIAS new="is_syncing" existing="syncing?" deprecated="true"/>
+			</ALIASES>
+			
+			<METHOD name="loggedIn?" runInThread="none">
+				<DESC>This is documentation</DESC>
+				<RETURN type="BOOLEAN"/>
+			</METHOD>
+			
+			<METHOD name="syncing?" runInThread="none">
+				<DESC>This is documentation</DESC>
+				<RETURN type="BOOLEAN"/>
+			</METHOD>
+			
+			<METHOD name="onSyncCreateError" runInThread="none">
 				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
@@ -29,7 +84,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="pushChanges">
+			<METHOD name="pushChanges" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
@@ -38,7 +93,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="onSyncUpdateError">
+			<METHOD name="onSyncUpdateError" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
@@ -62,7 +117,7 @@
 				
             </METHOD>
 			
-			<METHOD name="onSyncDeleteError">
+			<METHOD name="onSyncDeleteError" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="srcName" type="STRING">
@@ -79,7 +134,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="search">
+			<METHOD name="search" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="args" type="HASH">
@@ -89,7 +144,7 @@
 				<RETURN type="HASH"/>
             </METHOD>
 			
-			<METHOD name="doSync">
+			<METHOD name="doSync" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="showStatusPopup" type="BOOLEAN">
@@ -108,7 +163,7 @@
 				
             </METHOD>
 			
-			<METHOD name="doSyncSource">
+			<METHOD name="doSyncSource" runInThread="none">
 				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
@@ -130,8 +185,7 @@
 				
             </METHOD>
 			
-			<METHOD name="doSearch" hasCallback="mandatory">
-				<DESC>This is documentation</DESC>
+			<METHOD name="doSearch" runInThread="none" hasCallback="mandatory">
 				
 				<PARAMS>
 					<PARAM name="arSources" type="ARRAY">
@@ -153,22 +207,14 @@
 					<PARAM name="nProgressStep" type="INTEGER">
 						<DESC></DESC>
 					</PARAM>
-					
-					<PARAM name="callback" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
-					<PARAM name="callbackParams" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
+										
 				</PARAMS>
 				
 				<RETURN type="HASH"/>
 				
             </METHOD>
 			
-			<METHOD name="login" hasCallback="mandatory">
+			<METHOD name="login" runInThread="none" hasCallback="mandatory">
 				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
@@ -180,30 +226,21 @@
 						<DESC></DESC>
 					</PARAM>
 					
-					<PARAM name="callback" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
 				</PARAMS>
 				
 				<RETURN type="INTEGER"/>
 				
             </METHOD>
-			
-			<METHOD name="loggedIn">
-				<DESC>This is documentation</DESC>
-				<RETURN type="BOOLEAN"/>
-            </METHOD>
-			
-			<METHOD name="logout">
+						
+			<METHOD name="logout" runInThread="none">
 				<DESC>This is documentation</DESC>
             </METHOD>
 			
-			<METHOD name="stopSync">
+			<METHOD name="stopSync" runInThread="none">
 				<DESC>This is documentation</DESC>
             </METHOD>
 			
-			<METHOD name="setNotification">
+			<METHOD name="setNotification" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
@@ -221,7 +258,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="clearNotification">
+			<METHOD name="clearNotification" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
@@ -230,45 +267,8 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="setPollInterval">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="interval" type="INTEGER">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-				<RETURN type="INTEGER"/>
-            </METHOD>
 			
-			<METHOD name="getPollInterval">
-				<DESC>This is documentation</DESC>
-				<RETURN type="INTEGER"/>
-            </METHOD>
-			
-			<METHOD name="setSyncServer">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="syncServer" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-            </METHOD>
-			
-			<METHOD name="getSourceAttributes">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="partition" type="STRING">
-						<DESC></DESC>
-					</PARAM>
-					
-					<PARAM name="sourceId" type="INTEGER">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-				<RETURN type="ARRAY"/>
-            </METHOD>
-			
-			<METHOD name="setObjectNotifyUrl">
+			<METHOD name="setObjectNotifyUrl" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="url" type="STRING">
@@ -278,7 +278,7 @@
 				
             </METHOD>
 			
-			<METHOD name="addObjectNotify">
+			<METHOD name="addObjectNotify" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
@@ -291,7 +291,7 @@
 				
             </METHOD>
 			
-			<METHOD name="cleanObjectNotify">
+			<METHOD name="cleanObjectNotify" runInThread="none">
 				<DESC>This is documentation</DESC>
             </METHOD>
 			
@@ -304,41 +304,8 @@
 				</PARAMS>
 				<RETURN type="INTEGER"/>
             </METHOD>
-			
-			<METHOD name="getPageSize">
-				<DESC>This is documentation</DESC>
-				<RETURN type="INTEGER"/>
-            </METHOD>
-			
-			<METHOD name="setPageSize">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="pageSize" type="INTEGER">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-            </METHOD>
-			
-			<METHOD name="setThreadedMode">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="threadedModeEnabled" type="BOOLEAN">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-            </METHOD>
-			
-			<METHOD name="enableStatusPopup">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="statusPopupEnabled" type="BOOLEAN">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-            </METHOD>
-			
-			<METHOD name="setSourceProperty">
-				<DESC>This is documentation</DESC>
+												
+			<METHOD name="setSourceProperty" runInThread="none">
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -354,8 +321,7 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="getSourceProperty">
-				<DESC>This is documentation</DESC>
+			<METHOD name="getSourceProperty" runInThread="none">
 				<PARAMS>
 					<PARAM name="sourceId" type="INTEGER">
 						<DESC></DESC>
@@ -367,25 +333,7 @@
 				</PARAMS>
 				<RETURN type="STRING"/>
             </METHOD>
-			
-			<METHOD name="setSslVerifyPeer">
-				<DESC>This is documentation</DESC>
-				<PARAMS>
-					<PARAM name="verifyPeer" type="BOOLEAN">
-						<DESC></DESC>
-					</PARAM>
-				</PARAMS>
-            </METHOD>
-			
-			<METHOD name="isSyncing">
-				<DESC>This is documentation</DESC>
-				<RETURN type="BOOLEAN"/>
-            </METHOD>
-			
-			<METHOD name="registerPush">
-				<DESC>This is documentation</DESC>
-            </METHOD>
-			
+												
         </METHODS>
 		
 		<VER_INTRODUCED>1.0.0</VER_INTRODUCED>
