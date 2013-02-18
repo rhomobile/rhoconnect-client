@@ -136,11 +136,33 @@
 				</PARAMS>
             </METHOD>
 			
-			<METHOD name="search">
+			<METHOD name="search" hasCallback="mandatory" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="args" type="HASH">
 						<DESC></DESC>
+						<VALUES>
+							<VALUE name="from" type="STRING">
+								<DESCR></DESCR>
+							</VALUE>
+							
+							<VALUE name="search_params" type="HASH">
+								<DESCR></DESCR>
+							</VALUE>
+
+							<VALUE name="offset" type="INTEGER">
+								<DESCR></DESCR>
+							</VALUE>
+
+							<VALUE name="maxResults" type="INTEGER">
+								<DESCR></DESCR>
+							</VALUE>
+
+							<VALUE name="progressStep" type="INTEGER">
+								<DESCR></DESCR>
+							</VALUE>
+
+						</VALUES>
 					</PARAM>
 				</PARAMS>
 				<RETURN type="HASH"/>
@@ -169,15 +191,17 @@
 				<DESC>This is documentation</DESC>
 				
 				<PARAMS>
-					<PARAM name="sourceId" type="INTEGER">
+					<PARAM name="sourceName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 					
 					<PARAM name="showStatusPopup" type="BOOLEAN">
+						<CAN_BE_NIL/>
 						<DESC></DESC>
 					</PARAM>
 					
 					<PARAM name="queryParams" type="STRING">
+						<CAN_BE_NIL/>
 						<DESC></DESC>
 					</PARAM>
 					
@@ -245,7 +269,7 @@
 			<METHOD name="setNotification" hasCallback="mandatory" runInThread="none">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
-					<PARAM name="sourceId" type="INTEGER">
+					<PARAM name="sourceName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
@@ -254,7 +278,7 @@
 			<METHOD name="clearNotification">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
-					<PARAM name="sourceId" type="INTEGER">
+					<PARAM name="sourceName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
@@ -268,7 +292,7 @@
 			<METHOD name="addObjectNotify">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
-					<PARAM name="sourceId" type="INTEGER">
+					<PARAM name="sourceName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 					<PARAM name="object" type="STRING">
@@ -285,7 +309,7 @@
 			<METHOD name="getLastSyncObjectCount">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
-					<PARAM name="sourceId" type="INTEGER">
+					<PARAM name="sourceName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 				</PARAMS>
@@ -294,7 +318,7 @@
 												
 			<METHOD name="setSourceProperty">
 				<PARAMS>
-					<PARAM name="sourceId" type="INTEGER">
+					<PARAM name="sourceName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 					
@@ -310,7 +334,7 @@
 			
 			<METHOD name="getSourceProperty">
 				<PARAMS>
-					<PARAM name="sourceId" type="INTEGER">
+					<PARAM name="sourceName" type="STRING">
 						<DESC></DESC>
 					</PARAM>
 					
