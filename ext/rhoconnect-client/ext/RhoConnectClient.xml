@@ -3,7 +3,11 @@
 <API>
     <MODULE name="RhoConnectClient" parent="Rho" generateUnderscoreRubyNames="true">
         <HELP_OVERVIEW>is used for syncronization with Rhoconnect servers.</HELP_OVERVIEW>
-				
+		
+		<ALIASES>
+            <ALIAS new="SyncEngine" existing="Rho.RhoConnectClient" deprecated="true"/>
+        </ALIASES>
+
 		<PROPERTIES access="STATIC">
 			
 			<ALIASES>
