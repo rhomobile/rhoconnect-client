@@ -1,13 +1,14 @@
 #include "RhoConnectClientBase.h"
+#include "SyncThread.h"
 
 namespace rho {
 
 
 class RhoconnectClientImpl : public CRhoConnectClientSingletonBase
 {
-protected:
-
-
+private:
+	sync::CSyncThread* getSyncThread() const { return sync::CSyncThread::getInstance(); }
+	sync::CSyncEngine& getSyncEngine() const { return sync::CSyncThread::getSyncEngine(); }
 
 
 public:
