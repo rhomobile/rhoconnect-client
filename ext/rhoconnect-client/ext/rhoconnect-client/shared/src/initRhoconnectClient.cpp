@@ -41,7 +41,7 @@ public:
 	}
 	
 	virtual void rho_sync_addobjectnotify_bysrcname(const char* szSrcName, const char* szObject) {
-		rho_sync_addobjectnotify_bysrcname(szSrcName, szObject);
+		rho::sync::CSyncThread::getSyncEngine().getNotify().addObjectNotify(szSrcName, szObject);
 	}
 	
 	virtual const rho::String& clientRegisterGetDevicePin() {
