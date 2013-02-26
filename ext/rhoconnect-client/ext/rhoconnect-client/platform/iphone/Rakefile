@@ -20,11 +20,11 @@ namespace "build" do
     $xcodebuild = ENV['XCODEBUILD']	
     raise "XCODEBUILD is not set" if $xcodebuild.nil?
  
-    $configuration = ENV['CONFIGURATION']	
-    raise "CONFIGURATION is not set" if $configuration.nil?
+	  #    $configuration = ENV['CONFIGURATION']
+	  #raise "CONFIGURATION is not set" if $configuration.nil?
 
-    $sdk = ENV['SDK_NAME']	
-    raise "SDK_NAME is not set" if $sdk.nil?
+	  #$sdk = ENV['SDK_NAME']
+	  #raise "SDK_NAME is not set" if $sdk.nil?
 
     $bindir = ENV['PLATFORM_DEVELOPER_BIN_DIR']
     raise "PLATFORM_DEVELOPER_BIN_DIR is not set" if $bindir.nil?
