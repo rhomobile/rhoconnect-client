@@ -11,6 +11,15 @@ elif [ "$RHO_PLATFORM" = "iphone" ]; then
 cd rhoconnect-client/platform/iphone
 rake --trace
 
+elif [ "$RHO_PLATFORM" = "osx" ]; then
+
+cd rhoconnect-client/platform/iphone
+rake --trace
+
+else
+
+rake --trace
+
 fi
 
 
