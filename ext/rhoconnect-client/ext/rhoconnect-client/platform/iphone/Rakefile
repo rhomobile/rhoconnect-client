@@ -71,6 +71,7 @@ namespace "build" do
 		args << "-I\"#{$rootdir}/platform/shared\""
 		args << "-I\"#{$rootdir}/platform/shared/common\""
 	    args << "-I\"#{$rootdir}/platform/shared/sync\""
+		args << "-I\"#{$rootdir}/lib/commonAPI/coreapi/ext/shared\""
 		args << "-I\"#{$rhoconnectclientdir}/ext/rhoconnect-client/shared/src\""
 		  
 		args << "-I\"#{$rootdir}/platform/shared/ruby/iphone\""
