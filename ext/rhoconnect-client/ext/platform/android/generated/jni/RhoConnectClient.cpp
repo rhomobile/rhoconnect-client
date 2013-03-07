@@ -123,30 +123,6 @@ const char* const CRhoConnectClientBase::SYNCING_TASK_CLASS =
 jclass CRhoConnectClientBase::s_clssyncingTask = 0;
 jmethodID CRhoConnectClientBase::s_midsyncingTask;
 
-const char* const CRhoConnectClientBase::ONSYNCCREATEERROR_TASK_CLASS = 
-        "com.rho.rhoconnectclient.RhoConnectClientSingletonBase$onSyncCreateErrorTask";
-
-jclass CRhoConnectClientBase::s_clsonSyncCreateErrorTask = 0;
-jmethodID CRhoConnectClientBase::s_midonSyncCreateErrorTask;
-
-const char* const CRhoConnectClientBase::PUSHCHANGES_TASK_CLASS = 
-        "com.rho.rhoconnectclient.RhoConnectClientSingletonBase$pushChangesTask";
-
-jclass CRhoConnectClientBase::s_clspushChangesTask = 0;
-jmethodID CRhoConnectClientBase::s_midpushChangesTask;
-
-const char* const CRhoConnectClientBase::ONSYNCUPDATEERROR_TASK_CLASS = 
-        "com.rho.rhoconnectclient.RhoConnectClientSingletonBase$onSyncUpdateErrorTask";
-
-jclass CRhoConnectClientBase::s_clsonSyncUpdateErrorTask = 0;
-jmethodID CRhoConnectClientBase::s_midonSyncUpdateErrorTask;
-
-const char* const CRhoConnectClientBase::ONSYNCDELETEERROR_TASK_CLASS = 
-        "com.rho.rhoconnectclient.RhoConnectClientSingletonBase$onSyncDeleteErrorTask";
-
-jclass CRhoConnectClientBase::s_clsonSyncDeleteErrorTask = 0;
-jmethodID CRhoConnectClientBase::s_midonSyncDeleteErrorTask;
-
 const char* const CRhoConnectClientBase::SEARCH_TASK_CLASS = 
         "com.rho.rhoconnectclient.RhoConnectClientSingletonBase$searchTask";
 
@@ -300,7 +276,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetUserNameTask = loadClass(env, GETUSERNAME_TASK_CLASS);
         if (!s_clsgetUserNameTask) return 0;
         s_midgetUserNameTask = env->GetMethodID(s_clsgetUserNameTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetUserNameTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETUSERNAME_TASK_CLASS;
@@ -310,7 +286,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetPollIntervalTask = loadClass(env, GETPOLLINTERVAL_TASK_CLASS);
         if (!s_clsgetPollIntervalTask) return 0;
         s_midgetPollIntervalTask = env->GetMethodID(s_clsgetPollIntervalTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetPollIntervalTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETPOLLINTERVAL_TASK_CLASS;
@@ -320,7 +296,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetPollIntervalTask = loadClass(env, SETPOLLINTERVAL_TASK_CLASS);
         if (!s_clssetPollIntervalTask) return 0;
         s_midsetPollIntervalTask = env->GetMethodID(s_clssetPollIntervalTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;ILcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;ILcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetPollIntervalTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETPOLLINTERVAL_TASK_CLASS;
@@ -330,7 +306,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetSyncServerTask = loadClass(env, GETSYNCSERVER_TASK_CLASS);
         if (!s_clsgetSyncServerTask) return 0;
         s_midgetSyncServerTask = env->GetMethodID(s_clsgetSyncServerTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetSyncServerTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETSYNCSERVER_TASK_CLASS;
@@ -340,7 +316,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetSyncServerTask = loadClass(env, SETSYNCSERVER_TASK_CLASS);
         if (!s_clssetSyncServerTask) return 0;
         s_midsetSyncServerTask = env->GetMethodID(s_clssetSyncServerTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetSyncServerTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETSYNCSERVER_TASK_CLASS;
@@ -350,7 +326,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetPageSizeTask = loadClass(env, GETPAGESIZE_TASK_CLASS);
         if (!s_clsgetPageSizeTask) return 0;
         s_midgetPageSizeTask = env->GetMethodID(s_clsgetPageSizeTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetPageSizeTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETPAGESIZE_TASK_CLASS;
@@ -360,7 +336,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetPageSizeTask = loadClass(env, SETPAGESIZE_TASK_CLASS);
         if (!s_clssetPageSizeTask) return 0;
         s_midsetPageSizeTask = env->GetMethodID(s_clssetPageSizeTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;ILcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;ILcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetPageSizeTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETPAGESIZE_TASK_CLASS;
@@ -370,7 +346,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetThreadedModeTask = loadClass(env, GETTHREADEDMODE_TASK_CLASS);
         if (!s_clsgetThreadedModeTask) return 0;
         s_midgetThreadedModeTask = env->GetMethodID(s_clsgetThreadedModeTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetThreadedModeTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETTHREADEDMODE_TASK_CLASS;
@@ -380,7 +356,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetThreadedModeTask = loadClass(env, SETTHREADEDMODE_TASK_CLASS);
         if (!s_clssetThreadedModeTask) return 0;
         s_midsetThreadedModeTask = env->GetMethodID(s_clssetThreadedModeTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;ZLcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;ZLcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetThreadedModeTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETTHREADEDMODE_TASK_CLASS;
@@ -390,7 +366,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetShowStatusPopupTask = loadClass(env, GETSHOWSTATUSPOPUP_TASK_CLASS);
         if (!s_clsgetShowStatusPopupTask) return 0;
         s_midgetShowStatusPopupTask = env->GetMethodID(s_clsgetShowStatusPopupTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetShowStatusPopupTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETSHOWSTATUSPOPUP_TASK_CLASS;
@@ -400,7 +376,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetShowStatusPopupTask = loadClass(env, SETSHOWSTATUSPOPUP_TASK_CLASS);
         if (!s_clssetShowStatusPopupTask) return 0;
         s_midsetShowStatusPopupTask = env->GetMethodID(s_clssetShowStatusPopupTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;ZLcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;ZLcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetShowStatusPopupTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETSHOWSTATUSPOPUP_TASK_CLASS;
@@ -410,7 +386,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetSslVerifyPeerTask = loadClass(env, GETSSLVERIFYPEER_TASK_CLASS);
         if (!s_clsgetSslVerifyPeerTask) return 0;
         s_midgetSslVerifyPeerTask = env->GetMethodID(s_clsgetSslVerifyPeerTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetSslVerifyPeerTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETSSLVERIFYPEER_TASK_CLASS;
@@ -420,7 +396,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetSslVerifyPeerTask = loadClass(env, SETSSLVERIFYPEER_TASK_CLASS);
         if (!s_clssetSslVerifyPeerTask) return 0;
         s_midsetSslVerifyPeerTask = env->GetMethodID(s_clssetSslVerifyPeerTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;ZLcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;ZLcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetSslVerifyPeerTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETSSLVERIFYPEER_TASK_CLASS;
@@ -430,7 +406,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsloggedInTask = loadClass(env, LOGGEDIN_TASK_CLASS);
         if (!s_clsloggedInTask) return 0;
         s_midloggedInTask = env->GetMethodID(s_clsloggedInTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midloggedInTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + LOGGEDIN_TASK_CLASS;
@@ -440,57 +416,17 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssyncingTask = loadClass(env, SYNCING_TASK_CLASS);
         if (!s_clssyncingTask) return 0;
         s_midsyncingTask = env->GetMethodID(s_clssyncingTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsyncingTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SYNCING_TASK_CLASS;
             return NULL;
         }
 
-        s_clsonSyncCreateErrorTask = loadClass(env, ONSYNCCREATEERROR_TASK_CLASS);
-        if (!s_clsonSyncCreateErrorTask) return 0;
-        s_midonSyncCreateErrorTask = env->GetMethodID(s_clsonSyncCreateErrorTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
-        if(!s_midonSyncCreateErrorTask)
-        {
-            LOG(FATAL) + "Failed to get constructor for java class " + ONSYNCCREATEERROR_TASK_CLASS;
-            return NULL;
-        }
-
-        s_clspushChangesTask = loadClass(env, PUSHCHANGES_TASK_CLASS);
-        if (!s_clspushChangesTask) return 0;
-        s_midpushChangesTask = env->GetMethodID(s_clspushChangesTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
-        if(!s_midpushChangesTask)
-        {
-            LOG(FATAL) + "Failed to get constructor for java class " + PUSHCHANGES_TASK_CLASS;
-            return NULL;
-        }
-
-        s_clsonSyncUpdateErrorTask = loadClass(env, ONSYNCUPDATEERROR_TASK_CLASS);
-        if (!s_clsonSyncUpdateErrorTask) return 0;
-        s_midonSyncUpdateErrorTask = env->GetMethodID(s_clsonSyncUpdateErrorTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
-        if(!s_midonSyncUpdateErrorTask)
-        {
-            LOG(FATAL) + "Failed to get constructor for java class " + ONSYNCUPDATEERROR_TASK_CLASS;
-            return NULL;
-        }
-
-        s_clsonSyncDeleteErrorTask = loadClass(env, ONSYNCDELETEERROR_TASK_CLASS);
-        if (!s_clsonSyncDeleteErrorTask) return 0;
-        s_midonSyncDeleteErrorTask = env->GetMethodID(s_clsonSyncDeleteErrorTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
-        if(!s_midonSyncDeleteErrorTask)
-        {
-            LOG(FATAL) + "Failed to get constructor for java class " + ONSYNCDELETEERROR_TASK_CLASS;
-            return NULL;
-        }
-
         s_clssearchTask = loadClass(env, SEARCH_TASK_CLASS);
         if (!s_clssearchTask) return 0;
         s_midsearchTask = env->GetMethodID(s_clssearchTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/util/Map;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/util/Map;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsearchTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SEARCH_TASK_CLASS;
@@ -500,7 +436,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsdoSyncTask = loadClass(env, DOSYNC_TASK_CLASS);
         if (!s_clsdoSyncTask) return 0;
         s_middoSyncTask = env->GetMethodID(s_clsdoSyncTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;ZLjava/lang/String;ZLcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;ZLjava/lang/String;ZLcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_middoSyncTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + DOSYNC_TASK_CLASS;
@@ -510,7 +446,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsdoSyncSourceTask = loadClass(env, DOSYNCSOURCE_TASK_CLASS);
         if (!s_clsdoSyncSourceTask) return 0;
         s_middoSyncSourceTask = env->GetMethodID(s_clsdoSyncSourceTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;ZLjava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;ZLjava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_middoSyncSourceTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + DOSYNCSOURCE_TASK_CLASS;
@@ -520,7 +456,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsloginTask = loadClass(env, LOGIN_TASK_CLASS);
         if (!s_clsloginTask) return 0;
         s_midloginTask = env->GetMethodID(s_clsloginTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midloginTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + LOGIN_TASK_CLASS;
@@ -530,7 +466,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clslogoutTask = loadClass(env, LOGOUT_TASK_CLASS);
         if (!s_clslogoutTask) return 0;
         s_midlogoutTask = env->GetMethodID(s_clslogoutTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midlogoutTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + LOGOUT_TASK_CLASS;
@@ -540,7 +476,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsstopSyncTask = loadClass(env, STOPSYNC_TASK_CLASS);
         if (!s_clsstopSyncTask) return 0;
         s_midstopSyncTask = env->GetMethodID(s_clsstopSyncTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midstopSyncTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + STOPSYNC_TASK_CLASS;
@@ -550,7 +486,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetNotificationTask = loadClass(env, SETNOTIFICATION_TASK_CLASS);
         if (!s_clssetNotificationTask) return 0;
         s_midsetNotificationTask = env->GetMethodID(s_clssetNotificationTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetNotificationTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETNOTIFICATION_TASK_CLASS;
@@ -560,7 +496,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsclearNotificationTask = loadClass(env, CLEARNOTIFICATION_TASK_CLASS);
         if (!s_clsclearNotificationTask) return 0;
         s_midclearNotificationTask = env->GetMethodID(s_clsclearNotificationTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midclearNotificationTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + CLEARNOTIFICATION_TASK_CLASS;
@@ -570,7 +506,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetObjectNotificationTask = loadClass(env, SETOBJECTNOTIFICATION_TASK_CLASS);
         if (!s_clssetObjectNotificationTask) return 0;
         s_midsetObjectNotificationTask = env->GetMethodID(s_clssetObjectNotificationTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetObjectNotificationTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETOBJECTNOTIFICATION_TASK_CLASS;
@@ -580,7 +516,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsaddObjectNotifyTask = loadClass(env, ADDOBJECTNOTIFY_TASK_CLASS);
         if (!s_clsaddObjectNotifyTask) return 0;
         s_midaddObjectNotifyTask = env->GetMethodID(s_clsaddObjectNotifyTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midaddObjectNotifyTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + ADDOBJECTNOTIFY_TASK_CLASS;
@@ -590,7 +526,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clscleanObjectNotifyTask = loadClass(env, CLEANOBJECTNOTIFY_TASK_CLASS);
         if (!s_clscleanObjectNotifyTask) return 0;
         s_midcleanObjectNotifyTask = env->GetMethodID(s_clscleanObjectNotifyTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midcleanObjectNotifyTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + CLEANOBJECTNOTIFY_TASK_CLASS;
@@ -600,7 +536,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetLastSyncObjectCountTask = loadClass(env, GETLASTSYNCOBJECTCOUNT_TASK_CLASS);
         if (!s_clsgetLastSyncObjectCountTask) return 0;
         s_midgetLastSyncObjectCountTask = env->GetMethodID(s_clsgetLastSyncObjectCountTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetLastSyncObjectCountTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETLASTSYNCOBJECTCOUNT_TASK_CLASS;
@@ -610,7 +546,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clssetSourcePropertyTask = loadClass(env, SETSOURCEPROPERTY_TASK_CLASS);
         if (!s_clssetSourcePropertyTask) return 0;
         s_midsetSourcePropertyTask = env->GetMethodID(s_clssetSourcePropertyTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midsetSourcePropertyTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + SETSOURCEPROPERTY_TASK_CLASS;
@@ -620,7 +556,7 @@ JNIEnv* CRhoConnectClientBase::jniInit(JNIEnv* env)
         s_clsgetSourcePropertyTask = loadClass(env, GETSOURCEPROPERTY_TASK_CLASS);
         if (!s_clsgetSourcePropertyTask) return 0;
         s_midgetSourcePropertyTask = env->GetMethodID(s_clsgetSourcePropertyTask, "<init>",
-                        "(Lcom/rho/rhoconnectclient/IRhoConnectClient;Ljava/lang/String;Ljava/lang/String;Lcom/motorolasolutions/rhoelements/IMethodResult;)V");
+                        "(Lcom/rho/rhoconnectclient/IRhoConnectClientSingleton;Ljava/lang/String;Ljava/lang/String;Lcom/rhomobile/rhodes/api/IMethodResult;)V");
         if(!s_midgetSourcePropertyTask)
         {
             LOG(FATAL) + "Failed to get constructor for java class " + GETSOURCEPROPERTY_TASK_CLASS;

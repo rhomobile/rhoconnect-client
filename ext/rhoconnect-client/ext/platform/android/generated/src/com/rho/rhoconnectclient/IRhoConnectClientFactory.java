@@ -11,6 +11,6 @@ public interface IRhoConnectClientFactory
     IRhoConnectClientSingleton getApiSingleton();
 
     @Override
-    RhoConnectClient getApiObject(String id);
+    IRhoConnectClient getApiObject(String id);
 
 }

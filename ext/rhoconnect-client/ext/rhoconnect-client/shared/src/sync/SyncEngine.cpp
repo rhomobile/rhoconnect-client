@@ -421,6 +421,19 @@ CSyncSource* CSyncEngine::findSourceByName(const String& strSrcName)
 {
     return findSource(CSourceID(strSrcName));
 }
+	
+CSyncSource* CSyncEngine::findSourceById(int srcId)
+{
+	for( int i = 0; i < (int)m_sources.size(); i++ )
+    {
+        CSyncSource& src = *m_sources.elementAt(i);
+        if ( src.getID() == srcId )
+            return &src;
+    }
+    
+    return null;
+}
+
 
 void CSyncEngine::applyChangedValues(db::CDBAdapter& db)
 {

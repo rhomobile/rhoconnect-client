@@ -106,6 +106,9 @@ rho::String js_RhoConnectClient_getUserName_Obj(rho::json::CJSONArray& argv, id<
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -124,7 +127,7 @@ rho::String js_RhoConnectClient_getUserName_Obj(rho::json::CJSONArray& argv, id<
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -272,6 +275,9 @@ rho::String js_RhoConnectClient_getPollInterval_Obj(rho::json::CJSONArray& argv,
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -290,7 +296,7 @@ rho::String js_RhoConnectClient_getPollInterval_Obj(rho::json::CJSONArray& argv,
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -438,6 +444,9 @@ rho::String js_RhoConnectClient_setPollInterval_Obj(rho::json::CJSONArray& argv,
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_INTEGER, 0, "value", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -456,7 +465,7 @@ rho::String js_RhoConnectClient_setPollInterval_Obj(rho::json::CJSONArray& argv,
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -604,6 +613,9 @@ rho::String js_RhoConnectClient_getSyncServer_Obj(rho::json::CJSONArray& argv, i
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -622,7 +634,7 @@ rho::String js_RhoConnectClient_getSyncServer_Obj(rho::json::CJSONArray& argv, i
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -770,6 +782,9 @@ rho::String js_RhoConnectClient_setSyncServer_Obj(rho::json::CJSONArray& argv, i
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "value", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -788,7 +803,7 @@ rho::String js_RhoConnectClient_setSyncServer_Obj(rho::json::CJSONArray& argv, i
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -936,6 +951,9 @@ rho::String js_RhoConnectClient_getPageSize_Obj(rho::json::CJSONArray& argv, id<
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -954,7 +972,7 @@ rho::String js_RhoConnectClient_getPageSize_Obj(rho::json::CJSONArray& argv, id<
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -1102,6 +1120,9 @@ rho::String js_RhoConnectClient_setPageSize_Obj(rho::json::CJSONArray& argv, id<
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_INTEGER, 0, "value", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -1120,7 +1141,7 @@ rho::String js_RhoConnectClient_setPageSize_Obj(rho::json::CJSONArray& argv, id<
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -1268,6 +1289,9 @@ rho::String js_RhoConnectClient_getThreadedMode_Obj(rho::json::CJSONArray& argv,
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -1286,7 +1310,7 @@ rho::String js_RhoConnectClient_getThreadedMode_Obj(rho::json::CJSONArray& argv,
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -1434,6 +1458,9 @@ rho::String js_RhoConnectClient_setThreadedMode_Obj(rho::json::CJSONArray& argv,
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_BOOLEAN, 0, "value", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -1452,7 +1479,7 @@ rho::String js_RhoConnectClient_setThreadedMode_Obj(rho::json::CJSONArray& argv,
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -1600,6 +1627,9 @@ rho::String js_RhoConnectClient_getShowStatusPopup_Obj(rho::json::CJSONArray& ar
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -1618,7 +1648,7 @@ rho::String js_RhoConnectClient_getShowStatusPopup_Obj(rho::json::CJSONArray& ar
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -1766,6 +1796,9 @@ rho::String js_RhoConnectClient_setShowStatusPopup_Obj(rho::json::CJSONArray& ar
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_BOOLEAN, 0, "value", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -1784,7 +1817,7 @@ rho::String js_RhoConnectClient_setShowStatusPopup_Obj(rho::json::CJSONArray& ar
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -1932,6 +1965,9 @@ rho::String js_RhoConnectClient_getSslVerifyPeer_Obj(rho::json::CJSONArray& argv
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -1950,7 +1986,7 @@ rho::String js_RhoConnectClient_getSslVerifyPeer_Obj(rho::json::CJSONArray& argv
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -2098,6 +2134,9 @@ rho::String js_RhoConnectClient_setSslVerifyPeer_Obj(rho::json::CJSONArray& argv
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_BOOLEAN, 0, "value", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -2116,7 +2155,7 @@ rho::String js_RhoConnectClient_setSslVerifyPeer_Obj(rho::json::CJSONArray& argv
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -2264,6 +2303,9 @@ rho::String js_RhoConnectClient_loggedIn_Obj(rho::json::CJSONArray& argv, id<IRh
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -2282,7 +2324,7 @@ rho::String js_RhoConnectClient_loggedIn_Obj(rho::json::CJSONArray& argv, id<IRh
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -2430,6 +2472,9 @@ rho::String js_RhoConnectClient_syncing_Obj(rho::json::CJSONArray& argv, id<IRho
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -2448,7 +2493,7 @@ rho::String js_RhoConnectClient_syncing_Obj(rho::json::CJSONArray& argv, id<IRho
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -2505,670 +2550,6 @@ rho::String js_s_RhoConnectClient_syncing(rho::json::CJSONArray& argv, const rho
     id<IRhoConnectClientFactory> factory = [RhoConnectClientFactorySingleton getRhoConnectClientFactoryInstance];
     id<IRhoConnectClientSingleton> singleton = [factory getRhoConnectClientSingleton];
     return js_RhoConnectClient_syncing_Obj(argv, singleton);
-
-}
-
-
-
-
-
-
-
-@interface RhoConnectClient_onSyncCreateError_caller_params : NSObject
-
-@property (assign) NSArray* params;
-@property (assign) id<IRhoConnectClientSingleton> item;
-@property (assign) CMethodResult* methodResult;
-
-+(RhoConnectClient_onSyncCreateError_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult;
-
-@end
-
-@implementation RhoConnectClient_onSyncCreateError_caller_params
-
-@synthesize params,item,methodResult;
-
-+(RhoConnectClient_onSyncCreateError_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult {
-    RhoConnectClient_onSyncCreateError_caller_params* par = [[RhoConnectClient_onSyncCreateError_caller_params alloc] init];
-    par.params = _params;
-    par.item = _item;
-    par.methodResult = _methodResult;
-    return par;
-}
-
-@end
-
-
-@interface RhoConnectClient_onSyncCreateError_caller : NSObject {
-
-}
-+(RhoConnectClient_onSyncCreateError_caller*) getSharedInstance;
-+(void) onSyncCreateError:(RhoConnectClient_onSyncCreateError_caller_params*)caller_params;
-+(void) onSyncCreateError_in_thread:(RhoConnectClient_onSyncCreateError_caller_params*)caller_params;
-+(void) onSyncCreateError_in_UI_thread:(RhoConnectClient_onSyncCreateError_caller_params*)caller_params;
-
-@end
-
-static RhoConnectClient_onSyncCreateError_caller* our_RhoConnectClient_onSyncCreateError_caller = nil;
-
-@implementation RhoConnectClient_onSyncCreateError_caller
-
-+(RhoConnectClient_onSyncCreateError_caller*) getSharedInstance {
-    if (our_RhoConnectClient_onSyncCreateError_caller == nil) {
-        our_RhoConnectClient_onSyncCreateError_caller = [[RhoConnectClient_onSyncCreateError_caller alloc] init];
-    }
-    return our_RhoConnectClient_onSyncCreateError_caller;
-}
-
--(void) command_onSyncCreateError:(RhoConnectClient_onSyncCreateError_caller_params*)caller_params {
-    NSArray* params = caller_params.params;
-    id<IRhoConnectClientSingleton> objItem = caller_params.item;
-    CMethodResult* methodResult = caller_params.methodResult;
-
-    
-    [objItem onSyncCreateError:(NSString*)[params objectAtIndex:0] objects:(NSArray*)[params objectAtIndex:1] action:(NSString*)[params objectAtIndex:2] ];
-}
-
-
-+(void) onSyncCreateError:(RhoConnectClient_onSyncCreateError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncCreateError_caller getSharedInstance] command_onSyncCreateError:caller_params];
-}
-
-+(void) onSyncCreateError_in_thread:(RhoConnectClient_onSyncCreateError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncCreateError_caller getSharedInstance] performSelectorInBackground:@selector(command_onSyncCreateError:) withObject:caller_params];
-}
-
-+(void) onSyncCreateError_in_UI_thread:(RhoConnectClient_onSyncCreateError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncCreateError_caller getSharedInstance] performSelectorOnMainThread:@selector(command_onSyncCreateError:) withObject:caller_params waitUntilDone:NO];
-}
-
-
-@end
-
-
-rho::String js_RhoConnectClient_onSyncCreateError_Obj(rho::json::CJSONArray& argv, id<IRhoConnectClientSingleton>objItem) {
-
-    CMethodResult* methodResult = [[CMethodResult alloc] init];
-
-    NSObject* params[3+1];
-    NSString* callbackURL = nil;
-    NSString* callbackParam = nil;
-    BOOL method_return_result = YES;
-    int argc = argv.getSize();
-    
-    BOOL is_factory_param[] = { NO, NO, NO, NO };
-
-    int i;
-
-    // init
-    for (i = 0; i < (3); i++) {
-        params[i] = [CJSConverter getObjectiveCNULL];
-    }
-
-    // enumerate params
-    for (int i = 0; i < (3); i++) {
-        if (argc > i) {
-            // we have a [i] param !
-            if (is_factory_param[i]) {
-                params[i] = RhoConnectClient_makeInstanceByJSObject(argv.getItem(i).getString());
-            }
-            else {
-                rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
-            }
-        }
-    }
-
-    NSMutableArray* params_array = [NSMutableArray arrayWithCapacity:(3)];
-    for (i = 0 ; i < (3); i++) {
-        [params_array addObject:params[i]];
-    }
-
-    
-    // check callback
-    if (argc >= (3+1)) {
-        rho::json::CJSONEntry callback = argv.getItem(3);
-        if (callback.isString()) {
-            rho::json::CJSONEntry entry = argv.getItem(i);
-            callbackURL = [((NSString*)[CJSConverter convertFromJS:&callback]) retain];
-        }
-    }
-    // check callback param
-    if (argc >= (3+2)) {
-        rho::json::CJSONEntry callback_param = argv.getItem(3+1);
-        if (callback_param.isString()) {
-            callbackParam = [((NSString*)[CJSConverter convertFromJS:&callback_param]) retain];
-        }
-    }
-    
-
-    if (callbackURL != nil) {
-        // we have callback - method should not call setResult if method execute from current thread - only later or in UI or separated threads !!!
-        [methodResult setJSCallback:callbackURL];
-        if (callbackParam != nil) {
-            [methodResult setCallbackParam:callbackParam];
-        }
-        
-        [RhoConnectClient_onSyncCreateError_caller onSyncCreateError_in_thread:[RhoConnectClient_onSyncCreateError_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    else {
-        // we do not have callback
-        
-        [RhoConnectClient_onSyncCreateError_caller onSyncCreateError:[RhoConnectClient_onSyncCreateError_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    rho::String resValue = "";
-    if ((callbackURL == nil) && (method_return_result)) {
-        resValue = [[methodResult toJSON] UTF8String];
-    }
-    return resValue;
-}
-
-
-rho::String js_s_RhoConnectClient_onSyncCreateError(rho::json::CJSONArray& argv, const rho::String& strObjID) {
-
-    id<IRhoConnectClientFactory> factory = [RhoConnectClientFactorySingleton getRhoConnectClientFactoryInstance];
-    id<IRhoConnectClientSingleton> singleton = [factory getRhoConnectClientSingleton];
-    return js_RhoConnectClient_onSyncCreateError_Obj(argv, singleton);
-
-}
-
-
-
-
-
-
-
-@interface RhoConnectClient_pushChanges_caller_params : NSObject
-
-@property (assign) NSArray* params;
-@property (assign) id<IRhoConnectClientSingleton> item;
-@property (assign) CMethodResult* methodResult;
-
-+(RhoConnectClient_pushChanges_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult;
-
-@end
-
-@implementation RhoConnectClient_pushChanges_caller_params
-
-@synthesize params,item,methodResult;
-
-+(RhoConnectClient_pushChanges_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult {
-    RhoConnectClient_pushChanges_caller_params* par = [[RhoConnectClient_pushChanges_caller_params alloc] init];
-    par.params = _params;
-    par.item = _item;
-    par.methodResult = _methodResult;
-    return par;
-}
-
-@end
-
-
-@interface RhoConnectClient_pushChanges_caller : NSObject {
-
-}
-+(RhoConnectClient_pushChanges_caller*) getSharedInstance;
-+(void) pushChanges:(RhoConnectClient_pushChanges_caller_params*)caller_params;
-+(void) pushChanges_in_thread:(RhoConnectClient_pushChanges_caller_params*)caller_params;
-+(void) pushChanges_in_UI_thread:(RhoConnectClient_pushChanges_caller_params*)caller_params;
-
-@end
-
-static RhoConnectClient_pushChanges_caller* our_RhoConnectClient_pushChanges_caller = nil;
-
-@implementation RhoConnectClient_pushChanges_caller
-
-+(RhoConnectClient_pushChanges_caller*) getSharedInstance {
-    if (our_RhoConnectClient_pushChanges_caller == nil) {
-        our_RhoConnectClient_pushChanges_caller = [[RhoConnectClient_pushChanges_caller alloc] init];
-    }
-    return our_RhoConnectClient_pushChanges_caller;
-}
-
--(void) command_pushChanges:(RhoConnectClient_pushChanges_caller_params*)caller_params {
-    NSArray* params = caller_params.params;
-    id<IRhoConnectClientSingleton> objItem = caller_params.item;
-    CMethodResult* methodResult = caller_params.methodResult;
-
-    
-    [objItem pushChanges:(NSString*)[params objectAtIndex:0] ];
-}
-
-
-+(void) pushChanges:(RhoConnectClient_pushChanges_caller_params*)caller_params {
-    [[RhoConnectClient_pushChanges_caller getSharedInstance] command_pushChanges:caller_params];
-}
-
-+(void) pushChanges_in_thread:(RhoConnectClient_pushChanges_caller_params*)caller_params {
-    [[RhoConnectClient_pushChanges_caller getSharedInstance] performSelectorInBackground:@selector(command_pushChanges:) withObject:caller_params];
-}
-
-+(void) pushChanges_in_UI_thread:(RhoConnectClient_pushChanges_caller_params*)caller_params {
-    [[RhoConnectClient_pushChanges_caller getSharedInstance] performSelectorOnMainThread:@selector(command_pushChanges:) withObject:caller_params waitUntilDone:NO];
-}
-
-
-@end
-
-
-rho::String js_RhoConnectClient_pushChanges_Obj(rho::json::CJSONArray& argv, id<IRhoConnectClientSingleton>objItem) {
-
-    CMethodResult* methodResult = [[CMethodResult alloc] init];
-
-    NSObject* params[1+1];
-    NSString* callbackURL = nil;
-    NSString* callbackParam = nil;
-    BOOL method_return_result = YES;
-    int argc = argv.getSize();
-    
-    BOOL is_factory_param[] = { NO, NO };
-
-    int i;
-
-    // init
-    for (i = 0; i < (1); i++) {
-        params[i] = [CJSConverter getObjectiveCNULL];
-    }
-
-    // enumerate params
-    for (int i = 0; i < (1); i++) {
-        if (argc > i) {
-            // we have a [i] param !
-            if (is_factory_param[i]) {
-                params[i] = RhoConnectClient_makeInstanceByJSObject(argv.getItem(i).getString());
-            }
-            else {
-                rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
-            }
-        }
-    }
-
-    NSMutableArray* params_array = [NSMutableArray arrayWithCapacity:(1)];
-    for (i = 0 ; i < (1); i++) {
-        [params_array addObject:params[i]];
-    }
-
-    
-    // check callback
-    if (argc >= (1+1)) {
-        rho::json::CJSONEntry callback = argv.getItem(1);
-        if (callback.isString()) {
-            rho::json::CJSONEntry entry = argv.getItem(i);
-            callbackURL = [((NSString*)[CJSConverter convertFromJS:&callback]) retain];
-        }
-    }
-    // check callback param
-    if (argc >= (1+2)) {
-        rho::json::CJSONEntry callback_param = argv.getItem(1+1);
-        if (callback_param.isString()) {
-            callbackParam = [((NSString*)[CJSConverter convertFromJS:&callback_param]) retain];
-        }
-    }
-    
-
-    if (callbackURL != nil) {
-        // we have callback - method should not call setResult if method execute from current thread - only later or in UI or separated threads !!!
-        [methodResult setJSCallback:callbackURL];
-        if (callbackParam != nil) {
-            [methodResult setCallbackParam:callbackParam];
-        }
-        
-        [RhoConnectClient_pushChanges_caller pushChanges_in_thread:[RhoConnectClient_pushChanges_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    else {
-        // we do not have callback
-        
-        [RhoConnectClient_pushChanges_caller pushChanges:[RhoConnectClient_pushChanges_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    rho::String resValue = "";
-    if ((callbackURL == nil) && (method_return_result)) {
-        resValue = [[methodResult toJSON] UTF8String];
-    }
-    return resValue;
-}
-
-
-rho::String js_s_RhoConnectClient_pushChanges(rho::json::CJSONArray& argv, const rho::String& strObjID) {
-
-    id<IRhoConnectClientFactory> factory = [RhoConnectClientFactorySingleton getRhoConnectClientFactoryInstance];
-    id<IRhoConnectClientSingleton> singleton = [factory getRhoConnectClientSingleton];
-    return js_RhoConnectClient_pushChanges_Obj(argv, singleton);
-
-}
-
-
-
-
-
-
-
-@interface RhoConnectClient_onSyncUpdateError_caller_params : NSObject
-
-@property (assign) NSArray* params;
-@property (assign) id<IRhoConnectClientSingleton> item;
-@property (assign) CMethodResult* methodResult;
-
-+(RhoConnectClient_onSyncUpdateError_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult;
-
-@end
-
-@implementation RhoConnectClient_onSyncUpdateError_caller_params
-
-@synthesize params,item,methodResult;
-
-+(RhoConnectClient_onSyncUpdateError_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult {
-    RhoConnectClient_onSyncUpdateError_caller_params* par = [[RhoConnectClient_onSyncUpdateError_caller_params alloc] init];
-    par.params = _params;
-    par.item = _item;
-    par.methodResult = _methodResult;
-    return par;
-}
-
-@end
-
-
-@interface RhoConnectClient_onSyncUpdateError_caller : NSObject {
-
-}
-+(RhoConnectClient_onSyncUpdateError_caller*) getSharedInstance;
-+(void) onSyncUpdateError:(RhoConnectClient_onSyncUpdateError_caller_params*)caller_params;
-+(void) onSyncUpdateError_in_thread:(RhoConnectClient_onSyncUpdateError_caller_params*)caller_params;
-+(void) onSyncUpdateError_in_UI_thread:(RhoConnectClient_onSyncUpdateError_caller_params*)caller_params;
-
-@end
-
-static RhoConnectClient_onSyncUpdateError_caller* our_RhoConnectClient_onSyncUpdateError_caller = nil;
-
-@implementation RhoConnectClient_onSyncUpdateError_caller
-
-+(RhoConnectClient_onSyncUpdateError_caller*) getSharedInstance {
-    if (our_RhoConnectClient_onSyncUpdateError_caller == nil) {
-        our_RhoConnectClient_onSyncUpdateError_caller = [[RhoConnectClient_onSyncUpdateError_caller alloc] init];
-    }
-    return our_RhoConnectClient_onSyncUpdateError_caller;
-}
-
--(void) command_onSyncUpdateError:(RhoConnectClient_onSyncUpdateError_caller_params*)caller_params {
-    NSArray* params = caller_params.params;
-    id<IRhoConnectClientSingleton> objItem = caller_params.item;
-    CMethodResult* methodResult = caller_params.methodResult;
-
-    
-    [objItem onSyncUpdateError:(NSString*)[params objectAtIndex:0] objects:(NSArray*)[params objectAtIndex:1] action:(NSString*)[params objectAtIndex:2] rollbackData:(NSString*)[params objectAtIndex:3] ];
-}
-
-
-+(void) onSyncUpdateError:(RhoConnectClient_onSyncUpdateError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncUpdateError_caller getSharedInstance] command_onSyncUpdateError:caller_params];
-}
-
-+(void) onSyncUpdateError_in_thread:(RhoConnectClient_onSyncUpdateError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncUpdateError_caller getSharedInstance] performSelectorInBackground:@selector(command_onSyncUpdateError:) withObject:caller_params];
-}
-
-+(void) onSyncUpdateError_in_UI_thread:(RhoConnectClient_onSyncUpdateError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncUpdateError_caller getSharedInstance] performSelectorOnMainThread:@selector(command_onSyncUpdateError:) withObject:caller_params waitUntilDone:NO];
-}
-
-
-@end
-
-
-rho::String js_RhoConnectClient_onSyncUpdateError_Obj(rho::json::CJSONArray& argv, id<IRhoConnectClientSingleton>objItem) {
-
-    CMethodResult* methodResult = [[CMethodResult alloc] init];
-
-    NSObject* params[4+1];
-    NSString* callbackURL = nil;
-    NSString* callbackParam = nil;
-    BOOL method_return_result = YES;
-    int argc = argv.getSize();
-    
-    BOOL is_factory_param[] = { NO, NO, NO, NO, NO };
-
-    int i;
-
-    // init
-    for (i = 0; i < (4); i++) {
-        params[i] = [CJSConverter getObjectiveCNULL];
-    }
-
-    // enumerate params
-    for (int i = 0; i < (4); i++) {
-        if (argc > i) {
-            // we have a [i] param !
-            if (is_factory_param[i]) {
-                params[i] = RhoConnectClient_makeInstanceByJSObject(argv.getItem(i).getString());
-            }
-            else {
-                rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
-            }
-        }
-    }
-
-    NSMutableArray* params_array = [NSMutableArray arrayWithCapacity:(4)];
-    for (i = 0 ; i < (4); i++) {
-        [params_array addObject:params[i]];
-    }
-
-    
-    // check callback
-    if (argc >= (4+1)) {
-        rho::json::CJSONEntry callback = argv.getItem(4);
-        if (callback.isString()) {
-            rho::json::CJSONEntry entry = argv.getItem(i);
-            callbackURL = [((NSString*)[CJSConverter convertFromJS:&callback]) retain];
-        }
-    }
-    // check callback param
-    if (argc >= (4+2)) {
-        rho::json::CJSONEntry callback_param = argv.getItem(4+1);
-        if (callback_param.isString()) {
-            callbackParam = [((NSString*)[CJSConverter convertFromJS:&callback_param]) retain];
-        }
-    }
-    
-
-    if (callbackURL != nil) {
-        // we have callback - method should not call setResult if method execute from current thread - only later or in UI or separated threads !!!
-        [methodResult setJSCallback:callbackURL];
-        if (callbackParam != nil) {
-            [methodResult setCallbackParam:callbackParam];
-        }
-        
-        [RhoConnectClient_onSyncUpdateError_caller onSyncUpdateError_in_thread:[RhoConnectClient_onSyncUpdateError_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    else {
-        // we do not have callback
-        
-        [RhoConnectClient_onSyncUpdateError_caller onSyncUpdateError:[RhoConnectClient_onSyncUpdateError_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    rho::String resValue = "";
-    if ((callbackURL == nil) && (method_return_result)) {
-        resValue = [[methodResult toJSON] UTF8String];
-    }
-    return resValue;
-}
-
-
-rho::String js_s_RhoConnectClient_onSyncUpdateError(rho::json::CJSONArray& argv, const rho::String& strObjID) {
-
-    id<IRhoConnectClientFactory> factory = [RhoConnectClientFactorySingleton getRhoConnectClientFactoryInstance];
-    id<IRhoConnectClientSingleton> singleton = [factory getRhoConnectClientSingleton];
-    return js_RhoConnectClient_onSyncUpdateError_Obj(argv, singleton);
-
-}
-
-
-
-
-
-
-
-@interface RhoConnectClient_onSyncDeleteError_caller_params : NSObject
-
-@property (assign) NSArray* params;
-@property (assign) id<IRhoConnectClientSingleton> item;
-@property (assign) CMethodResult* methodResult;
-
-+(RhoConnectClient_onSyncDeleteError_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult;
-
-@end
-
-@implementation RhoConnectClient_onSyncDeleteError_caller_params
-
-@synthesize params,item,methodResult;
-
-+(RhoConnectClient_onSyncDeleteError_caller_params*) makeParams:(NSArray*)_params _item:(id<IRhoConnectClientSingleton>)_item _methodResult:(CMethodResult*)_methodResult {
-    RhoConnectClient_onSyncDeleteError_caller_params* par = [[RhoConnectClient_onSyncDeleteError_caller_params alloc] init];
-    par.params = _params;
-    par.item = _item;
-    par.methodResult = _methodResult;
-    return par;
-}
-
-@end
-
-
-@interface RhoConnectClient_onSyncDeleteError_caller : NSObject {
-
-}
-+(RhoConnectClient_onSyncDeleteError_caller*) getSharedInstance;
-+(void) onSyncDeleteError:(RhoConnectClient_onSyncDeleteError_caller_params*)caller_params;
-+(void) onSyncDeleteError_in_thread:(RhoConnectClient_onSyncDeleteError_caller_params*)caller_params;
-+(void) onSyncDeleteError_in_UI_thread:(RhoConnectClient_onSyncDeleteError_caller_params*)caller_params;
-
-@end
-
-static RhoConnectClient_onSyncDeleteError_caller* our_RhoConnectClient_onSyncDeleteError_caller = nil;
-
-@implementation RhoConnectClient_onSyncDeleteError_caller
-
-+(RhoConnectClient_onSyncDeleteError_caller*) getSharedInstance {
-    if (our_RhoConnectClient_onSyncDeleteError_caller == nil) {
-        our_RhoConnectClient_onSyncDeleteError_caller = [[RhoConnectClient_onSyncDeleteError_caller alloc] init];
-    }
-    return our_RhoConnectClient_onSyncDeleteError_caller;
-}
-
--(void) command_onSyncDeleteError:(RhoConnectClient_onSyncDeleteError_caller_params*)caller_params {
-    NSArray* params = caller_params.params;
-    id<IRhoConnectClientSingleton> objItem = caller_params.item;
-    CMethodResult* methodResult = caller_params.methodResult;
-
-    
-    [objItem onSyncDeleteError:(NSString*)[params objectAtIndex:0] objects:(NSArray*)[params objectAtIndex:1] action:(NSString*)[params objectAtIndex:2] ];
-}
-
-
-+(void) onSyncDeleteError:(RhoConnectClient_onSyncDeleteError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncDeleteError_caller getSharedInstance] command_onSyncDeleteError:caller_params];
-}
-
-+(void) onSyncDeleteError_in_thread:(RhoConnectClient_onSyncDeleteError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncDeleteError_caller getSharedInstance] performSelectorInBackground:@selector(command_onSyncDeleteError:) withObject:caller_params];
-}
-
-+(void) onSyncDeleteError_in_UI_thread:(RhoConnectClient_onSyncDeleteError_caller_params*)caller_params {
-    [[RhoConnectClient_onSyncDeleteError_caller getSharedInstance] performSelectorOnMainThread:@selector(command_onSyncDeleteError:) withObject:caller_params waitUntilDone:NO];
-}
-
-
-@end
-
-
-rho::String js_RhoConnectClient_onSyncDeleteError_Obj(rho::json::CJSONArray& argv, id<IRhoConnectClientSingleton>objItem) {
-
-    CMethodResult* methodResult = [[CMethodResult alloc] init];
-
-    NSObject* params[3+1];
-    NSString* callbackURL = nil;
-    NSString* callbackParam = nil;
-    BOOL method_return_result = YES;
-    int argc = argv.getSize();
-    
-    BOOL is_factory_param[] = { NO, NO, NO, NO };
-
-    int i;
-
-    // init
-    for (i = 0; i < (3); i++) {
-        params[i] = [CJSConverter getObjectiveCNULL];
-    }
-
-    // enumerate params
-    for (int i = 0; i < (3); i++) {
-        if (argc > i) {
-            // we have a [i] param !
-            if (is_factory_param[i]) {
-                params[i] = RhoConnectClient_makeInstanceByJSObject(argv.getItem(i).getString());
-            }
-            else {
-                rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
-            }
-        }
-    }
-
-    NSMutableArray* params_array = [NSMutableArray arrayWithCapacity:(3)];
-    for (i = 0 ; i < (3); i++) {
-        [params_array addObject:params[i]];
-    }
-
-    
-    // check callback
-    if (argc >= (3+1)) {
-        rho::json::CJSONEntry callback = argv.getItem(3);
-        if (callback.isString()) {
-            rho::json::CJSONEntry entry = argv.getItem(i);
-            callbackURL = [((NSString*)[CJSConverter convertFromJS:&callback]) retain];
-        }
-    }
-    // check callback param
-    if (argc >= (3+2)) {
-        rho::json::CJSONEntry callback_param = argv.getItem(3+1);
-        if (callback_param.isString()) {
-            callbackParam = [((NSString*)[CJSConverter convertFromJS:&callback_param]) retain];
-        }
-    }
-    
-
-    if (callbackURL != nil) {
-        // we have callback - method should not call setResult if method execute from current thread - only later or in UI or separated threads !!!
-        [methodResult setJSCallback:callbackURL];
-        if (callbackParam != nil) {
-            [methodResult setCallbackParam:callbackParam];
-        }
-        
-        [RhoConnectClient_onSyncDeleteError_caller onSyncDeleteError_in_thread:[RhoConnectClient_onSyncDeleteError_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    else {
-        // we do not have callback
-        
-        [RhoConnectClient_onSyncDeleteError_caller onSyncDeleteError:[RhoConnectClient_onSyncDeleteError_caller_params makeParams:params_array _item:objItem _methodResult:methodResult]];
-        
-    }
-    rho::String resValue = "";
-    if ((callbackURL == nil) && (method_return_result)) {
-        resValue = [[methodResult toJSON] UTF8String];
-    }
-    return resValue;
-}
-
-
-rho::String js_s_RhoConnectClient_onSyncDeleteError(rho::json::CJSONArray& argv, const rho::String& strObjID) {
-
-    id<IRhoConnectClientFactory> factory = [RhoConnectClientFactorySingleton getRhoConnectClientFactoryInstance];
-    id<IRhoConnectClientSingleton> singleton = [factory getRhoConnectClientSingleton];
-    return js_RhoConnectClient_onSyncDeleteError_Obj(argv, singleton);
 
 }
 
@@ -3260,6 +2641,11 @@ rho::String js_RhoConnectClient_search_Obj(rho::json::CJSONArray& argv, id<IRhoC
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params_param0_param0[] = { {RHO_API_STRING, 0, 0, 0, 0 } };
+    static RHO_API_PARAM rho_api_params_param0[] = { {RHO_API_ARRAY, 0, "sources", 1, rho_api_params_param0_param0 }, {RHO_API_STRING, 0, "from", 0, 0 }, {RHO_API_HASH, 0, "searchParams", 0, 0 }, {RHO_API_INTEGER, 0, "offset", 0, 0 }, {RHO_API_INTEGER, 0, "maxResults", 0, 0 }, {RHO_API_INTEGER, 0, "progressStep", 0, 0 }, {RHO_API_BOOLEAN, 0, "syncChanges", 0, 0 } };
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_HASH, 0, "args", 7, rho_api_params_param0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -3278,7 +2664,7 @@ rho::String js_RhoConnectClient_search_Obj(rho::json::CJSONArray& argv, id<IRhoC
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -3426,6 +2812,9 @@ rho::String js_RhoConnectClient_doSync_Obj(rho::json::CJSONArray& argv, id<IRhoC
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_BOOLEAN, 0, "showStatusPopup", 0, 0 }, {RHO_API_STRING, 0, "queryParams", 0, 0 }, {RHO_API_BOOLEAN, 0, "syncOnlyChangedSources", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO, NO, NO };
 
     int i;
@@ -3444,7 +2833,7 @@ rho::String js_RhoConnectClient_doSync_Obj(rho::json::CJSONArray& argv, id<IRhoC
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -3592,6 +2981,9 @@ rho::String js_RhoConnectClient_doSyncSource_Obj(rho::json::CJSONArray& argv, id
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "sourceName", 0, 0 }, {RHO_API_BOOLEAN, 0, "showStatusPopup", 0, 0 }, {RHO_API_STRING, 0, "queryParams", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO, NO, NO };
 
     int i;
@@ -3610,7 +3002,7 @@ rho::String js_RhoConnectClient_doSyncSource_Obj(rho::json::CJSONArray& argv, id
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -3758,6 +3150,9 @@ rho::String js_RhoConnectClient_login_Obj(rho::json::CJSONArray& argv, id<IRhoCo
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "login", 0, 0 }, {RHO_API_STRING, 0, "password", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO, NO };
 
     int i;
@@ -3776,7 +3171,7 @@ rho::String js_RhoConnectClient_login_Obj(rho::json::CJSONArray& argv, id<IRhoCo
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -3924,6 +3319,9 @@ rho::String js_RhoConnectClient_logout_Obj(rho::json::CJSONArray& argv, id<IRhoC
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -3942,7 +3340,7 @@ rho::String js_RhoConnectClient_logout_Obj(rho::json::CJSONArray& argv, id<IRhoC
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -4090,6 +3488,9 @@ rho::String js_RhoConnectClient_stopSync_Obj(rho::json::CJSONArray& argv, id<IRh
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -4108,7 +3509,7 @@ rho::String js_RhoConnectClient_stopSync_Obj(rho::json::CJSONArray& argv, id<IRh
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -4256,6 +3657,9 @@ rho::String js_RhoConnectClient_setNotification_Obj(rho::json::CJSONArray& argv,
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "sourceName", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -4274,7 +3678,7 @@ rho::String js_RhoConnectClient_setNotification_Obj(rho::json::CJSONArray& argv,
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -4422,6 +3826,9 @@ rho::String js_RhoConnectClient_clearNotification_Obj(rho::json::CJSONArray& arg
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "sourceName", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -4440,7 +3847,7 @@ rho::String js_RhoConnectClient_clearNotification_Obj(rho::json::CJSONArray& arg
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -4588,6 +3995,9 @@ rho::String js_RhoConnectClient_setObjectNotification_Obj(rho::json::CJSONArray&
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -4606,7 +4016,7 @@ rho::String js_RhoConnectClient_setObjectNotification_Obj(rho::json::CJSONArray&
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -4754,6 +4164,9 @@ rho::String js_RhoConnectClient_addObjectNotify_Obj(rho::json::CJSONArray& argv,
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "sourceName", 0, 0 }, {RHO_API_STRING, 0, "object", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO, NO };
 
     int i;
@@ -4772,7 +4185,7 @@ rho::String js_RhoConnectClient_addObjectNotify_Obj(rho::json::CJSONArray& argv,
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -4920,6 +4333,9 @@ rho::String js_RhoConnectClient_cleanObjectNotify_Obj(rho::json::CJSONArray& arg
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = {  };
+
+    
     BOOL is_factory_param[] = { NO };
 
     int i;
@@ -4938,7 +4354,7 @@ rho::String js_RhoConnectClient_cleanObjectNotify_Obj(rho::json::CJSONArray& arg
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -5086,6 +4502,9 @@ rho::String js_RhoConnectClient_getLastSyncObjectCount_Obj(rho::json::CJSONArray
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "sourceName", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO };
 
     int i;
@@ -5104,7 +4523,7 @@ rho::String js_RhoConnectClient_getLastSyncObjectCount_Obj(rho::json::CJSONArray
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -5252,6 +4671,9 @@ rho::String js_RhoConnectClient_setSourceProperty_Obj(rho::json::CJSONArray& arg
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "sourceName", 0, 0 }, {RHO_API_STRING, 0, "propertyName", 0, 0 }, {RHO_API_STRING, 0, "propertyValue", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO, NO, NO };
 
     int i;
@@ -5270,7 +4692,7 @@ rho::String js_RhoConnectClient_setSourceProperty_Obj(rho::json::CJSONArray& arg
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }
@@ -5418,6 +4840,9 @@ rho::String js_RhoConnectClient_getSourceProperty_Obj(rho::json::CJSONArray& arg
     BOOL method_return_result = YES;
     int argc = argv.getSize();
     
+    static RHO_API_PARAM rho_api_params[] = { {RHO_API_STRING, 0, "sourceName", 0, 0 }, {RHO_API_STRING, 0, "propertyName", 0, 0 } };
+
+    
     BOOL is_factory_param[] = { NO, NO, NO };
 
     int i;
@@ -5436,7 +4861,7 @@ rho::String js_RhoConnectClient_getSourceProperty_Obj(rho::json::CJSONArray& arg
             }
             else {
                 rho::json::CJSONEntry entry = argv.getItem(i);
-                params[i] = [[CJSConverter convertFromJS:&entry] retain];
+                params[i] = [[CJSConverter convertFromJS:&entry rho_api_param:&(rho_api_params[i])] retain];
             }
         }
     }

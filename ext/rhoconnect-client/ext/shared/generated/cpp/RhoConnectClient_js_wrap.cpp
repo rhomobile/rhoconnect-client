@@ -18,7 +18,7 @@ rho::String js_s_RhoConnectClient_getUserName(rho::json::CJSONArray& argv, const
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -77,12 +77,11 @@ rho::String js_s_RhoConnectClient_getUserName(rho::json::CJSONArray& argv, const
 
 }
 
-
 rho::String js_s_RhoConnectClient_getPollInterval(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -141,12 +140,11 @@ rho::String js_s_RhoConnectClient_getPollInterval(rho::json::CJSONArray& argv, c
 
 }
 
-
 rho::String js_s_RhoConnectClient_setPollInterval(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -244,12 +242,11 @@ rho::String js_s_RhoConnectClient_setPollInterval(rho::json::CJSONArray& argv, c
 
 }
 
-
 rho::String js_s_RhoConnectClient_getSyncServer(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -308,12 +305,11 @@ rho::String js_s_RhoConnectClient_getSyncServer(rho::json::CJSONArray& argv, con
 
 }
 
-
 rho::String js_s_RhoConnectClient_setSyncServer(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -338,7 +334,7 @@ rho::String js_s_RhoConnectClient_setSyncServer(rho::json::CJSONArray& argv, con
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -416,12 +412,11 @@ rho::String js_s_RhoConnectClient_setSyncServer(rho::json::CJSONArray& argv, con
 
 }
 
-
 rho::String js_s_RhoConnectClient_getPageSize(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -480,12 +475,11 @@ rho::String js_s_RhoConnectClient_getPageSize(rho::json::CJSONArray& argv, const
 
 }
 
-
 rho::String js_s_RhoConnectClient_setPageSize(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -583,12 +577,11 @@ rho::String js_s_RhoConnectClient_setPageSize(rho::json::CJSONArray& argv, const
 
 }
 
-
 rho::String js_s_RhoConnectClient_getThreadedMode(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -647,12 +640,11 @@ rho::String js_s_RhoConnectClient_getThreadedMode(rho::json::CJSONArray& argv, c
 
 }
 
-
 rho::String js_s_RhoConnectClient_setThreadedMode(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -750,12 +742,11 @@ rho::String js_s_RhoConnectClient_setThreadedMode(rho::json::CJSONArray& argv, c
 
 }
 
-
 rho::String js_s_RhoConnectClient_getShowStatusPopup(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -814,12 +805,11 @@ rho::String js_s_RhoConnectClient_getShowStatusPopup(rho::json::CJSONArray& argv
 
 }
 
-
 rho::String js_s_RhoConnectClient_setShowStatusPopup(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -917,12 +907,11 @@ rho::String js_s_RhoConnectClient_setShowStatusPopup(rho::json::CJSONArray& argv
 
 }
 
-
 rho::String js_s_RhoConnectClient_getSslVerifyPeer(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -981,12 +970,11 @@ rho::String js_s_RhoConnectClient_getSslVerifyPeer(rho::json::CJSONArray& argv, 
 
 }
 
-
 rho::String js_s_RhoConnectClient_setSslVerifyPeer(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -1084,12 +1072,11 @@ rho::String js_s_RhoConnectClient_setSslVerifyPeer(rho::json::CJSONArray& argv, 
 
 }
 
-
 rho::String js_s_RhoConnectClient_loggedIn(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -1148,12 +1135,11 @@ rho::String js_s_RhoConnectClient_loggedIn(rho::json::CJSONArray& argv, const rh
 
 }
 
-
 rho::String js_s_RhoConnectClient_syncing(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -1212,741 +1198,11 @@ rho::String js_s_RhoConnectClient_syncing(rho::json::CJSONArray& argv, const rho
 
 }
 
-
-rho::String js_s_RhoConnectClient_onSyncCreateError(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int argc = argv.getSize();
-    int nCallbackArg = 0;
-
-
-
-    nCallbackArg = 1;
-
-    
-    if ( argc == 0 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
-    
-
-
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( argv[0].isString() )
-        {
-            arg0 = argv[0].getString();
-
-            oRes.setStringParam(argv[0].getString());
-
-        }
-        else if (!argv[0].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "0" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    nCallbackArg = 2;
-
-    
-    if ( argc == 1 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
-    
-
-
-
-
-
-
-
-
-
-
-    rho::Vector<rho::String> arg1;
-    if ( argc > 1 )
-    {
-        if ( argv[1].isArray() )
-        {
-            CJSONArray arParam(argv[1]);
-            for( int i = 0; i < arParam.getSize(); i++ )
-            {
-                arg1.addElement( arParam[i].getString() );
-            }
-        }
-        else if (!argv[1].isNull())
-        {
-            oRes.setArgError("Type error: argument " "1" " should be " "array" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-    nCallbackArg = 3;
-
-    
-    if ( argc == 2 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
-    
-
-
-    rho::String arg2;
-    if ( argc > 2 )
-    {
-        if ( argv[2].isString() )
-        {
-            arg2 = argv[2].getString();
-
-        }
-        else if (!argv[2].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "2" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-
-
-        if ( !argv[nCallbackArg].isString() )
-        {
-            oRes.setArgError("Type error: callback should be String");
-            return oRes.toJSON();
-        }
-
-        oRes.setCallInUIThread(false);
-        oRes.setRubyCallback( argv[nCallbackArg].getString() );
-        if ( argc > nCallbackArg + 1 )
-        {
-            if ( !argv[nCallbackArg + 1].isString() )
-            {
-                oRes.setArgError("Type error: callback parameter should be String");
-                return oRes.toJSON();
-            }
-
-            oRes.setCallbackParam( argv[nCallbackArg + 1].getString() );
-        }
-
-    }
-
-
-    pFunctor = rho_makeInstanceClassFunctor4( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::onSyncCreateError, arg0, arg1, arg2,  oRes );
-
-
-
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->onSyncCreateError( arg0, arg1, arg2,  oRes );
-
-
-    }
-
-
-    return oRes.toJSON();
-
-}
-
-
-rho::String js_s_RhoConnectClient_pushChanges(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int argc = argv.getSize();
-    int nCallbackArg = 0;
-
-
-
-    nCallbackArg = 1;
-
-    
-    if ( argc == 0 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(1) );
-        return oRes.toJSON();
-    }
-    
-
-
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( argv[0].isString() )
-        {
-            arg0 = argv[0].getString();
-
-            oRes.setStringParam(argv[0].getString());
-
-        }
-        else if (!argv[0].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "0" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(1) );
-        return oRes.toJSON();
-
-
-        if ( !argv[nCallbackArg].isString() )
-        {
-            oRes.setArgError("Type error: callback should be String");
-            return oRes.toJSON();
-        }
-
-        oRes.setCallInUIThread(false);
-        oRes.setRubyCallback( argv[nCallbackArg].getString() );
-        if ( argc > nCallbackArg + 1 )
-        {
-            if ( !argv[nCallbackArg + 1].isString() )
-            {
-                oRes.setArgError("Type error: callback parameter should be String");
-                return oRes.toJSON();
-            }
-
-            oRes.setCallbackParam( argv[nCallbackArg + 1].getString() );
-        }
-
-    }
-
-
-    pFunctor = rho_makeInstanceClassFunctor2( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::pushChanges, arg0,  oRes );
-
-
-
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->pushChanges( arg0,  oRes );
-
-
-    }
-
-
-    return oRes.toJSON();
-
-}
-
-
-rho::String js_s_RhoConnectClient_onSyncUpdateError(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int argc = argv.getSize();
-    int nCallbackArg = 0;
-
-
-
-    nCallbackArg = 1;
-
-    
-    if ( argc == 0 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toJSON();
-    }
-    
-
-
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( argv[0].isString() )
-        {
-            arg0 = argv[0].getString();
-
-            oRes.setStringParam(argv[0].getString());
-
-        }
-        else if (!argv[0].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "0" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    nCallbackArg = 2;
-
-    
-    if ( argc == 1 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toJSON();
-    }
-    
-
-
-
-
-
-
-
-
-
-
-    rho::Vector<rho::String> arg1;
-    if ( argc > 1 )
-    {
-        if ( argv[1].isArray() )
-        {
-            CJSONArray arParam(argv[1]);
-            for( int i = 0; i < arParam.getSize(); i++ )
-            {
-                arg1.addElement( arParam[i].getString() );
-            }
-        }
-        else if (!argv[1].isNull())
-        {
-            oRes.setArgError("Type error: argument " "1" " should be " "array" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-    nCallbackArg = 3;
-
-    
-    if ( argc == 2 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toJSON();
-    }
-    
-
-
-    rho::String arg2;
-    if ( argc > 2 )
-    {
-        if ( argv[2].isString() )
-        {
-            arg2 = argv[2].getString();
-
-        }
-        else if (!argv[2].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "2" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    nCallbackArg = 4;
-
-    
-
-
-    rho::String arg3;
-    if ( argc > 3 )
-    {
-        if ( argv[3].isString() )
-        {
-            arg3 = argv[3].getString();
-
-        }
-        else if (!argv[3].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "3" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toJSON();
-
-
-        if ( !argv[nCallbackArg].isString() )
-        {
-            oRes.setArgError("Type error: callback should be String");
-            return oRes.toJSON();
-        }
-
-        oRes.setCallInUIThread(false);
-        oRes.setRubyCallback( argv[nCallbackArg].getString() );
-        if ( argc > nCallbackArg + 1 )
-        {
-            if ( !argv[nCallbackArg + 1].isString() )
-            {
-                oRes.setArgError("Type error: callback parameter should be String");
-                return oRes.toJSON();
-            }
-
-            oRes.setCallbackParam( argv[nCallbackArg + 1].getString() );
-        }
-
-    }
-
-
-    pFunctor = rho_makeInstanceClassFunctor5( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::onSyncUpdateError, arg0, arg1, arg2, arg3,  oRes );
-
-
-
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->onSyncUpdateError( arg0, arg1, arg2, arg3,  oRes );
-
-
-    }
-
-
-    return oRes.toJSON();
-
-}
-
-
-rho::String js_s_RhoConnectClient_onSyncDeleteError(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int argc = argv.getSize();
-    int nCallbackArg = 0;
-
-
-
-    nCallbackArg = 1;
-
-    
-    if ( argc == 0 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
-    
-
-
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( argv[0].isString() )
-        {
-            arg0 = argv[0].getString();
-
-            oRes.setStringParam(argv[0].getString());
-
-        }
-        else if (!argv[0].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "0" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    nCallbackArg = 2;
-
-    
-    if ( argc == 1 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
-    
-
-
-
-
-
-
-
-
-
-
-    rho::Vector<rho::String> arg1;
-    if ( argc > 1 )
-    {
-        if ( argv[1].isArray() )
-        {
-            CJSONArray arParam(argv[1]);
-            for( int i = 0; i < arParam.getSize(); i++ )
-            {
-                arg1.addElement( arParam[i].getString() );
-            }
-        }
-        else if (!argv[1].isNull())
-        {
-            oRes.setArgError("Type error: argument " "1" " should be " "array" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-    nCallbackArg = 3;
-
-    
-    if ( argc == 2 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
-    
-
-
-    rho::String arg2;
-    if ( argc > 2 )
-    {
-        if ( argv[2].isString() )
-        {
-            arg2 = argv[2].getString();
-
-        }
-        else if (!argv[2].isNull())
-        {
-            oRes.setArgError( "Type error: argument " "2" " should be " "string" );
-            return oRes.toJSON();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-
-
-        if ( !argv[nCallbackArg].isString() )
-        {
-            oRes.setArgError("Type error: callback should be String");
-            return oRes.toJSON();
-        }
-
-        oRes.setCallInUIThread(false);
-        oRes.setRubyCallback( argv[nCallbackArg].getString() );
-        if ( argc > nCallbackArg + 1 )
-        {
-            if ( !argv[nCallbackArg + 1].isString() )
-            {
-                oRes.setArgError("Type error: callback parameter should be String");
-                return oRes.toJSON();
-            }
-
-            oRes.setCallbackParam( argv[nCallbackArg + 1].getString() );
-        }
-
-    }
-
-
-    pFunctor = rho_makeInstanceClassFunctor4( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::onSyncDeleteError, arg0, arg1, arg2,  oRes );
-
-
-
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->onSyncDeleteError( arg0, arg1, arg2,  oRes );
-
-
-    }
-
-
-    return oRes.toJSON();
-
-}
-
-
 rho::String js_s_RhoConnectClient_search(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2044,12 +1300,11 @@ rho::String js_s_RhoConnectClient_search(rho::json::CJSONArray& argv, const rho:
 
 }
 
-
 rho::String js_s_RhoConnectClient_doSync(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2058,12 +1313,6 @@ rho::String js_s_RhoConnectClient_doSync(rho::json::CJSONArray& argv, const rho:
 
     nCallbackArg = 1;
 
-    
-    if ( argc == 0 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
     
 
 
@@ -2097,12 +1346,6 @@ rho::String js_s_RhoConnectClient_doSync(rho::json::CJSONArray& argv, const rho:
 
     nCallbackArg = 2;
 
-    
-    if ( argc == 1 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
     
 
 
@@ -2139,12 +1382,6 @@ rho::String js_s_RhoConnectClient_doSync(rho::json::CJSONArray& argv, const rho:
 
     nCallbackArg = 3;
 
-    
-    if ( argc == 2 )
-    {
-        oRes.setArgError( "Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toJSON();
-    }
     
 
 
@@ -2228,12 +1465,11 @@ rho::String js_s_RhoConnectClient_doSync(rho::json::CJSONArray& argv, const rho:
 
 }
 
-
 rho::String js_s_RhoConnectClient_doSyncSource(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2258,7 +1494,7 @@ rho::String js_s_RhoConnectClient_doSyncSource(rho::json::CJSONArray& argv, cons
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -2405,12 +1641,11 @@ rho::String js_s_RhoConnectClient_doSyncSource(rho::json::CJSONArray& argv, cons
 
 }
 
-
 rho::String js_s_RhoConnectClient_login(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2435,7 +1670,7 @@ rho::String js_s_RhoConnectClient_login(rho::json::CJSONArray& argv, const rho::
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -2548,12 +1783,11 @@ rho::String js_s_RhoConnectClient_login(rho::json::CJSONArray& argv, const rho::
 
 }
 
-
 rho::String js_s_RhoConnectClient_logout(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2612,12 +1846,11 @@ rho::String js_s_RhoConnectClient_logout(rho::json::CJSONArray& argv, const rho:
 
 }
 
-
 rho::String js_s_RhoConnectClient_stopSync(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2676,12 +1909,11 @@ rho::String js_s_RhoConnectClient_stopSync(rho::json::CJSONArray& argv, const rh
 
 }
 
-
 rho::String js_s_RhoConnectClient_setNotification(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2706,7 +1938,7 @@ rho::String js_s_RhoConnectClient_setNotification(rho::json::CJSONArray& argv, c
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -2777,12 +2009,11 @@ rho::String js_s_RhoConnectClient_setNotification(rho::json::CJSONArray& argv, c
 
 }
 
-
 rho::String js_s_RhoConnectClient_clearNotification(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2807,7 +2038,7 @@ rho::String js_s_RhoConnectClient_clearNotification(rho::json::CJSONArray& argv,
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -2885,12 +2116,11 @@ rho::String js_s_RhoConnectClient_clearNotification(rho::json::CJSONArray& argv,
 
 }
 
-
 rho::String js_s_RhoConnectClient_setObjectNotification(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2942,12 +2172,11 @@ rho::String js_s_RhoConnectClient_setObjectNotification(rho::json::CJSONArray& a
 
 }
 
-
 rho::String js_s_RhoConnectClient_addObjectNotify(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -2972,7 +2201,7 @@ rho::String js_s_RhoConnectClient_addObjectNotify(rho::json::CJSONArray& argv, c
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -3092,12 +2321,11 @@ rho::String js_s_RhoConnectClient_addObjectNotify(rho::json::CJSONArray& argv, c
 
 }
 
-
 rho::String js_s_RhoConnectClient_cleanObjectNotify(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -3156,12 +2384,11 @@ rho::String js_s_RhoConnectClient_cleanObjectNotify(rho::json::CJSONArray& argv,
 
 }
 
-
 rho::String js_s_RhoConnectClient_getLastSyncObjectCount(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -3186,7 +2413,7 @@ rho::String js_s_RhoConnectClient_getLastSyncObjectCount(rho::json::CJSONArray& 
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -3264,12 +2491,11 @@ rho::String js_s_RhoConnectClient_getLastSyncObjectCount(rho::json::CJSONArray& 
 
 }
 
-
 rho::String js_s_RhoConnectClient_setSourceProperty(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -3294,7 +2520,7 @@ rho::String js_s_RhoConnectClient_setSourceProperty(rho::json::CJSONArray& argv,
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -3456,12 +2682,11 @@ rho::String js_s_RhoConnectClient_setSourceProperty(rho::json::CJSONArray& argv,
 
 }
 
-
 rho::String js_s_RhoConnectClient_getSourceProperty(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int argc = argv.getSize();
     int nCallbackArg = 0;
@@ -3486,7 +2711,7 @@ rho::String js_s_RhoConnectClient_getSourceProperty(rho::json::CJSONArray& argv,
         {
             arg0 = argv[0].getString();
 
-            oRes.setStringParam(argv[0].getString());
+            oRes.setParamName(argv[0].getString());
 
         }
         else if (!argv[0].isNull())
@@ -3605,7 +2830,6 @@ rho::String js_s_RhoConnectClient_getSourceProperty(rho::json::CJSONArray& argv,
     return oRes.toJSON();
 
 }
-
 
 
 

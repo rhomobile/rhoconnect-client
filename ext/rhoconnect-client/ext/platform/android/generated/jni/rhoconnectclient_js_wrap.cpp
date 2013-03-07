@@ -645,174 +645,6 @@ rho::String js_s_RhoConnectClient_syncing(rho::json::CJSONArray& argv, const rho
     RAWTRACE2("%s(id=%s) end ^^^", __FUNCTION__, strObjID.c_str());
     return res;
 }
-rho::String js_s_RhoConnectClient_onSyncCreateError(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    RAWTRACE2("%s(id=%s)", __FUNCTION__, strObjID.c_str());
-
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toJson();
-    }
-
-
-    int argc = argv.getSize();
-    if((argc < 3) || (argc > 3))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toJson();
-    }
-    
-    if(argc > 3)
-    {
-        if(argc > 4)
-            result.setCallBack(argv[3], argv[4]);
-        else
-            result.setCallBack(argv[3]);
-    
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toJson();
-        }
-    }
-
-    ObjectProxy::onSyncCreateError(argumentsAdapter(argv), result); 
-    rho::String res = 
-        result.toJson();
-
-    RAWTRACE2("%s(id=%s) end ^^^", __FUNCTION__, strObjID.c_str());
-    return res;
-}
-rho::String js_s_RhoConnectClient_pushChanges(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    RAWTRACE2("%s(id=%s)", __FUNCTION__, strObjID.c_str());
-
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toJson();
-    }
-
-
-    int argc = argv.getSize();
-    if((argc < 1) || (argc > 1))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toJson();
-    }
-    
-    if(argc > 1)
-    {
-        if(argc > 2)
-            result.setCallBack(argv[1], argv[2]);
-        else
-            result.setCallBack(argv[1]);
-    
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toJson();
-        }
-    }
-
-    ObjectProxy::pushChanges(argumentsAdapter(argv), result); 
-    rho::String res = 
-        result.toJson();
-
-    RAWTRACE2("%s(id=%s) end ^^^", __FUNCTION__, strObjID.c_str());
-    return res;
-}
-rho::String js_s_RhoConnectClient_onSyncUpdateError(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    RAWTRACE2("%s(id=%s)", __FUNCTION__, strObjID.c_str());
-
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toJson();
-    }
-
-
-    int argc = argv.getSize();
-    if((argc < 3) || (argc > 4))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toJson();
-    }
-    
-    if(argc > 4)
-    {
-        if(argc > 5)
-            result.setCallBack(argv[4], argv[5]);
-        else
-            result.setCallBack(argv[4]);
-    
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toJson();
-        }
-    }
-
-    ObjectProxy::onSyncUpdateError(argumentsAdapter(argv), result); 
-    rho::String res = 
-        result.toJson();
-
-    RAWTRACE2("%s(id=%s) end ^^^", __FUNCTION__, strObjID.c_str());
-    return res;
-}
-rho::String js_s_RhoConnectClient_onSyncDeleteError(rho::json::CJSONArray& argv, const rho::String& strObjID)
-{
-    RAWTRACE2("%s(id=%s)", __FUNCTION__, strObjID.c_str());
-
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toJson();
-    }
-
-
-    int argc = argv.getSize();
-    if((argc < 3) || (argc > 3))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toJson();
-    }
-    
-    if(argc > 3)
-    {
-        if(argc > 4)
-            result.setCallBack(argv[3], argv[4]);
-        else
-            result.setCallBack(argv[3]);
-    
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toJson();
-        }
-    }
-
-    ObjectProxy::onSyncDeleteError(argumentsAdapter(argv), result); 
-    rho::String res = 
-        result.toJson();
-
-    RAWTRACE2("%s(id=%s) end ^^^", __FUNCTION__, strObjID.c_str());
-    return res;
-}
 rho::String js_s_RhoConnectClient_search(rho::json::CJSONArray& argv, const rho::String& strObjID)
 {
     RAWTRACE2("%s(id=%s)", __FUNCTION__, strObjID.c_str());
@@ -827,7 +659,7 @@ rho::String js_s_RhoConnectClient_search(rho::json::CJSONArray& argv, const rho:
 
 
     int argc = argv.getSize();
-    if((argc < 2) || (argc > 3))
+    if((argc < 1) || (argc > 3))
     {
         result.setArgError("Wrong number of arguments");
         RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
@@ -869,7 +701,7 @@ rho::String js_s_RhoConnectClient_doSync(rho::json::CJSONArray& argv, const rho:
 
 
     int argc = argv.getSize();
-    if((argc < 3) || (argc > 3))
+    if((argc < 0) || (argc > 3))
     {
         result.setArgError("Wrong number of arguments");
         RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);

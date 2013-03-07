@@ -19,8 +19,7 @@ VALUE getRuby_RhoConnectClient_Module();
 
 
 
-extern "C" static void
-string_iter(const char* szVal, void* par)
+static void string_iter(const char* szVal, void* par)
 {
     rho::Vector<rho::String>& ar = *((rho::Vector<rho::String>*)(par));
     ar.addElement( szVal );
@@ -28,10 +27,10 @@ string_iter(const char* szVal, void* par)
 
 static void getStringArrayFromValue(VALUE val, rho::Vector<rho::String>& res)
 {
-    rho_ruby_enum_strary(val, string_iter, &res);
+    rho_ruby_enum_strary_json(val, string_iter, &res);
 }
 
-extern "C" static void hash_eachstr(const char* szName, const char* szVal, void* par)
+static void hash_eachstr(const char* szName, const char* szVal, void* par)
 {
     rho::Hashtable<rho::String, rho::String>& hash = *((rho::Hashtable<rho::String, rho::String>*)(par));
     hash.put( szName, szVal );
@@ -39,7 +38,7 @@ extern "C" static void hash_eachstr(const char* szName, const char* szVal, void*
 
 static void getStringHashFromValue(VALUE val, rho::Hashtable<rho::String, rho::String>& res)
 {
-    rho_ruby_enum_strhash(val, hash_eachstr, &res);
+    rho_ruby_enum_strhash_json(val, hash_eachstr, &res);
 }
 
 
@@ -47,7 +46,7 @@ VALUE rb_s_RhoConnectClient_getUserName(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -75,11 +74,12 @@ VALUE rb_s_RhoConnectClient_getUserName(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getPollInterval(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -107,11 +107,12 @@ VALUE rb_s_RhoConnectClient_getPollInterval(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setPollInterval(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -157,11 +158,12 @@ VALUE rb_s_RhoConnectClient_setPollInterval(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getSyncServer(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -189,11 +191,12 @@ VALUE rb_s_RhoConnectClient_getSyncServer(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setSyncServer(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -209,7 +212,7 @@ VALUE rb_s_RhoConnectClient_setSyncServer(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -244,11 +247,12 @@ VALUE rb_s_RhoConnectClient_setSyncServer(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getPageSize(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -276,11 +280,12 @@ VALUE rb_s_RhoConnectClient_getPageSize(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setPageSize(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -326,11 +331,12 @@ VALUE rb_s_RhoConnectClient_setPageSize(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getThreadedMode(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -358,11 +364,12 @@ VALUE rb_s_RhoConnectClient_getThreadedMode(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setThreadedMode(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -408,11 +415,12 @@ VALUE rb_s_RhoConnectClient_setThreadedMode(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getShowStatusPopup(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -440,11 +448,12 @@ VALUE rb_s_RhoConnectClient_getShowStatusPopup(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setShowStatusPopup(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -490,11 +499,12 @@ VALUE rb_s_RhoConnectClient_setShowStatusPopup(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getSslVerifyPeer(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -522,11 +532,12 @@ VALUE rb_s_RhoConnectClient_getSslVerifyPeer(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setSslVerifyPeer(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -572,11 +583,12 @@ VALUE rb_s_RhoConnectClient_setSslVerifyPeer(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_loggedIn(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -604,11 +616,12 @@ VALUE rb_s_RhoConnectClient_loggedIn(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_syncing(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -636,364 +649,12 @@ VALUE rb_s_RhoConnectClient_syncing(int argc, VALUE *argv)
 
 
 
-VALUE rb_s_RhoConnectClient_onSyncCreateError(int argc, VALUE *argv)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int nCallbackArg = 0;
-    nCallbackArg = 1;
-    if ( argc == 0 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( rho_ruby_is_string(argv[0]) )
-        {
-            arg0 = getStringFromValue(argv[0]);
-
-            oRes.setStringParam(getStringFromValue(argv[0]));
-
-        }
-        else if (!rho_ruby_is_NIL(argv[0]))
-        {
-            oRes.setArgError("Type error: argument " "0" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    nCallbackArg = 2;
-    if ( argc == 1 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    rho::Vector<rho::String> arg1;
-    if ( argc > 1 )
-    {
-        if ( rho_ruby_is_array(argv[1]) )
-            getStringArrayFromValue(argv[1], arg1);
-        else if (!rho_ruby_is_NIL(argv[1]))
-        {
-            oRes.setArgError("Type error: argument " "1" " should be " "array" );
-            return oRes.toRuby();
-        }
-    }
-
-    nCallbackArg = 3;
-    if ( argc == 2 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    rho::String arg2;
-    if ( argc > 2 )
-    {
-        if ( rho_ruby_is_string(argv[2]) )
-        {
-            arg2 = getStringFromValue(argv[2]);
-
-        }
-        else if (!rho_ruby_is_NIL(argv[2]))
-        {
-            oRes.setArgError("Type error: argument " "2" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    pFunctor = rho_makeInstanceClassFunctor4( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::onSyncCreateError, arg0, arg1, arg2,  oRes );
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->onSyncCreateError( arg0, arg1, arg2,  oRes );
-
-    }
-    return oRes.toRuby();
-}
-
-
-
-
-
-VALUE rb_s_RhoConnectClient_pushChanges(int argc, VALUE *argv)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int nCallbackArg = 0;
-    nCallbackArg = 1;
-    if ( argc == 0 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(1) );
-        return oRes.toRuby();
-    }
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( rho_ruby_is_string(argv[0]) )
-        {
-            arg0 = getStringFromValue(argv[0]);
-
-            oRes.setStringParam(getStringFromValue(argv[0]));
-
-        }
-        else if (!rho_ruby_is_NIL(argv[0]))
-        {
-            oRes.setArgError("Type error: argument " "0" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(1) );
-        return oRes.toRuby();
-    }
-    pFunctor = rho_makeInstanceClassFunctor2( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::pushChanges, arg0,  oRes );
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->pushChanges( arg0,  oRes );
-
-    }
-    return oRes.toRuby();
-}
-
-
-
-
-
-VALUE rb_s_RhoConnectClient_onSyncUpdateError(int argc, VALUE *argv)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int nCallbackArg = 0;
-    nCallbackArg = 1;
-    if ( argc == 0 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toRuby();
-    }
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( rho_ruby_is_string(argv[0]) )
-        {
-            arg0 = getStringFromValue(argv[0]);
-
-            oRes.setStringParam(getStringFromValue(argv[0]));
-
-        }
-        else if (!rho_ruby_is_NIL(argv[0]))
-        {
-            oRes.setArgError("Type error: argument " "0" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    nCallbackArg = 2;
-    if ( argc == 1 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toRuby();
-    }
-    rho::Vector<rho::String> arg1;
-    if ( argc > 1 )
-    {
-        if ( rho_ruby_is_array(argv[1]) )
-            getStringArrayFromValue(argv[1], arg1);
-        else if (!rho_ruby_is_NIL(argv[1]))
-        {
-            oRes.setArgError("Type error: argument " "1" " should be " "array" );
-            return oRes.toRuby();
-        }
-    }
-
-    nCallbackArg = 3;
-    if ( argc == 2 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toRuby();
-    }
-    rho::String arg2;
-    if ( argc > 2 )
-    {
-        if ( rho_ruby_is_string(argv[2]) )
-        {
-            arg2 = getStringFromValue(argv[2]);
-
-        }
-        else if (!rho_ruby_is_NIL(argv[2]))
-        {
-            oRes.setArgError("Type error: argument " "2" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    nCallbackArg = 4;
-    rho::String arg3;
-    if ( argc > 3 )
-    {
-        if ( rho_ruby_is_string(argv[3]) )
-        {
-            arg3 = getStringFromValue(argv[3]);
-
-        }
-        else if (!rho_ruby_is_NIL(argv[3]))
-        {
-            oRes.setArgError("Type error: argument " "3" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(4) );
-        return oRes.toRuby();
-    }
-    pFunctor = rho_makeInstanceClassFunctor5( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::onSyncUpdateError, arg0, arg1, arg2, arg3,  oRes );
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->onSyncUpdateError( arg0, arg1, arg2, arg3,  oRes );
-
-    }
-    return oRes.toRuby();
-}
-
-
-
-
-
-VALUE rb_s_RhoConnectClient_onSyncDeleteError(int argc, VALUE *argv)
-{
-    rho::apiGenerator::CMethodResult oRes;
-
-    rho::common::IRhoRunnable* pFunctor = 0;
-    bool bUseCallback = false;
-    int nCallbackArg = 0;
-    nCallbackArg = 1;
-    if ( argc == 0 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    rho::String arg0;
-    if ( argc > 0 )
-    {
-        if ( rho_ruby_is_string(argv[0]) )
-        {
-            arg0 = getStringFromValue(argv[0]);
-
-            oRes.setStringParam(getStringFromValue(argv[0]));
-
-        }
-        else if (!rho_ruby_is_NIL(argv[0]))
-        {
-            oRes.setArgError("Type error: argument " "0" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    nCallbackArg = 2;
-    if ( argc == 1 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    rho::Vector<rho::String> arg1;
-    if ( argc > 1 )
-    {
-        if ( rho_ruby_is_array(argv[1]) )
-            getStringArrayFromValue(argv[1], arg1);
-        else if (!rho_ruby_is_NIL(argv[1]))
-        {
-            oRes.setArgError("Type error: argument " "1" " should be " "array" );
-            return oRes.toRuby();
-        }
-    }
-
-    nCallbackArg = 3;
-    if ( argc == 2 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    rho::String arg2;
-    if ( argc > 2 )
-    {
-        if ( rho_ruby_is_string(argv[2]) )
-        {
-            arg2 = getStringFromValue(argv[2]);
-
-        }
-        else if (!rho_ruby_is_NIL(argv[2]))
-        {
-            oRes.setArgError("Type error: argument " "2" " should be " "string" );
-            return oRes.toRuby();
-        }
-    }
-
-    if ( argc > nCallbackArg )
-    {
-
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
-    pFunctor = rho_makeInstanceClassFunctor4( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::onSyncDeleteError, arg0, arg1, arg2,  oRes );
-
-    if ( bUseCallback )
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->addCommandToQueue( pFunctor );
-    else 
-    {
-        delete pFunctor;
-
-
-        rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS()->onSyncDeleteError( arg0, arg1, arg2,  oRes );
-
-    }
-    return oRes.toRuby();
-}
-
-
-
-
 
 VALUE rb_s_RhoConnectClient_search(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1043,11 +704,6 @@ VALUE rb_s_RhoConnectClient_search(int argc, VALUE *argv)
         
         bUseCallback = true;
     }
-    else
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(2) + ".Mandatory Callback parameter is mised." );
-        return oRes.toRuby();
-    }
     pFunctor = rho_makeInstanceClassFunctor2( rho::CRhoConnectClientFactoryBase::getRhoConnectClientSingletonS(), &rho::IRhoConnectClientSingleton::search, arg0,  oRes );
     {
         delete pFunctor;
@@ -1063,19 +719,15 @@ VALUE rb_s_RhoConnectClient_search(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_doSync(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
-    if ( argc == 0 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
     bool arg0;
     if ( argc > 0 )
     {
@@ -1089,11 +741,6 @@ VALUE rb_s_RhoConnectClient_doSync(int argc, VALUE *argv)
     }
 
     nCallbackArg = 2;
-    if ( argc == 1 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
     rho::String arg1;
     if ( argc > 1 )
     {
@@ -1110,11 +757,6 @@ VALUE rb_s_RhoConnectClient_doSync(int argc, VALUE *argv)
     }
 
     nCallbackArg = 3;
-    if ( argc == 2 )
-    {
-        oRes.setArgError("Wrong number of arguments: " + convertToStringA(argc) + " instead of " + convertToStringA(3) );
-        return oRes.toRuby();
-    }
     bool arg2;
     if ( argc > 2 )
     {
@@ -1152,11 +794,12 @@ VALUE rb_s_RhoConnectClient_doSync(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_doSyncSource(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1172,7 +815,7 @@ VALUE rb_s_RhoConnectClient_doSyncSource(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1236,11 +879,12 @@ VALUE rb_s_RhoConnectClient_doSyncSource(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_login(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1256,7 +900,7 @@ VALUE rb_s_RhoConnectClient_login(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1336,11 +980,12 @@ VALUE rb_s_RhoConnectClient_login(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_logout(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -1368,11 +1013,12 @@ VALUE rb_s_RhoConnectClient_logout(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_stopSync(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -1400,11 +1046,12 @@ VALUE rb_s_RhoConnectClient_stopSync(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setNotification(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1420,7 +1067,7 @@ VALUE rb_s_RhoConnectClient_setNotification(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1479,11 +1126,12 @@ VALUE rb_s_RhoConnectClient_setNotification(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_clearNotification(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1499,7 +1147,7 @@ VALUE rb_s_RhoConnectClient_clearNotification(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1534,11 +1182,12 @@ VALUE rb_s_RhoConnectClient_clearNotification(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setObjectNotification(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -1590,11 +1239,12 @@ VALUE rb_s_RhoConnectClient_setObjectNotification(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_addObjectNotify(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1610,7 +1260,7 @@ VALUE rb_s_RhoConnectClient_addObjectNotify(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1666,11 +1316,12 @@ VALUE rb_s_RhoConnectClient_addObjectNotify(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_cleanObjectNotify(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     if ( argc > nCallbackArg )
@@ -1698,11 +1349,12 @@ VALUE rb_s_RhoConnectClient_cleanObjectNotify(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getLastSyncObjectCount(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1718,7 +1370,7 @@ VALUE rb_s_RhoConnectClient_getLastSyncObjectCount(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1753,11 +1405,12 @@ VALUE rb_s_RhoConnectClient_getLastSyncObjectCount(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_setSourceProperty(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1773,7 +1426,7 @@ VALUE rb_s_RhoConnectClient_setSourceProperty(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1850,11 +1503,12 @@ VALUE rb_s_RhoConnectClient_setSourceProperty(int argc, VALUE *argv)
 
 
 
+
 VALUE rb_s_RhoConnectClient_getSourceProperty(int argc, VALUE *argv)
 {
     rho::apiGenerator::CMethodResult oRes;
 
-    rho::common::IRhoRunnable* pFunctor = 0;
+    rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor = 0;
     bool bUseCallback = false;
     int nCallbackArg = 0;
     nCallbackArg = 1;
@@ -1870,7 +1524,7 @@ VALUE rb_s_RhoConnectClient_getSourceProperty(int argc, VALUE *argv)
         {
             arg0 = getStringFromValue(argv[0]);
 
-            oRes.setStringParam(getStringFromValue(argv[0]));
+            oRes.setParamName(getStringFromValue(argv[0]));
 
         }
         else if (!rho_ruby_is_NIL(argv[0]))
@@ -1921,6 +1575,7 @@ VALUE rb_s_RhoConnectClient_getSourceProperty(int argc, VALUE *argv)
     }
     return oRes.toRuby();
 }
+
 
 
 

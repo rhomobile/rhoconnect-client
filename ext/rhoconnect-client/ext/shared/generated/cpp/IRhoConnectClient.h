@@ -41,10 +41,6 @@ struct IRhoConnectClientSingleton
     virtual void setSslVerifyPeer( bool value, rho::apiGenerator::CMethodResult& oResult) = 0;
     virtual void loggedIn(rho::apiGenerator::CMethodResult& oResult) = 0;
     virtual void syncing(rho::apiGenerator::CMethodResult& oResult) = 0;
-    virtual void onSyncCreateError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action, rho::apiGenerator::CMethodResult& oResult) = 0;
-    virtual void pushChanges( const rho::String& srcName, rho::apiGenerator::CMethodResult& oResult) = 0;
-    virtual void onSyncUpdateError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action,  const rho::String& rollbackData, rho::apiGenerator::CMethodResult& oResult) = 0;
-    virtual void onSyncDeleteError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action, rho::apiGenerator::CMethodResult& oResult) = 0;
     virtual void search( const rho::Hashtable<rho::String, rho::String>& args, rho::apiGenerator::CMethodResult& oResult) = 0;
     virtual void doSync( bool showStatusPopup,  const rho::String& queryParams,  bool syncOnlyChangedSources, rho::apiGenerator::CMethodResult& oResult) = 0;
     virtual void doSyncSource( const rho::String& sourceName,  bool showStatusPopup,  const rho::String& queryParams, rho::apiGenerator::CMethodResult& oResult) = 0;
@@ -61,7 +57,7 @@ struct IRhoConnectClientSingleton
     virtual void getSourceProperty( const rho::String& sourceName,  const rho::String& propertyName, rho::apiGenerator::CMethodResult& oResult) = 0;
 
 
-    virtual void addCommandToQueue(rho::common::IRhoRunnable* pFunctor) = 0;
+    virtual void addCommandToQueue(rho::common::CInstanceClassFunctorBase<rho::apiGenerator::CMethodResult>* pFunctor) = 0;
     virtual void callCommandInThread(rho::common::IRhoRunnable* pFunctor) = 0;
 };
 

@@ -1,20 +1,17 @@
-#include "RhoConnectClientBase.h"
-#include "SyncThread.h"
+#include "generated/cpp/RhoConnectClientBase.h"
+#include "sync/SyncThread.h"
 
 namespace rho {
-
-
-class RhoconnectClientImpl : public CRhoConnectClientSingletonBase
+	
+class RhoConnectClientImpl : public CRhoConnectClientSingletonBase
 {
 private:
 	sync::CSyncThread* getSyncThread() const { return sync::CSyncThread::getInstance(); }
 	sync::CSyncEngine& getSyncEngine() const { return sync::CSyncThread::getSyncEngine(); }
-
-
 public:
 
 
-    RhoconnectClientImpl();
+    RhoConnectClientImpl();
 	
 	virtual void getUserName(rho::apiGenerator::CMethodResult& oResult);
     virtual void getPollInterval(rho::apiGenerator::CMethodResult& oResult);
@@ -49,6 +46,27 @@ public:
     virtual void getLastSyncObjectCount( const rho::String& sourceName, rho::apiGenerator::CMethodResult& oResult);
     virtual void setSourceProperty( const rho::String& sourceName,  const rho::String& propertyName,  const rho::String& propertyValue, rho::apiGenerator::CMethodResult& oResult);
     virtual void getSourceProperty( const rho::String& sourceName,  const rho::String& propertyName, rho::apiGenerator::CMethodResult& oResult);
+    //virtual void getSourceNameById( int sourceId, rho::apiGenerator::CMethodResult& oResult);
+
+	/*
+	virtual void set_threaded_mode( bool threaded, rho::apiGenerator::CMethodResult& oResult);
+    virtual void set_ssl_verify_peer( bool verify, rho::apiGenerator::CMethodResult& oResult);
+	virtual void set_pollinterval( int interval, rho::apiGenerator::CMethodResult& oResult);
+    virtual void get_pollinterval(rho::apiGenerator::CMethodResult& oResult);
+    virtual void set_syncserver( const rho::String& url, rho::apiGenerator::CMethodResult& oResult);
+    virtual void set_pagesize( int size, rho::apiGenerator::CMethodResult& oResult);
+    virtual void get_pagesize(rho::apiGenerator::CMethodResult& oResult);
+    virtual void enable_status_popup( bool enable, rho::apiGenerator::CMethodResult& oResult);
+	virtual void dosync_source( int source,  int showStatusPopup,  const rho::String& queryParams, rho::apiGenerator::CMethodResult& oResult);
+    virtual void set_notification( int source, rho::apiGenerator::CMethodResult& oResult);
+    virtual void clear_notification( int source, rho::apiGenerator::CMethodResult& oResult);
+    virtual void add_objectnotify( int source,  const rho::String& object, rho::apiGenerator::CMethodResult& oResult);
+    virtual void get_lastsync_objectcount( int source, rho::apiGenerator::CMethodResult& oResult);
+    virtual void set_source_property( int source,  const rho::String& propertyName,  const rho::String& propertyValue, rho::apiGenerator::CMethodResult& oResult);
+    virtual void get_source_property( int source,  const rho::String& propertyName, rho::apiGenerator::CMethodResult& oResult);
+	virtual void logged_in(rho::apiGenerator::CMethodResult& oResult);
+    virtual void is_syncing(rho::apiGenerator::CMethodResult& oResult);
+	*/
 
 
 };
@@ -56,9 +74,6 @@ public:
 
  
 
-};
+}
 
 extern "C" void Init_RhoConnectClient_API();
-
-
-}

@@ -86,6 +86,7 @@ CSyncThread::~CSyncThread(void)
     stop(SYNC_WAIT_BEFOREKILL_SECONDS);
 }
 
+/*
 #ifndef RHO_NO_RUBY
 unsigned long CSyncThread::getRetValue()
 {
@@ -99,6 +100,7 @@ unsigned long CSyncThread::getRetValue()
     return ret;
 }
 #else
+*/
 unsigned long CSyncThread::getRetValue()
 {
     unsigned long ret = 0;
@@ -110,7 +112,7 @@ unsigned long CSyncThread::getRetValue()
 
     return ret;
 }
-#endif 
+//#endif
 
 int CSyncThread::getLastPollInterval()
 {
@@ -308,11 +310,11 @@ source_iter(const char* szName, void* parSources)
 
 #ifndef RHO_NO_RUBY
 unsigned long rho_sync_doSearch(unsigned long ar_sources, const char *from, const char *params, bool sync_changes, int nProgressStep, 
-    const char* callback, const char* callback_params)
+								/*const char* callback, const char* callback_params*/const rho::apiGenerator::CMethodResult& oResult)
 {
     rho_sync_stop();
-    if ( callback && *callback )
-        CSyncThread::getSyncEngine().getNotify().setSearchNotification( new CSyncNotification( callback, callback_params ? callback_params : "", true) );
+//    if ( callback && *callback )
+        CSyncThread::getSyncEngine().getNotify().setSearchNotification( new CSyncNotification( oResult, true) );
 
     rho::Vector<rho::String> arSources;
     rho_ruby_enum_strary(ar_sources, source_iter, &arSources);
@@ -368,11 +370,11 @@ void rho_sync_set_syncserver(const char* syncserver)
     }
 }
 
-unsigned long rho_sync_login(const char *name, const char *password, const char* callback)
+unsigned long rho_sync_login(const char *name, const char *password, const rho::apiGenerator::CMethodResult& oResult)
 {
     rho_sync_stop();
     CSyncThread::getInstance()->addQueueCommand(new CSyncThread::CSyncLoginCommand(name, password, 
-		new CSyncNotification(callback, "", false) ) );
+		new CSyncNotification(oResult, false) ) );
 
     return CSyncThread::getInstance()->getRetValue();
 }
@@ -403,9 +405,9 @@ void rho_sync_logout()
     CSyncThread::getSyncEngine().logout_int();
 }
 
-void rho_sync_set_notification(int source_id, const char *url, char* params)
+void rho_sync_set_notification(int source_id, const rho::apiGenerator::CMethodResult& oResult)
 {
-    CSyncThread::getSyncEngine().getNotify().setSyncNotification(source_id, new CSyncNotification(url, params ? params : "", source_id != -1) );
+    CSyncThread::getSyncEngine().getNotify().setSyncNotification(source_id, new CSyncNotification(oResult, source_id != -1) );
 }
 
 void rho_sync_set_notification_c(int source_id, /*RHOC_CALLBACK*/void* callback, void* callback_data)

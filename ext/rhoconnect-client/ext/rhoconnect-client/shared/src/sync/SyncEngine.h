@@ -151,6 +151,8 @@ public:
     ISyncProtocol& getProtocol(){ return *m_SyncProtocol; }
 
     CSyncSource* findSourceByName(const String& strSrcName);
+	CSyncSource* findSourceById(int srcId);
+
 
     int getSyncPageSize() { return m_nSyncPageSize; }
     void setSyncPageSize(int nPageSize){ m_nSyncPageSize = nPageSize; }

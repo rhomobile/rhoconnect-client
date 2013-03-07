@@ -31,6 +31,7 @@
 #include "common/AutoPointer.h"
 #include "common/IRhoClassFactory.h"
 #include "net/INetRequest.h"
+#include "api_generator/MethodResult.h"
 
 typedef int (*RHOC_CALLBACK)(const char* szNotify, void* callback_data);
 
@@ -45,14 +46,15 @@ class CSyncSource;
 
 struct CSyncNotification
 {
-    String m_strUrl, m_strParams;
+	apiGenerator::CMethodResult m_callbackData;
+	
     RHOC_CALLBACK m_cCallback;
     void*         m_cCallbackData;
 
     boolean m_bRemoveAfterFire;
     CSyncNotification(): m_cCallback(0), m_cCallbackData(0), m_bRemoveAfterFire(false){}
 
-    CSyncNotification(String strUrl, String strParams, boolean bRemoveAfterFire);
+    CSyncNotification(const apiGenerator::CMethodResult& callbackData, boolean bRemoveAfterFire);
     CSyncNotification(RHOC_CALLBACK callback, void* callback_data, boolean bRemoveAfterFire) : 
         m_cCallback(callback), m_cCallbackData(callback_data), m_bRemoveAfterFire(false){}
 
@@ -63,13 +65,14 @@ struct CSyncNotification
 
 struct CObjectNotification
 {
-    String m_strUrl;
+	apiGenerator::CMethodResult m_callbackData;
+
     RHOC_CALLBACK m_cCallback;
     void*         m_cCallbackData;
     
     CObjectNotification(): m_cCallback(0), m_cCallbackData(0){}
     
-    CObjectNotification(String strUrl);
+    CObjectNotification(const apiGenerator::CMethodResult& callbackData);
     CObjectNotification(RHOC_CALLBACK callback, void* callback_data) : 
         m_cCallback(callback), m_cCallbackData(callback_data){}
     

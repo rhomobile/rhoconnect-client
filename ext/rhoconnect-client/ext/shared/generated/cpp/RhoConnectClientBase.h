@@ -1,5 +1,7 @@
 #include "IRhoConnectClient.h"
+#include "logging/RhoLog.h"
 #include "common/StringConverter.h"
+#include "common/ExtManager.h"
 
 
 namespace rho {
@@ -10,7 +12,7 @@ class CRhoConnectClientFactoryBase : public CModuleFactoryBase<IRhoConnectClient
 {
 protected:
     static rho::common::CAutoPtr<CRhoConnectClientFactoryBase> m_pInstance;
-    Hashtable<rho::String,IRhoConnectClient*> m_hashModules;
+    HashtablePtr<rho::String,IRhoConnectClient*> m_hashModules;
 
 public:
 
@@ -33,20 +35,30 @@ public:
     }
 
     virtual IRhoConnectClient* createModuleByID(const rho::String& strID){ return (IRhoConnectClient*)0; };
+    virtual void deleteModuleByID(const rho::String& strID)
+    {
+        m_hashModules.remove(strID);
+    }
 
 };
 
-class CRhoConnectClientSingletonBase : public CModuleSingletonBase< IRhoConnectClientSingleton >
+class CRhoConnectClientSingletonBase : public CModuleSingletonBase< IRhoConnectClientSingleton >, public rho::common::IRhoExtension
 {
 protected:
+    DEFINE_LOGCLASS;
+
 
 
 
 
 public:
-
+    virtual rho::LogCategory getModuleLogCategory(){ return getLogCategory(); }
 
     CRhoConnectClientSingletonBase();
+    ~CRhoConnectClientSingletonBase();
+
+
+
 
 
 
@@ -55,8 +67,11 @@ public:
 class CRhoConnectClientBase: public IRhoConnectClient
 {
 protected:
+    DEFINE_LOGCLASS;
+
 
 public:
+
 
 
  

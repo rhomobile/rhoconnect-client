@@ -3,10 +3,12 @@
 #include "sync/ILoginListener.h"
 #include "sync/SyncThread.h"
 #include "sync/ClientRegister.h"
+#include "RhoConnectClientImpl.h"
+#include "common/RhodesApp.h"
 
-class RhoconnectClientImpl : public rho::sync::IRhoconnectClient {
+class RhoConnectClientRhodesInterfaceImpl : public rho::sync::IRhoconnectClient {
 public:
-	virtual ~RhoconnectClientImpl() {}
+	virtual ~RhoConnectClientRhodesInterfaceImpl() {}
 	
 	virtual void doSyncSourceByName( const char* srcName ) {
 		rho_sync_doSyncSourceByName( srcName );
@@ -161,14 +163,28 @@ public:
 
 };
 
-RhoconnectClientImpl g_client;
+RhoConnectClientRhodesInterfaceImpl g_client;
+
+namespace rho {
+
+class RhoConnectClientFactory : public CRhoConnectClientFactoryBase
+{
+public:
+    RhoConnectClientFactory(){}
+	
+    IRhoConnectClientSingleton* createModuleSingleton(){ return new RhoConnectClientImpl(); }
+};
+
+}
 
 extern "C" {
 
 void initRhoconnectClient() {
+	RHODESAPP().getExtManager().requireRubyFile("RhoConnectClient");
+
+	rho::RhoConnectClientFactory::setInstance( new rho::RhoConnectClientFactory() );
 	
 	rho::sync::RhoconnectClientManager::setRhoconnectClientImpl( &g_client );
-	
 }
 
 }

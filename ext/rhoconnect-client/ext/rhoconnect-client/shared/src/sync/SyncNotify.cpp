@@ -159,12 +159,15 @@ void CSyncNotify::fireObjectsNotification()
         if ( strBody.length() == 0 )
             return;
     }
+	
+	String strUrl = m_pObjectNotify->m_callbackData.getRubyCallback();
 
-    if ( m_pObjectNotify->m_strUrl.length() > 0 )
+    if ( strUrl.length() > 0 )
     {
-        String strUrl = getNet().resolveUrl(m_pObjectNotify->m_strUrl);
-  
-        callNotify( CSyncNotification(strUrl,"",false), strBody);
+        strUrl = getNet().resolveUrl(strUrl);
+		apiGenerator::CMethodResult r;
+		r.setRubyCallback(strUrl);
+        callNotify( CSyncNotification(r,false), strBody);
     }else if (m_pObjectNotify->m_cCallback)
     {
         m_isInsideCallback = true;
@@ -282,11 +285,11 @@ void CSyncNotify::setSyncNotification(int source_id, CSyncNotification* pNotify 
     }
 }
 
-CSyncNotification::CSyncNotification(String strUrl, String strParams, boolean bRemoveAfterFire) : 
-    m_strParams(strParams), m_cCallback(null), m_cCallbackData(null), m_bRemoveAfterFire(bRemoveAfterFire)
+CSyncNotification::CSyncNotification(const apiGenerator::CMethodResult& callbackData, boolean bRemoveAfterFire) :
+    m_callbackData(callbackData), m_cCallback(null), m_cCallbackData(null), m_bRemoveAfterFire(bRemoveAfterFire)
 {
-    if ( strUrl.length() > 0 )
-        m_strUrl = RHODESAPPBASE().canonicalizeRhoUrl(strUrl);
+//    if ( m_callbackData.strUrl.length() > 0 )
+//        m_callbackData.strUrl = RHODESAPPBASE().canonicalizeRhoUrl(m_callbackData.strUrl);
 }
 
 CSyncNotification::~CSyncNotification()
@@ -301,16 +304,15 @@ String CSyncNotification::toString()const
 		return "C_Callback";
 	
 	String strRes = "Url :";
-	strRes += m_strUrl;
+//	strRes += m_strUrl;
 	strRes += "; Params: ";
-	strRes += m_strParams;
+//	strRes += m_strParams;
 	return strRes;
 }
     
-CObjectNotification::CObjectNotification(String strUrl) : 
-   m_cCallback(null), m_cCallbackData(null)
+CObjectNotification::CObjectNotification(const apiGenerator::CMethodResult& callbackData) :
+   m_callbackData(callbackData), m_cCallback(null), m_cCallbackData(null)
 {
-    m_strUrl = strUrl;
 }
 
 CObjectNotification::~CObjectNotification()
@@ -325,7 +327,7 @@ String CObjectNotification::toString()const
         return "C_Callback";
     
     String strRes = "Url :";
-    strRes += m_strUrl;
+//    strRes += m_callbackData.strUrl;
     return strRes;
 }
 
@@ -515,12 +517,14 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
         	    strBody += "in_progress";
 
             strBody += "&rho_callback=1";
-            if ( pSN->m_strParams.length() > 0 )
+			String strParams = pSN->m_callbackData.getCallbackParam();
+			
+            if ( strParams.length() > 0 )
             {
-                if ( !String_startsWith( pSN->m_strParams, "&" ) )
+                if ( !String_startsWith( strParams, "&" ) )
                     strBody += "&";
 
-                strBody += pSN->m_strParams;
+                strBody += strParams;
             }
 
             bRemoveAfterFire = bRemoveAfterFire && pSN->m_bRemoveAfterFire;
@@ -546,7 +550,9 @@ const String& CSyncNotify::getNotifyBody()
 
 boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const String& strBody )
 {
-    String strUrl = oNotify.m_strUrl; //Need to copy url since notify may be cleared in callback
+    //String strUrl = oNotify.m_callbackData.getRubyCallback(); //Need to copy url since notify may be cleared in callback
+	apiGenerator::CMethodResult cb = oNotify.m_callbackData;
+	
     if ( getSync().isNoThreadedMode() )
     {
         m_arNotifyBody.addElement( strBody );
@@ -559,9 +565,10 @@ boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const String& 
         m_isInsideCallback = false;
         return nRet == 1;
     }
-    if ( strUrl.length() == 0 )
-        return true;
+//    if ( strUrl.length() == 0 )
+//        return true;
 
+/*
 #ifndef RHO_NO_RUBY
     if (0 == strUrl.find("javascript:"))
     {
@@ -570,12 +577,16 @@ boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const String& 
     	return true;
     }
 #endif
-
+*/
 	m_isInsideCallback = true;        
-    NetResponse resp = getNet().pushData( strUrl, strBody, null );
+//    NetResponse resp = getNet().pushData( strUrl, strBody, null );
+	cb.setCollectionMode(false);
+	cb.setCallbackParam(strBody);
+	cb.set(strBody);
+//	cb.callCallback();
 	m_isInsideCallback = false;        
 
-    if ( !resp.isOK() )
+    /*if ( !resp.isOK() )
         LOG(ERROR) + "Fire notification failed. Code: " + resp.getRespCode() + "; Error body: " + resp.getCharData();
     else
     {
@@ -583,7 +594,8 @@ boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const String& 
         return szData && strcmp(szData,"stop") == 0;
     }
 
-    return false;
+    return false;*/
+	return true;
 }
 
 void CSyncNotify::clearNotification(CSyncSource* src)

@@ -26,11 +26,11 @@ namespace "build" do
 	  #$sdk = ENV['SDK_NAME']
 	  #raise "SDK_NAME is not set" if $sdk.nil?
 
-    $bindir = ENV['PLATFORM_DEVELOPER_BIN_DIR']
-    raise "PLATFORM_DEVELOPER_BIN_DIR is not set" if $bindir.nil?
+	$bindir = ENV['PLATFORM_DEVELOPER_BIN_DIR']
+	raise "PLATFORM_DEVELOPER_BIN_DIR is not set" if $bindir.nil?
     
-    $sdkroot = ENV['SDKROOT']
-    raise "SDKROOT is not set" if $sdkroot.nil?
+	$sdkroot = ENV['SDKROOT']
+	raise "SDKROOT is not set" if $sdkroot.nil?
 
     $arch = ENV['ARCHS']
     raise "ARCHS is not set" if $arch.nil?
@@ -49,7 +49,6 @@ namespace "build" do
 	  
 	  src_files = []
 	
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/ruby/syncengine_wrap.c'
 	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/rhoconnectclient.c'
 	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/initRhoconnectClient.cpp'
 	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/ClientRegister.cpp'
@@ -57,6 +56,15 @@ namespace "build" do
 	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncNotify.cpp'
 	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncSource.cpp'
 	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncThread.cpp'
+	  
+	  src_files << $rhoconnectclientdir + '/ext/shared/RhoConnectClientImpl.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/generated/rhoconnectclient_api_init.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/generated/rhoconnectclient_js_api.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/generated/rhoconnectclient_ruby_api.c'
+	  
+	  src_files << $rhoconnectclientdir + '/ext/shared/generated/cpp/RhoConnectClient_js_wrap.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/generated/cpp/RhoConnectClient_ruby_wrap.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/generated/cpp/RhoConnectClientBase.cpp'
 	  
 	  objects = []
 	  mkdir_p $tempdir unless File.exists? $tempdir
@@ -70,8 +78,12 @@ namespace "build" do
 		args << "-I\"#{$rootdir}/platform/shared/ruby/include\""
 		args << "-I\"#{$rootdir}/platform/shared\""
 		args << "-I\"#{$rootdir}/platform/shared/common\""
-	    args << "-I\"#{$rootdir}/platform/shared/sync\""
+		args << "-I\"#{$rootdir}/platform/shared/rubyext\""
+		args << "-I\"#{$rhoconnectclientdir}/ext/shared\""
 		args << "-I\"#{$rootdir}/lib/commonAPI/coreapi/ext/shared\""
+
+
+	    	args << "-I\"#{$rootdir}/platform/shared/sync\""
 		args << "-I\"#{$rhoconnectclientdir}/ext/rhoconnect-client/shared/src\""
 		  
 		args << "-I\"#{$rootdir}/platform/shared/ruby/iphone\""
@@ -80,7 +92,9 @@ namespace "build" do
 		args << "-isysroot \"#{$sdkroot}\""
 		args << "-fno-common"
 		args << "-arch #{$arch}"
-		args << "-O2"
+#		args << "-O2"
+#		args << "-gdwarf"
+		args << "-ggdb"
 		args << "-o \"#{objname}\""
 		args << "-c"
 		args << f

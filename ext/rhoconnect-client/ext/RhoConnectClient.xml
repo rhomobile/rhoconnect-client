@@ -1,7 +1,7 @@
 <?xml version = "1.0"?>
 <?xml-stylesheet type="text/xsl" href="pb_help.xsl"?>
 <API>
-    <MODULE name="RhoConnectClient" parent="Rho" generateUnderscoreRubyNames="true">
+    <MODULE name="RhoConnectClient" parent="Rho">
         <HELP_OVERVIEW>is used for syncronization with Rhoconnect servers.</HELP_OVERVIEW>
 		
 		<ALIASES>
@@ -9,17 +9,6 @@
         </ALIASES>
 
 		<PROPERTIES access="STATIC">
-			
-			<ALIASES>
-				<ALIAS new="user_name" existing="userName" deprecated="true"/>
-				<ALIAS new="poll_interval" existing="pollInterval" deprecated="true"/>
-				<ALIAS new="sync_server" existing="syncServer" deprecated="true"/>
-				<ALIAS new="page_size" existing="pageSize" deprecated="true"/>
-				<ALIAS new="threaded_mode" existing="threadedMode?" deprecated="true"/>
-				<ALIAS new="show_status_popup" existing="showStatusPopup?" deprecated="true"/>
-				<ALIAS new="ssl_verify_peer" existing="sslVerifyPeer?" deprecated="true"/>
-			</ALIASES>
-
 			
 			<PROPERTY name="userName" type="STRING" readOnly="true">
 				<DESC>This is documentation</DESC>
@@ -37,15 +26,15 @@
 				<DESC>This is documentation</DESC>
 			</PROPERTY>
 			
-			<PROPERTY name="threadedMode?" type="BOOLEAN" default="true">
+			<PROPERTY name="threadedMode" type="BOOLEAN" default="true">
 				<DESC>This is documentation</DESC>
 			</PROPERTY>
 			
-			<PROPERTY name="showStatusPopup?" type="BOOLEAN" default="true">
+			<PROPERTY name="showStatusPopup" type="BOOLEAN" default="true">
 				<DESC>This is documentation</DESC>
 			</PROPERTY>
 
-			<PROPERTY name="sslVerifyPeer?" type="BOOLEAN" default="true">
+			<PROPERTY name="sslVerifyPeer" type="BOOLEAN" default="true">
 				<DESC>This is documentation</DESC>
 			</PROPERTY>
 			
@@ -54,12 +43,42 @@
         <METHODS access="STATIC">
 			
 			<ALIASES>
-				<ALIAS new="dosync" existing="doSync" deprecated="true"/>
-				<ALIAS new="dosync_source" existing="doSyncSource" deprecated="true"/>
-				<ALIAS new="logged_in" existing="loggedIn?" deprecated="true"/>
-				<ALIAS new="is_syncing" existing="syncing?" deprecated="true"/>
-				<ALIAS new="set_objectnotify_url" existing="SetObjectNotification" deprecated="true"/>
+				<ALIAS new="dosync" existing="doSync" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
 
+				<ALIAS new="set_objectnotify_url" existing="SetObjectNotification" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
+
+				<ALIAS new="add_objectnotify" existing="addObjectNotify" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
+
+				<ALIAS new="clean_objectnotify" existing="cleanObjectNotify">
+					<DESC></DESC>
+				</ALIAS>
+
+				<ALIAS new="on_sync_create_error" existing="onSyncCreateError" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
+
+				<ALIAS new="push_changes" existing="pushChanges" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
+
+				<ALIAS new="on_sync_update_error" existing="onSyncUpdateError" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
+				
+				<ALIAS new="on_sync_delete_error" existing="onSyncDeleteError" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
+				
+				<ALIAS new="stop_sync" existing="stopSync" deprecated="true">
+					<DESC></DESC>
+				</ALIAS>
+				
 			</ALIASES>
 			
 			<METHOD name="loggedIn?">
@@ -71,7 +90,7 @@
 				<DESC>This is documentation</DESC>
 				<RETURN type="BOOLEAN"/>
 			</METHOD>
-			
+<!--
 			<METHOD name="onSyncCreateError">
 				<DESC>This is documentation</DESC>
 				
@@ -139,55 +158,73 @@
 					</PARAM>
 				</PARAMS>
             </METHOD>
-			
-			<METHOD name="search" hasCallback="mandatory" runInThread="none">
+-->
+			<METHOD name="search" hasCallback="optional" runInThread="none">
 				<DESC>This is documentation</DESC>
+				
 				<PARAMS>
-					<PARAM name="args" type="HASH">
+
+					<PARAM name="args" type="HASH" propertyHash="true">
 						<DESC></DESC>
-						<VALUES>
-							<VALUE name="from" type="STRING">
-								<DESCR></DESCR>
-							</VALUE>
+						<PARAMS>
+							<PARAM name="sources" type="ARRAY">
+								<DESC></DESC>
+								<CAN_BE_NIL/>
+							</PARAM>
 							
-							<VALUE name="search_params" type="HASH">
-								<DESCR></DESCR>
-							</VALUE>
-
-							<VALUE name="offset" type="INTEGER">
-								<DESCR></DESCR>
-							</VALUE>
-
-							<VALUE name="maxResults" type="INTEGER">
-								<DESCR></DESCR>
-							</VALUE>
-
-							<VALUE name="progressStep" type="INTEGER">
-								<DESCR></DESCR>
-							</VALUE>
-
-						</VALUES>
+							<PARAM name="from" type="STRING">
+								<DESC></DESC>
+								<CAN_BE_NIL/>
+							</PARAM>
+							
+							<PARAM name="searchParams" type="HASH">
+								<DESC></DESC>
+							</PARAM>
+							
+							<PARAM name="offset" type="INTEGER">
+								<CAN_BE_NIL/>
+								<DESC></DESC>
+							</PARAM>
+							<PARAM name="maxResults" type="INTEGER">
+								<CAN_BE_NIL/>
+								<DESC></DESC>
+							</PARAM>
+							
+							<PARAM name="progressStep" type="INTEGER">
+								<DESC></DESC>
+								<CAN_BE_NIL/>
+							</PARAM>
+							
+							<PARAM name="syncChanges" type="BOOLEAN">
+								<DESC></DESC>
+								<CAN_BE_NIL/>
+							</PARAM>
+							
+						</PARAMS>
 					</PARAM>
+									
 				</PARAMS>
 				<RETURN type="HASH"/>
             </METHOD>
-			
 			<METHOD name="doSync">
 				<DESC>This is documentation</DESC>
 				<PARAMS>
 					<PARAM name="showStatusPopup" type="BOOLEAN">
 						<DESC></DESC>
+						<CAN_BE_NIL/>
 					</PARAM>
 					
 					<PARAM name="queryParams" type="STRING">
 						<DESC></DESC>
+						<CAN_BE_NIL/>
 					</PARAM>
 					
 					<PARAM name="syncOnlyChangedSources" type="BOOLEAN">
 						<DESC></DESC>
+						<CAN_BE_NIL/>
 					</PARAM>
 				</PARAMS>
-				<RETURN type="HASH"/>
+				<RETURN type="STRING"/>
 				
             </METHOD>
 			
@@ -211,7 +248,7 @@
 					
 				</PARAMS>
 				
-				<RETURN type="HASH"/>
+				<RETURN type="STRING"/>
 				
             </METHOD>
 			
@@ -261,7 +298,7 @@
 			
 			
 			<METHOD name="setObjectNotification" hasCallback="mandatory" runInThread="none">
-				<DESC>This is documentation</DESC>s
+				<DESC>This is documentation</DESC>
             </METHOD>
 			
 			<METHOD name="addObjectNotify">
@@ -319,6 +356,183 @@
 				</PARAMS>
 				<RETURN type="STRING"/>
             </METHOD>
+<!--
+			<METHOD name="getSourceNameById" >
+				<PARAMS>
+					<PARAM name="sourceId" type="INTEGER">
+					</PARAM>
+				</PARAMS>
+				<RETURN type="STRING"/>
+			</METHOD>
+-->			
+			
+			<!-- Deprecated methods -->
+<!--
+			<METHOD name="set_threaded_mode" deprecated="true">
+				<PARAMS>
+					<PARAM name="threaded" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+			</METHOD>
+			
+			<METHOD name="set_ssl_verify_peer" deprecated="true">
+				<PARAMS>
+					<PARAM name="verify" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+			</METHOD>
+			
+			<METHOD name="set_pollinterval" deprecated="true">
+				<PARAMS>
+					<PARAM name="interval" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN type="INTEGER"/>
+			</METHOD>
+			
+			<METHOD name="get_pollinterval" deprecated="true">
+				<RETURN type="INTEGER"/>
+			</METHOD>
+			
+			<METHOD name="set_syncserver" deprecated="true">
+				<PARAMS>
+					<PARAM name="url" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+			</METHOD>
+			
+			<METHOD name="set_pagesize" deprecated="true">
+				<PARAMS>
+					<PARAM name="size" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+			</METHOD>
+
+			<METHOD name="get_pagesize" deprecated="true">
+				<RETURN type="INTEGER"/>
+			</METHOD>
+			
+			<METHOD name="enable_status_popup" deprecated="true">
+				<PARAMS>
+					<PARAM name="enable" type="BOOLEAN">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+			</METHOD>
+			
+			<METHOD name="dosync_source" deprecated="true">
+				<DESC>This is documentation</DESC>
+				
+				<PARAMS>
+					<PARAM name="source" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="showStatusPopup" type="INTEGER">
+						<CAN_BE_NIL/>
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="queryParams" type="STRING">
+						<CAN_BE_NIL/>
+						<DESC></DESC>
+					</PARAM>
+					
+				</PARAMS>
+				
+				<RETURN type="STRING"/>
+				
+            </METHOD>
+			
+			<METHOD name="set_notification" hasCallback="mandatory" runInThread="none" deprecated="true">
+				<DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="source" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="clear_notification" deprecated="true">
+				<DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="source" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="add_objectnotify" deprecated="true">
+				<DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="source" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					<PARAM name="object" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				
+            </METHOD>
+			
+			
+			<METHOD name="get_lastsync_objectcount" deprecated="true">
+				<DESC>This is documentation</DESC>
+				<PARAMS>
+					<PARAM name="source" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN type="INTEGER"/>
+            </METHOD>
+			
+			<METHOD name="set_source_property" deprecated="true">
+				<PARAMS>
+					<PARAM name="source" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="propertyName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="propertyValue" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+            </METHOD>
+			
+			<METHOD name="get_source_property" deprecated="true">
+				<PARAMS>
+					<PARAM name="source" type="INTEGER">
+						<DESC></DESC>
+					</PARAM>
+					
+					<PARAM name="propertyName" type="STRING">
+						<DESC></DESC>
+					</PARAM>
+				</PARAMS>
+				<RETURN type="STRING"/>
+            </METHOD>
+			
+			<METHOD name="logged_in" deprecated="true">
+				<DESC></DESC>
+				<RETURN type="INTEGER"/>
+			</METHOD>
+			
+			<METHOD name="is_syncing" deprecated="true">
+				<DESC></DESC>
+				<RETURN type="INTEGER"/>
+			</METHOD>
+
+-->
+
+
 												
         </METHODS>
 		

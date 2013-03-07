@@ -755,202 +755,6 @@ VALUE rb_s_RhoConnectClient_syncing(int argc, VALUE *argv)
     return res;
 }
 
-VALUE rb_s_RhoConnectClient_onSyncCreateError(int argc, VALUE *argv)
-{
-    RAWTRACE(__FUNCTION__);
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toRuby();
-    }
-
-
-    if((argc < 3) || (argc > 3))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toRuby();
-    }
-    
-    unsigned realParamCount = (argc < 3) ? argc : 3;
-    std::vector<VALUE> arguments(argv, argv + realParamCount);
-    if(argc > 3)
-    {
-        if (rho_ruby_is_proc(argv[3]) || rho_ruby_is_method(argv[3]))
-        {
-            result.setRubyProcCallBack(argv[3]);
-        } else
-        {
-            if(argc > 4)
-                result.setCallBack(argv[3], argv[4]);
-            else
-                result.setCallBack(argv[3]);
-    
-        }
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toRuby();
-        }
-    }
-
-    ObjectProxy::onSyncCreateError(argumentsAdapter(arguments), result); 
-    VALUE res = 
-        result.toRuby();
-
-    RAWTRACE(__FUNCTION__);
-    return res;
-}
-
-VALUE rb_s_RhoConnectClient_pushChanges(int argc, VALUE *argv)
-{
-    RAWTRACE(__FUNCTION__);
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toRuby();
-    }
-
-
-    if((argc < 1) || (argc > 1))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toRuby();
-    }
-    
-    unsigned realParamCount = (argc < 1) ? argc : 1;
-    std::vector<VALUE> arguments(argv, argv + realParamCount);
-    if(argc > 1)
-    {
-        if (rho_ruby_is_proc(argv[1]) || rho_ruby_is_method(argv[1]))
-        {
-            result.setRubyProcCallBack(argv[1]);
-        } else
-        {
-            if(argc > 2)
-                result.setCallBack(argv[1], argv[2]);
-            else
-                result.setCallBack(argv[1]);
-    
-        }
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toRuby();
-        }
-    }
-
-    ObjectProxy::pushChanges(argumentsAdapter(arguments), result); 
-    VALUE res = 
-        result.toRuby();
-
-    RAWTRACE(__FUNCTION__);
-    return res;
-}
-
-VALUE rb_s_RhoConnectClient_onSyncUpdateError(int argc, VALUE *argv)
-{
-    RAWTRACE(__FUNCTION__);
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toRuby();
-    }
-
-
-    if((argc < 3) || (argc > 4))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toRuby();
-    }
-    
-    unsigned realParamCount = (argc < 4) ? argc : 4;
-    std::vector<VALUE> arguments(argv, argv + realParamCount);
-    if(argc > 4)
-    {
-        if (rho_ruby_is_proc(argv[4]) || rho_ruby_is_method(argv[4]))
-        {
-            result.setRubyProcCallBack(argv[4]);
-        } else
-        {
-            if(argc > 5)
-                result.setCallBack(argv[4], argv[5]);
-            else
-                result.setCallBack(argv[4]);
-    
-        }
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toRuby();
-        }
-    }
-
-    ObjectProxy::onSyncUpdateError(argumentsAdapter(arguments), result); 
-    VALUE res = 
-        result.toRuby();
-
-    RAWTRACE(__FUNCTION__);
-    return res;
-}
-
-VALUE rb_s_RhoConnectClient_onSyncDeleteError(int argc, VALUE *argv)
-{
-    RAWTRACE(__FUNCTION__);
-    MethodResultJni result;
-    if(!result)
-    {
-        result.setError("JNI error: failed to initialize MethodResult java object");
-        RAWLOG_ERROR("JNI error: failed to initialize MethodResult java object ^^^");
-        return result.toRuby();
-    }
-
-
-    if((argc < 3) || (argc > 3))
-    {
-        result.setArgError("Wrong number of arguments");
-        RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
-        return result.toRuby();
-    }
-    
-    unsigned realParamCount = (argc < 3) ? argc : 3;
-    std::vector<VALUE> arguments(argv, argv + realParamCount);
-    if(argc > 3)
-    {
-        if (rho_ruby_is_proc(argv[3]) || rho_ruby_is_method(argv[3]))
-        {
-            result.setRubyProcCallBack(argv[3]);
-        } else
-        {
-            if(argc > 4)
-                result.setCallBack(argv[3], argv[4]);
-            else
-                result.setCallBack(argv[3]);
-    
-        }
-        if(!result.hasCallBackUrl())
-        {
-            RAWLOG_ERROR("Error setting callback ^^^");
-            return result.toRuby();
-        }
-    }
-
-    ObjectProxy::onSyncDeleteError(argumentsAdapter(arguments), result); 
-    VALUE res = 
-        result.toRuby();
-
-    RAWTRACE(__FUNCTION__);
-    return res;
-}
-
 VALUE rb_s_RhoConnectClient_search(int argc, VALUE *argv)
 {
     RAWTRACE(__FUNCTION__);
@@ -963,7 +767,7 @@ VALUE rb_s_RhoConnectClient_search(int argc, VALUE *argv)
     }
 
 
-    if((argc < 2) || (argc > 3))
+    if((argc < 1) || (argc > 3))
     {
         result.setArgError("Wrong number of arguments");
         RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);
@@ -1012,7 +816,7 @@ VALUE rb_s_RhoConnectClient_doSync(int argc, VALUE *argv)
     }
 
 
-    if((argc < 3) || (argc > 3))
+    if((argc < 0) || (argc > 3))
     {
         result.setArgError("Wrong number of arguments");
         RAWLOG_ERROR1("Wrong number of arguments: %d ^^^", argc);

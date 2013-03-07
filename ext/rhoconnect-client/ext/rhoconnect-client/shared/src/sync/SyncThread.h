@@ -32,6 +32,7 @@
 #include "db/DBAdapter.h"
 #include "sync/SyncEngine.h"
 #include "common/ThreadQueue.h"
+#include "api_generator/MethodResult.h"
 
 namespace rho {
 namespace sync {
@@ -126,7 +127,7 @@ public:
         boolean m_bSyncChanges;
         rho::Vector<rho::String> m_arSources;
 
-        CSyncSearchCommand(String from, String params, rho::Vector<rho::String>& arSources, boolean sync_changes, int nProgressStep) : CSyncCommand(CSyncThread::scSearchOne,params,nProgressStep, false, "")
+        CSyncSearchCommand(String from, String params, const rho::Vector<rho::String>& arSources, boolean sync_changes, int nProgressStep) : CSyncCommand(CSyncThread::scSearchOne,params,nProgressStep, false, "")
 	    {
 		    m_strFrom = from;
             m_bSyncChanges = sync_changes;
@@ -176,12 +177,12 @@ unsigned long rho_sync_doSyncSource(unsigned long nSrcID,int show_status_popup, 
 unsigned long rho_sync_doSyncSourceByID(int nSrcID);
 unsigned long rho_sync_doSyncSourceByName(const char* szSrcName);
 
-unsigned long rho_sync_doSearch(unsigned long ar_sources, const char *from, const char *params, bool sync_changes, int nProgressStep, const char* callback, const char* callback_params);
+unsigned long rho_sync_doSearch(unsigned long ar_sources, const char *from, const char *params, bool sync_changes, int nProgressStep, const rho::apiGenerator::CMethodResult& oResult);
 
-unsigned long rho_sync_login(const char *login, const char *password, const char* callback);
+unsigned long rho_sync_login(const char *login, const char *password, const rho::apiGenerator::CMethodResult& oResult);
 int rho_sync_logged_in();
 void rho_sync_logout();
-void rho_sync_set_notification(int source_id, const char *url, char* params);
+void rho_sync_set_notification(int source_id, const rho::apiGenerator::CMethodResult& oResult);
 void rho_sync_clear_notification(int source_id);
 int rho_sync_set_pollinterval(int nInterval);
 int rho_sync_get_pollinterval();

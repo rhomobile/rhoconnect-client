@@ -35,14 +35,6 @@ rho::String js_s_RhoConnectClient_loggedIn(rho::json::CJSONArray& argv, const rh
 
 rho::String js_s_RhoConnectClient_syncing(rho::json::CJSONArray& argv, const rho::String& strObjID);
 
-rho::String js_s_RhoConnectClient_onSyncCreateError(rho::json::CJSONArray& argv, const rho::String& strObjID);
-
-rho::String js_s_RhoConnectClient_pushChanges(rho::json::CJSONArray& argv, const rho::String& strObjID);
-
-rho::String js_s_RhoConnectClient_onSyncUpdateError(rho::json::CJSONArray& argv, const rho::String& strObjID);
-
-rho::String js_s_RhoConnectClient_onSyncDeleteError(rho::json::CJSONArray& argv, const rho::String& strObjID);
-
 rho::String js_s_RhoConnectClient_search(rho::json::CJSONArray& argv, const rho::String& strObjID);
 
 rho::String js_s_RhoConnectClient_doSync(rho::json::CJSONArray& argv, const rho::String& strObjID);
@@ -92,29 +84,21 @@ extern "C" void Init_JSAPI_RhoConnectClient(void)
 
     rho::apiGenerator::js_define_method("Rho:RhoConnectClient:pageSize=", js_s_RhoConnectClient_setPageSize);
 
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:threadedMode?", js_s_RhoConnectClient_getThreadedMode);
+    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:threadedMode", js_s_RhoConnectClient_getThreadedMode);
 
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:threadedMode?=", js_s_RhoConnectClient_setThreadedMode);
+    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:threadedMode=", js_s_RhoConnectClient_setThreadedMode);
 
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:showStatusPopup?", js_s_RhoConnectClient_getShowStatusPopup);
+    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:showStatusPopup", js_s_RhoConnectClient_getShowStatusPopup);
 
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:showStatusPopup?=", js_s_RhoConnectClient_setShowStatusPopup);
+    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:showStatusPopup=", js_s_RhoConnectClient_setShowStatusPopup);
 
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:sslVerifyPeer?", js_s_RhoConnectClient_getSslVerifyPeer);
+    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:sslVerifyPeer", js_s_RhoConnectClient_getSslVerifyPeer);
 
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:sslVerifyPeer?=", js_s_RhoConnectClient_setSslVerifyPeer);
+    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:sslVerifyPeer=", js_s_RhoConnectClient_setSslVerifyPeer);
 
     rho::apiGenerator::js_define_method("Rho:RhoConnectClient:loggedIn?", js_s_RhoConnectClient_loggedIn);
 
     rho::apiGenerator::js_define_method("Rho:RhoConnectClient:syncing?", js_s_RhoConnectClient_syncing);
-
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:onSyncCreateError", js_s_RhoConnectClient_onSyncCreateError);
-
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:pushChanges", js_s_RhoConnectClient_pushChanges);
-
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:onSyncUpdateError", js_s_RhoConnectClient_onSyncUpdateError);
-
-    rho::apiGenerator::js_define_method("Rho:RhoConnectClient:onSyncDeleteError", js_s_RhoConnectClient_onSyncDeleteError);
 
     rho::apiGenerator::js_define_method("Rho:RhoConnectClient:search", js_s_RhoConnectClient_search);
 

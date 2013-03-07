@@ -86,18 +86,6 @@ protected:
     static const char* const SYNCING_TASK_CLASS;
     static jclass s_clssyncingTask;
     static jmethodID s_midsyncingTask;
-    static const char* const ONSYNCCREATEERROR_TASK_CLASS;
-    static jclass s_clsonSyncCreateErrorTask;
-    static jmethodID s_midonSyncCreateErrorTask;
-    static const char* const PUSHCHANGES_TASK_CLASS;
-    static jclass s_clspushChangesTask;
-    static jmethodID s_midpushChangesTask;
-    static const char* const ONSYNCUPDATEERROR_TASK_CLASS;
-    static jclass s_clsonSyncUpdateErrorTask;
-    static jmethodID s_midonSyncUpdateErrorTask;
-    static const char* const ONSYNCDELETEERROR_TASK_CLASS;
-    static jclass s_clsonSyncDeleteErrorTask;
-    static jmethodID s_midonSyncDeleteErrorTask;
     static const char* const SEARCH_TASK_CLASS;
     static jclass s_clssearchTask;
     static jmethodID s_midsearchTask;
@@ -180,8 +168,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -203,8 +190,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -226,14 +212,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jint > jhvalue
-            = rho_cast< jint >(env, argsAdapter[0]);
+        jholder< jint > jhvalue = (argsAdapter.size() <= 0) ?
+            static_cast< jint >(0) :
+                rho_cast< jint >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssetPollIntervalTask, s_midsetPollIntervalTask,
                     jhObject.get(), 
                     jhvalue.get(),
@@ -253,8 +239,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -276,14 +261,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhvalue
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhvalue = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssetSyncServerTask, s_midsetSyncServerTask,
                     jhObject.get(), 
                     jhvalue.get(),
@@ -303,8 +288,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -326,14 +310,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jint > jhvalue
-            = rho_cast< jint >(env, argsAdapter[0]);
+        jholder< jint > jhvalue = (argsAdapter.size() <= 0) ?
+            static_cast< jint >(0) :
+                rho_cast< jint >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssetPageSizeTask, s_midsetPageSizeTask,
                     jhObject.get(), 
                     jhvalue.get(),
@@ -353,8 +337,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -376,14 +359,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jboolean > jhvalue
-            = rho_cast< jboolean >(env, argsAdapter[0]);
+        jholder< jboolean > jhvalue = (argsAdapter.size() <= 0) ?
+            static_cast< jboolean >(0) :
+                rho_cast< jboolean >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssetThreadedModeTask, s_midsetThreadedModeTask,
                     jhObject.get(), 
                     jhvalue.get(),
@@ -403,8 +386,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -426,14 +408,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jboolean > jhvalue
-            = rho_cast< jboolean >(env, argsAdapter[0]);
+        jholder< jboolean > jhvalue = (argsAdapter.size() <= 0) ?
+            static_cast< jboolean >(0) :
+                rho_cast< jboolean >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssetShowStatusPopupTask, s_midsetShowStatusPopupTask,
                     jhObject.get(), 
                     jhvalue.get(),
@@ -453,8 +435,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -476,14 +457,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jboolean > jhvalue
-            = rho_cast< jboolean >(env, argsAdapter[0]);
+        jholder< jboolean > jhvalue = (argsAdapter.size() <= 0) ?
+            static_cast< jboolean >(0) :
+                rho_cast< jboolean >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssetSslVerifyPeerTask, s_midsetSslVerifyPeerTask,
                     jhObject.get(), 
                     jhvalue.get(),
@@ -503,8 +484,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -526,149 +506,12 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
         jhobject jhTask = env->NewObject(s_clssyncingTask, s_midsyncingTask,
                     jhObject.get(), 
-                    static_cast<jobject>(result));
-
-        run(env, jhTask.get(), result, true, true);
-    }
-
-    static
-    void onSyncCreateError(const T& argsAdapter, MethodResultJni& result)
-    {
-        LOG(TRACE) + "onSyncCreateError";
-
-        JNIEnv *env = jniInit();
-        if (!env) {
-            LOG(FATAL) + "JNI initialization failed";
-            return;
-        }
-
-        RHO_ASSERT(argsAdapter.size() >= 3);
-        RHO_ASSERT(argsAdapter.size() <= (3 + 2));
-
-        jhobject jhObject = 
-            getSingleton(env); 
-
-        jholder< jstring > jhsrcName
-            = rho_cast< jstring >(env, argsAdapter[0]);
-
-        jholder< jobject > jhobjects
-            = rho_cast< jobject >(env, argsAdapter[1]);
-
-        jholder< jstring > jhaction
-            = rho_cast< jstring >(env, argsAdapter[2]);
-        jhobject jhTask = env->NewObject(s_clsonSyncCreateErrorTask, s_midonSyncCreateErrorTask,
-                    jhObject.get(), 
-                    jhsrcName.get(),
-                    jhobjects.get(),
-                    jhaction.get(),
-                    static_cast<jobject>(result));
-
-        run(env, jhTask.get(), result, true, true);
-    }
-
-    static
-    void pushChanges(const T& argsAdapter, MethodResultJni& result)
-    {
-        LOG(TRACE) + "pushChanges";
-
-        JNIEnv *env = jniInit();
-        if (!env) {
-            LOG(FATAL) + "JNI initialization failed";
-            return;
-        }
-
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
-
-        jhobject jhObject = 
-            getSingleton(env); 
-
-        jholder< jstring > jhsrcName
-            = rho_cast< jstring >(env, argsAdapter[0]);
-        jhobject jhTask = env->NewObject(s_clspushChangesTask, s_midpushChangesTask,
-                    jhObject.get(), 
-                    jhsrcName.get(),
-                    static_cast<jobject>(result));
-
-        run(env, jhTask.get(), result, true, true);
-    }
-
-    static
-    void onSyncUpdateError(const T& argsAdapter, MethodResultJni& result)
-    {
-        LOG(TRACE) + "onSyncUpdateError";
-
-        JNIEnv *env = jniInit();
-        if (!env) {
-            LOG(FATAL) + "JNI initialization failed";
-            return;
-        }
-
-        RHO_ASSERT(argsAdapter.size() >= 4);
-        RHO_ASSERT(argsAdapter.size() <= (4 + 2));
-
-        jhobject jhObject = 
-            getSingleton(env); 
-
-        jholder< jstring > jhsrcName
-            = rho_cast< jstring >(env, argsAdapter[0]);
-
-        jholder< jobject > jhobjects
-            = rho_cast< jobject >(env, argsAdapter[1]);
-
-        jholder< jstring > jhaction
-            = rho_cast< jstring >(env, argsAdapter[2]);
-
-        jholder< jstring > jhrollbackData
-            = rho_cast< jstring >(env, argsAdapter[3]);
-        jhobject jhTask = env->NewObject(s_clsonSyncUpdateErrorTask, s_midonSyncUpdateErrorTask,
-                    jhObject.get(), 
-                    jhsrcName.get(),
-                    jhobjects.get(),
-                    jhaction.get(),
-                    jhrollbackData.get(),
-                    static_cast<jobject>(result));
-
-        run(env, jhTask.get(), result, true, true);
-    }
-
-    static
-    void onSyncDeleteError(const T& argsAdapter, MethodResultJni& result)
-    {
-        LOG(TRACE) + "onSyncDeleteError";
-
-        JNIEnv *env = jniInit();
-        if (!env) {
-            LOG(FATAL) + "JNI initialization failed";
-            return;
-        }
-
-        RHO_ASSERT(argsAdapter.size() >= 3);
-        RHO_ASSERT(argsAdapter.size() <= (3 + 2));
-
-        jhobject jhObject = 
-            getSingleton(env); 
-
-        jholder< jstring > jhsrcName
-            = rho_cast< jstring >(env, argsAdapter[0]);
-
-        jholder< jobject > jhobjects
-            = rho_cast< jobject >(env, argsAdapter[1]);
-
-        jholder< jstring > jhaction
-            = rho_cast< jstring >(env, argsAdapter[2]);
-        jhobject jhTask = env->NewObject(s_clsonSyncDeleteErrorTask, s_midonSyncDeleteErrorTask,
-                    jhObject.get(), 
-                    jhsrcName.get(),
-                    jhobjects.get(),
-                    jhaction.get(),
                     static_cast<jobject>(result));
 
         run(env, jhTask.get(), result, true, true);
@@ -685,14 +528,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jobject > jhargs
-            = rho_cast< jobject >(env, argsAdapter[0]);
+        jholder< jobject > jhargs = (argsAdapter.size() <= 0) ?
+            static_cast< jobject >(0) :
+                rho_cast< jobject >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssearchTask, s_midsearchTask,
                     jhObject.get(), 
                     jhargs.get(),
@@ -712,20 +555,22 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 3);
-        RHO_ASSERT(argsAdapter.size() <= (3 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 5);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jboolean > jhshowStatusPopup
-            = rho_cast< jboolean >(env, argsAdapter[0]);
+        jholder< jboolean > jhshowStatusPopup = (argsAdapter.size() <= 0) ?
+            static_cast< jboolean >(0) :
+                rho_cast< jboolean >(env, argsAdapter[0]);
 
-        jholder< jstring > jhqueryParams
-            = rho_cast< jstring >(env, argsAdapter[1]);
+        jholder< jstring > jhqueryParams = (argsAdapter.size() <= 1) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[1]);
 
-        jholder< jboolean > jhsyncOnlyChangedSources
-            = rho_cast< jboolean >(env, argsAdapter[2]);
+        jholder< jboolean > jhsyncOnlyChangedSources = (argsAdapter.size() <= 2) ?
+            static_cast< jboolean >(0) :
+                rho_cast< jboolean >(env, argsAdapter[2]);
         jhobject jhTask = env->NewObject(s_clsdoSyncTask, s_middoSyncTask,
                     jhObject.get(), 
                     jhshowStatusPopup.get(),
@@ -747,20 +592,22 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 3);
-        RHO_ASSERT(argsAdapter.size() <= (3 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 5);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhsourceName
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhsourceName = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
 
-        jholder< jboolean > jhshowStatusPopup
-            = rho_cast< jboolean >(env, argsAdapter[1]);
+        jholder< jboolean > jhshowStatusPopup = (argsAdapter.size() <= 1) ?
+            static_cast< jboolean >(0) :
+                rho_cast< jboolean >(env, argsAdapter[1]);
 
-        jholder< jstring > jhqueryParams
-            = rho_cast< jstring >(env, argsAdapter[2]);
+        jholder< jstring > jhqueryParams = (argsAdapter.size() <= 2) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[2]);
         jhobject jhTask = env->NewObject(s_clsdoSyncSourceTask, s_middoSyncSourceTask,
                     jhObject.get(), 
                     jhsourceName.get(),
@@ -782,17 +629,18 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 2);
-        RHO_ASSERT(argsAdapter.size() <= (2 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 4);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhlogin
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhlogin = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
 
-        jholder< jstring > jhpassword
-            = rho_cast< jstring >(env, argsAdapter[1]);
+        jholder< jstring > jhpassword = (argsAdapter.size() <= 1) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[1]);
         jhobject jhTask = env->NewObject(s_clsloginTask, s_midloginTask,
                     jhObject.get(), 
                     jhlogin.get(),
@@ -813,8 +661,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -836,8 +683,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -859,14 +705,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhsourceName
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhsourceName = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clssetNotificationTask, s_midsetNotificationTask,
                     jhObject.get(), 
                     jhsourceName.get(),
@@ -886,14 +732,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhsourceName
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhsourceName = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clsclearNotificationTask, s_midclearNotificationTask,
                     jhObject.get(), 
                     jhsourceName.get(),
@@ -913,8 +759,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -936,17 +781,18 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 2);
-        RHO_ASSERT(argsAdapter.size() <= (2 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 4);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhsourceName
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhsourceName = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
 
-        jholder< jstring > jhobject
-            = rho_cast< jstring >(env, argsAdapter[1]);
+        jholder< jstring > jhobject = (argsAdapter.size() <= 1) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[1]);
         jhobject jhTask = env->NewObject(s_clsaddObjectNotifyTask, s_midaddObjectNotifyTask,
                     jhObject.get(), 
                     jhsourceName.get(),
@@ -967,8 +813,7 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 0);
-        RHO_ASSERT(argsAdapter.size() <= (0 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 2);
 
         jhobject jhObject = 
             getSingleton(env); 
@@ -990,14 +835,14 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 1);
-        RHO_ASSERT(argsAdapter.size() <= (1 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 3);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhsourceName
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhsourceName = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
         jhobject jhTask = env->NewObject(s_clsgetLastSyncObjectCountTask, s_midgetLastSyncObjectCountTask,
                     jhObject.get(), 
                     jhsourceName.get(),
@@ -1017,20 +862,22 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 3);
-        RHO_ASSERT(argsAdapter.size() <= (3 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 5);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhsourceName
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhsourceName = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
 
-        jholder< jstring > jhpropertyName
-            = rho_cast< jstring >(env, argsAdapter[1]);
+        jholder< jstring > jhpropertyName = (argsAdapter.size() <= 1) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[1]);
 
-        jholder< jstring > jhpropertyValue
-            = rho_cast< jstring >(env, argsAdapter[2]);
+        jholder< jstring > jhpropertyValue = (argsAdapter.size() <= 2) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[2]);
         jhobject jhTask = env->NewObject(s_clssetSourcePropertyTask, s_midsetSourcePropertyTask,
                     jhObject.get(), 
                     jhsourceName.get(),
@@ -1052,17 +899,18 @@ public:
             return;
         }
 
-        RHO_ASSERT(argsAdapter.size() >= 2);
-        RHO_ASSERT(argsAdapter.size() <= (2 + 2));
+        RHO_ASSERT(argsAdapter.size() <= 4);
 
         jhobject jhObject = 
             getSingleton(env); 
 
-        jholder< jstring > jhsourceName
-            = rho_cast< jstring >(env, argsAdapter[0]);
+        jholder< jstring > jhsourceName = (argsAdapter.size() <= 0) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[0]);
 
-        jholder< jstring > jhpropertyName
-            = rho_cast< jstring >(env, argsAdapter[1]);
+        jholder< jstring > jhpropertyName = (argsAdapter.size() <= 1) ?
+            static_cast< jstring >(0) :
+                rho_cast< jstring >(env, argsAdapter[1]);
         jhobject jhTask = env->NewObject(s_clsgetSourcePropertyTask, s_midgetSourcePropertyTask,
                     jhObject.get(), 
                     jhsourceName.get(),

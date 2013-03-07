@@ -66,22 +66,6 @@
 
 }
 
--(void) onSyncCreateError:(NSString*)srcName objects:(NSArray*)objects action:(NSString*)action {
-
-}
-
--(void) pushChanges:(NSString*)srcName {
-
-}
-
--(void) onSyncUpdateError:(NSString*)srcName objects:(NSArray*)objects action:(NSString*)action rollbackData:(NSString*)rollbackData {
-
-}
-
--(void) onSyncDeleteError:(NSString*)srcName objects:(NSArray*)objects action:(NSString*)action {
-
-}
-
 -(void) search:(NSDictionary*)args methodResult:(id<IMethodResult>)methodResult {
 
 }

@@ -21,7 +21,16 @@
 		C541647F1682735F00EBD3A5 /* SyncSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C54164721682735F00EBD3A5 /* SyncSource.h */; };
 		C54164801682735F00EBD3A5 /* SyncThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C54164731682735F00EBD3A5 /* SyncThread.cpp */; };
 		C54164811682735F00EBD3A5 /* SyncThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C54164741682735F00EBD3A5 /* SyncThread.h */; };
-		C56989231682152A0064AE81 /* syncengine_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = C56989221682152A0064AE81 /* syncengine_wrap.c */; };
+		C5D0EBD916D4F6750026E610 /* RhoConnectClientImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5D0EBD716D4F6750026E610 /* RhoConnectClientImpl.cpp */; };
+		C5D0EBDA16D4F6750026E610 /* RhoConnectClientImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5D0EBD816D4F6750026E610 /* RhoConnectClientImpl.h */; };
+		C5D536E916D59547007F25DD /* rhoconnectclient_api_init.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5D536E616D59547007F25DD /* rhoconnectclient_api_init.cpp */; };
+		C5D536EA16D59547007F25DD /* rhoconnectclient_js_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5D536E716D59547007F25DD /* rhoconnectclient_js_api.cpp */; };
+		C5D536EB16D59547007F25DD /* rhoconnectclient_ruby_api.c in Sources */ = {isa = PBXBuildFile; fileRef = C5D536E816D59547007F25DD /* rhoconnectclient_ruby_api.c */; };
+		C5D536F116D59554007F25DD /* IRhoConnectClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C5D536EC16D59554007F25DD /* IRhoConnectClient.h */; };
+		C5D536F216D59554007F25DD /* RhoConnectClient_js_wrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5D536ED16D59554007F25DD /* RhoConnectClient_js_wrap.cpp */; };
+		C5D536F316D59554007F25DD /* RhoConnectClient_ruby_wrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5D536EE16D59554007F25DD /* RhoConnectClient_ruby_wrap.cpp */; };
+		C5D536F416D59554007F25DD /* RhoConnectClientBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5D536EF16D59554007F25DD /* RhoConnectClientBase.cpp */; };
+		C5D536F516D59554007F25DD /* RhoConnectClientBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C5D536F016D59554007F25DD /* RhoConnectClientBase.h */; };
 		C5FA6040167B512D00F5838A /* Rhoconnect-client_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = C5FA603F167B512D00F5838A /* Rhoconnect-client_Prefix.pch */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +49,16 @@
 		C54164721682735F00EBD3A5 /* SyncSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncSource.h; path = ../../shared/src/sync/SyncSource.h; sourceTree = "<group>"; };
 		C54164731682735F00EBD3A5 /* SyncThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncThread.cpp; path = ../../shared/src/sync/SyncThread.cpp; sourceTree = "<group>"; };
 		C54164741682735F00EBD3A5 /* SyncThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncThread.h; path = ../../shared/src/sync/SyncThread.h; sourceTree = "<group>"; };
-		C56989221682152A0064AE81 /* syncengine_wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = syncengine_wrap.c; path = ../../shared/ruby/syncengine_wrap.c; sourceTree = "<group>"; };
+		C5D0EBD716D4F6750026E610 /* RhoConnectClientImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RhoConnectClientImpl.cpp; path = ../../../shared/RhoConnectClientImpl.cpp; sourceTree = "<group>"; };
+		C5D0EBD816D4F6750026E610 /* RhoConnectClientImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RhoConnectClientImpl.h; path = ../../../shared/RhoConnectClientImpl.h; sourceTree = "<group>"; };
+		C5D536E616D59547007F25DD /* rhoconnectclient_api_init.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rhoconnectclient_api_init.cpp; path = ../../../shared/generated/rhoconnectclient_api_init.cpp; sourceTree = "<group>"; };
+		C5D536E716D59547007F25DD /* rhoconnectclient_js_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rhoconnectclient_js_api.cpp; path = ../../../shared/generated/rhoconnectclient_js_api.cpp; sourceTree = "<group>"; };
+		C5D536E816D59547007F25DD /* rhoconnectclient_ruby_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rhoconnectclient_ruby_api.c; path = ../../../shared/generated/rhoconnectclient_ruby_api.c; sourceTree = "<group>"; };
+		C5D536EC16D59554007F25DD /* IRhoConnectClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRhoConnectClient.h; path = ../../../shared/generated/cpp/IRhoConnectClient.h; sourceTree = "<group>"; };
+		C5D536ED16D59554007F25DD /* RhoConnectClient_js_wrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RhoConnectClient_js_wrap.cpp; path = ../../../shared/generated/cpp/RhoConnectClient_js_wrap.cpp; sourceTree = "<group>"; };
+		C5D536EE16D59554007F25DD /* RhoConnectClient_ruby_wrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RhoConnectClient_ruby_wrap.cpp; path = ../../../shared/generated/cpp/RhoConnectClient_ruby_wrap.cpp; sourceTree = "<group>"; };
+		C5D536EF16D59554007F25DD /* RhoConnectClientBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RhoConnectClientBase.cpp; path = ../../../shared/generated/cpp/RhoConnectClientBase.cpp; sourceTree = "<group>"; };
+		C5D536F016D59554007F25DD /* RhoConnectClientBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RhoConnectClientBase.h; path = ../../../shared/generated/cpp/RhoConnectClientBase.h; sourceTree = "<group>"; };
 		C5FA603F167B512D00F5838A /* Rhoconnect-client_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Rhoconnect-client_Prefix.pch"; sourceTree = "<group>"; };
 		FAC155F3145855CF0016F3BD /* libRhoconnect-client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libRhoconnect-client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -67,8 +85,11 @@
 		0867D691FE84028FC02AAC07 /* Barcode */ = {
 			isa = PBXGroup;
 			children = (
+				C541645B16822D4A00EBD3A5 /* rhoconnectclient.c */,
 				C54164681682735F00EBD3A5 /* ClientRegister.cpp */,
 				C54164691682735F00EBD3A5 /* ClientRegister.h */,
+				C5D0EBD716D4F6750026E610 /* RhoConnectClientImpl.cpp */,
+				C5D0EBD816D4F6750026E610 /* RhoConnectClientImpl.h */,
 				C541646B1682735F00EBD3A5 /* ISyncProtocol.h */,
 				C541646C1682735F00EBD3A5 /* SyncEngine.cpp */,
 				C541646D1682735F00EBD3A5 /* SyncEngine.h */,
@@ -80,8 +101,14 @@
 				C54164731682735F00EBD3A5 /* SyncThread.cpp */,
 				C54164741682735F00EBD3A5 /* SyncThread.h */,
 				C54164661682735000EBD3A5 /* initRhoconnectClient.cpp */,
-				C541645B16822D4A00EBD3A5 /* rhoconnectclient.c */,
-				C56989221682152A0064AE81 /* syncengine_wrap.c */,
+				C5D536E616D59547007F25DD /* rhoconnectclient_api_init.cpp */,
+				C5D536E716D59547007F25DD /* rhoconnectclient_js_api.cpp */,
+				C5D536E816D59547007F25DD /* rhoconnectclient_ruby_api.c */,
+				C5D536EC16D59554007F25DD /* IRhoConnectClient.h */,
+				C5D536ED16D59554007F25DD /* RhoConnectClient_js_wrap.cpp */,
+				C5D536EE16D59554007F25DD /* RhoConnectClient_ruby_wrap.cpp */,
+				C5D536EF16D59554007F25DD /* RhoConnectClientBase.cpp */,
+				C5D536F016D59554007F25DD /* RhoConnectClientBase.h */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
@@ -135,6 +162,9 @@
 				C541647D1682735F00EBD3A5 /* SyncProtocol_3.h in Headers */,
 				C541647F1682735F00EBD3A5 /* SyncSource.h in Headers */,
 				C54164811682735F00EBD3A5 /* SyncThread.h in Headers */,
+				C5D0EBDA16D4F6750026E610 /* RhoConnectClientImpl.h in Headers */,
+				C5D536F116D59554007F25DD /* IRhoConnectClient.h in Headers */,
+				C5D536F516D59554007F25DD /* RhoConnectClientBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,7 +218,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C56989231682152A0064AE81 /* syncengine_wrap.c in Sources */,
 				C541646116822D4A00EBD3A5 /* rhoconnectclient.c in Sources */,
 				C54164671682735000EBD3A5 /* initRhoconnectClient.cpp in Sources */,
 				C54164751682735F00EBD3A5 /* ClientRegister.cpp in Sources */,
@@ -196,6 +225,13 @@
 				C541647B1682735F00EBD3A5 /* SyncNotify.cpp in Sources */,
 				C541647E1682735F00EBD3A5 /* SyncSource.cpp in Sources */,
 				C54164801682735F00EBD3A5 /* SyncThread.cpp in Sources */,
+				C5D0EBD916D4F6750026E610 /* RhoConnectClientImpl.cpp in Sources */,
+				C5D536E916D59547007F25DD /* rhoconnectclient_api_init.cpp in Sources */,
+				C5D536EA16D59547007F25DD /* rhoconnectclient_js_api.cpp in Sources */,
+				C5D536EB16D59547007F25DD /* rhoconnectclient_ruby_api.c in Sources */,
+				C5D536F216D59554007F25DD /* RhoConnectClient_js_wrap.cpp in Sources */,
+				C5D536F316D59554007F25DD /* RhoConnectClient_ruby_wrap.cpp in Sources */,
+				C5D536F416D59554007F25DD /* RhoConnectClientBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +251,7 @@
 					"$(RHO_ROOT)/platform/shared/ruby/include",
 					"$(RHO_ROOT)/platform/shared/ruby/iphone",
 					"$(RHO_ROOT)/platform/shared",
+					./../../../shared,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -236,6 +273,7 @@
 					"$(RHO_ROOT)/platform/shared/ruby/include",
 					"$(RHO_ROOT)/platform/shared/ruby/iphone",
 					"$(RHO_ROOT)/platform/shared",
+					./../../../shared,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = NO;
