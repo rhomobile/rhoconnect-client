@@ -1,5 +1,7 @@
 #include "RhoConnectClientImpl.h"
 #include "logging/RhoLog.h"
+#include "json/JSONIterator.h"
+#include "net/URI.h"
 
 namespace rho {
 
@@ -68,46 +70,97 @@ void RhoConnectClientImpl::loggedIn(rho::apiGenerator::CMethodResult& oResult) {
 void RhoConnectClientImpl::syncing(rho::apiGenerator::CMethodResult& oResult) {
 	oResult.set( getSyncEngine().isSyncing() );
 }
-
-/*
-void RhoConnectClientImpl::onSyncCreateError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action, rho::apiGenerator::CMethodResult& oResult) {
-	//implemented in Ruby
-}
-	
-void RhoConnectClientImpl::pushChanges( const rho::String& srcName, rho::apiGenerator::CMethodResult& oResult) {
-	//implemented in Ruby
-}
-
-void RhoConnectClientImpl::onSyncUpdateError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action,  const rho::String& rollbackData, rho::apiGenerator::CMethodResult& oResult) {
-	//implemented in Ruby
-}
-	
-void RhoConnectClientImpl::onSyncDeleteError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action, rho::apiGenerator::CMethodResult& oResult) {
-	//implemented in Ruby
-}
-*/
  
 void RhoConnectClientImpl::search( const rho::Hashtable<rho::String, rho::String>& args, rho::apiGenerator::CMethodResult& oResult) {
 	getSyncThread()->stopAll();
-	
-	getSyncEngine().getNotify().setSearchNotification( new sync::CSyncNotification(oResult, true) );
-	
-	rho::String params = "";
-/*
-	searchParams += '&offset=' + Rho::RhoSupport.url_encode(args[:offset]) if args[:offset]
-        searchParams += '&max_results=' + Rho::RhoSupport.url_encode(args[:max_results]) if args[:max_results]
-			
-			callbackParams = args[:callback_param] ? args[:callback_param] : ""
-			
-			if args[:search_params]
-				args[:search_params].each do |key,value|
-					searchParams += '&' + "search[#{Rho::RhoSupport.url_encode(key)}]" + '=' + Rho::RhoSupport.url_encode(value)
-					callbackParams += '&' + "search_params[#{Rho::RhoSupport.url_encode(key)}]" + '=' + Rho::RhoSupport.url_encode(value)
-					end
-					end
 
-*/		
-//	getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncSearchCommand(from,params,sources,syncChanges,progressStep) );
+	bool syncChanges = false;
+	int progressStep = -1;
+	rho::Vector<rho::String> sources;
+	rho::String searchParams;
+	rho::String from = "search";
+	
+	
+	/* handle old-style callback setting */
+	if (args.containsKey("callback")) {
+		oResult.setRubyCallback(args.get("callback"));
+		
+		if (args.containsKey("callback_param")) {
+			oResult.setCallbackParam(args.get("callback_param"));
+		}
+	}
+		
+	if (args.containsKey("from") ) {
+		from = args.get("from");
+	}
+	
+	
+	/*this will return new arg value, overriding deprecated one, if it is present*/
+	struct DeprecatedArgsHandler {
+		static bool getArgValue( const rho::Hashtable<rho::String, rho::String>& args, const rho::String& newArgName, const rho::String& deprecatedArgName, rho::String& realArgValue ) {
+			bool found = false;
+			if ( args.containsKey(deprecatedArgName) ) {
+				RAWLOG_WARNING2("'%s' argument is deprecated for search. Use '%s' instead.",deprecatedArgName.c_str(),newArgName.c_str());
+				realArgValue = args.get(deprecatedArgName);
+				found = true;
+			}
+			if ( args.containsKey(newArgName) ) {
+				realArgValue = args.get(newArgName);
+				found = true;
+			}
+			return found;
+		}
+	};
+	
+	
+	String jsonSources;
+	if ( DeprecatedArgsHandler::getArgValue(args,"sourceNames","source_names",jsonSources) ) {
+		rho::json::CJSONEntry json(jsonSources.c_str());
+		if ( json.isArray() ) {
+			for( rho::json::CJSONArrayIterator array(json); !array.isEnd(); array.next()) {
+				sources.push_back( array.getCurItem().getString() );
+			}
+		}
+	}
+
+	if (args.containsKey("offset")) {
+		searchParams += "&offset=" + rho::net::URI::urlEncode(args.get("offset"));
+	}
+	
+	rho::String maxResults;
+	if ( DeprecatedArgsHandler::getArgValue(args,"maxResults","max_results",maxResults) ) {
+		searchParams += "&max_results=" + rho::net::URI::urlEncode(maxResults);
+	}
+	
+	
+	rho::String jsonSearchParams;
+	if ( DeprecatedArgsHandler::getArgValue(args,"searchParams","search_params",jsonSearchParams) ) {
+		rho::json::CJSONEntry json(jsonSearchParams.c_str());
+		rho::String callbackParam = oResult.getCallbackParam();
+		if ( json.isObject() ) {
+			for ( rho::json::CJSONStructIterator obj(json); !obj.isEnd(); obj.next() ) {
+				rho::String key = rho::net::URI::urlEncode(obj.getCurKey());
+				rho::String value = rho::net::URI::urlEncode(obj.getCurValue().getString());
+				
+				searchParams += "&search[" + key + "]=" + value;
+				callbackParam += "&search_params[" + key + "]=" = value;
+			}
+		}
+		oResult.setCallbackParam(callbackParam);
+	}
+	
+	rho::String strSyncChanges;
+	if ( DeprecatedArgsHandler::getArgValue(args,"syncChanges","sync_changes",strSyncChanges) ) {
+		syncChanges = (strSyncChanges=="true") || (strSyncChanges=="1");
+	}
+	
+	rho::String strProgressStep;
+	if ( DeprecatedArgsHandler::getArgValue(args,"progressStep","progress_step",strProgressStep) ) {
+		progressStep = atoi(strProgressStep.c_str());
+	}
+
+	getSyncEngine().getNotify().setSearchNotification( new sync::CSyncNotification(oResult, true) );
+	getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncSearchCommand(from,searchParams,sources,syncChanges,progressStep) );
 	
 	oResult.setCollectionMode(true);
 	const char* ret = (const char*)getSyncThread()->getRetValue();

@@ -28,10 +28,12 @@ public:
     virtual void setSslVerifyPeer( bool value, rho::apiGenerator::CMethodResult& oResult);
     virtual void loggedIn(rho::apiGenerator::CMethodResult& oResult);
     virtual void syncing(rho::apiGenerator::CMethodResult& oResult);
+	/*
     virtual void onSyncCreateError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action, rho::apiGenerator::CMethodResult& oResult);
     virtual void pushChanges( const rho::String& srcName, rho::apiGenerator::CMethodResult& oResult);
     virtual void onSyncUpdateError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action,  const rho::String& rollbackData, rho::apiGenerator::CMethodResult& oResult);
     virtual void onSyncDeleteError( const rho::String& srcName,  const rho::Vector<rho::String>& objects,  const rho::String& action, rho::apiGenerator::CMethodResult& oResult);
+	*/
     virtual void search( const rho::Hashtable<rho::String, rho::String>& args, rho::apiGenerator::CMethodResult& oResult);
     virtual void doSync( bool showStatusPopup,  const rho::String& queryParams,  bool syncOnlyChangedSources, rho::apiGenerator::CMethodResult& oResult);
     virtual void doSyncSource( const rho::String& sourceName,  bool showStatusPopup,  const rho::String& queryParams, rho::apiGenerator::CMethodResult& oResult);

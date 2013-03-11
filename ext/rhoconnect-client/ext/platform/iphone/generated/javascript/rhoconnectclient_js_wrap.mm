@@ -2642,7 +2642,7 @@ rho::String js_RhoConnectClient_search_Obj(rho::json::CJSONArray& argv, id<IRhoC
     int argc = argv.getSize();
     
     static RHO_API_PARAM rho_api_params_param0_param0[] = { {RHO_API_STRING, 0, 0, 0, 0 } };
-    static RHO_API_PARAM rho_api_params_param0[] = { {RHO_API_ARRAY, 0, "sources", 1, rho_api_params_param0_param0 }, {RHO_API_STRING, 0, "from", 0, 0 }, {RHO_API_HASH, 0, "searchParams", 0, 0 }, {RHO_API_INTEGER, 0, "offset", 0, 0 }, {RHO_API_INTEGER, 0, "maxResults", 0, 0 }, {RHO_API_INTEGER, 0, "progressStep", 0, 0 }, {RHO_API_BOOLEAN, 0, "syncChanges", 0, 0 } };
+    static RHO_API_PARAM rho_api_params_param0[] = { {RHO_API_ARRAY, 0, "sourceNames", 1, rho_api_params_param0_param0 }, {RHO_API_STRING, 0, "from", 0, 0 }, {RHO_API_HASH, 0, "searchParams", 0, 0 }, {RHO_API_INTEGER, 0, "offset", 0, 0 }, {RHO_API_INTEGER, 0, "maxResults", 0, 0 }, {RHO_API_INTEGER, 0, "progressStep", 0, 0 }, {RHO_API_BOOLEAN, 0, "syncChanges", 0, 0 } };
     static RHO_API_PARAM rho_api_params[] = { {RHO_API_HASH, 0, "args", 7, rho_api_params_param0 } };
 
     

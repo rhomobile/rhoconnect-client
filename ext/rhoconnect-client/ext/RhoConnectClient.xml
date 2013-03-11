@@ -167,7 +167,7 @@
 					<PARAM name="args" type="HASH" propertyHash="true">
 						<DESC></DESC>
 						<PARAMS>
-							<PARAM name="sources" type="ARRAY">
+							<PARAM name="sourceNames" type="ARRAY">
 								<DESC></DESC>
 								<CAN_BE_NIL/>
 							</PARAM>

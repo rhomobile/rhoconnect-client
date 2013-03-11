@@ -67,37 +67,6 @@ class RhoConnectClient
         Object.const_get(src_name).on_sync_delete_error(objects, action)
     end
 
-=begin
-    def self.search(args)
-        searchParams = ""
-
-        searchParams += '&offset=' + Rho::RhoSupport.url_encode(args[:offset]) if args[:offset]
-        searchParams += '&max_results=' + Rho::RhoSupport.url_encode(args[:max_results]) if args[:max_results]
-
-        callbackParams = args[:callback_param] ? args[:callback_param] : ""
-
-		if args[:search_params]
-            args[:search_params].each do |key,value|
-              searchParams += '&' + "search[#{Rho::RhoSupport.url_encode(key)}]" + '=' + Rho::RhoSupport.url_encode(value)
-              callbackParams += '&' + "search_params[#{Rho::RhoSupport.url_encode(key)}]" + '=' + Rho::RhoSupport.url_encode(value)
-            end  
-        end
-		puts "search args: #{args.inspect}"
-
-        RhoConnectClient.doSearch(
-			args[:source_names],
-			args[:from] ? args[:from] : 'search',
-			args[:searchParams],
-			args[:offset],
-			args[:max_results],
-			args[:progress_step] ? args[:progress_step] : -1,
-			args[:sync_changes] ? args[:sync_changes] : false,
-            args[:callback],
-			args[:callback_param] )
-    end
-=end
-
-
 	def self.getSourceNameById( sourceId )
 		puts "getSourceNameById: #{sourceId}"
 		if -1 == sourceId
