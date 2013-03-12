@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Rhoconnect-client"
 	ProjectGUID="{93453E28-E84A-40C4-BD6A-51A8373D7044}"
 	Keyword="Win32Proj"
@@ -170,6 +170,86 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|MC3000c50b (ARMV4I)"
+			OutputDirectory="$(RHO_ROOT)\Platform\wm\Bin\$(PlatformName)\Rhodes\$(ConfigurationName)"
+			IntermediateDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
+			ConfigurationType="4"
+			InheritedPropertySheets=".\Rhoconnect-client.vsprops"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(RHO_ROOT)\platform\shared\sync&quot;;&quot;$(RHO_ROOT)\platform\shared\ruby\wince&quot;;&quot;$(RHO_ROOT)\platform\shared\ruby\include&quot;;&quot;$(RHO_ROOT)\platform\shared&quot;;&quot;$(RHO_ROOT)\platform\shared\common&quot;;..\..\shared\src;$(RHO_ROOT)\lib\commonAPI\coreapi\ext\shared"
+				PreprocessorDefinitions="OS_PLATFORM_MOTCE=5;_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;_LIB;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
+				MinimalRebuild="true"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES)"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+				AdditionalOptions=" /subsystem:windowsce,5.00"
+				OutputFile="$(OutDir)/Rhoconnect-client.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release|Windows Mobile 6 Professional SDK (ARMV4I)"
 			OutputDirectory="$(RHO_ROOT)\Platform\wm\Bin\$(PlatformName)\Rhodes\$(ConfigurationName)"
 			IntermediateDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
@@ -313,83 +393,6 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Debug|MC3000c50b (ARMV4I)"
-			OutputDirectory="$(RHO_ROOT)\Platform\wm\Bin\$(PlatformName)\Rhodes\$(ConfigurationName)"
-			IntermediateDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
-			ConfigurationType="4"
-			InheritedPropertySheets=".\Rhoconnect-client.vsprops"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="1"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				ExecutionBucket="7"
-				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(RHO_ROOT)\platform\shared\sync&quot;;&quot;$(RHO_ROOT)\platform\shared\ruby\wince&quot;;&quot;$(RHO_ROOT)\platform\shared\ruby\include&quot;;&quot;$(RHO_ROOT)\platform\shared&quot;;&quot;$(RHO_ROOT)\platform\shared\common&quot;;..\..\shared\src;$(RHO_ROOT)\lib\commonAPI\coreapi\ext\shared"
-				PreprocessorDefinitions="OS_PLATFORM_MOTCE=5;_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);WINCE;DEBUG;_LIB;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
-				MinimalRebuild="true"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES)"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-				AdditionalOptions=" /subsystem:windowsce,5.00"
-				OutputFile="$(OutDir)/Rhoconnect-client.lib"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCCodeSignTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-			<DeploymentTool
-				ForceDirty="-1"
-				RemoteDirectory=""
-				RegisterOutput="0"
-				AdditionalFiles=""
-			/>
-			<DebuggerTool
-			/>
-		</Configuration>
-		<Configuration
 			Name="Release|MC3000c50b (ARMV4I)"
 			OutputDirectory="$(RHO_ROOT)\Platform\wm\Bin\$(PlatformName)\Rhodes\$(ConfigurationName)"
 			IntermediateDirectory="$(TEMP_FILES_DIR)\$(ConfigurationName)"
@@ -449,6 +452,9 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
 			/>
 			<Tool
 				Name="VCCodeSignTool"
@@ -689,10 +695,6 @@
 			</File>
 			<File
 				RelativePath="..\..\shared\RhoConnectClientSingletonImpl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\RhoConnectSingletonImpl.cpp"
 				>
 			</File>
 			<File
