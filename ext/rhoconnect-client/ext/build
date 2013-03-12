@@ -3,17 +3,17 @@
 
 if [ "$RHO_PLATFORM" = "android" ]; then
 
-cd rhoconnect-client/platform/android
+cd platform/android
 rake --trace
 
 elif [ "$RHO_PLATFORM" = "iphone" ]; then
 
-cd rhoconnect-client/platform/iphone
+cd platform/iphone
 rake --trace
 
 elif [ "$RHO_PLATFORM" = "osx" ]; then
 
-cd rhoconnect-client/platform/iphone
+cd platform/iphone
 rake --trace
 
 else

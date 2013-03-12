@@ -1,21 +1,21 @@
 
 if "%RHO_PLATFORM%" == "android" (
 
-cd rhoconnect-client\platform\android
+cd platform\android
 rake --trace
 
 )
 
 if "%RHO_PLATFORM%" == "iphone" (
 
-cd rhoconnect-client\platform\phone
+cd platform\phone
 rake --trace
 
 )
 
 if "%RHO_PLATFORM%" == "bb" (
 
-cd rhoconnect-client\platform\bb
+cd platform\bb
 rake --trace
 
 )

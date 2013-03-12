@@ -45,17 +45,17 @@ namespace "build" do
   task :all => :config do
 	  
 	  curdir = pwd
-	  $rhoconnectclientdir = curdir.gsub('/ext/rhoconnect-client/platform/iphone','')
+	  $rhoconnectclientdir = curdir.gsub('/ext/platform/iphone','')
 	  
 	  src_files = []
 	
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/rhoconnectclient.c'
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/initRhoconnectClient.cpp'
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/ClientRegister.cpp'
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncEngine.cpp'
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncNotify.cpp'
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncSource.cpp'
-	  src_files << $rhoconnectclientdir + '/ext/rhoconnect-client/shared/src/sync/SyncThread.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/rhoconnectclient.c'
+	  src_files << $rhoconnectclientdir + '/ext/shared/initRhoconnectClient.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/sync/ClientRegister.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/sync/SyncEngine.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/sync/SyncNotify.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/sync/SyncSource.cpp'
+	  src_files << $rhoconnectclientdir + '/ext/shared/sync/SyncThread.cpp'
 	  
 	  src_files << $rhoconnectclientdir + '/ext/shared/RhoConnectClientImpl.cpp'
 	  src_files << $rhoconnectclientdir + '/ext/shared/generated/rhoconnectclient_api_init.cpp'
@@ -82,9 +82,7 @@ namespace "build" do
 		args << "-I\"#{$rhoconnectclientdir}/ext/shared\""
 		args << "-I\"#{$rootdir}/lib/commonAPI/coreapi/ext/shared\""
 
-
-	    	args << "-I\"#{$rootdir}/platform/shared/sync\""
-		args << "-I\"#{$rhoconnectclientdir}/ext/rhoconnect-client/shared/src\""
+		args << "-I\"#{$rootdir}/platform/shared/sync\""
 		  
 		args << "-I\"#{$rootdir}/platform/shared/ruby/iphone\""
 		args << "-D_XOPEN_SOURCE"
@@ -92,9 +90,8 @@ namespace "build" do
 		args << "-isysroot \"#{$sdkroot}\""
 		args << "-fno-common"
 		args << "-arch #{$arch}"
-#		args << "-O2"
-#		args << "-gdwarf"
-		args << "-ggdb"
+		args << "-O2"
+#		args << "-ggdb"
 		args << "-o \"#{objname}\""
 		args << "-c"
 		args << f

@@ -1293,6 +1293,16 @@ end
 			::Rho::RHO.init_sync_source_properties(Rho::RhoConfig::sources.values)
 		end
 	end
+	
+	
+	it "should set notifications" do
+		Rho::RhoConnectClient.setNotification(getCustomer_str,"/app/Settings/sync_notify")
+		Rho::RhoConnectClient.clearNotification(getCustomer_str)
+		
+		Rho::RhoConnectClient.setObjectNotification("/app/Settings/object_notify")
+		Rho::RhoConnectClient.addObjectNotify(getCustomer_str,"object")
+		Rho::RhoConnectClient.cleanObjectNotify()
+	end
   
   it "should logout" do
     SyncEngine.logout()

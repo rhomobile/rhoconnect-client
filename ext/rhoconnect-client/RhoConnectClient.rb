@@ -68,21 +68,16 @@ class RhoConnectClient
     end
 
 	def self.getSourceNameById( sourceId )
-		puts "getSourceNameById: #{sourceId}"
 		if -1 == sourceId
-			puts "sourceId is -1, return special value '*'"
 			return '*'
 		else
 			Rho::RhoConfig::sources.values.each do |src|
-				puts "source: #{src.inspect}"
 				if src['source_id'] == sourceId
-					puts "source found, returning name: #{src['name']}"
 					return src['name']
 				end
 			end
 		end
 
-		puts "source with id: #{sourceId} not found"
 		nil
 	end
 
