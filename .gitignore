@@ -21,3 +21,4 @@ config.yml
 
 ext/rhoconnect-client/ext/platform/*/generated
 ext/rhoconnect-client/ext/shared/generated
+ext/rhoconnect-client/public/api/generated
