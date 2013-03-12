@@ -18,3 +18,6 @@ config.yml
 /rhoconnect-client/Java/Android/test/gen
 /rhoconnect-client/Java/Android/test/bin
 /rhoconnect-client/C++/Tests/win32/bin
+
+ext/rhoconnect-client/ext/platform/*/generated
+ext/rhoconnect-client/ext/shared/generated
