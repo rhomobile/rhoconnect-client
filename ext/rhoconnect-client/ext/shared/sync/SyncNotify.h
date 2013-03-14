@@ -140,7 +140,7 @@ public:
 
     void onSyncSourceEnd( int nSrc, VectorPtr<CSyncSource*>& sources );
     void fireSyncNotification( CSyncSource* psrc, boolean bFinish, int nErrCode, String strMessage);
-    void fireSyncNotification2( CSyncSource* src, boolean bFinish, int nErrCode, String strServerError);
+    void fireSyncNotification2( CSyncSource* src, boolean bFinish, int nErrCode, const Hashtable<String,String>& serverErrors);
 
     void fireBulkSyncNotification( boolean bFinish, String status, String partition, int nErrCode );
 
@@ -159,7 +159,7 @@ public:
     boolean isFakeServerResponse(){ return m_bFakeServerResponse; }
     void setFakeServerResponse(boolean bFakeServerResponse){ m_bFakeServerResponse = bFakeServerResponse; }
 
-    void fireAllSyncNotifications( boolean bFinish, int nErrCode, String strError, String strServerError );
+    void fireAllSyncNotifications( boolean bFinish, int nErrCode, String strError/*, String strServerError*/ );
     void reportSyncStatus(String status, int error, String strDetails);
     void showStatusPopup(const String& status);
     
@@ -167,14 +167,16 @@ public:
 private:
     CSyncNotification* getSyncNotifyBySrc(CSyncSource* src);
 
-    String makeCreateObjectErrorBody(int nSrcID);
+    void appendCreateObjectErrorInfo(int nSrcID, Hashtable< String, Hashtable<String, String> >& result);
     void processSingleObject();
 
-    void doFireSyncNotification( CSyncSource* src, boolean bFinish, int nErrCode, String strError, String strParams, String strServerError);
+    void doFireSyncNotification( CSyncSource* src, boolean bFinish, int nErrCode, String strError, const Hashtable<String, String>* params, const Hashtable<String, String>* pServerErrors);
 
-    boolean callNotify(const CSyncNotification& oNotify, const String& strBody );
+    boolean callNotify(const CSyncNotification& oNotify, const Hashtable<String, String>& result, const Hashtable<String, Hashtable<String,String> >* l2Result = 0 );
 
     void clearNotification(CSyncSource* src);
+	
+	static String notifyParamToStr( const Hashtable<String,String>& result, const Hashtable< String, Hashtable< String, String > >* );
 
 };
 

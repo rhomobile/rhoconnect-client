@@ -39,7 +39,7 @@ void RhoConnectClientImpl::setPageSize( int value, rho::apiGenerator::CMethodRes
 }
 	
 void RhoConnectClientImpl::getThreadedMode(rho::apiGenerator::CMethodResult& oResult) {
-	//TODO
+	oResult.set( !getSyncEngine().isNoThreadedMode() );
 }
 	
 void RhoConnectClientImpl::setThreadedMode( bool value, rho::apiGenerator::CMethodResult& oResult) {
@@ -161,40 +161,36 @@ void RhoConnectClientImpl::search( const rho::Hashtable<rho::String, rho::String
 
 	getSyncEngine().getNotify().setSearchNotification( new sync::CSyncNotification(oResult, true) );
 	getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncSearchCommand(from,searchParams,sources,syncChanges,progressStep) );
-	
-	oResult.setCollectionMode(true);
-	const char* ret = (const char*)getSyncThread()->getRetValue();
-	if (ret != 0) {
-		oResult.set( ret );
-	}
+		
+	handleSyncResult(oResult);
 }
 	
 void RhoConnectClientImpl::doSync( bool showStatusPopup,  const rho::String& queryParams,  bool syncOnlyChangedSources, rho::apiGenerator::CMethodResult& oResult) {
     getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncCommand(sync::CSyncThread::scSyncAll,showStatusPopup,queryParams.c_str(),syncOnlyChangedSources));
 	
-	const char* ret = (const char*)getSyncThread()->getRetValue();
-	if (ret != 0) {
-		oResult.set( ret );
-	}
+	handleSyncResult(oResult);
 }
 	
 void RhoConnectClientImpl::doSyncSource( const rho::String& sourceName,  bool showStatusPopup,  const rho::String& queryParams, rho::apiGenerator::CMethodResult& oResult) {
     getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncCommand(sync::CSyncThread::scSyncOne, sourceName, 0, false, "" ) );
 	
-	const char* ret = (const char*)getSyncThread()->getRetValue();
-	if (ret != 0) {
-		oResult.set( ret );
-	}
+	handleSyncResult(oResult);
 }
 	
 void RhoConnectClientImpl::login( const rho::String& login,  const rho::String& password, rho::apiGenerator::CMethodResult& oResult) {	
 	getSyncThread()->stopAll();
     getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncLoginCommand(login, password, new sync::CSyncNotification(oResult, false) ) );
 	
-	oResult.setCollectionMode(true);
-	const char* ret = (const char*)getSyncThread()->getRetValue();
-	if (ret != 0) {
-		oResult.set( ret );
+	handleSyncResult(oResult);	
+}
+	
+void RhoConnectClientImpl::handleSyncResult(rho::apiGenerator::CMethodResult& oResult) {
+	if ( getSyncEngine().isNoThreadedMode() ) {
+		oResult.setCollectionMode(true);
+		const char* ret = (const char*)getSyncThread()->getRetValue();
+		if (ret != 0) {
+			oResult.set( ret );
+		}
 	}
 }
 	
@@ -266,88 +262,4 @@ void RhoConnectClientImpl::getSourceProperty( const rho::String& sourceName,  co
 	}
 	oResult.set(ret);
 }
-/*
-void RhoConnectClientImpl::getSourceNameById( int sourceId, rho::apiGenerator::CMethodResult& oResult) {
-	if ( -1 == sourceId ) {
-		oResult.set("*");
-	} else {
-		getSyncEngine().loadAllSources();
-		sync::CSyncSource* src = getSyncEngine().findSourceById(sourceId);
-		if ( src != 0 ) {
-			oResult.set(src->getName());
-		}
-	}
-}
-*/
-/*
-void RhoConnectClientImpl::set_threaded_mode( bool threaded, rho::apiGenerator::CMethodResult& oResult) {
-	setThreadedMode(threaded, oResult);
-}
-
-void RhoConnectClientImpl::set_ssl_verify_peer( bool verify, rho::apiGenerator::CMethodResult& oResult) {
-	setSslVerifyPeer(verify, oResult);
-}
-	
-void RhoConnectClientImpl::set_pollinterval( int interval, rho::apiGenerator::CMethodResult& oResult) {
-	setPollInterval(interval, oResult);
-		
-}
-	
-void RhoConnectClientImpl::get_pollinterval(rho::apiGenerator::CMethodResult& oResult) {
-	getPollInterval(oResult);
-}
-	
-void RhoConnectClientImpl::set_syncserver( const rho::String& url, rho::apiGenerator::CMethodResult& oResult) {
-	setSyncServer(url, oResult);
-}
-	
-void RhoConnectClientImpl::set_pagesize( int size, rho::apiGenerator::CMethodResult& oResult) {
-	setPageSize(size, oResult);
-}
-	
-void RhoConnectClientImpl::get_pagesize(rho::apiGenerator::CMethodResult& oResult) {
-	getPageSize(oResult);
-}
-	
-void RhoConnectClientImpl::enable_status_popup( bool enable, rho::apiGenerator::CMethodResult& oResult) {
-	setShowStatusPopup(enable,oResult);
-}
-	
-void RhoConnectClientImpl::dosync_source( int source,  int showStatusPopup,  const rho::String& queryParams, rho::apiGenerator::CMethodResult& oResult) {
-	sync::CSyncThread::getInstance()->addQueueCommand(new sync::CSyncThread::CSyncCommand(sync::CSyncThread::scSyncOne, "", source, showStatusPopup!=0, queryParams.c_str() ) );
-    oResult.set( (const char*)sync::CSyncThread::getInstance()->getRetValue() );
-}
-	
-void RhoConnectClientImpl::set_notification( int source, rho::apiGenerator::CMethodResult& oResult) {
-	rho_sync_set_notification(source,"","");
-}
-	
-void RhoConnectClientImpl::clear_notification( int source, rho::apiGenerator::CMethodResult& oResult) {
-	rho_sync_clear_notification(source);
-}
-	
-void RhoConnectClientImpl::add_objectnotify( int source,  const rho::String& object, rho::apiGenerator::CMethodResult& oResult) {
-	rho_sync_addobjectnotify( source, object.c_str() );
-}
-	
-void RhoConnectClientImpl::get_lastsync_objectcount( int source, rho::apiGenerator::CMethodResult& oResult) {
-	oResult.set( rho_sync_get_lastsync_objectcount( source ) );
-}
-	
-void RhoConnectClientImpl::set_source_property( int source,  const rho::String& propertyName,  const rho::String& propertyValue, rho::apiGenerator::CMethodResult& oResult) {
-	rho_sync_set_source_property(source,propertyName.c_str(),propertyValue.c_str());
-}
-	
-void RhoConnectClientImpl::get_source_property( int source,  const rho::String& propertyName, rho::apiGenerator::CMethodResult& oResult) {
-	oResult.set(rho_sync_get_source_property(source,propertyName.c_str()));
-}
-	
-void RhoConnectClientImpl::logged_in(rho::apiGenerator::CMethodResult& oResult) {
-	oResult.set( getSyncEngine().isLoggedIn()?1:0 );
-}
-	
-void RhoConnectClientImpl::is_syncing(rho::apiGenerator::CMethodResult& oResult) {
-	oResult.set( getSyncEngine().isSyncing()?1:0 );
-}
-*/
 }

@@ -666,7 +666,9 @@ void CSyncSource::syncServerChanges()
 //{"create-error":{"0_broken_object_id":{"name":"wrongname","an_attribute":"error create"},"0_broken_object_id-error":{"message":"error create"}}}
 void CSyncSource::processServerErrors(CJSONEntry& oCmds)
 {
-    String strServerError;
+	Hashtable<String, String> errors;
+/*
+//    String strServerError;
     const char* arErrTypes[] = {"source-error", "search-error", "create-error", "update-error", "delete-error", "update-rollback", null};
     for( int i = 0; ; i++ )
     {
@@ -674,6 +676,8 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
             break;
         if ( !oCmds.hasName(arErrTypes[i]) )
             continue;
+		
+		String strServerError = "";
 
         CJSONEntry errSrc = oCmds.getEntry(arErrTypes[i]);
         CJSONStructIterator errIter(errSrc);
@@ -688,7 +692,7 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
                     if ( strServerError.length() > 0 )
                         strServerError += "&";
 
-                    strServerError += "server_errors[" + URI::urlEncode(strKey) + "][message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
+                    strServerError += URI::urlEncode(strKey) + "[message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
                 }
             }else
             {
@@ -700,7 +704,7 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
                     strObject = strObject.substr(0, strKey.length()-6);
                     if ( strServerError.length() > 0 )
                         strServerError += "&";
-                    strServerError += "server_errors[" + String(arErrTypes[i]) + "][" + URI::urlEncode(strObject) + "][message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
+                    strServerError += URI::urlEncode(strObject) + "[message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
                 }else
                 {
                     CJSONStructIterator attrIter(errIter.getCurValue());
@@ -712,15 +716,77 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
                         if ( strServerError.length() > 0 )
                             strServerError += "&";
 
-                        strServerError += "server_errors[" + String(arErrTypes[i]) + "][" + URI::urlEncode(strObject) + "][attributes][" + URI::urlEncode(strAttrName) + "]=" + URI::urlEncode(strAttrValue);
+                        strServerError += URI::urlEncode(strObject) + "[attributes][" + URI::urlEncode(strAttrName) + "]=" + URI::urlEncode(strAttrValue);
                     }
                 }
             }
         }
+		
+		if ( strServerError.size() > 0 ) {
+			errors.put(arErrTypes[i],strServerError);
+		}
     }
-
-    if ( strServerError.length() > 0 )
-        getNotify().fireSyncNotification2(this, true, RhoAppAdapter.ERR_CUSTOMSYNCSERVER, strServerError);
+	
+    if ( errors.size() > 0 )
+        getNotify().fireSyncNotification2(this, true, RhoAppAdapter.ERR_CUSTOMSYNCSERVER, errors);
+ */
+ 
+	String strServerError;
+	const char* arErrTypes[] = {"source-error", "search-error", "create-error", "update-error", "delete-error", "update-rollback", null};
+	for( int i = 0; ; i++ )
+	{
+		if ( arErrTypes[i] == null )
+			break;
+		if ( !oCmds.hasName(arErrTypes[i]) )
+			continue;
+		
+		CJSONEntry errSrc = oCmds.getEntry(arErrTypes[i]);
+		CJSONStructIterator errIter(errSrc);
+		for( ; !errIter.isEnd(); errIter.next() )
+		{
+			String strKey = errIter.getCurKey();
+			
+			if ( i == 0 || i == 1 )//"source-error", "search-error"
+			{
+				if ( errIter.getCurValue().hasName("message") )
+				{
+					if ( strServerError.length() > 0 )
+						strServerError += "&";
+					
+					strServerError += "server_errors[" + URI::urlEncode(strKey) + "][message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
+				}
+			}else
+			{
+				//"create-error", "update-error", "delete-error", "update-rollback"
+				String strObject = strKey;
+				
+				if ( String_endsWith(strObject, "-error") )
+				{
+					strObject = strObject.substr(0, strKey.length()-6);
+					if ( strServerError.length() > 0 )
+						strServerError += "&";
+					strServerError += "server_errors[" + String(arErrTypes[i]) + "][" + URI::urlEncode(strObject) + "][message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
+				}else
+				{
+					CJSONStructIterator attrIter(errIter.getCurValue());
+					for( ; !attrIter.isEnd(); attrIter.next() )
+					{
+						String strAttrName = attrIter.getCurKey();
+						String strAttrValue = attrIter.getCurString();
+						
+						if ( strServerError.length() > 0 )
+							strServerError += "&";
+						
+						strServerError += "server_errors[" + String(arErrTypes[i]) + "][" + URI::urlEncode(strObject) + "][attributes][" + URI::urlEncode(strAttrName) + "]=" + URI::urlEncode(strAttrValue);
+					}
+				}
+			}
+		}
+	}
+	
+	if ( strServerError.length() > 0 )
+		errors.put("server_errors",strServerError);
+		getNotify().fireSyncNotification2(this, true, RhoAppAdapter.ERR_CUSTOMSYNCSERVER, errors/*strServerError*/);
 }
 
 void CSyncSource::processServerResponse_ver3(CJSONArrayIterator& oJsonArr)

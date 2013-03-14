@@ -106,7 +106,9 @@ void CSyncNotify::processSingleObject()
 
 void CSyncNotify::fireObjectsNotification()
 {
-	String strBody = "";
+	Hashtable<String, String> result;
+	Hashtable<String, Hashtable<String,String> > l2Result;
+	Hashtable<String, String> hashDeleted,hashUpdated,hashCreated;
 
     {
         synchronized(m_mxObjectNotify)
@@ -133,48 +135,37 @@ void CSyncNotify::fireObjectsNotification()
                         nNotifyType = enUpdate;    
                 }
 */
-                if ( strBody.length() > 0 )
-                    strBody += "&rho_callback=1&";
-
+                Hashtable<String,String>* pHash = 0;
                 switch(nNotifyType)
                 {
                 case enDelete:
-                    strBody += "deleted[][object]=" + itObject->first;
-                    strBody += "&deleted[][source_id]=" + convertToStringA(nSrcID);
+                    pHash = &hashDeleted;
                     break;
                 case enUpdate:
-                    strBody += "updated[][object]=" + itObject->first;
-                    strBody += "&updated[][source_id]=" + convertToStringA(nSrcID);
+                    pHash = &hashUpdated;
                     break;
                 case enCreate:
-                    strBody += "created[][object]=" + itObject->first;
-                    strBody += "&created[][source_id]=" + convertToStringA(nSrcID);
+                    pHash = &hashCreated;
                     break;
+                }
+				
+                if (pHash != 0) {
+                    pHash->put( itObject->first, convertToStringA(nSrcID) );
                 }
 
                 hashObject.put(itObject->first, enNone);
             }
         }
 
-        if ( strBody.length() == 0 )
+        if ( (hashDeleted.size() + hashCreated.size() + hashUpdated.size() ) == 0 )
             return;
     }
 	
-	String strUrl = m_pObjectNotify->m_callbackData.getRubyCallback();
+	l2Result.put("created",hashCreated);
+	l2Result.put("updated",hashUpdated);
+	l2Result.put("deleted",hashDeleted);
 
-    if ( strUrl.length() > 0 )
-    {
-        strUrl = getNet().resolveUrl(strUrl);
-		apiGenerator::CMethodResult r;
-		r.setRubyCallback(strUrl);
-        callNotify( CSyncNotification(r,false), strBody);
-    }else if (m_pObjectNotify->m_cCallback)
-    {
-        m_isInsideCallback = true;
-        (*m_pObjectNotify->m_cCallback)(strBody.c_str(), m_pObjectNotify->m_cCallbackData);
-        m_isInsideCallback = false;
-        //callNotify( CSyncNotification(m_pObjectNotify->m_cCallback,m_pObjectNotify->m_cCallbackData,false), strBody);
-    }
+	callNotify( CSyncNotification(m_pObjectNotify->m_callbackData,false), result, &l2Result );
 }
 
 void CSyncNotify::onObjectChanged(int nSrcID, const String& strObject, int nType)
@@ -209,27 +200,24 @@ void CSyncNotify::addCreateObjectError(int nSrcID, const String& strObject, cons
     }
 }
 
-String CSyncNotify::makeCreateObjectErrorBody(int nSrcID)
+void CSyncNotify::appendCreateObjectErrorInfo(int nSrcID, Hashtable< String, Hashtable<String, String> >& result )
 {
     String strBody = "";
 
     synchronized(m_mxObjectNotify)
     {
         Hashtable<String,String>* phashErrors = m_hashCreateObjectErrors.get(nSrcID);
+		
+		
         if ( phashErrors == null )
-            return "";
+            return ;
 
         Hashtable<String,String>& hashErrors = *phashErrors;
-        for ( Hashtable<String,String>::iterator itError = hashErrors.begin();  itError != hashErrors.end(); ++itError )
-        {
-            strBody += "&create_error[][object]=" + itError->first;
-            strBody += "&create_error[][error_message]=" + itError->second;
-        }
+		
+        result.put("create_error",hashErrors);
 
         hashErrors.clear();
     }
-
-    return strBody;
 }
 
 void CSyncNotify::setObjectNotification(CObjectNotification* pNotify)
@@ -385,16 +373,17 @@ void CSyncNotify::fireBulkSyncNotification( boolean bFinish, String status, Stri
 		String strMessage = RhoAppAdapter.getMessageText("sync_failed_for") + "bulk.";
 		reportSyncStatus(strMessage,nErrCode,"");
 	}
+	
+	Hashtable<String,String> params;
+	params.put("partition",partition);
+	params.put("bulk_status",status);
+	params.put("sync_type","bulk");
 
-    String strParams = "";
-    strParams += "partition=" + partition;
-    strParams += "&bulk_status="+status;
-    strParams += "&sync_type=bulk";
-
-    doFireSyncNotification( null, bFinish, nErrCode, "", strParams, "" );
+    doFireSyncNotification( null, bFinish, nErrCode, "", &params, 0 );
 }
 
-void CSyncNotify::fireAllSyncNotifications( boolean bFinish, int nErrCode, String strError, String strServerError )
+
+void CSyncNotify::fireAllSyncNotifications( boolean bFinish, int nErrCode, String strError/*, String strServerError*/ )
 {
     if ( getSync().getState() == CSyncEngine::esExit )
 		return;
@@ -403,9 +392,10 @@ void CSyncNotify::fireAllSyncNotifications( boolean bFinish, int nErrCode, Strin
     {
         CSyncNotification* pSN = getSyncNotifyBySrc(null);    
         if ( pSN != null )
-            doFireSyncNotification( null, bFinish, nErrCode, strError, "", strServerError );
+            doFireSyncNotification( null, bFinish, nErrCode, strError, 0, 0/*strServerError*/ );
     }
 }
+
 
 void CSyncNotify::fireSyncNotification( CSyncSource* src, boolean bFinish, int nErrCode, String strMessage)
 {
@@ -423,7 +413,7 @@ void CSyncNotify::fireSyncNotification( CSyncSource* src, boolean bFinish, int n
         }
 	}
 
-    doFireSyncNotification(src, bFinish, nErrCode, "", "", "" );
+    doFireSyncNotification(src, bFinish, nErrCode, "", 0, 0 );
 }
 
 CSyncNotification* CSyncNotify::getSyncNotifyBySrc(CSyncSource* src)
@@ -446,18 +436,21 @@ CSyncNotification* CSyncNotify::getSyncNotifyBySrc(CSyncSource* src)
     return pSN != null ? pSN : &m_emptyNotify;
 }
 
-void CSyncNotify::fireSyncNotification2( CSyncSource* src, boolean bFinish, int nErrCode, String strServerError)
+void CSyncNotify::fireSyncNotification2( CSyncSource* src, boolean bFinish, int nErrCode, const Hashtable<String,String>& serverErrors)
 {
-    doFireSyncNotification(src, bFinish, nErrCode, "", "", strServerError);
+    doFireSyncNotification(src, bFinish, nErrCode, "", 0, &serverErrors);
 }
 
-void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int nErrCode, String strError, String strParams, String strServerError)
+void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int nErrCode, String strError, const Hashtable<String,String>* params, const Hashtable<String,String>* pServerErrors)
 {
 	if ( getSync().isStoppedByUser() )
 		return;
 
     CSyncNotification* pSN;
-    String strBody;
+
+	Hashtable<String, String> result;
+	Hashtable<String, Hashtable<String,String> > errorsL2;
+	
     boolean bRemoveAfterFire = bFinish;
     {
         synchronized(m_mxSyncNotifications)
@@ -465,74 +458,71 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
             pSN = getSyncNotifyBySrc(src);
 	        if ( pSN == null )
                 return;
-
-		    strBody = "";
+			
+			if ( params != 0 ) {
+				result = *params;
+			}else {
+				result.put("sync_type","incremental");
+			}
 
             if ( src != null )
             {
-                strBody += "total_count=" + convertToStringA( (*src).getTotalCount());
-                strBody += "&processed_count=" + convertToStringA( (*src).getCurPageCount());
-                strBody += "&cumulative_count=" + convertToStringA(getLastSyncObjectCount( (*src).getID()));
-                strBody += "&source_id=" + convertToStringA( (*src).getID());
-                strBody += "&source_name=" + (*src).getName();
-            }
+				result.put("total_count", convertToStringA( (*src).getTotalCount()));
+				result.put("processed_count", convertToStringA( (*src).getTotalCount()));
+				result.put("cumulative_count", convertToStringA( (*src).getCurPageCount()));
+				result.put("source_id", convertToStringA( (*src).getID()));
+				result.put("source_name", (*src).getName());
+			}
 
-            if ( strParams.length() > 0 )
-                strBody += (strBody.length() > 0 ? "&" : "") + strParams;
-            else
-                strBody += String(strBody.length() > 0 ? "&" : "") + "sync_type=incremental";
-
-            strBody += "&status=";
+			String status;
             if ( bFinish )
             {
                 if ( nErrCode == RhoAppAdapter.ERR_NONE )
                 {
                     if ( getSync().isSchemaChanged() )
-                        strBody += "schema_changed";
+                        status = "schema_changed";
                     else
-                        strBody += (src == null && strParams.length() == 0) ? "complete" : "ok";
+                        status = (src == null && ( (params==0) || params->size()==0 ) ) ? "complete" : "ok";
                 }
 	            else
 	            {
                     if ( getSync().isStoppedByUser() )
                         nErrCode = RhoAppAdapter.ERR_CANCELBYUSER;
 
-	        	    strBody += "error";				        	
-			        strBody += "&error_code=" + convertToStringA(nErrCode);
-		            strBody += "&error_message=";
+					status = "error";
+					
+					result.put("error_code", convertToStringA(nErrCode) );
+					
+					String error;
+					if ( strError.length() > 0 ) {
+                        error = URI::urlEncode(strError);
+					} else if ( src != null ) {
+                        error = URI::urlEncode( (*src).m_strError);
+					}
+					
+					result.put("error_message",error);
+					
+					if ( pServerErrors != 0 ) {
+						result.insert(pServerErrors->begin(),pServerErrors->end());
+						//errorsL2.put("server_errors",*pServerErrors);
+					}
+				}
 
-                    if ( strError.length() > 0 )
-                        URI::urlEncode(strError,strBody);
-                    else if ( src != null )
-                        URI::urlEncode( (*src).m_strError,strBody);
-
-                    if ( strServerError.length() > 0 )
-                        strBody += "&" + strServerError;
-	            }
-
-                if ( src != null )
-                    strBody += makeCreateObjectErrorBody( (*src).getID());
-            }
-            else
-        	    strBody += "in_progress";
-
-            strBody += "&rho_callback=1";
-			String strParams = pSN->m_callbackData.getCallbackParam();
-			
-            if ( strParams.length() > 0 )
-            {
-                if ( !String_startsWith( strParams, "&" ) )
-                    strBody += "&";
-
-                strBody += strParams;
-            }
-
+                if ( src != null ) {
+                    appendCreateObjectErrorInfo( (*src).getID(), errorsL2 );
+				}
+            } else {
+        	    status = "in_progress";
+			}
+						   
+			result.put("status",status);
+						   			
             bRemoveAfterFire = bRemoveAfterFire && pSN->m_bRemoveAfterFire;
         }
     }
     LOG(INFO) + "Fire notification. Source : " + (src != null ? (*src).getName():"") + "; " + pSN->toString();
 	
-    if ( callNotify(*pSN, strBody) || bRemoveAfterFire)
+    if ( callNotify(*pSN, result, &errorsL2 ) || bRemoveAfterFire)
         clearNotification(src);
 }
 
@@ -547,17 +537,63 @@ const String& CSyncNotify::getNotifyBody()
 
     return m_arNotifyBody[m_arNotifyBody.size()-1];
 }
+	
+	
+String CSyncNotify::notifyParamToStr( const Hashtable<String,String>& result, const Hashtable< String, Hashtable< String, String > >* l2Hashes) {
 
-boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const String& strBody )
+	String ret = "";
+	
+	for ( Hashtable<String,String>::const_iterator it = result.begin(); it != result.end(); ++it ) {
+		if ( ret.length() > 0 ) {
+			ret += "&";
+		}
+		
+		if ( it->first == "server_errors" ) {
+			ret += it->second;
+		} else {
+			ret += it->first + "=" + it->second;
+		}
+	}
+	
+	if ( l2Hashes != 0 ) {
+		for ( Hashtable< String, Hashtable< String, String > >::const_iterator it = l2Hashes->begin(); it != l2Hashes->end(); ++it ) {
+			
+			const String& key = it->first;
+			const Hashtable<String,String>& value = it->second;
+			
+			const String& strArg2 = (key=="create_error")?"error_message":"source_id";
+
+			for ( Hashtable<String,String>::const_iterator it = result.begin(); it != result.end(); ++it ) {
+				if ( ret.length() > 0 ) {
+					ret += "&";
+				}
+
+				ret +=  key + "[][object]=" + it->first + "&";
+				ret +=  key + "[][" + strArg2 + "]=" + it->second;
+			}
+		}
+	}
+	
+	if ( String_endsWith(ret,"&") ) {
+		ret = ret.substr(0,ret.size()-1);
+	}
+	
+	return ret;
+}
+
+
+boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const Hashtable<String, String>& result, const Hashtable<String,Hashtable<String,String> >* l2Hashes )
 {
-    //String strUrl = oNotify.m_callbackData.getRubyCallback(); //Need to copy url since notify may be cleared in callback
 	apiGenerator::CMethodResult cb = oNotify.m_callbackData;
+	
+	String strBody = notifyParamToStr( result, l2Hashes );
 	
     if ( getSync().isNoThreadedMode() )
     {
         m_arNotifyBody.addElement( strBody );
         return false;
     }
+	
     if ( oNotify.m_cCallback )
     {
         m_isInsideCallback = true;        
@@ -565,36 +601,17 @@ boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const String& 
         m_isInsideCallback = false;
         return nRet == 1;
     }
-//    if ( strUrl.length() == 0 )
-//        return true;
 
-/*
-#ifndef RHO_NO_RUBY
-    if (0 == strUrl.find("javascript:"))
-    {
-        String js = strUrl.substr(11) + "('" + strBody + "');";
-        rho_webview_execute_js(js.c_str(), -1);
-    	return true;
-    }
-#endif
-*/
-	m_isInsideCallback = true;        
-//    NetResponse resp = getNet().pushData( strUrl, strBody, null );
-	cb.setCollectionMode(false);
-	cb.setCallbackParam(strBody);
-	cb.set(strBody);
-//	cb.callCallback();
-	m_isInsideCallback = false;        
+	m_isInsideCallback = true;
 
-    /*if ( !resp.isOK() )
-        LOG(ERROR) + "Fire notification failed. Code: " + resp.getRespCode() + "; Error body: " + resp.getCharData();
-    else
-    {
-        const char* szData = resp.getCharData();
-        return szData && strcmp(szData,"stop") == 0;
-    }
+	if ( l2Hashes != 0 ) {
+		Hashtable<String,Hashtable<String,String> >& l2 = cb.getStringHashL2();
+		l2 = *l2Hashes;
+	}
+	cb.set(result);
 
-    return false;*/
+	m_isInsideCallback = false;
+
 	return true;
 }
 
@@ -659,20 +676,17 @@ void CSyncNotify::callLoginCallback(const CSyncNotification& oNotify, int nErrCo
 {
 	if ( getSync().isStoppedByUser() )
 		return;
+	
+	Hashtable<String, String> result;
+	String strErrorCode = convertToStringA(nErrCode);
+	String strEncodedMessage = URI::urlEncode(strMessage);
+	
+	result.put("error_code", strErrorCode);
+	result.put("error_message", strEncodedMessage);
 
-	//try{
-    String strBody = "error_code=" + convertToStringA(nErrCode);
-    strBody += "&error_message=";
-    URI::urlEncode(strMessage, strBody);
-    strBody += "&rho_callback=1";
+    LOG(INFO) + "Login callback: " + oNotify.toString() + ". Error code: "+ strErrorCode + ". Message: " + strEncodedMessage;
 
-    LOG(INFO) + "Login callback: " + oNotify.toString() + ". Body: "+ strBody;
-
-    callNotify(oNotify, strBody);
-	//}catch(Exception exc)
-	//{
-	//	LOG.ERROR("Call Login callback failed.", exc);
-	//}
+    callNotify(oNotify,result);
 }
 
 }
