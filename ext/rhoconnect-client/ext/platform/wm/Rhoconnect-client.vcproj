@@ -642,59 +642,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\shared\initRhoconnectClient.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\cpp\IRhoConnectClient.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\shared\sync\ISyncProtocol.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\rhoconnectclient.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\rhoconnectclient_api_init.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\rhoconnectclient_js_api.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\cpp\RhoConnectClient_js_wrap.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\rhoconnectclient_ruby_api.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\cpp\RhoConnectClient_ruby_wrap.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\cpp\RhoConnectClientBase.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\generated\cpp\RhoConnectClientBase.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\RhoConnectClientImpl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\RhoConnectClientImpl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\shared\RhoConnectClientSingletonImpl.h"
 				>
 			</File>
 			<File
@@ -735,9 +683,77 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Headers"
+			Name="shared"
 			>
+			<File
+				RelativePath="..\..\shared\initRhoconnectClient.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\rhoconnectclient.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\RhoConnectClientImpl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\RhoConnectClientImpl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\shared\RhoConnectClientSingletonImpl.h"
+				>
+			</File>
+			<Filter
+				Name="generated"
+				>
+				<File
+					RelativePath="..\..\shared\generated\rhoconnectclient_api_init.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\shared\generated\rhoconnectclient_js_api.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\shared\generated\rhoconnectclient_ruby_api.c"
+					>
+				</File>
+				<Filter
+					Name="cpp"
+					>
+					<File
+						RelativePath="..\..\shared\generated\cpp\IRhoConnectClient.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\shared\generated\cpp\RhoConnectClient_js_wrap.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\shared\generated\cpp\RhoConnectClient_ruby_wrap.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\shared\generated\cpp\RhoConnectClientBase.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\shared\generated\cpp\RhoConnectClientBase.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
+		<File
+			RelativePath="..\..\..\RhoConnectClient.rb"
+			>
+		</File>
+		<File
+			RelativePath="..\..\RhoConnectClient.xml"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

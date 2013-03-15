@@ -586,16 +586,17 @@ boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const Hashtabl
 {
 	apiGenerator::CMethodResult cb = oNotify.m_callbackData;
 	
-	String strBody = notifyParamToStr( result, l2Hashes );
-	
     if ( getSync().isNoThreadedMode() )
     {
+        String strBody = notifyParamToStr( result, l2Hashes );
         m_arNotifyBody.addElement( strBody );
         return false;
     }
 	
     if ( oNotify.m_cCallback )
     {
+        String strBody = notifyParamToStr( result, l2Hashes );
+
         m_isInsideCallback = true;        
         int nRet = (*oNotify.m_cCallback)(strBody.c_str(), oNotify.m_cCallbackData);
         m_isInsideCallback = false;

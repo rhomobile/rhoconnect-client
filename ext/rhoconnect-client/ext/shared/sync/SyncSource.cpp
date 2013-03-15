@@ -785,8 +785,10 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
 	}
 	
 	if ( strServerError.length() > 0 )
+    {
 		errors.put("server_errors",strServerError);
 		getNotify().fireSyncNotification2(this, true, RhoAppAdapter.ERR_CUSTOMSYNCSERVER, errors/*strServerError*/);
+    }
 }
 
 void CSyncSource::processServerResponse_ver3(CJSONArrayIterator& oJsonArr)
