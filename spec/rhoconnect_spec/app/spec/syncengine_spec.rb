@@ -619,7 +619,7 @@ end
     item2.should == nil
     
   end
-
+=begin
   it "should client register" do
     if System.get_property('platform') == 'WINDOWS_DESKTOP' || System.get_property('platform') == 'Blackberry'
         dbRes = ::Rho::RHO.get_user_db().select_from_table('client_info','token,token_sent, client_id')
@@ -633,6 +633,7 @@ end
         dbRes[0]['client_id'].length().should > 0
     end
   end
+=end
 
   it "should reset data after login with different user" do
     SyncEngine.logged_in.should == 1    

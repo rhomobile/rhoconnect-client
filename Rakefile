@@ -180,12 +180,16 @@ namespace "run" do
 
   namespace "iphone" do
     task :rhoconnect_spec do
+      require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+
       run_rhoconnect_spec('iphone')
     end
   end
 
   namespace "wm" do
     task :rhoconnect_spec do
+      require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+
       run_rhoconnect_spec('wm')
       exit 1 if $total.to_i==0
       exit $failed.to_i
@@ -194,6 +198,8 @@ namespace "run" do
 
   namespace "win32" do
     task :rhoconnect_spec do
+      require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+
       run_rhoconnect_spec('win32')
       exit 1 if $total.to_i==0
       exit $failed.to_i
