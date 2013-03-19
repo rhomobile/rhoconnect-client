@@ -209,7 +209,7 @@ end
   it "should not sync without login" do
     SyncEngine.logged_in.should == 0
   
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_CLIENTISNOTLOGGEDIN
 
   end
@@ -227,7 +227,7 @@ end
 
   it "should login" do
     
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('test', 'test', "/app/Settings/login_callback")
+    res =  SyncEngine.login('test', 'test', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
     SyncEngine.logged_in.should == 1
@@ -244,7 +244,7 @@ end
         dbRes[0]['client_id'].should == ""
     end
     
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -255,7 +255,7 @@ end
 
     SyncEngine.set_notification(getProduct.get_source_id.to_i(), "/app/Settings/sync_notify", "")
 
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync_source( getProduct_str )
+    res =  SyncEngine.dosync_source( getProduct_str )
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
   end
@@ -275,7 +275,7 @@ end
       :callback => '/app/Contact/search_callback',
       :callback_param => "")
   
-    res = ::Rho::RhoSupport::parse_query_parameters search_res
+    res =  search_res
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
   end
@@ -283,7 +283,7 @@ end
   it "should sync all" do
     SyncEngine.logged_in.should == 1
   
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+    res =  SyncEngine.dosync
 
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
@@ -300,7 +300,7 @@ end
     item2 = getProduct.find(item.object)
     item2.vars.should == item.vars
 
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -330,7 +330,7 @@ end
     }
     SyncEngine.set_source_property( getProduct().get_source_id.to_i(), "sync_push_callback", SYNC_CALLBACK_NAME );
     
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'error'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NETWORK
     
@@ -366,7 +366,7 @@ end
     }
     SyncEngine.set_source_property( getProduct().get_source_id.to_i(), "sync_push_callback", SYNC_CALLBACK_NAME );
     
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -377,7 +377,7 @@ end
 
     records2.length.should == 2
 
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -412,7 +412,7 @@ end
     }
     SyncEngine.set_source_property( getProduct().get_source_id.to_i(), "sync_push_callback", SYNC_CALLBACK_NAME );
     
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -427,7 +427,7 @@ end
     records2.length.should > 1
     records3.length.should == 1
 
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -456,7 +456,7 @@ end
     }
     SyncEngine.set_source_property( getProduct().get_source_id.to_i(), "sync_push_callback", SYNC_CALLBACK_NAME );
     
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'error'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NETWORK
     
@@ -478,7 +478,7 @@ end
     item2 = getProduct.find(item.object)
     item2.vars.should == item.vars
     
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+    res =  SyncEngine.dosync
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -509,7 +509,7 @@ end
     records.length.should == 1
 
     Rho::RhoConfig.syncserver = 'http://rhodes-store-server.heroku2.com/application'
-    res = ::Rho::RhoSupport::parse_query_parameters getCustomer.sync
+    res =  getCustomer.sync
     res['status'].should == 'error'
     res['error_code'].to_i.should >  ::Rho::RhoError::ERR_NONE
     res['error_code'].to_i.should <  ::Rho::RhoError::ERR_RUNTIME
@@ -529,7 +529,7 @@ end
     records3.length.should == 0
 
     Rho::RhoConfig.syncserver = syncserver_url
-    res = ::Rho::RhoSupport::parse_query_parameters getCustomer.sync
+    res =  getCustomer.sync
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -550,7 +550,7 @@ end
     item.sku = new_sku
     item.save
     
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -604,7 +604,7 @@ end
         item.destroy
     end    
 
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+    res =  SyncEngine.dosync
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -644,7 +644,7 @@ end
     SyncEngine.logout
     SyncEngine.logged_in.should == 0
     
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('test1', 'test', "/app/Settings/login_callback")
+    res =  SyncEngine.login('test1', 'test', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     SyncEngine.logged_in.should == 1
     
@@ -667,8 +667,15 @@ end
     
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"create-error\":{\"" + item.object + "\":{\"name\":\"wrongname\",\"an_attribute\":\"error create\"},\"" + item.object + "-error\":{\"message\":\"error create\"}}}]"
     
-    SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )
+	  	
+	res = getProduct.sync( "/app/Settings/sync_notify")
+	  
+	puts "res = #{res.inspect}"
+
+    res =  res
+	  
+	puts "res = #{res.inspect}"
     
     res['server_errors'].should_not be_nil
     res['server_errors']['create-error'].should_not be_nil
@@ -718,7 +725,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"create-error\":{\"" + item.object + "\":{\"name\":\"wrongname\",\"an_attribute\":\"error create\"},\"" + item.object + "-error\":{\"message\":\"error create\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     
     res['server_errors'].should_not be_nil
     res['server_errors']['create-error'].should_not be_nil
@@ -771,7 +778,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"create-error\":{\"" + item.object + "\":{\"name\":\"wrongname\",\"an_attribute\":\"error create\"},\"" + item.object + "-error\":{\"message\":\"error create\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     
     res['server_errors'].should_not be_nil
     res['server_errors']['create-error'].should_not be_nil
@@ -812,7 +819,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"update-error\":{\"broken_object_id\":{\"name\":\"wrongname\",\"an_attribute\":\"error update\"},\"broken_object_id-error\":{\"message\":\"error update\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     puts "res : #{res}"
     
     res['server_errors'].should_not be_nil
@@ -858,7 +865,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"update-error\":{\"broken_object_id\":{\"name\":\"wrongname\",\"an_attribute\":\"error update\"},\"broken_object_id-error\":{\"message\":\"error update\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     puts "res : #{res}"
     
     res['server_errors'].should_not be_nil
@@ -889,7 +896,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"update-rollback\": {\"#{obj_id}\": {\"name\": \"OLD_NAME\"}},\"update-error\":{\"#{obj_id}\":{\"name\":\"wrongname\",\"an_attribute\":\"error update\"},\"#{obj_id}-error\":{\"message\":\"error update\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     #puts "res : #{res}"
     
     res['server_errors'].should_not be_nil
@@ -924,7 +931,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"delete-error\":{\"broken_object_id\":{\"name\":\"wrongname\",\"an_attribute\":\"error delete\"},\"broken_object_id-error\":{\"message\":\"Error delete record\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     puts "res : #{res}"
     
     res['server_errors'].should_not be_nil
@@ -970,7 +977,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"source-error\":{\"query-error\":{\"message\":\"Error during query\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     puts "res : #{res}"
     
     res['server_errors'].should_not be_nil
@@ -991,7 +998,7 @@ end
       :progress_step => 10,
       :callback => '/app/Contact/search_callback',
       :callback_param => "")
-    res = ::Rho::RhoSupport::parse_query_parameters(search_res)      
+    res = (search_res)      
     puts "res : #{res}"
     
     res['server_errors'].should_not be_nil
@@ -1009,7 +1016,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"create-error\":{\"" + item.object + "\":{\"name\":\"wrongname\",\"an_attribute\":\"error create\"},\"" + item.object + "-error\":{\"message\":\"error create\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
 
     item.update_attributes({:price => "123"})
 
@@ -1023,7 +1030,7 @@ end
     records3.length.should == 1
 
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
 
     records3 = getTestDB().select_from_table('changed_values','*', {'update_type' => 'update', "sent"=>1})
     records3.length.should == 1
@@ -1039,7 +1046,7 @@ end
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"create-error\":{\"" + item.object + "\":{\"name\":\"wrongname\",\"an_attribute\":\"error create\"},\"" + item.object + "-error\":{\"message\":\"error create\"}}}]"
     
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
 
     item2 = getProduct.create({:name => 'Test2', :brand => "Rho2"})
     records2 = getTestDB().select_from_table('changed_values','*', {'update_type' => 'create', "sent"=>0} )
@@ -1047,7 +1054,7 @@ end
     records2[0]['attrib'].should == 'object'
 
     SyncEngine.set_source_property(getProduct().get_source_id.to_i(), "rho_server_response", "" )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -1070,7 +1077,7 @@ end
     
     err_resp = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"create-error\":{\"" + cust1.object + "\":{\"name\":\"wrongname\",\"an_attribute\":\"error create\"},\"" + cust1.object + "-error\":{\"message\":\"error create\"}}}]"
     SyncEngine.set_source_property(getCustomer().get_source_id.to_i(), "rho_server_response", err_resp )    
-    res = ::Rho::RhoSupport::parse_query_parameters getCustomer.sync( "/app/Settings/sync_notify")
+    res =  getCustomer.sync( "/app/Settings/sync_notify")
 
     test = getTestDB().select_from_table('changed_values','*')
     puts "test: #{test}"
@@ -1083,7 +1090,7 @@ end
     records2.length.should > 0
 
     SyncEngine.set_source_property(getCustomer().get_source_id.to_i(), "rho_server_response", "" )    
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -1104,7 +1111,7 @@ end
 	it "should not sync non-exist properties from freezed model with similar names" do
 		SyncEngine.logged_in.should == 1
 		
-		res = ::Rho::RhoSupport::parse_query_parameters getCustomer.sync( "/app/Settings/sync_notify")
+		res =  getCustomer.sync( "/app/Settings/sync_notify")
 		res['status'].should == 'ok'
 		res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 		
@@ -1130,7 +1137,7 @@ end
 			end
 			::Rho::RHO.init_sync_source_properties(Rho::RhoConfig::sources.values)
 			
-			res2 = ::Rho::RhoSupport::parse_query_parameters getCustomer.sync( "/app/Settings/sync_notify")
+			res2 =  getCustomer.sync( "/app/Settings/sync_notify")
 			res2['status'].should == 'ok'
 			res2['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 			
@@ -1170,7 +1177,7 @@ end
     }
     SyncEngine.set_source_property( getProduct().get_source_id.to_i(), "sync_push_callback", SYNC_CALLBACK_NAME );
     
-    res = ::Rho::RhoSupport::parse_query_parameters getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync( "/app/Settings/sync_notify")
     res['status'].should == 'error'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NETWORK
     
@@ -1195,7 +1202,7 @@ end
 	  
 	  Rhom::Rhom.have_local_changes.should == true
 	  
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync	  
+	  res =  SyncEngine.dosync	  
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  	  
@@ -1208,7 +1215,7 @@ end
 	  
 	  Rhom::Rhom.have_local_changes.should == true
 	  
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync(false,'',true)
+	  res =  SyncEngine.dosync(false,'',true)
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  	  
@@ -1223,7 +1230,7 @@ end
 	  Rhom::Rhom.database_full_reset
 	  Rho::RhoConfig.bulksync_state='1' 
 	  
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+	  res =  SyncEngine.dosync
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  	  
@@ -1248,7 +1255,7 @@ end
 		  item.destroy
 	  end
 	  
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+	  res =  SyncEngine.dosync
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
   end
@@ -1256,7 +1263,7 @@ end
 	it "should not sync non-exist properties from freezed model" do
 		SyncEngine.logged_in.should == 1
 		
-		res = ::Rho::RhoSupport::parse_query_parameters getCustomer.sync( "/app/Settings/sync_notify")
+		res =  getCustomer.sync( "/app/Settings/sync_notify")
 		res['status'].should == 'ok'
 		res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 		
@@ -1278,7 +1285,7 @@ end
 			end
 			::Rho::RHO.init_sync_source_properties(Rho::RhoConfig::sources.values)
 			
-			res2 = ::Rho::RhoSupport::parse_query_parameters getCustomer.sync( "/app/Settings/sync_notify")
+			res2 =  getCustomer.sync( "/app/Settings/sync_notify")
 			res2['status'].should == 'ok'
 			res2['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 			

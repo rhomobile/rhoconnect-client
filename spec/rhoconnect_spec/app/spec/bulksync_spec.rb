@@ -47,7 +47,7 @@ describe "BulkSync_test" do
   end
 
   it "should login" do
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("te st", "test", "/app/Settings/login_callback")
+    res =  SyncEngine.login("te st", "test", "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
     SyncEngine.logged_in.should == 1
@@ -58,7 +58,7 @@ describe "BulkSync_test" do
 	puts "Waiting #{towait} secs for next bulk data"
 	sleep(towait)
 	Rho::RhoConfig.bulksync_state='0'
-	res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+	res =  SyncEngine.dosync
 	res['status'].should == 'complete'
 	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	Rho::RhoConfig.bulksync_state.should=='1'
@@ -79,12 +79,12 @@ describe "BulkSync_test" do
     SyncEngine.logged_in.should == 1
     ::Rhom::Rhom.database_full_reset_and_logout
     
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("te st", "test", "/app/Settings/login_callback")
+    res =  SyncEngine.login("te st", "test", "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     SyncEngine.logged_in.should == 1
 
     Rho::RhoConfig.bulksync_state='1'
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+    res =  SyncEngine.dosync
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -143,7 +143,7 @@ end
   it "should do selective bulk sync" do
 	  
 	  
-	  res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login("te st", "test", "/app/Settings/login_callback")
+	  res =  SyncEngine.login("te st", "test", "/app/Settings/login_callback")
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  SyncEngine.logged_in.should == 1
 	  

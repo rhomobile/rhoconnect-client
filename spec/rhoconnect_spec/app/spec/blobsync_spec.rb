@@ -50,7 +50,7 @@ describe "BlobSync_test" do
   it "should login" do
 
     login_name = System.get_property('platform') + System.get_property('device_name')    
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('login_name', '', "/app/Settings/login_callback")
+    res =  SyncEngine.login('login_name', '', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
     SyncEngine.logged_in.should == 1
@@ -87,7 +87,7 @@ end
     getBlobTest.sync( "/app/Settings/sync_notify")
     sleep(2) #wait till sync server update data
 
-    res = ::Rho::RhoSupport::parse_query_parameters getBlobTest.sync( "/app/Settings/sync_notify")
+    res =  getBlobTest.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
@@ -127,7 +127,7 @@ end
     getBlobTest.sync( "/app/Settings/sync_notify")
     sleep(2) #wait till sync server update data
 
-    res = ::Rho::RhoSupport::parse_query_parameters getBlobTest.sync( "/app/Settings/sync_notify")
+    res =  getBlobTest.sync( "/app/Settings/sync_notify")
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     

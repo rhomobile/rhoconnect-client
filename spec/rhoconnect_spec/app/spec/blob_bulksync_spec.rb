@@ -42,7 +42,7 @@ describe "BlobBulkSync_test" do
   it "should login" do
 
     login_name = System.get_property('platform') + System.get_property('device_name')    
-    res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('login_name', '', "/app/Settings/login_callback")
+    res =  SyncEngine.login('login_name', '', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
     SyncEngine.logged_in.should == 1
@@ -79,7 +79,7 @@ end
 							
 	  File.exists?(file_name).should == true
 						
-	  res = ::Rho::RhoSupport::parse_query_parameters model.sync( "/app/Settings/sync_notify")
+	  res =  model.sync( "/app/Settings/sync_notify")
 	  res['status'].should == 'ok'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 						
@@ -123,7 +123,7 @@ end
 
   it "should bulk sync blobs" do
 	Rho::RhoConfig.bulksync_state='0'
-	res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+	res =  SyncEngine.dosync
 							
 	res['status'].should == 'complete'
 	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
@@ -157,14 +157,14 @@ end
 it "should export database after blob bulk sync" do
 	Rhom::Rhom.database_full_reset
 	login_name = System.get_property('platform') + System.get_property('device_name')
-	res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.login('login_name', '', "/app/Settings/login_callback")
+	res =  SyncEngine.login('login_name', '', "/app/Settings/login_callback")
 	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	SyncEngine.logged_in.should == 1
 	
 	sleep(15)
 	
 	Rho::RhoConfig.bulksync_state='0'
-	res = ::Rho::RhoSupport::parse_query_parameters SyncEngine.dosync
+	res =  SyncEngine.dosync
 	
 	res['status'].should == 'complete'
 	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
