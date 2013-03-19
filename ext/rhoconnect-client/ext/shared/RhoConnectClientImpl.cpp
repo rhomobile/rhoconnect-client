@@ -80,14 +80,13 @@ void RhoConnectClientImpl::search( const rho::Hashtable<rho::String, rho::String
 	rho::String searchParams;
 	rho::String from = "search";
 	
-	
 	/* handle old-style callback setting */
 	if (args.containsKey("callback")) {
 		oResult.setRubyCallback(args.get("callback"));
-		
-		if (args.containsKey("callback_param")) {
-			oResult.setCallbackParam(args.get("callback_param"));
-		}
+        
+        if (args.containsKey("callback_param")) {
+            oResult.setCallbackParam(args.get("callback_param"));
+        }
 	}
 		
 	if (args.containsKey("from") ) {
@@ -136,17 +135,14 @@ void RhoConnectClientImpl::search( const rho::Hashtable<rho::String, rho::String
 	rho::String jsonSearchParams;
 	if ( DeprecatedArgsHandler::getArgValue(args,"searchParams","search_params",jsonSearchParams) ) {
 		rho::json::CJSONEntry json(jsonSearchParams.c_str());
-		rho::String callbackParam = oResult.getCallbackParam();
 		if ( json.isObject() ) {
 			for ( rho::json::CJSONStructIterator obj(json); !obj.isEnd(); obj.next() ) {
 				rho::String key = rho::net::URI::urlEncode(obj.getCurKey());
 				rho::String value = rho::net::URI::urlEncode(obj.getCurValue().getString());
 				
 				searchParams += "&search[" + key + "]=" + value;
-				callbackParam += "&search_params[" + key + "]=" = value;
 			}
 		}
-		oResult.setCallbackParam(callbackParam);
 	}
 	
 	rho::String strSyncChanges;
@@ -189,7 +185,7 @@ void RhoConnectClientImpl::handleSyncResult(rho::apiGenerator::CMethodResult& oR
 		oResult.setCollectionMode(true);
 		const char* ret = (const char*)getSyncThread()->getRetValue();
 		if (ret != 0) {
-			oResult.set( ret );
+			oResult.setJSON( ret );
 		}
 	}
 }

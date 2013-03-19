@@ -43,6 +43,7 @@
 #include "ruby/ext/rho/rhoruby.h"
 #endif //RHO_NO_RUBY
 
+
 namespace rho {
 namespace sync {
 IMPLEMENT_LOGCLASS(CSyncSource,"Sync");
@@ -666,9 +667,8 @@ void CSyncSource::syncServerChanges()
 //{"create-error":{"0_broken_object_id":{"name":"wrongname","an_attribute":"error create"},"0_broken_object_id-error":{"message":"error create"}}}
 void CSyncSource::processServerErrors(CJSONEntry& oCmds)
 {
-	Hashtable<String, String> errors;
-/*
-//    String strServerError;
+    Hashtable<String, String> errors;
+
     const char* arErrTypes[] = {"source-error", "search-error", "create-error", "update-error", "delete-error", "update-rollback", null};
     for( int i = 0; ; i++ )
     {
@@ -676,118 +676,113 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
             break;
         if ( !oCmds.hasName(arErrTypes[i]) )
             continue;
-		
+
 		String strServerError = "";
 
         CJSONEntry errSrc = oCmds.getEntry(arErrTypes[i]);
+        
+        String errorType = "";
         CJSONStructIterator errIter(errSrc);
-        for( ; !errIter.isEnd(); errIter.next() )
+
+        if ( i == 0 || i == 1 )//"source-error", "search-error"
         {
-            String strKey = errIter.getCurKey();
-
-            if ( i == 0 || i == 1 )//"source-error", "search-error" 
+            if ( errIter.getCurValue().hasName("message") ) {
+                errorType = errIter.getCurKey() + "-json";
+                strServerError = String("{message:\"")+errIter.getCurValue().getString("message")+"\"}";
+            }
+        } else {
+            //"create-error", "update-error", "delete-error", "update-rollback"
+            errorType = String(arErrTypes[i]) + "-json";
+            
+            Hashtable<String,String> objErrors;
+                        
+            //iterate objects
+            for( ; !errIter.isEnd(); errIter.next() )
             {
-                if ( errIter.getCurValue().hasName("message") )
-                {
-                    if ( strServerError.length() > 0 )
-                        strServerError += "&";
-
-                    strServerError += URI::urlEncode(strKey) + "[message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
-                }
-            }else
-            {
-                //"create-error", "update-error", "delete-error", "update-rollback" 
-                String strObject = strKey;
+                String strObject = errIter.getCurKey();
+                
 
                 if ( String_endsWith(strObject, "-error") )
                 {
-                    strObject = strObject.substr(0, strKey.length()-6);
-                    if ( strServerError.length() > 0 )
-                        strServerError += "&";
-                    strServerError += URI::urlEncode(strObject) + "[message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
-                }else
+                    strObject = strObject.substr(0, strObject.length()-6);
+                }
+                
+                String strValue = objErrors.get(strObject);
+                
+                if ( strValue.length() == 0 ) {
+                    strValue = "{";
+                }
+                
+                if ( String_endsWith(strValue, "}") ) {
+                    strValue = strValue.substr(0,strValue.length()-1);
+                }
+                
+                if ( errIter.getCurValue().hasName("message") )
                 {
+                    if (strValue.length() > 1) {
+                        strValue += ",";
+                    }
+                    strValue += String("message:\"") + errIter.getCurValue().getString("message") + "\"";
+                } else {                
                     CJSONStructIterator attrIter(errIter.getCurValue());
-                    for( ; !attrIter.isEnd(); attrIter.next() )
-                    {
+                    bool first = true;
+                    String strAttrs = "";
+                    if ( !attrIter.isEnd() ) {
+                        if (strValue.length() > 1) {
+                            strValue += ",";
+                        }
+                        strAttrs += "attributes:{";
+                    }
+
+                    for( ; !attrIter.isEnd(); attrIter.next() ) {
+                        if ( first ) {
+                            first = false;
+                        } else {
+                            strAttrs += ",";
+                        }
+                    
                         String strAttrName = attrIter.getCurKey();
                         String strAttrValue = attrIter.getCurString();
-
-                        if ( strServerError.length() > 0 )
-                            strServerError += "&";
-
-                        strServerError += URI::urlEncode(strObject) + "[attributes][" + URI::urlEncode(strAttrName) + "]=" + URI::urlEncode(strAttrValue);
+                    
+                        strAttrs += "\""+strAttrName+"\":\""+strAttrValue+"\"";
                     }
+                    
+                    if ( strAttrs.length() > 0 ) {
+                        strAttrs += "}";
+                    }
+                    
+                    if ( strValue.length() > 1 ) {
+                        strValue += ",";
+                    }
+                    
+                    strValue += strAttrs;
                 }
+                
+                strValue += "}";
+                
+                objErrors.put(strObject,strValue);
+                
+            }
+            
+            if ( objErrors.size() > 0 ) {
+                strServerError = "{";
+                for ( Hashtable<String,String>::const_iterator it = objErrors.begin(); it != objErrors.end(); ++it ) {
+                    strServerError += "\"" + it->first + "\":" + it->second;
+                }
+                strServerError += "}";
             }
         }
+    
+        
+        if ( (errorType.length()>0) && (strServerError.size()>0) ) {
+            errors.put(errorType,strServerError);
+        }
+
 		
-		if ( strServerError.size() > 0 ) {
-			errors.put(arErrTypes[i],strServerError);
-		}
     }
-	
-    if ( errors.size() > 0 )
+    
+    if ( errors.size() > 0 ) {
         getNotify().fireSyncNotification2(this, true, RhoAppAdapter.ERR_CUSTOMSYNCSERVER, errors);
- */
- 
-	String strServerError;
-	const char* arErrTypes[] = {"source-error", "search-error", "create-error", "update-error", "delete-error", "update-rollback", null};
-	for( int i = 0; ; i++ )
-	{
-		if ( arErrTypes[i] == null )
-			break;
-		if ( !oCmds.hasName(arErrTypes[i]) )
-			continue;
-		
-		CJSONEntry errSrc = oCmds.getEntry(arErrTypes[i]);
-		CJSONStructIterator errIter(errSrc);
-		for( ; !errIter.isEnd(); errIter.next() )
-		{
-			String strKey = errIter.getCurKey();
-			
-			if ( i == 0 || i == 1 )//"source-error", "search-error"
-			{
-				if ( errIter.getCurValue().hasName("message") )
-				{
-					if ( strServerError.length() > 0 )
-						strServerError += "&";
-					
-					strServerError += "server_errors[" + URI::urlEncode(strKey) + "][message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
-				}
-			}else
-			{
-				//"create-error", "update-error", "delete-error", "update-rollback"
-				String strObject = strKey;
-				
-				if ( String_endsWith(strObject, "-error") )
-				{
-					strObject = strObject.substr(0, strKey.length()-6);
-					if ( strServerError.length() > 0 )
-						strServerError += "&";
-					strServerError += "server_errors[" + String(arErrTypes[i]) + "][" + URI::urlEncode(strObject) + "][message]=" + URI::urlEncode(errIter.getCurValue().getString("message"));
-				}else
-				{
-					CJSONStructIterator attrIter(errIter.getCurValue());
-					for( ; !attrIter.isEnd(); attrIter.next() )
-					{
-						String strAttrName = attrIter.getCurKey();
-						String strAttrValue = attrIter.getCurString();
-						
-						if ( strServerError.length() > 0 )
-							strServerError += "&";
-						
-						strServerError += "server_errors[" + String(arErrTypes[i]) + "][" + URI::urlEncode(strObject) + "][attributes][" + URI::urlEncode(strAttrName) + "]=" + URI::urlEncode(strAttrValue);
-					}
-				}
-			}
-		}
-	}
-	
-	if ( strServerError.length() > 0 )
-    {
-		errors.put("server_errors",strServerError);
-		getNotify().fireSyncNotification2(this, true, RhoAppAdapter.ERR_CUSTOMSYNCSERVER, errors/*strServerError*/);
     }
 }
 

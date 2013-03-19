@@ -503,8 +503,7 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
 					result.put("error_message",error);
 					
 					if ( pServerErrors != 0 ) {
-						result.insert(pServerErrors->begin(),pServerErrors->end());
-						//errorsL2.put("server_errors",*pServerErrors);
+						errorsL2.put("server_errors",*pServerErrors);
 					}
 				}
 
@@ -542,42 +541,64 @@ const String& CSyncNotify::getNotifyBody()
 String CSyncNotify::notifyParamToStr( const Hashtable<String,String>& result, const Hashtable< String, Hashtable< String, String > >* l2Hashes) {
 
 	String ret = "";
-	
-	for ( Hashtable<String,String>::const_iterator it = result.begin(); it != result.end(); ++it ) {
-		if ( ret.length() > 0 ) {
-			ret += "&";
-		}
-		
-		if ( it->first == "server_errors" ) {
-			ret += it->second;
-		} else {
-			ret += it->first + "=" + it->second;
-		}
-	}
-	
-	if ( l2Hashes != 0 ) {
-		for ( Hashtable< String, Hashtable< String, String > >::const_iterator it = l2Hashes->begin(); it != l2Hashes->end(); ++it ) {
-			
-			const String& key = it->first;
-			const Hashtable<String,String>& value = it->second;
-			
-			const String& strArg2 = (key=="create_error")?"error_message":"source_id";
+    
+    struct JSONCreator {
+        static String& addCommaIfNeeded( String& result ) {
+            result = String_trimRight(result);
+            if ( (result.length()>0) && !(String_endsWith(result,"[" ) || String_endsWith(result,"{")) ) {
+                result += ",";
+            }
+            return result;
+        }
+        
+        static String& addNode( const String& key, const String& value, bool jsonValue, String& result ) {
+            addCommaIfNeeded(result);
+            String quote = jsonValue?"":"\"";
+            result += "\"" + key + "\":" + quote + value + quote;
+            return result;
+        }
+        
+        static String& addNode( const Hashtable<String,String>& objects, const Hashtable< String, Hashtable< String, String > >* l2Hashes, String& result, bool skipComma = false ) {
+            if ( !skipComma ) {
+                addCommaIfNeeded(result);
+            }
+            
+            if ( (objects.size()==0) && ((l2Hashes==0) || (l2Hashes->size()==0)) ) {
+                return result;
+            }
+            
+            result += "{";
 
-			for ( Hashtable<String,String>::const_iterator it = result.begin(); it != result.end(); ++it ) {
-				if ( ret.length() > 0 ) {
-					ret += "&";
-				}
+            for ( Hashtable<String,String>::const_iterator it = objects.begin(); it != objects.end(); ++it ) {
+                String key = it->first;
+                bool jsonValue = false;
+                if ( String_endsWith(it->first,"-json")) {
+                    jsonValue = true;
+                    key = key.substr( 0, key.length() - 5 );
+                }
+                addNode( key, it->second, jsonValue, result );
+            }
+            
+            if ( l2Hashes !=0 ) {
+                if ( l2Hashes->size() > 0 ) {
+                    addCommaIfNeeded(result);
+                }
 
-				ret +=  key + "[][object]=" + it->first + "&";
-				ret +=  key + "[][" + strArg2 + "]=" + it->second;
-			}
-		}
-	}
-	
-	if ( String_endsWith(ret,"&") ) {
-		ret = ret.substr(0,ret.size()-1);
-	}
-	
+                for ( Hashtable< String, Hashtable< String, String > >::const_iterator it = l2Hashes->begin(); it != l2Hashes->end(); ++it ) {
+                    result += "\"" + it->first + "\":";
+                    addNode( it->second, 0, result, true );
+                }
+            }
+            
+            result += "}";
+            
+            return result;
+        }
+        
+    };
+    
+    JSONCreator::addNode( result, l2Hashes, ret );
+    
 	return ret;
 }
 
@@ -585,18 +606,17 @@ String CSyncNotify::notifyParamToStr( const Hashtable<String,String>& result, co
 boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const Hashtable<String, String>& result, const Hashtable<String,Hashtable<String,String> >* l2Hashes )
 {
 	apiGenerator::CMethodResult cb = oNotify.m_callbackData;
+    
+    String strBody = notifyParamToStr( result, l2Hashes );
 	
     if ( getSync().isNoThreadedMode() )
     {
-        String strBody = notifyParamToStr( result, l2Hashes );
         m_arNotifyBody.addElement( strBody );
         return false;
     }
 	
     if ( oNotify.m_cCallback )
     {
-        String strBody = notifyParamToStr( result, l2Hashes );
-
         m_isInsideCallback = true;        
         int nRet = (*oNotify.m_cCallback)(strBody.c_str(), oNotify.m_cCallbackData);
         m_isInsideCallback = false;
@@ -605,12 +625,9 @@ boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const Hashtabl
 
 	m_isInsideCallback = true;
 
-	if ( l2Hashes != 0 ) {
-		Hashtable<String,Hashtable<String,String> >& l2 = cb.getStringHashL2();
-		l2 = *l2Hashes;
-	}
-	cb.set(result);
+	cb.setJSON(strBody);
 
+    
 	m_isInsideCallback = false;
 
 	return true;
