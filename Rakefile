@@ -147,8 +147,6 @@ namespace "gem" do
   end
 end
 
-require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
-
 namespace "run" do
   namespace "android" do
     task :rhoconnect_spec => "rhoconnect_spec:emulator"
@@ -156,6 +154,8 @@ namespace "run" do
 
     namespace "rhoconnect_spec" do
       task :device do
+	require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+
         $device_flag = '-d'
         run_rhoconnect_spec('android')
         unless $dont_exit_on_failure
@@ -165,6 +165,8 @@ namespace "run" do
       end
 
       task :emulator do
+	require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+
         $device_flag = '-e'
         run_rhoconnect_spec('android')
         unless $dont_exit_on_failure
