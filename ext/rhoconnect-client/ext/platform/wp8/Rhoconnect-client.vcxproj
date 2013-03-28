@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0A785FEF-1B00-4CD9-B261-A83C6FFE7199}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and '$(VisualStudioVersion)' == ''">$(VCTargetsPath11)</VCTargetsPath>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <TargetPlatformIdentifier>Windows Phone</TargetPlatformIdentifier>
+    <TargetPlatformVersion>8.0</TargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110_wp80</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Rhoconnect-client.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Rhoconnect-client.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.51106.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(RHO_ROOT)\Platform\wp8\Bin\$(Platform)\rhoruntime\$(Configuration)\</OutDir>
+    <IntDir>$(TEMP_FILES_DIR)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(RHO_ROOT)\Platform\wp8\Bin\$(Platform)\rhoruntime\$(Configuration)\</OutDir>
+    <IntDir>$(TEMP_FILES_DIR)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(RHO_ROOT)\platform\shared\sync;$(RHO_ROOT)\platform\shared\ruby\win32;$(RHO_ROOT)\platform\shared\ruby\wp8;$(RHO_ROOT)\platform\shared\ruby\include;$(RHO_ROOT)\platform\shared;$(RHO_ROOT)\platform\shared\common;..\..\shared;$(RHO_ROOT)\lib\commonAPI\coreapi\ext\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;_LIB;_WP8_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Rhoconnect-client.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>$(RHO_ROOT)\platform\shared\sync;$(RHO_ROOT)\platform\shared\ruby\win32;$(RHO_ROOT)\platform\shared\ruby\include;$(RHO_ROOT)\platform\shared\ruby\wp8;$(RHO_ROOT)\platform\shared;$(RHO_ROOT)\platform\shared\common;..\..\shared;$(RHO_ROOT)\lib\commonAPI\coreapi\ext\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;_LIB;_WP8_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;$(PLATFORMDEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Rhoconnect-client.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\shared\sync\ClientRegister.cpp" />
+    <ClCompile Include="..\..\shared\sync\SyncEngine.cpp" />
+    <ClCompile Include="..\..\shared\sync\SyncNotify.cpp" />
+    <ClCompile Include="..\..\shared\sync\SyncSource.cpp" />
+    <ClCompile Include="..\..\shared\sync\SyncThread.cpp" />
+    <ClCompile Include="..\..\shared\initRhoconnectClient.cpp" />
+    <ClCompile Include="..\..\shared\rhoconnectclient.c" />
+    <ClCompile Include="..\..\shared\RhoConnectClientImpl.cpp" />
+    <ClCompile Include="..\..\shared\generated\rhoconnectclient_api_init.cpp" />
+    <ClCompile Include="..\..\shared\generated\rhoconnectclient_js_api.cpp" />
+    <ClCompile Include="..\..\shared\generated\rhoconnectclient_ruby_api.c" />
+    <ClCompile Include="..\..\shared\generated\cpp\RhoConnectClient_js_wrap.cpp" />
+    <ClCompile Include="..\..\shared\generated\cpp\RhoConnectClient_ruby_wrap.cpp" />
+    <ClCompile Include="..\..\shared\generated\cpp\RhoConnectClientBase.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\shared\sync\ClientRegister.h" />
+    <ClInclude Include="..\..\shared\sync\ISyncProtocol.h" />
+    <ClInclude Include="..\..\shared\sync\SyncEngine.h" />
+    <ClInclude Include="..\..\shared\sync\SyncNotify.h" />
+    <ClInclude Include="..\..\shared\sync\SyncProtocol_3.h" />
+    <ClInclude Include="..\..\shared\sync\SyncSource.h" />
+    <ClInclude Include="..\..\shared\sync\SyncThread.h" />
+    <ClInclude Include="..\..\shared\RhoConnectClientImpl.h" />
+    <ClInclude Include="..\..\shared\RhoConnectClientSingletonImpl.h" />
+    <ClInclude Include="..\..\shared\generated\cpp\IRhoConnectClient.h" />
+    <ClInclude Include="..\..\shared\generated\cpp\RhoConnectClientBase.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\RhoConnectClient.rb" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\RhoConnectClient.xml">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

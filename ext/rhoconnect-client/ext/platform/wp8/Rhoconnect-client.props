@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <RHO_ROOT_DEMO>..\..\..\..\..\..\rhodes</RHO_ROOT_DEMO>
+    <TEMP_FILES_DIR_DEMO>$(RHO_ROOT)\platform\wp8\bin\$(Platform)\extensions\$(ProjectName)</TEMP_FILES_DIR_DEMO>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.51106.1</_ProjectFileVersion>
+    <_PropertySheetDisplayName>emmlapi</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="RHO_ROOT_DEMO">
+      <Value>$(RHO_ROOT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="TEMP_FILES_DIR_DEMO">
+      <Value>$(TEMP_FILES_DIR)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9FC737FA-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="shared">
+      <UniqueIdentifier>{4ad52c06-f53d-43fb-ae0f-fd01f325e13f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared\generated">
+      <UniqueIdentifier>{23f6b011-485b-4f55-aab5-68cbe54548f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shared\generated\cpp">
+      <UniqueIdentifier>{298dec4c-86de-49b8-a08b-44bd4dfdad0a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\shared\sync\ClientRegister.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\sync\SyncEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\sync\SyncNotify.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\sync\SyncSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\sync\SyncThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\initRhoconnectClient.cpp">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\rhoconnectclient.c">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\RhoConnectClientImpl.cpp">
+      <Filter>shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\generated\rhoconnectclient_api_init.cpp">
+      <Filter>shared\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\generated\rhoconnectclient_js_api.cpp">
+      <Filter>shared\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\generated\rhoconnectclient_ruby_api.c">
+      <Filter>shared\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\generated\cpp\RhoConnectClient_js_wrap.cpp">
+      <Filter>shared\generated\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\generated\cpp\RhoConnectClient_ruby_wrap.cpp">
+      <Filter>shared\generated\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\generated\cpp\RhoConnectClientBase.cpp">
+      <Filter>shared\generated\cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\shared\sync\ClientRegister.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\sync\ISyncProtocol.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\sync\SyncEngine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\sync\SyncNotify.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\sync\SyncProtocol_3.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\sync\SyncSource.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\sync\SyncThread.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\RhoConnectClientImpl.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\RhoConnectClientSingletonImpl.h">
+      <Filter>shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\generated\cpp\IRhoConnectClient.h">
+      <Filter>shared\generated\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\generated\cpp\RhoConnectClientBase.h">
+      <Filter>shared\generated\cpp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\RhoConnectClient.rb" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\RhoConnectClient.xml" />
+  </ItemGroup>
+</Project>
