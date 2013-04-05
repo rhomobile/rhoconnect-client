@@ -797,7 +797,7 @@ void CSyncEngine::loadBulkPartition(const String& strPartition )
     String strSqlDataUrl = CFilePath::join(getHostFromUrl(serverUrl), strDataUrl) +strZip;
     LOG(INFO) + "Bulk sync: download data from server: " + strSqlDataUrl;
     {
-        NetResponse resp1 = getNet().pullFile(strSqlDataUrl, fDataName+strZip, this, null);
+        NetResponse resp1 = getNet().pullFile(strSqlDataUrl, fDataName+strZip, this, null, true, false);
         if ( !resp1.isOK() )
         {
 	        LOG(ERROR) + "Bulk sync failed: cannot download database file.";

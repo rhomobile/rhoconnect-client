@@ -1470,7 +1470,7 @@ boolean CSyncSource::downloadBlob(CAttrValue& value)//throws Exception
 		url += "?";
 	url += "client_id=" + getSync().getClientID();
 
-    NetResponse resp = getNet().pullFile(url, fName, &getSync(), null);
+    NetResponse resp = getNet().pullFile(url, fName, &getSync(), null, true, false);
     if ( !resp.isOK() )
     {
         CRhoFile::deleteFile(fName.c_str());
