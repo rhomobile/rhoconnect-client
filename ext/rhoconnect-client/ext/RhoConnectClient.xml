@@ -76,7 +76,7 @@
 			</METHOD>
 
 			<METHOD name="search" hasCallback="optional" runInThread="none">
-				<DESC>If you have a large dataset in your backend service, you don’t have to synchronize everything with the RhoConnectClient. Instead you can filter the synchronized dataset using the RhoConnectClient's search function.</DESC>
+				<DESC>If you have a large dataset in your backend service, you don't have to synchronize everything with the RhoConnectClient. Instead you can filter the synchronized dataset using the RhoConnectClient's search function.</DESC>
 				
 				<PARAMS>
 
