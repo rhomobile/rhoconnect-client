@@ -178,7 +178,7 @@ void CClientRegister::run()
 		    LOG(INFO)+"SyncThread is not ready";
 		
 		LOG(INFO)+"Waiting for "+ m_nPollInterval+ " sec to try again to register client";
-		wait(m_nPollInterval);
+		wait(m_nPollInterval*1000);
 	}
     LOG(INFO)+"ClientRegister thread shutdown";
 }

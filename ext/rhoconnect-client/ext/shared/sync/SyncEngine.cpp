@@ -774,7 +774,7 @@ void CSyncEngine::loadBulkPartition(const String& strPartition )
             if ( nTimeout == 0 )
                 nTimeout = 5;
 
-            CSyncThread::getInstance()->wait(nTimeout);
+            CSyncThread::getInstance()->wait(nTimeout*1000);
             strCmd = "";
         }
     }
