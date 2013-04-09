@@ -6,6 +6,9 @@
 #include "RhoConnectClientImpl.h"
 #include "common/RhodesApp.h"
 
+#undef DEFAULT_LOGCATEGORY
+#define DEFAULT_LOGCATEGORY "initRhoconnectClient"
+
 class RhoConnectClientRhodesInterfaceImpl : public rho::sync::IRhoconnectClient {
 public:
 	virtual ~RhoConnectClientRhodesInterfaceImpl() {}

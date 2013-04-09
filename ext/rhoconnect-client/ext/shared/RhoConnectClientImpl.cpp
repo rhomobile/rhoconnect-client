@@ -3,6 +3,9 @@
 #include "json/JSONIterator.h"
 #include "net/URI.h"
 
+#undef DEFAULT_LOGCATEGORY
+#define DEFAULT_LOGCATEGORY "RhoConnectClientImpl"
+
 namespace rho {
 
 
