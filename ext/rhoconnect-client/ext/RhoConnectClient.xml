@@ -65,12 +65,12 @@
 				
 			</ALIASES>
 			
-			<METHOD name="loggedIn?">
+			<METHOD name="isLoggedIn">
 				<DESC>Returns true if the RhoConnectClient currently has a user session, false if not.</DESC>
 				<RETURN type="BOOLEAN"/>
 			</METHOD>
 			
-			<METHOD name="syncing?">
+			<METHOD name="isSyncing">
 				<DESC>Returns true if sync is currently in progress.</DESC>
 				<RETURN type="BOOLEAN"/>
 			</METHOD>

@@ -26,8 +26,8 @@ public:
     virtual void setShowStatusPopup( bool value, rho::apiGenerator::CMethodResult& oResult);
     virtual void getSslVerifyPeer(rho::apiGenerator::CMethodResult& oResult);
     virtual void setSslVerifyPeer( bool value, rho::apiGenerator::CMethodResult& oResult);
-    virtual void loggedIn(rho::apiGenerator::CMethodResult& oResult);
-    virtual void syncing(rho::apiGenerator::CMethodResult& oResult);
+    virtual void isLoggedIn(rho::apiGenerator::CMethodResult& oResult);
+    virtual void isSyncing(rho::apiGenerator::CMethodResult& oResult);
 
     virtual void search( const rho::Hashtable<rho::String, rho::String>& args, rho::apiGenerator::CMethodResult& oResult);
     virtual void doSync( bool showStatusPopup,  const rho::String& queryParams,  bool syncOnlyChangedSources, rho::apiGenerator::CMethodResult& oResult);

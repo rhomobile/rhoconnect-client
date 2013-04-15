@@ -1042,6 +1042,11 @@ void CSyncEngine::setSyncServer(const char* syncserver)
 		logout_int();
 	}
 }
+    
+String CSyncEngine::getSyncServer() const {
+    return RHOCONF().getString("syncserver");
+}
+
 
 static String getHostFromUrl( const String& strUrl )
 {

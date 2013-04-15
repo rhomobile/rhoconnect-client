@@ -26,7 +26,7 @@ void RhoConnectClientImpl::setPollInterval( int value, rho::apiGenerator::CMetho
 }
 	
 void RhoConnectClientImpl::getSyncServer(rho::apiGenerator::CMethodResult& oResult) {
-	//TODO oResult.set( getSyncEngine().getSyncServer() );
+	oResult.set( getSyncEngine().getSyncServer() );
 }
 	
 void RhoConnectClientImpl::setSyncServer( const rho::String& value, rho::apiGenerator::CMethodResult& oResult) {
@@ -66,11 +66,11 @@ void RhoConnectClientImpl::setSslVerifyPeer( bool value, rho::apiGenerator::CMet
 	getSyncEngine().setSslVerifyPeer(value);
 }
 	
-void RhoConnectClientImpl::loggedIn(rho::apiGenerator::CMethodResult& oResult) {
+void RhoConnectClientImpl::isLoggedIn(rho::apiGenerator::CMethodResult& oResult) {
 	oResult.set( getSyncEngine().isLoggedIn() );
 }
 	
-void RhoConnectClientImpl::syncing(rho::apiGenerator::CMethodResult& oResult) {
+void RhoConnectClientImpl::isSyncing(rho::apiGenerator::CMethodResult& oResult) {
 	oResult.set( getSyncEngine().isSyncing() );
 }
  

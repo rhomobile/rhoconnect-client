@@ -108,6 +108,7 @@ public:
     void logout_int();
 
 	void setSyncServer(const char* syncserver);
+    String getSyncServer() const;
 
     void setState(ESyncState eState){ m_syncState = eState; }
     ESyncState getState()const{ return m_syncState; }

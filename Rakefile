@@ -150,6 +150,8 @@ end
 namespace "run" do
   namespace "android" do
     task :rhoconnect_spec => "rhoconnect_spec:emulator"
+    task :rhoconnect_spec_js => "rhoconnect_spec_js:emulator"
+
 
 
     namespace "rhoconnect_spec" do
@@ -157,7 +159,7 @@ namespace "run" do
 	require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
         $device_flag = '-d'
-        run_rhoconnect_spec('android')
+        run_rhoconnect_spec('android','rhoconnect_spec', { :ruby => true } )
         unless $dont_exit_on_failure
           exit 1 if $total.to_i==0
           exit $failed.to_i
@@ -168,13 +170,37 @@ namespace "run" do
 	require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
         $device_flag = '-e'
-        run_rhoconnect_spec('android')
+        run_rhoconnect_spec('android','rhoconnect_spec', { :ruby => true } )
         unless $dont_exit_on_failure
           exit 1 if $total.to_i==0
           exit $failed.to_i
         end
       end
     end
+      
+      namespace "rhoconnect_spec_js" do
+          task :device do
+              require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+              
+              $device_flag = '-d'
+              run_rhoconnect_spec('android','rhoconnect_spec_js', { :js => true } )
+              unless $dont_exit_on_failure
+                  exit 1 if $total.to_i==0
+                  exit $failed.to_i
+              end
+          end
+          
+          task :emulator do
+              require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+              
+              $device_flag = '-e'
+              run_rhoconnect_spec('android','rhoconnect_spec_js', { :js => true } )
+              unless $dont_exit_on_failure
+                  exit 1 if $total.to_i==0
+                  exit $failed.to_i
+              end
+          end
+      end
 
   end
 
@@ -182,27 +208,50 @@ namespace "run" do
     task :rhoconnect_spec do
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
-      run_rhoconnect_spec('iphone')
+      run_rhoconnect_spec('iphone','rhoconnect_spec', { :ruby => true } )
     end
+      
+      task :rhoconnect_spec_js do
+          require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+          
+          run_rhoconnect_spec('iphone','rhoconnect_spec_js', { :js => true } )
+      end
+
   end
 
   namespace "wm" do
     task :rhoconnect_spec do
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
-      run_rhoconnect_spec('wm')
+      run_rhoconnect_spec('wm','rhoconnect_spec', { :ruby => true } )
       exit 1 if $total.to_i==0
       exit $failed.to_i
     end
+      
+      task :rhoconnect_spec_js do
+          require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+          
+          run_rhoconnect_spec('wm','rhoconnect_spec_js', { :js => true } )
+          exit 1 if $total.to_i==0
+          exit $failed.to_i
+      end
   end
 
   namespace "win32" do
     task :rhoconnect_spec do
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
-      run_rhoconnect_spec('win32')
+      run_rhoconnect_spec('win32','rhoconnect_spec', { :ruby => true } )
       exit 1 if $total.to_i==0
       exit $failed.to_i
     end
+      
+      task :rhoconnect_spec_js do
+          require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+          
+          run_rhoconnect_spec('win32','rhoconnect_spec_js', { :js => true } )
+          exit 1 if $total.to_i==0
+          exit $failed.to_i
+      end
   end
 end

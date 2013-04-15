@@ -4,8 +4,7 @@ require File.join($rho_root,'lib','build','jake.rb')
 require File.join($rho_root,'lib','build','rhoconnect_helper.rb')
 
 
-	def run_rhoconnect_spec(platform)
-		appname = "rhoconnect_spec"
+	def run_rhoconnect_spec(platform,appname,flags)
 		test_appname = "testapp"
 
 		puts "run_spec_app(#{platform},#{appname})"
@@ -71,11 +70,23 @@ require File.join($rho_root,'lib','build','rhoconnect_helper.rb')
 
 
 		RhoconnectHelper.start_rhoconnect_stack(server_path,true)
-
-		File.open(File.join($app_path, 'app', 'sync_server.rb'), 'w') do |f|
-			f.puts "SYNC_SERVER_HOST = '#{RhoconnectHelper.host}'"
-			f.puts "SYNC_SERVER_PORT = #{RhoconnectHelper.port}"
-		end
+        
+        generateRuby = flags && flags[:ruby]==true
+        generateJS = flags && flags[:js]==true
+        
+        if generateRuby then
+            File.open(File.join($app_path, 'app', 'sync_server.rb'), 'w') do |f|
+                f.puts "SYNC_SERVER_HOST = '#{RhoconnectHelper.host}'"
+                f.puts "SYNC_SERVER_PORT = #{RhoconnectHelper.port}"
+            end
+        end
+        
+        if generateJS then
+            File.open(File.join($app_path, 'public', 'app', 'sync_server.js'), 'w') do |f|
+                f.puts "var SYNC_SERVER_HOST = '#{RhoconnectHelper.host}';"
+                f.puts "var SYNC_SERVER_PORT = #{RhoconnectHelper.port};"
+            end
+        end
 
 		puts "run specs"
 		chdir $rho_root
