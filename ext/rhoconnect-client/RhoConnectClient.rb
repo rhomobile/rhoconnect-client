@@ -153,11 +153,11 @@ class RhoConnectClient
 	end
 
 	def self.logged_in
-		RhoConnectClient.loggedIn?()? 1 : 0
+		RhoConnectClient.isLoggedIn()? 1 : 0
 	end
 
 	def self.is_syncing
-		RhoConnectClient.syncing?()? 1 : 0
+		RhoConnectClient.isSyncing()? 1 : 0
 	end
 
 	def self.set_objectnotify_url(url)
