@@ -314,7 +314,7 @@
         <REMARK title="Backround synchronization on iOS">
             <DESC>
                 <![CDATA[
-                    On iOS, if application is put to background, it will be suspended. To allow application finish sync after application goes to background, you can use ‘finish_sync_in_background’ parameter in rhoconfig.txt. When this parameter is set to ‘1’, if sync is active in the time of background transition ( e.g. started from app_deactivate handler ), application will not be suspended until sync is finished.
+                    On iOS, if application is put to background, it will be suspended. To allow application finish sync after application goes to background, you can use 'finish_sync_in_background' parameter in rhoconfig.txt. When this parameter is set to '1', if sync is active in the time of background transition ( e.g. started from app_deactivate handler ), application will not be suspended until sync is finished.
                 ]]>
                 
             </DESC>
@@ -375,7 +375,7 @@
         </EXAMPLE>
         
         <EXAMPLE title="Notifications">
-            <DESC>In this example, once the sync process for the Account model is complete, the view will be directed to the sync_notify action (with params ‘sync_complete=true’) if user is on the same page.</DESC>
+            <DESC>In this example, once the sync process for the Account model is complete, the view will be directed to the sync_notify action (with params 'sync_complete=true') if user is on the same page.</DESC>
             <SECTIONS>
                 <SECTION>
                     <DESC>To set a notification for a model, you can use the following method:</DESC>
