@@ -246,7 +246,7 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
 		}
     }
 	String strBody = getRegisterBody(client_id);
-    NetResponse resp = getNet().pushData( oSync.getProtocol().getClientRegisterUrl(), strBody, &oSync );
+    NetResponse resp = getNet().pushData( oSync.getProtocol().getClientRegisterUrl(client_id), strBody, &oSync );
 	if( resp.isOK() )
     {
 //				try {

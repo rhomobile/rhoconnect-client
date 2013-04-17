@@ -370,7 +370,7 @@ void CSyncSource::doSyncClientChanges()
                 oItem.m_strName = "cud";
                 m_arMultipartItems.addElement(pItem);
 
-                NetResponse resp = getNet().pushMultipartData( getProtocol().getClientChangesUrl(), m_arMultipartItems, &getSync(), null);
+                NetResponse resp = getNet().pushMultipartData( getProtocol().getClientChangesUrl(getName()), m_arMultipartItems, &getSync(), null);
                 if ( !resp.isOK() )
                 {
                     //getSync().stopSync();
@@ -379,7 +379,7 @@ void CSyncSource::doSyncClientChanges()
                 }
             }else
             {
-                NetResponse resp = getNet().pushData( getProtocol().getClientChangesUrl(), strBody, &getSync());
+                NetResponse resp = getNet().pushData( getProtocol().getClientChangesUrl(getName()), strBody, &getSync());
                 if ( !resp.isOK() )
                 {
                     //getSync().stopSync();
@@ -611,7 +611,7 @@ void CSyncSource::syncServerChanges()
            ( m_nErrCode == RhoAppAdapter.ERR_NONE || m_nErrCode == RhoAppAdapter.ERR_CUSTOMSYNCSERVER) )
     {
         setCurPageCount(0);
-        String strUrl = getProtocol().getServerQueryUrl("");
+        String strUrl = getProtocol().getServerQueryUrl(getName());
         String strQuery = getProtocol().getServerQueryBody(getName(), getSync().getClientID(), getSync().getSyncPageSize());
 
         if ( !m_bTokenFromDB && getToken() > 1 )

@@ -58,7 +58,7 @@ end
 SYNC_CALLBACK_NAME = 'sync_callback_spec'
 
 
-SYNC_SERVER_URL = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}/application"
+SYNC_SERVER_URL = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}"
 #SYNC_SERVER_URL = "http://rhoconnect-spec-exact_platform.heroku.com/application"
 #SYNC_SERVER_URL = "http://rhodes-store-spec-server.heroku.com/application"
 #SYNC_SERVER_URL = 'http://localhost:9292/application'
@@ -508,7 +508,7 @@ end
     records = ::Rho::RHO.get_user_db().select_from_table('changed_values','*', 'update_type' => 'create')
     records.length.should == 1
 
-    Rho::RhoConfig.syncserver = 'http://rhodes-store-server.heroku2.com/application'
+    Rho::RhoConfig.syncserver = 'http://rhodes-store-server.heroku2.com'
     res =  getCustomer.sync
     res['status'].should == 'error'
     res['error_code'].to_i.should >  ::Rho::RhoError::ERR_NONE

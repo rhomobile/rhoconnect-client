@@ -31,16 +31,39 @@
 #include "common/RhoFilePath.h"
 #include "json/JSONIterator.h"
 
+#include <iostream>
+
 namespace rho {
 namespace sync {
 
-struct CSyncProtocol_3 : public ISyncProtocol
+struct CSyncProtocol_4 : public ISyncProtocol
 {
     String m_strContentType;
+    String m_strAppNamespace;
+    String m_strClientNamespace;
+    String m_strSANamespace;
 
-    CSyncProtocol_3()
+    CSyncProtocol_4()
     {
         m_strContentType = "application/json";
+        m_strAppNamespace = "rc/v1/app/";
+        m_strClientNamespace = "rc/v1/clients/";
+        m_strSANamespace = "app/v1/";
+    }
+
+    const String& getAppNamespaceUrl()
+    {
+        return m_strAppNamespace;
+    }
+
+    const String& getClientNamespaceUrl()
+    {
+        return m_strClientNamespace;
+    }
+
+    const String& getSANamespaceUrl()
+    {
+        return m_strSANamespace;
     }
 
     const String& getContentType(){ return m_strContentType; }
@@ -48,7 +71,7 @@ struct CSyncProtocol_3 : public ISyncProtocol
 
     String getLoginUrl()
     {
-        return RHOCONF().getPath("syncserver") + "clientlogin";
+        return RHOCONF().getPath("syncserver") + getAppNamespaceUrl() + "login";
     }
 
     String getLoginBody( const String& name, const String& password)
@@ -58,18 +81,18 @@ struct CSyncProtocol_3 : public ISyncProtocol
 
     String getClientCreateUrl()
     {
-        return RHOCONF().getPath("syncserver") + "clientcreate";
+        String strUrl = RHOCONF().getPath("syncserver") + getClientNamespaceUrl();
+        return strUrl.substr(0, strUrl.length() - 1);
     }
 
-    String getClientRegisterUrl(const String& /*strClientID*/)
+    String getClientRegisterUrl(const String& strClientID)
     {
-        return RHOCONF().getPath("syncserver") + "clientregister";
+        return RHOCONF().getPath("syncserver") + getClientNamespaceUrl() + strClientID + "/register";
     }
 
-    String getClientRegisterBody( const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType)
+    String getClientRegisterBody( const String& /*strClientID*/, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType)
     {
-        return "{\"client_id\":" + json::CJSONEntry::quoteValue(strClientID) + 
-            ",\"device_pin\":" + json::CJSONEntry::quoteValue(strPin) +
+        return "{\"device_pin\":" + json::CJSONEntry::quoteValue(strPin) +
             ( strPhoneID.length() > 0 ? ",\"phone_id\":" + json::CJSONEntry::quoteValue(strPhoneID) : "") +
             ",\"device_port\":" + json::CJSONEntry::quoteValue(common::convertToStringA(nPort)) +
             ",\"device_type\":" + json::CJSONEntry::quoteValue(strType) +
@@ -77,10 +100,9 @@ struct CSyncProtocol_3 : public ISyncProtocol
             "}";
     }
 
-	String getClientAnsRegisterBody( const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID )
+	String getClientAnsRegisterBody( const String& /*strClientID*/, const String& strPin, int nPort, const String& strType, const String& strPhoneID )
     {
-        return "{\"client_id\":" + json::CJSONEntry::quoteValue(strClientID) + 
-            ",\"device_pin\":" + json::CJSONEntry::quoteValue(strPin) +
+        return "{\"device_pin\":" + json::CJSONEntry::quoteValue(strPin) +
             ( strPhoneID.length() > 0 ? ",\"phone_id\":" + json::CJSONEntry::quoteValue(strPhoneID) : "") +
             ",\"device_port\":" + json::CJSONEntry::quoteValue(common::convertToStringA(nPort)) +
             ",\"device_type\":" + json::CJSONEntry::quoteValue(strType) + 
@@ -89,55 +111,49 @@ struct CSyncProtocol_3 : public ISyncProtocol
 
     String getClientResetUrl(const String& strClientID)
     {
-        String strUrl = RHOCONF().getPath("syncserver") + "clientreset?client_id=" + strClientID;
+        String strUrl = RHOCONF().getPath("syncserver") + getClientNamespaceUrl() + strClientID + "/reset";
+    }
+
+    String getClientResetBody()
+    {
+        String strBody;
         String strSources = RHOCONF().getString("reset_models");
         if ( strSources.length() > 0 )
-            strUrl += strSources;
+            strBody += strSources;
 
-        return strUrl;
+        return strBody;
     }
 
-    String getClientResetBody() 
+    String getClientChangesUrl(const String& strSrcName)
     {
-        return "";
+        return RHOCONF().getPath("syncserver") + getSANamespaceUrl() + strSrcName;
     }
 
-    String getClientChangesUrl(const String& /*strSrcName*/)
+    String getServerQueryUrl(const String& strSrcName)
     {
-        String strUrl = RHOCONF().getPath("syncserver");
-        return strUrl.substr(0,strUrl.length()-1);
-    }
-
-    String getServerQueryUrl(const String& /*strSrcName*/ )
-    {
-        String strUrl = RHOCONF().getPath("syncserver");
-        return strUrl.substr(0,strUrl.length()-1);
+        return RHOCONF().getPath("syncserver") + getSANamespaceUrl() + strSrcName;
     }
 
     String getServerQueryBody(const String& strSrcName, const String& strClientID, int nPageSize )
     {
         String strQuery = "?client_id=" + strClientID + 
-                "&p_size=" + common::convertToStringA(nPageSize) + "&version=3";
+                "&p_size=" + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
         
-        if ( strSrcName.length() > 0 )
-            strQuery += "&source_name=" + strSrcName;
-
         return strQuery;
     }
 
     String getServerSearchUrl()
     {
-        return RHOCONF().getPath("syncserver") + "search";
+        return RHOCONF().getPath("syncserver") + getAppNamespaceUrl() + "search";
     }
 
     String getServerSearchBody(const String& strClientID, int nPageSize )
     {
         String strSearch = "?client_id=" + strClientID + 
-                "&p_size=" + common::convertToStringA(nPageSize) + "&version=3";
+                "&p_size=" + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
         
         return strSearch;
     }
-
 };
 
 }

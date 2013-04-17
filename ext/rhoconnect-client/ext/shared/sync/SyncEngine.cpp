@@ -38,7 +38,7 @@
 #include "common/RhoFilePath.h"
 #include "common/RhoFile.h"
 #include "common/RhoAppAdapter.h"
-#include "SyncProtocol_3.h"
+#include "SyncProtocol_4.h"
 #include "net/URI.h"
 #include "common/RhoSettingsDefs.h"
 #include "common/Tokenizer.h"
@@ -68,7 +68,7 @@ CSyncEngine::CSyncEngine(): m_syncState(esNone), m_oSyncNotify(*this)
 
 void CSyncEngine::initProtocol()
 {
-    m_SyncProtocol = new CSyncProtocol_3();
+    m_SyncProtocol = new CSyncProtocol_4();
 }
 
 void CSyncEngine::setSslVerifyPeer(boolean b)
@@ -233,8 +233,8 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
     while( isContinueSync() )
     {
         int nSearchCount = 0;
-        String strUrl = getProtocol().getServerQueryUrl(strAction);
-        String strQuery = getProtocol().getServerQueryBody("", getClientID(), getSyncPageSize());
+        String strUrl = getProtocol().getServerSearchUrl();
+        String strQuery = getProtocol().getServerSearchBody(getClientID(), getSyncPageSize());
 
         if ( strParams.length() > 0 )
             strQuery += strParams.at(0) == '&' ? strParams : "&" + strParams;
@@ -255,7 +255,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
         }
 
 	    LOG(INFO) + "Call search on server. Url: " + (strUrl+strQuery);
-        NetResponse resp = getNet().pullData(strUrl+strQuery, this);
+        NetResponse resp = getNet().pushData(strUrl+strQuery, "", this);
 
         if ( !resp.isOK() )
         {
@@ -601,7 +601,7 @@ void CSyncEngine::processServerSources(String strSources)
 
 boolean CSyncEngine::resetClientIDByNet(const String& strClientID)//throws Exception
 {
-    NetResponse resp = getNetClientID().pullData(getProtocol().getClientResetUrl(strClientID), this);
+    NetResponse resp = getNetClientID().pushData(getProtocol().getClientResetUrl(strClientID), getProtocol().getClientResetBody(), this);
     if ( !resp.isOK() )
     {
         m_nErrCode = RhoAppAdapter.getErrorFromResponse(resp);
@@ -614,7 +614,8 @@ boolean CSyncEngine::resetClientIDByNet(const String& strClientID)//throws Excep
 
 String CSyncEngine::requestClientIDByNet()
 {
-    NetResponse resp = getNetClientID().pullData(getProtocol().getClientCreateUrl(), this);
+    String clientCreateBody;
+    NetResponse resp = getNetClientID().pushData(getProtocol().getClientCreateUrl(), clientCreateBody, this);
     if ( resp.isOK() && resp.getCharData() != null )
     {
         const char* szData = resp.getCharData();
