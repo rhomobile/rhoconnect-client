@@ -58,7 +58,7 @@ end
 SYNC_CALLBACK_NAME = 'sync_callback_spec'
 
 
-SYNC_SERVER_URL = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}"
+SYNC_SERVER_URL = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}/application"
 #SYNC_SERVER_URL = "http://rhoconnect-spec-exact_platform.heroku.com/application"
 #SYNC_SERVER_URL = "http://rhodes-store-spec-server.heroku.com/application"
 #SYNC_SERVER_URL = 'http://localhost:9292/application'
@@ -107,6 +107,7 @@ describe "SyncEngine_test" do
   
   after (:each) do
     Rho::RhoConfig.syncserver = syncserver_url
+    Rho::RhoConfig.sync_version = 3
 	  
 	SyncEngine.set_syncserver(syncserver_url)
 	SyncEngine.set_ssl_verify_peer(true)
@@ -156,7 +157,7 @@ end
     res.should > 0    
     
     Rhom::Rhom.database_full_reset_ex( :models => [getProduct_str(), getCustomer_str] )
-    Rho::RhoConfig.reset_models.should == "&sources[][name]=#{getProduct_str}&sources[][name]=#{getCustomer_str}"
+    Rho::RhoConfig.reset_models.should == "#{getProduct_str},#{getCustomer_str}"
     
     res = getProduct().find(:all)
     res.length.should == 0
@@ -177,7 +178,7 @@ end
     res.should > 0    
   
     Rhom::Rhom.database_full_reset_ex( :models => [getProduct_str] )
-    Rho::RhoConfig.reset_models.should == "&sources[][name]=#{getProduct_str}"
+    Rho::RhoConfig.reset_models.should == "#{getProduct_str}"
     
     res = getProduct().find(:all)
     res.length.should == 0

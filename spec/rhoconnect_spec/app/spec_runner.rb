@@ -12,14 +12,13 @@ class SpecRunner < MSpecScript
 		MSpec.backtrace = true
 
 		config[:files] << [ "spec/syncengine_spec", [ {:schema_model=>true }, {:schema_model=>false } ] ]
-	#unless Rho::System.platform == "WINDOWS" || Rho::System.platform == "WINDOWS_DESKTOP"
-	#    config[:files] << [ "spec/blobsync_spec", [ {:schema_model=>true }, {:schema_model=>false } ] ]
-	#
-	#    config[:files] << "spec/bulksync_spec"
-	#    config[:files] << "spec/blob_bulksync_spec"
-  #  end
+		# unless Rho::System.platform == "WINDOWS" || Rho::System.platform == "WINDOWS_DESKTOP"
+		#    config[:files] << [ "spec/blobsync_spec", [ {:schema_model=>true }, {:schema_model=>false } ] ]
+		#    config[:files] << "spec/bulksync_spec"
+		# 	 config[:files] << "spec/blob_bulksync_spec"
+  #   end
     
-	#config[:files] << "spec/ssl_spec"
+		config[:files] << "spec/ssl_spec"
 
   end
 

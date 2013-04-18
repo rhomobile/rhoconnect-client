@@ -39,7 +39,7 @@
 #include "common/RhoFile.h"
 #include "common/RhoAppAdapter.h"
 #include "SyncProtocol_4.h"
-#include "net/URI.h"
+#include "SyncProtocol_3.h"
 #include "common/RhoSettingsDefs.h"
 #include "common/Tokenizer.h"
 
@@ -68,7 +68,18 @@ CSyncEngine::CSyncEngine(): m_syncState(esNone), m_oSyncNotify(*this)
 
 void CSyncEngine::initProtocol()
 {
-    m_SyncProtocol = new CSyncProtocol_4();
+    String protocolVersionA = RHOCONF().getString("sync_version");
+    int protocolVersion = 3;
+    LOG(INFO) + "MZVEREV1 : "  + protocolVersionA;
+    switch(protocolVersion) {
+    case 3:
+        m_SyncProtocol = new CSyncProtocol_3();
+        break;
+    case 4:
+    default:
+        m_SyncProtocol = new CSyncProtocol_4();
+        break;
+    }
 }
 
 void CSyncEngine::setSslVerifyPeer(boolean b)
@@ -207,7 +218,7 @@ void CSyncEngine::doSyncAllSources(const String& strQueryParams, boolean bSyncOn
         setState(esNone);
 }
 
-void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams, String strAction, boolean bSearchSyncChanges, int nProgressStep)
+void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams, boolean bSearchSyncChanges, int nProgressStep)
 {
     prepareSync(esSearch, null);
     if ( !isContinueSync() )
@@ -233,9 +244,12 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
     while( isContinueSync() )
     {
         int nSearchCount = 0;
-        String strUrl = getProtocol().getServerSearchUrl();
-        String strQuery = getProtocol().getServerSearchBody(getClientID(), getSyncPageSize());
-
+        String strUrl = getProtocol().getServerSearchUrl(getClientID(), getSyncPageSize());
+        String strBody = getProtocol().getServerSearchBody(getSyncPageSize());
+        Hashtable<String, String> reqHeaders;
+        reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
+        
+        String strQuery;
         if ( strParams.length() > 0 )
             strQuery += strParams.at(0) == '&' ? strParams : "&" + strParams;
 
@@ -255,7 +269,8 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
         }
 
 	    LOG(INFO) + "Call search on server. Url: " + (strUrl+strQuery);
-        NetResponse resp = getNet().pushData(strUrl+strQuery, "", this);
+        NetResponse resp = getNet().doRequest(getProtocol().getServerSearchMethod(), 
+                strUrl + strQuery, strBody, this, &reqHeaders);
 
         if ( !resp.isOK() )
         {
@@ -601,7 +616,8 @@ void CSyncEngine::processServerSources(String strSources)
 
 boolean CSyncEngine::resetClientIDByNet(const String& strClientID)//throws Exception
 {
-    NetResponse resp = getNetClientID().pushData(getProtocol().getClientResetUrl(strClientID), getProtocol().getClientResetBody(), this);
+    NetResponse resp = getNetClientID().doRequest(getProtocol().getClientResetMethod(),
+        getProtocol().getClientResetUrl(strClientID), getProtocol().getClientResetBody(), this, null );
     if ( !resp.isOK() )
     {
         m_nErrCode = RhoAppAdapter.getErrorFromResponse(resp);
@@ -615,7 +631,8 @@ boolean CSyncEngine::resetClientIDByNet(const String& strClientID)//throws Excep
 String CSyncEngine::requestClientIDByNet()
 {
     String clientCreateBody;
-    NetResponse resp = getNetClientID().pushData(getProtocol().getClientCreateUrl(), clientCreateBody, this);
+    NetResponse resp = getNetClientID().doRequest(getProtocol().getClientCreateMethod(),
+        getProtocol().getClientCreateUrl(), "", this, null);
     if ( resp.isOK() && resp.getCharData() != null )
     {
         const char* szData = resp.getCharData();
@@ -725,34 +742,25 @@ static String getHostFromUrl( const String& strUrl );
 void CSyncEngine::loadBulkPartition(const String& strPartition )
 {
     db::CDBAdapter& dbPartition = getDB(strPartition); 
+ 
+    Vector<String> source_names;
+    for ( int i = 0; i < (int)m_sources.size(); ++i ) {
+        source_names.push_back(m_sources[i]->getName());
+    }
+
     String serverUrl = RHOCONF().getPath("syncserver");
-    String strUrl = serverUrl + "bulk_data";
-	
-	//old code
-
-    String strQuery = "?client_id=" + m_clientID + "&partition=" + strPartition + "&sources=";	
-	for ( int i = 0; i < (int)m_sources.size(); ++i ) {
-		strQuery += URI::urlEncode(m_sources[i]->getName());
-		if ( i < (int)m_sources.size()-1 ) {
-			strQuery += ",";
-		}
-	}
-
-	//new code
-/*
-    String strQuery = "?client_id=" + m_clientID + "&partition=" + strPartition;
-	for ( int i = 0; i < (int)m_sources.size(); ++i ) {
-		strQuery += "&sources[]=";
-		strQuery += URI::urlEncode(m_sources[i]->getName());
-	}	
-*/
+    String strUrl = getProtocol().getServerBulkDataUrl(getClientID(), strPartition, source_names);
+    String strBody = getProtocol().getServerBulkDataBody(strPartition, source_names);
+    Hashtable<String, String> reqHeaders;
+    reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
+        
     String strDataUrl = "", strCmd = "", strCryptKey = "";
 
   	getNotify().fireBulkSyncNotification(false, "start", strPartition, RhoAppAdapter.ERR_NONE);
 
     while(strCmd.length() == 0&&isContinueSync())
     {	    
-        NetResponse resp = getNet().pullData(strUrl+strQuery, this);
+        NetResponse resp = getNet().doRequest(getProtocol().getServerBulkDataMethod(), strUrl, strBody, this, &reqHeaders);
         const char* szData = resp.getCharData();
         if ( !resp.isOK() || szData == null || *szData == 0)
         {

@@ -99,7 +99,7 @@ public:
 
     void doSyncAllSources(const String& strQueryParams, boolean bSyncOnlyChangedSources);
     void doSyncSource(const CSourceID& oSrcID, const String& strQueryParams);
-    void doSearch(rho::Vector<rho::String>& arSources, String strParams, String strAction, boolean bSearchSyncChanges, int nProgressStep);
+    void doSearch(rho::Vector<rho::String>& arSources, String strParams, boolean bSearchSyncChanges, int nProgressStep);
 
     void login(String name, String password, const CSyncNotification& oNotify);
     boolean isLoggedIn();

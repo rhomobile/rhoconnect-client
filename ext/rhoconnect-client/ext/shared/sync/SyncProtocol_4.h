@@ -30,6 +30,7 @@
 #include "common/StringConverter.h"
 #include "common/RhoFilePath.h"
 #include "json/JSONIterator.h"
+#include "common/Tokenizer.h"
 
 #include <iostream>
 
@@ -39,6 +40,7 @@ namespace sync {
 struct CSyncProtocol_4 : public ISyncProtocol
 {
     String m_strContentType;
+    String m_strClientIDHeader;
     String m_strAppNamespace;
     String m_strClientNamespace;
     String m_strSANamespace;
@@ -49,6 +51,7 @@ struct CSyncProtocol_4 : public ISyncProtocol
         m_strAppNamespace = "rc/v1/app/";
         m_strClientNamespace = "rc/v1/clients/";
         m_strSANamespace = "app/v1/";
+        m_strClientIDHeader = "X-RhoConnect-CLIENT-ID";
     }
 
     const String& getAppNamespaceUrl()
@@ -66,8 +69,9 @@ struct CSyncProtocol_4 : public ISyncProtocol
         return m_strSANamespace;
     }
 
-    const String& getContentType(){ return m_strContentType; }
-    virtual int getVersion(){ return 3; }
+    const String& getClientIDHeader() const { return m_strClientIDHeader; }
+    const String& getContentType() const { return m_strContentType; }
+    virtual int getVersion() const { return 3; }
 
     String getLoginUrl()
     {
@@ -77,6 +81,11 @@ struct CSyncProtocol_4 : public ISyncProtocol
     String getLoginBody( const String& name, const String& password)
     {
         return "{\"login\":" + json::CJSONEntry::quoteValue(name) + ",\"password\":" + json::CJSONEntry::quoteValue(password) + ",\"remember_me\":1}";
+    }
+
+    const char* getClientCreateMethod()
+    {
+        return "POST";
     }
 
     String getClientCreateUrl()
@@ -109,18 +118,35 @@ struct CSyncProtocol_4 : public ISyncProtocol
 			",\"device_push_type\":\"rhoconnect_push\"}";
     }
 
+    const char* getClientResetMethod()
+    {
+        return "POST";
+    }
+
     String getClientResetUrl(const String& strClientID)
     {
-        String strUrl = RHOCONF().getPath("syncserver") + getClientNamespaceUrl() + strClientID + "/reset";
+        return RHOCONF().getPath("syncserver") + getClientNamespaceUrl() + strClientID + "/reset";
     }
 
     String getClientResetBody()
     {
         String strBody;
         String strSources = RHOCONF().getString("reset_models");
-        if ( strSources.length() > 0 )
-            strBody += strSources;
-
+        rho::common::CTokenizer tokenizer(strSources, ",");
+        String strJSONSources;
+        while(tokenizer.hasMoreTokens()) {
+            String source_name = tokenizer.nextToken();
+            if(source_name.length() > 0) {
+                strJSONSources += "{\"name\":";
+                strJSONSources += json::CJSONEntry::quoteValue(source_name);
+                strJSONSources += "}";
+            }
+        } 
+        if(strJSONSources.size()) {
+            strBody += "{\"sources\":[";
+            strBody += strJSONSources;
+            strBody += "]}";
+        }
         return strBody;
     }
 
@@ -129,30 +155,48 @@ struct CSyncProtocol_4 : public ISyncProtocol
         return RHOCONF().getPath("syncserver") + getSANamespaceUrl() + strSrcName;
     }
 
-    String getServerQueryUrl(const String& strSrcName)
+    String getServerQueryUrl(const String& strSrcName, const String& strClientID, int nPageSize)
     {
-        return RHOCONF().getPath("syncserver") + getSANamespaceUrl() + strSrcName;
+        String strUrl = RHOCONF().getPath("syncserver") + getSANamespaceUrl() + strSrcName;
+        strUrl += "?p_size=" + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
+        return strUrl;
     }
 
-    String getServerQueryBody(const String& strSrcName, const String& strClientID, int nPageSize )
+    const char* getServerSearchMethod()
     {
-        String strQuery = "?client_id=" + strClientID + 
-                "&p_size=" + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
-        
-        return strQuery;
+        return "POST";
     }
 
-    String getServerSearchUrl()
+    String getServerSearchUrl(const String& strClientID, int nPageSize)
     {
-        return RHOCONF().getPath("syncserver") + getAppNamespaceUrl() + "search";
+        return RHOCONF().getPath("syncserver") + getAppNamespaceUrl() + "search" +
+            "?p_size=" + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
     }
 
-    String getServerSearchBody(const String& strClientID, int nPageSize )
+    String getServerSearchBody(int nPageSize )
     {
-        String strSearch = "?client_id=" + strClientID + 
-                "&p_size=" + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
-        
-        return strSearch;
+        return "";
+    }
+
+    const char* getServerBulkDataMethod() 
+    {
+        return "POST";
+    }
+
+    String getServerBulkDataUrl(const String& strClientID, const String& strPartition, const Vector<String>& sources)
+    {
+        return RHOCONF().getPath("syncserver") + getAppNamespaceUrl() + "bulk_data";
+    }
+
+    String getServerBulkDataBody(const String& strPartition, const Vector<String>& sources)
+    {
+        String strBody = "{\"partition\":";
+        strBody += json::CJSONEntry::quoteValue(strPartition);
+        strBody += ",\"sources\":";
+        strBody += json::CJSONEntry::toJSON(sources);
+        strBody += "}";
+    
+        return strBody;
     }
 };
 

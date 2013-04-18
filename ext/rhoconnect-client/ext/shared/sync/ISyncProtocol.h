@@ -35,26 +35,34 @@ struct ISyncProtocol
 {
 	virtual ~ISyncProtocol() {}
 	
-    virtual const String& getContentType() = 0;
-    virtual int getVersion() = 0;
+    virtual const String& getClientIDHeader() const = 0;
+    virtual const String& getContentType() const = 0;
+    virtual int getVersion() const = 0;
 
     virtual String getLoginUrl() = 0;
     virtual String getLoginBody( const String& name, const String& password)=0;
+    
+    virtual const char* getClientCreateMethod() = 0;
     virtual String getClientCreateUrl() = 0;
 
     virtual String getClientRegisterUrl(const String& strClientID) = 0;
 	virtual String getClientRegisterBody(const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType = "") = 0;
 	virtual String getClientAnsRegisterBody(const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID ) = 0;
 
+    virtual const char* getClientResetMethod() = 0;
 	virtual String getClientResetUrl(const String& strClientID) = 0;
     virtual String getClientResetBody() = 0;
+
     virtual String getClientChangesUrl(const String& srcName) = 0;
+    virtual String getServerQueryUrl(const String& strSrcName, const String& strClientID, int nPageSize )=0;
 
-    virtual String getServerQueryUrl(const String& strSrcName) = 0;
-    virtual String getServerQueryBody(const String& strSrcName, const String& strClientID, int nPageSize )=0;
+    virtual const char* getServerSearchMethod() = 0;
+    virtual String getServerSearchUrl(const String& strClientID, int nPageSize) = 0;
+    virtual String getServerSearchBody(int nPageSize )=0;
 
-    virtual String getServerSearchUrl() = 0;
-    virtual String getServerSearchBody(const String& strClientID, int nPageSize )=0;
+    virtual const char* getServerBulkDataMethod() = 0;
+    virtual String getServerBulkDataUrl(const String& strClientID, const String& strPartition, const Vector<String>& sources) = 0;
+    virtual String getServerBulkDataBody(const String& strPartition, const Vector<String>& sources) = 0;
 };
 
 }
