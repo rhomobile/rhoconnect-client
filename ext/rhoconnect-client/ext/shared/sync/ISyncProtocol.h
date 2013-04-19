@@ -57,8 +57,8 @@ struct ISyncProtocol
     virtual String getServerQueryUrl(const String& strSrcName, const String& strClientID, int nPageSize )=0;
 
     virtual const char* getServerSearchMethod() = 0;
-    virtual String getServerSearchUrl(const String& strClientID, int nPageSize) = 0;
-    virtual String getServerSearchBody(int nPageSize )=0;
+    virtual String getServerSearchUrl(const String& strClientID, int nPageSize, const String& strFrom, const Vector<String>& sources, const Hashtable<String, String>& source_tokens) = 0;
+    virtual String getServerSearchBody(int nPageSize, const Vector<String>& sources, const Hashtable<String, String>& source_tokens )=0;
 
     virtual const char* getServerBulkDataMethod() = 0;
     virtual String getServerBulkDataUrl(const String& strClientID, const String& strPartition, const Vector<String>& sources) = 0;

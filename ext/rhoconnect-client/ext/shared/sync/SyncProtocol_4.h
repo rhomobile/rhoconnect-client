@@ -167,15 +167,38 @@ struct CSyncProtocol_4 : public ISyncProtocol
         return "POST";
     }
 
-    String getServerSearchUrl(const String& strClientID, int nPageSize)
+    String getServerSearchUrl(const String& strClientID, int nPageSize, const String& strFrom, const Vector<String>& sources, const Hashtable<String, String>& source_tokens)
     {
-        return RHOCONF().getPath("syncserver") + getAppNamespaceUrl() + "search" +
+        return RHOCONF().getPath("syncserver") + getAppNamespaceUrl() + strFrom +
             "?p_size=" + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
     }
 
-    String getServerSearchBody(int nPageSize )
+    String getServerSearchBody(int nPageSize, const Vector<String>& sources, const Hashtable<String, String>& source_tokens )
     {
-        return "";
+        String strJSONSources;
+        for (int i = 0; i < (int)sources.size(); ++i )
+        {
+            strJSONSources += "{\"name\":";
+            strJSONSources += json::CJSONEntry::quoteValue(sources[i]);
+            String strToken = source_tokens.get(sources[i]);
+            if(strToken.length() > 0) {
+                strJSONSources += ",\"token\":";
+                strJSONSources += json::CJSONEntry::quoteValue(strToken);
+            }
+            strJSONSources += "}";
+        }
+        
+        String strBody;
+        if(strJSONSources.length() > 0) {
+            strBody += "\"sources\":[";
+            strBody += strJSONSources;
+            strBody += "]";
+        }
+
+        if(strBody.size() > 0)
+            strBody = String("{") + strBody + "}";
+
+        return strBody;
     }
 
     const char* getServerBulkDataMethod() 

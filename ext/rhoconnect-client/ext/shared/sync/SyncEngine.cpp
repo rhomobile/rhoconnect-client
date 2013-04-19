@@ -68,15 +68,17 @@ CSyncEngine::CSyncEngine(): m_syncState(esNone), m_oSyncNotify(*this)
 
 void CSyncEngine::initProtocol()
 {
-    String protocolVersionA = RHOCONF().getString("sync_version");
-    int protocolVersion = 3;
-    LOG(INFO) + "MZVEREV1 : "  + protocolVersionA;
+    int protocolVersion = RHOCONF().getInt("sync_version");
     switch(protocolVersion) {
     case 3:
         m_SyncProtocol = new CSyncProtocol_3();
         break;
-    case 4:
     default:
+        // unknown version - use V4
+        LOG(ERROR) + "Unknown Sync Protocol Version has been requested: "  +  convertToStringA(protocolVersion) + ", using Version 4 instead.";
+        // no break here - intentionally - to proceed with version 4
+    case 0: // 0 - means default
+    case 4:
         m_SyncProtocol = new CSyncProtocol_4();
         break;
     }
@@ -218,7 +220,7 @@ void CSyncEngine::doSyncAllSources(const String& strQueryParams, boolean bSyncOn
         setState(esNone);
 }
 
-void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams, boolean bSearchSyncChanges, int nProgressStep)
+void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams, const String& strFrom, boolean bSearchSyncChanges, int nProgressStep)
 {
     prepareSync(esSearch, null);
     if ( !isContinueSync() )
@@ -244,33 +246,35 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
     while( isContinueSync() )
     {
         int nSearchCount = 0;
-        String strUrl = getProtocol().getServerSearchUrl(getClientID(), getSyncPageSize());
-        String strBody = getProtocol().getServerSearchBody(getSyncPageSize());
-        Hashtable<String, String> reqHeaders;
-        reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
         
-        String strQuery;
+        String strSearchParams;
         if ( strParams.length() > 0 )
-            strQuery += strParams.at(0) == '&' ? strParams : "&" + strParams;
+            strSearchParams += strParams.at(0) == '&' ? strParams : "&" + strParams;
 
         String strTestResp = "";
+        Hashtable<String, String> source_tokens;
         for ( int i = 0; i < (int)arSources.size(); i++ )
         {
             CSyncSource* pSrc = findSourceByName(arSources.elementAt(i));
             if ( pSrc != null )
             {
-                strQuery += "&sources[][name]=" + pSrc->getName();
-
+                String source_token;
                 if ( !pSrc->isTokenFromDB() && pSrc->getToken() > 1 )
-                    strQuery += "&sources[][token]=" + convertToStringA(pSrc->getToken());
+                    source_token = convertToStringA(pSrc->getToken());
+                
+                source_tokens.put(pSrc->getName(), source_token);
 
                 strTestResp = getSourceOptions().getProperty(pSrc->getID(), "rho_server_response");
             }
         }
+        String strUrl = getProtocol().getServerSearchUrl(getClientID(), getSyncPageSize(), strFrom, arSources, source_tokens);
+        Hashtable<String, String> reqHeaders;
+        reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
+        String strBody = getProtocol().getServerSearchBody(getSyncPageSize(), arSources, source_tokens);
 
-	    LOG(INFO) + "Call search on server. Url: " + (strUrl+strQuery);
+	    LOG(INFO) + "Call search on server. Url: " + (strUrl+strSearchParams);
         NetResponse resp = getNet().doRequest(getProtocol().getServerSearchMethod(), 
-                strUrl + strQuery, strBody, this, &reqHeaders);
+                strUrl + strSearchParams, strBody, this, &reqHeaders);
 
         if ( !resp.isOK() )
         {

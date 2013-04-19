@@ -147,13 +147,25 @@ struct CSyncProtocol_3 : public ISyncProtocol
         return "GET";
     }
 
-    String getServerSearchUrl(const String& strClientID, int nPageSize)
+    String getServerSearchUrl(const String& strClientID, int nPageSize, const String& strFrom, const Vector<String>& sources, const Hashtable<String, String>& source_tokens)
     {
-        return RHOCONF().getPath("syncserver") + "search" + "?client_id=" + strClientID + "&p_size="
+        String strUrl = RHOCONF().getPath("syncserver") + strFrom + "?client_id=" + strClientID + "&p_size="
              + common::convertToStringA(nPageSize) + "&version=" + common::convertToStringA(getVersion());
+
+        String strSources;
+        for ( int i = 0; i < (int)sources.size(); ++i ) 
+        {
+            strSources += "&sources[][name]=" + sources[i];
+            String strToken = source_tokens.get(sources[i]);
+            if(strToken.size() > 0) {
+                strSources += "&sources[][token]=" + strToken; 
+            }
+        }
+
+        return strUrl + strSources;
     }
 
-    String getServerSearchBody(int nPageSize)
+    String getServerSearchBody(int nPageSize, const Vector<String>& sources, const Hashtable<String, String>& source_tokens)
     {
         return "";
     }
