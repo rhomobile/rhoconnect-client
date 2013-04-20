@@ -786,7 +786,7 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
     }
 }
 
-void CSyncSource::processServerResponse_ver3(CJSONArrayIterator& oJsonArr)
+void CSyncSource::processServerResponse_ver3(CJSONArrayIterator& oJsonArr, bool isRecoveryMode )
 {
     PROF_START("Data1");
 
@@ -912,13 +912,18 @@ void CSyncSource::processServerResponse_ver3(CJSONArrayIterator& oJsonArr)
             getDB().endTransaction();
             PROF_STOP("DB");
 
-            getNotify().fireObjectsNotification();
+            if (!isRecoveryMode) {
+                getNotify().fireObjectsNotification();
+            }
         }
     }
 
 	PROF_START("Data1");
-    if ( getCurPageCount() > 0 )
-        getNotify().fireSyncNotification(this, false, RhoAppAdapter.ERR_NONE, "");
+    if ( getCurPageCount() > 0 ) {
+        if ( !isRecoveryMode ) {
+            getNotify().fireSyncNotification(this, false, RhoAppAdapter.ERR_NONE, "");
+        }
+    }
 	PROF_STOP("Data1");
 }
 

@@ -270,8 +270,8 @@ void CSyncEngine::doSyncAllSources(const String& strQueryParams, boolean bSyncOn
             
             oSrcArr.reset(0);
             pSrc->setProgressStep(nProgressStep);
-            pSrc->processServerResponse_ver3(oSrcArr);
             
+            pSrc->processServerResponse_ver3(oSrcArr,true);
         }
                 
         return true;
