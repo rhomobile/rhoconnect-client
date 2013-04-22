@@ -220,6 +220,80 @@ void CSyncEngine::doSyncAllSources(const String& strQueryParams, boolean bSyncOn
         setState(esNone);
 }
 
+bool CSyncEngine::recoverSearch(const String& strUrl, const String& strBody, int& errorCode, String& strError, int nProgressStep ) {
+    
+    LOG(INFO) + "Call search on server for previous request. Url: " + (strUrl);
+
+    Hashtable<String, String> reqHeaders;
+    reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
+    
+    NetResponse resp = getNet().doRequest(getProtocol().getServerSearchMethod(), 
+                strUrl, strBody, this, &reqHeaders);
+
+    if ( !resp.isOK() )
+    {
+        errorCode = RhoAppAdapter.getErrorFromResponse(resp);
+        strError = resp.getCharData();
+        return false;
+    }
+    
+    const char* szData = resp.getCharData();
+    
+    CJSONArrayIterator oJsonArr(szData);
+    
+    for( ; !oJsonArr.isEnd() ; oJsonArr.next() )
+    {
+        CJSONArrayIterator oSrcArr(oJsonArr.getCurItem());
+        if (oSrcArr.isEnd())
+            break;
+        
+        int nVersion = 0;
+        if ( !oSrcArr.isEnd() && oSrcArr.getCurItem().hasName("version") )
+        {
+            nVersion = oSrcArr.getCurItem().getInt("version");
+            oSrcArr.next();
+        }
+        
+        if ( nVersion != getProtocol().getVersion() )
+        {
+            LOG(ERROR) + "Sync server send search data with incompatible version. Client version: " + convertToStringA(getProtocol().getVersion()) +
+            "; Server response version: " + convertToStringA(nVersion);
+            errorCode = RhoAppAdapter.ERR_SYNCVERSION;
+            return false;
+        }
+        
+        if ( !oSrcArr.isEnd() && oSrcArr.getCurItem().hasName("token"))
+        {
+            oSrcArr.next();
+        }
+        
+        if ( !oSrcArr.getCurItem().hasName("source") )
+        {
+            LOG(ERROR) + "Sync server send search data without source name.";
+            errorCode = RhoAppAdapter.ERR_UNEXPECTEDSERVERRESPONSE;
+            strError = szData;
+            return false;
+        }
+        
+        String strSrcName = oSrcArr.getCurItem().getString("source");
+        CSyncSource* pSrc = findSourceByName(strSrcName);
+        if ( pSrc == null )
+        {
+            LOG(ERROR) + "Sync server send search data for unknown source name:" + strSrcName;
+            errorCode = RhoAppAdapter.ERR_UNEXPECTEDSERVERRESPONSE;
+            strError = szData;
+            return false;
+        }
+        
+        oSrcArr.reset(0);
+        pSrc->setProgressStep(nProgressStep);
+        
+        pSrc->processServerResponse_ver3(oSrcArr,true);
+    }
+            
+    return true;
+}
+
 void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams, const String& strFrom, boolean bSearchSyncChanges, int nProgressStep)
 {
     prepareSync(esSearch, null);
@@ -246,6 +320,22 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
     while( isContinueSync() )
     {
         int nSearchCount = 0;
+
+        /* Recover state if previous search request wasn't successful. */
+        if ( (RHOCONF().isExist("search_request")) && (RHOCONF().getString("search_request").length()>0) ) {
+            String strError = "";
+            int errorCode = 0;
+            if (!recoverSearch(RHOCONF().getString("search_request_url"),RHOCONF().getString("search_request_body"), errorCode,strError,nProgressStep)) {
+                stopSync();
+                m_nErrCode = errorCode;
+                m_strError = strError;
+                continue;
+            }
+            
+            RHOCONF().setString("search_request_url", "", true);
+            RHOCONF().setString("search_request_body", "", true);            
+        }
+        
         
         String strSearchParams;
         if ( strParams.length() > 0 )
@@ -253,6 +343,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
 
         String strTestResp = "";
         Hashtable<String, String> source_tokens;
+        Hashtable<String, String> recover_tokens;
         for ( int i = 0; i < (int)arSources.size(); i++ )
         {
             CSyncSource* pSrc = findSourceByName(arSources.elementAt(i));
@@ -263,18 +354,32 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
                     source_token = convertToStringA(pSrc->getToken());
                 
                 source_tokens.put(pSrc->getName(), source_token);
+                recover_tokens.put(pSrc->getName(), "resend_token");
 
                 strTestResp = getSourceOptions().getProperty(pSrc->getID(), "rho_server_response");
             }
         }
-        String strUrl = getProtocol().getServerSearchUrl(getClientID(), getSyncPageSize(), strFrom, arSources, source_tokens);
+        String strUrl = getProtocol().getServerSearchUrl(getClientID(), getSyncPageSize(), strFrom, arSources, source_tokens) + strSearchParams;
+        String strRecoverUrl = getProtocol().getServerSearchUrl(getClientID(), getSyncPageSize(), strFrom, arSources, recover_tokens) + strSearchParams;
+        // for recover URL - set 'resend ' parameter
+        strRecoverUrl += "&resend=1";
         Hashtable<String, String> reqHeaders;
         reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
         String strBody = getProtocol().getServerSearchBody(getSyncPageSize(), arSources, source_tokens);
+        String strRecoverBody = getProtocol().getServerSearchBody(getSyncPageSize(), arSources, recover_tokens);
 
-	    LOG(INFO) + "Call search on server. Url: " + (strUrl+strSearchParams);
+	    LOG(INFO) + "Call search on server. Url: " + (strUrl);
+        // for recover URL - set 'resend ' parameter and store for recovery
+        strRecoverUrl += "&resend=1";
+        RHOCONF().setString("search_request_url", strRecoverUrl, true);
+        RHOCONF().setString("search_request_body", strRecoverBody, true);
+
         NetResponse resp = getNet().doRequest(getProtocol().getServerSearchMethod(), 
-                strUrl + strSearchParams, strBody, this, &reqHeaders);
+                strUrl, strBody, this, &reqHeaders);
+
+        // when request is completed - reset the recovery
+        RHOCONF().setString("search_request_url", "", true);
+        RHOCONF().setString("search_request_body", "", true);
 
         if ( !resp.isOK() )
         {

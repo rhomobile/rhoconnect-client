@@ -164,9 +164,8 @@ public:
     void applyChangedValues(db::CDBAdapter& db);
 private:
     
-    bool recoverSearch( const String& url, const String& query, int& errorCode, String& strError, int nProgressStep );
+    bool recoverSearch( const String& strUrl, const String& strBody, int& errorCode, String& strError, int nProgressStep );
 
- 
     CSyncSource* findSource(const CSourceID& oSrcID);
 
     void loadBulkPartition(const String& strPartition);
