@@ -68,7 +68,7 @@ CSyncEngine::CSyncEngine(): m_syncState(esNone), m_oSyncNotify(*this)
 
 void CSyncEngine::initProtocol()
 {
-    int protocolVersion = RHOCONF().getInt("sync_version");
+    int protocolVersion = RHOCONF().getInt("rc_protocol_version");
     switch(protocolVersion) {
     case 3:
         m_SyncProtocol = new CSyncProtocol_3();

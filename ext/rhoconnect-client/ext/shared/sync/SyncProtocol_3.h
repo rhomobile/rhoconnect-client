@@ -44,7 +44,7 @@ struct CSyncProtocol_3 : public ISyncProtocol
     CSyncProtocol_3()
     {
         m_strContentType = "application/json";
-        m_strClientIDHeader = "";
+        m_strClientIDHeader = "X-RhoConnect-CLIENT-ID";
     }
 
     const String& getClientIDHeader() const { return m_strClientIDHeader; }

@@ -1,0 +1,49 @@
+
+
+*** FAIL: BlobSync_test - Expected 2
+ to equal 1
+
+lib/mspec/expectations/expectations.rb:15:in `fail_with'
+lib/mspec/matchers/base.rb:8:in `=='
+apps/app/spec/blobsync_spec.rb:96:in `block (2 levels) in <main>'
+lib/mspec/runner/mspec.rb:112:in `instance_eval'
+lib/mspec/runner/mspec.rb:112:in `protect'
+lib/mspec/runner/context.rb:182:in `block in protect'
+lib/mspec/runner/context.rb:182:in `each'
+lib/mspec/runner/context.rb:182:in `all?'
+lib/mspec/runner/context.rb:182:in `protect'
+lib/mspec/runner/context.rb:210:in `block in process'
+lib/mspec/runner/context.rb:202:in `each'
+lib/mspec/runner/context.rb:202:in `process'
+lib/mspec/runner/mspec.rb:57:in `describe'
+lib/mspec/runner/object.rb:11:in `describe'
+apps/app/spec/blobsync_spec.rb:37:in `<main>'
+lib/mspec/runner/mspec.rb:101:in `load'
+lib/mspec/runner/mspec.rb:101:in `block in run_spec'
+lib/mspec/runner/mspec.rb:101:in `run_spec'
+lib/mspec/runner/mspec.rb:77:in `block (2 levels) in files'
+lib/mspec/runner/mspec.rb:76:in `each'
+lib/mspec/runner/mspec.rb:76:in `block in files'
+lib/mspec/runner/mspec.rb:70:in `each'
+lib/mspec/runner/mspec.rb:70:in `files'
+lib/mspec/runner/mspec.rb:62:in `process'
+apps/app/spec_runner.rb:28:in `run'
+apps/app/SpecRunner/controller.rb:12:in `index'
+lib/rho/rhocontroller.rb:101:in `serve'
+lib/rho/rhoapplication.rb:221:in `serve'
+lib/rho/rho.rb:889:in `serve'
+
+
+*** FAIL: BulkSync_test - Expected "error"
+ to equal "complete"
+apps/app/spec/bulksync_spec.rb:62:in `do_bulk_sync'
+apps/app/spec/bulksync_spec.rb:70:in `block (2 levels) in <main>'
+apps/app/spec/bulksync_spec.rb:24:in `<main>'
+lib/mspec/runner/mspec.rb:80:in `block in files'
+apps/app/spec/bulksync_spec.rb:93:in `block (2 levels) in <main>'
+
+
+*** FAIL: BlobBulkSync_test - Expected "error"
+apps/app/spec/blob_bulksync_spec.rb:128:in `block (2 levels) in <main>'
+apps/app/spec/blob_bulksync_spec.rb:24:in `<main>'
+apps/app/spec/blob_bulksync_spec.rb:169:in `block (2 levels) in <main>'
