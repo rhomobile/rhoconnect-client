@@ -417,19 +417,7 @@
                 </SECTIONS>
             </EXAMPLE>
             
-            <EXAMPLE>
-                <DESC></DESC>
-                <SECTIONS>
-                    <SECTION>
-                        <DESC></DESC>
-                        <CODE lang='ruby'>
-                            <![CDATA[
-                            ]]>
-                        </CODE>
-                        
-                    </SECTION>
-                </SECTIONS>
-            </EXAMPLE>
+            
             
             
         </EXAMPLES>
