@@ -859,16 +859,15 @@ void CSyncEngine::loadBulkPartition(const String& strPartition )
 
     String serverUrl = RHOCONF().getPath("syncserver");
     String strUrl = getProtocol().getServerBulkDataUrl(getClientID(), strPartition, source_names);
-    String strBody = getProtocol().getServerBulkDataBody(strPartition, source_names);
-    Hashtable<String, String> reqHeaders;
-    reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
-        
+    String strBody = getProtocol().getServerBulkDataBody(strPartition, source_names);   
     String strDataUrl = "", strCmd = "", strCryptKey = "";
 
   	getNotify().fireBulkSyncNotification(false, "start", strPartition, RhoAppAdapter.ERR_NONE);
 
     while(strCmd.length() == 0&&isContinueSync())
-    {	    
+    {	   
+        Hashtable<String, String> reqHeaders;
+        reqHeaders.put(getProtocol().getClientIDHeader(), getClientID()); 
         NetResponse resp = getNet().doRequest(getProtocol().getServerBulkDataMethod(), strUrl, strBody, this, &reqHeaders);
         const char* szData = resp.getCharData();
         if ( !resp.isOK() || szData == null || *szData == 0)
