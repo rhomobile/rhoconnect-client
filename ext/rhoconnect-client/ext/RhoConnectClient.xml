@@ -335,20 +335,20 @@
                         Common Parameters
                         These parameters are included in all notifications.
                         
-                        @params["source_id"] – The id of the current model that is synchronizing.
-                        @params["source_name"] – Name of the model (i.e. "Product")
-                        @params["sync_type"] – Type of sync used for this model: "incremental" or "bulk"
-                        @params["status"] – Status of the current sync process: "in_progress", "error", "ok", "complete", "schema-changed"
+                        @params["source_id"] - The id of the current model that is synchronizing.
+                        @params["source_name"] - Name of the model (i.e. "Product")
+                        @params["sync_type"] - Type of sync used for this model: "incremental" or "bulk"
+                        @params["status"] - Status of the current sync process: "in_progress", "error", "ok", "complete", "schema-changed"
                         
-                        "in_progress" – incremental sync
+                        "in_progress" - incremental sync
                         
-                        @params["total_count"] – Total number of records that exist for this RhoConnect source.
-                        @params["processed_count"] – Number of records included in the sync page.
-                        @params["cumulative_count"] – Number of records the SyncEngine has processed so far for this source.
+                        @params["total_count"] - Total number of records that exist for this RhoConnect source.
+                        @params["processed_count"] - Number of records included in the sync page.
+                        @params["cumulative_count"] - Number of records the SyncEngine has processed so far for this source.
                         
-                        "in_progress" – bulk sync
+                        "in_progress" - bulk sync
                         
-                        @params["bulk_status"] – The state of the bulk sync process:
+                        @params["bulk_status"] - The state of the bulk sync process:
                         "start": when bulk sync start and when specific partition is start syncing
                         
                         "download": when client start downloading database from server
@@ -361,13 +361,13 @@
                         
                         "complete": when bulk sync finished for all partitions without errors
                         
-                        @params["partition"] – Current bulk sync partition.
+                        @params["partition"] - Current bulk sync partition.
                         
                         "error"
                         
-                        @params["error_code"] – HTTP response code of the RhoConnect server error: 401, 500, 404, etc.
-                        @params["error_message"] – Response body (if any)
-                        @params["server_errors"] – Hash of Type objects of RhoConnect adapter error (if exists): "login-error", "query-error", "create-error", "update-error", "delete-error", "logoff-error"
+                        @params["error_code"] - HTTP response code of the RhoConnect server error: 401, 500, 404, etc.
+                        @params["error_message"] - Response body (if any)
+                        @params["server_errors"] - Hash of Type objects of RhoConnect adapter error (if exists): "login-error", "query-error", "create-error", "update-error", "delete-error", "logoff-error"
                         For "login-error", "query-error", "logoff-error": Type object is hash contains 'message' from server: @params["server_errors"]["query-error"]['message']
                         
                         For "create-error", "update-error", "delete-error": Type object is hash each containing an "object" as a key (that failed to create) and a corresponding "message" and "attributes": @params["server_errors"]["create-error"][object]['message'], @params["server_errors"]["create-error"][object]['attributes']
@@ -375,9 +375,9 @@
                         
                         "create-error" has to be handled in sync callback. Otherwise sync will stop on this model. To fix create errors you should call Model.on_sync_create_error or SyncEngine.on_sync_create_error
                         "ok"
-                        @params["total_count"] – Total number of records that exist for this RhoConnect source.
-                        @params["processed_count"] – Number of records included in the last sync page.
-                        @params["cumulative_count"] – Number of records the SyncEngine has processed so far for this source.
+                        @params["total_count"] - Total number of records that exist for this RhoConnect source.
+                        @params["processed_count"] - Number of records included in the last sync page.
+                        @params["cumulative_count"] - Number of records the SyncEngine has processed so far for this source.
                         "complete"
                         This status returns only when the SyncEngine process is complete.
                         
