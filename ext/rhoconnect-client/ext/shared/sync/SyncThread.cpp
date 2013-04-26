@@ -75,8 +75,7 @@ CSyncThread::CSyncThread() : CThreadQueue()
     LOG(INFO) + "syncserver: " + RHOCONF().getString("syncserver");
     LOG(INFO) + "bulksync_state: " + RHOCONF().getInt("bulksync_state");
 
-    if ( RHOCONF().getString("syncserver").length() > 0 )
-        start(epLow);
+    start(epLow);
 }
 
 CSyncThread::~CSyncThread(void)
