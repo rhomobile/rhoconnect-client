@@ -96,7 +96,6 @@ void RhoConnectClientImpl::search( const rho::Hashtable<rho::String, rho::String
 		from = args.get("from");
 	}
 	
-	
 	/*this will return new arg value, overriding deprecated one, if it is present*/
 	struct DeprecatedArgsHandler {
 		static bool getArgValue( const rho::Hashtable<rho::String, rho::String>& args, const rho::String& newArgName, const rho::String& deprecatedArgName, rho::String& realArgValue ) {

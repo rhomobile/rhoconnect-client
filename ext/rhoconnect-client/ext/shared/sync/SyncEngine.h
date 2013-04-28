@@ -99,7 +99,7 @@ public:
 
     void doSyncAllSources(const String& strQueryParams, boolean bSyncOnlyChangedSources);
     void doSyncSource(const CSourceID& oSrcID, const String& strQueryParams);
-    void doSearch(rho::Vector<rho::String>& arSources, String strParams, String strAction, boolean bSearchSyncChanges, int nProgressStep);
+    void doSearch(rho::Vector<rho::String>& arSources, String strParams, const String& from,  boolean bSearchSyncChanges, int nProgressStep);
 
     void login(String name, String password, const CSyncNotification& oNotify);
     boolean isLoggedIn();
@@ -164,9 +164,8 @@ public:
     void applyChangedValues(db::CDBAdapter& db);
 private:
     
-    bool recoverSearch( const String& url, const String& query, int& errorCode, String& strError, int nProgressStep );
+    bool recoverSearch( const String& strUrl, const String& strBody, int& errorCode, String& strError, int nProgressStep );
 
- 
     CSyncSource* findSource(const CSourceID& oSrcID);
 
     void loadBulkPartition(const String& strPartition);

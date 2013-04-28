@@ -168,8 +168,8 @@ void CSyncThread::processCommand(IQueueCommand* pCmd)
     case scSearchOne:
         {
 			checkShowStatus(oSyncCmd);
-            m_oSyncEngine.doSearch( ((CSyncSearchCommand&)oSyncCmd).m_arSources, oSyncCmd.m_strCmdParam, 
-                ((CSyncSearchCommand&)oSyncCmd).m_strFrom, ((CSyncSearchCommand&)oSyncCmd).m_bSyncChanges,
+            m_oSyncEngine.doSearch( ((CSyncSearchCommand&)oSyncCmd).m_arSources, oSyncCmd.m_strCmdParam, ((CSyncSearchCommand&)oSyncCmd).m_strFrom,
+                ((CSyncSearchCommand&)oSyncCmd).m_bSyncChanges,
                 oSyncCmd.m_nCmdParam);
         }
         break;
