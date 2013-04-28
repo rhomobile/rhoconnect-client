@@ -361,6 +361,8 @@ void CSyncSource::doSyncClientChanges()
             m_strError = getSync().getSourceOptions().getProperty(getID(), "sync_push_error_text" );
         }else
         {
+            Hashtable<String, String> reqHeaders;
+            reqHeaders.put(getProtocol().getClientIDHeader(), getSync().getClientID());
             if ( m_arMultipartItems.size() > 0 )
             {
                 CMultipartItem* pItem = new CMultipartItem();
@@ -370,7 +372,7 @@ void CSyncSource::doSyncClientChanges()
                 oItem.m_strName = "cud";
                 m_arMultipartItems.addElement(pItem);
 
-                NetResponse resp = getNet().pushMultipartData( getProtocol().getClientChangesUrl(), m_arMultipartItems, &getSync(), null);
+                NetResponse resp = getNet().pushMultipartData( getProtocol().getClientChangesUrl(getName()), m_arMultipartItems, &getSync(), &reqHeaders);
                 if ( !resp.isOK() )
                 {
                     //getSync().stopSync();
@@ -379,7 +381,7 @@ void CSyncSource::doSyncClientChanges()
                 }
             }else
             {
-                NetResponse resp = getNet().pushData( getProtocol().getClientChangesUrl(), strBody, &getSync());
+                NetResponse resp = getNet().doRequest("POST", getProtocol().getClientChangesUrl(getName()), strBody, &getSync(), &reqHeaders);
                 if ( !resp.isOK() )
                 {
                     //getSync().stopSync();
@@ -611,18 +613,19 @@ void CSyncSource::syncServerChanges()
            ( m_nErrCode == RhoAppAdapter.ERR_NONE || m_nErrCode == RhoAppAdapter.ERR_CUSTOMSYNCSERVER) )
     {
         setCurPageCount(0);
-        String strUrl = getProtocol().getServerQueryUrl("");
-        String strQuery = getProtocol().getServerQueryBody(getName(), getSync().getClientID(), getSync().getSyncPageSize());
+        String strUrl = getProtocol().getServerQueryUrl(getName(), getSync().getClientID(), getSync().getSyncPageSize());
+        Hashtable<String, String> reqHeaders;
+        reqHeaders.put(getProtocol().getClientIDHeader(), getSync().getClientID());
 
         if ( !m_bTokenFromDB && getToken() > 1 )
-            strQuery += "&token=" + convertToStringA(getToken());
+            strUrl += "&token=" + convertToStringA(getToken());
 
         if ( m_strQueryParams.length() > 0 )
-            strQuery += "&" + m_strQueryParams; 
+            strUrl += "&" + m_strQueryParams; 
 
-		LOG(INFO) + "Pull changes from server. Url: " + (strUrl+strQuery);
+		LOG(INFO) + "Pull changes from server. Url: " + strUrl;
         PROF_START("Net");	    
-        NetResponse resp = getNet().pullData(strUrl+strQuery, &getSync());
+        NetResponse resp = getNet().doRequest("GET", strUrl, "", &getSync(), &reqHeaders);
 	    PROF_STOP("Net");
 
         if ( !resp.isOK() )
