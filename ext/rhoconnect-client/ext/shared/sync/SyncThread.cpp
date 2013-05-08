@@ -67,11 +67,16 @@ CSyncThread* CSyncThread::m_pInstance = 0;
 CSyncThread::CSyncThread() : CThreadQueue()
 {
     CThreadQueue::setLogCategory(getLogCategory());
+    
+    int pollInterval = 60;
 
-    if( RHOCONF().isExist("sync_poll_interval") )
-        setPollInterval(RHOCONF().getInt("sync_poll_interval"));
+    if( RHOCONF().isExist("sync_poll_interval") ) {
+        pollInterval = RHOCONF().getInt("sync_poll_interval");
+    }
 
-    LOG(INFO) + "sync_poll_interval: " + RHOCONF().getInt("sync_poll_interval");
+    setPollInterval(pollInterval);
+    
+    LOG(INFO) + "sync_poll_interval: " + pollInterval;
     LOG(INFO) + "syncserver: " + RHOCONF().getString("syncserver");
     LOG(INFO) + "bulksync_state: " + RHOCONF().getInt("bulksync_state");
 
