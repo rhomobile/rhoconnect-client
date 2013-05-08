@@ -120,6 +120,7 @@ public:
     void exitSync(){ setState(esExit); m_NetRequest.cancel(); m_NetRequestClientID.cancel();}
     boolean isStoppedByUser(){ return m_bStopByUser; }
     void setSslVerifyPeer(boolean b);
+    bool getSslVerifyPeer();
 
 //private:
     String getClientID()const{ return m_clientID; }

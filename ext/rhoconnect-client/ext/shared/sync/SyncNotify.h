@@ -151,6 +151,7 @@ public:
     void callLoginCallback(const CSyncNotification& oNotify, int nErrCode, String strMessage);
 
     boolean isReportingEnabled(){return m_bEnableReporting&&m_bEnableReportingGlobal;}
+    bool isStatusPopupEnabled() const { return m_bEnableReportingGlobal; }
     void enableReporting(boolean bEnable){m_bEnableReporting = bEnable;}
     void enableStatusPopup(boolean bEnable){m_bEnableReportingGlobal = bEnable;}
 

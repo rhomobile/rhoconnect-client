@@ -38,11 +38,11 @@ require 'rhom/rhom_source'
 module Rho
 
 class RhoConnectClient
-
+=begin
     def self.get_user_name
         Rho::RhoConfig.rho_sync_user        
     end
-    
+=end    
     def self.on_sync_create_error( src_name, objects, action )
         raise ArgumentError, 'on_sync_create_error src_name should be string' unless src_name.is_a?(String)
         

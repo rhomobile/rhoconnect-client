@@ -91,6 +91,11 @@ void CSyncEngine::setSslVerifyPeer(boolean b)
 
     CClientRegister::SetSslVerifyPeer(b);
 }
+    
+bool CSyncEngine::getSslVerifyPeer()
+{
+    return m_NetRequest.getSslVerifyPeer() && m_NetRequestClientID.getSslVerifyPeer() && CClientRegister::GetSslVerifyPeer();
+}
 
 void CSyncEngine::CSourceOptions::setProperty(int nSrcID, const char* szPropName, const char* szPropValue)
 {

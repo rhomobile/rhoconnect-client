@@ -2,6 +2,7 @@
 #include "logging/RhoLog.h"
 #include "json/JSONIterator.h"
 #include "net/URI.h"
+#include "common/RhoConf.h"
 
 #undef DEFAULT_LOGCATEGORY
 #define DEFAULT_LOGCATEGORY "RhoConnectClientImpl"
@@ -14,7 +15,7 @@ RhoConnectClientImpl::RhoConnectClientImpl()
 }
 	
 void RhoConnectClientImpl::getUserName(rho::apiGenerator::CMethodResult& oResult) {
-	//implemented in Ruby
+    oResult.set( RHOCONF().getString("rho_sync_user") );
 }
 	
 void RhoConnectClientImpl::getPollInterval(rho::apiGenerator::CMethodResult& oResult) {
@@ -51,7 +52,7 @@ void RhoConnectClientImpl::setThreadedMode( bool value, rho::apiGenerator::CMeth
 }
 	
 void RhoConnectClientImpl::getShowStatusPopup(rho::apiGenerator::CMethodResult& oResult) {
-	//TODO
+	oResult.set( getSyncEngine().getNotify().isStatusPopupEnabled() );
 }
 	
 void RhoConnectClientImpl::setShowStatusPopup( bool value, rho::apiGenerator::CMethodResult& oResult) {
@@ -59,7 +60,7 @@ void RhoConnectClientImpl::setShowStatusPopup( bool value, rho::apiGenerator::CM
 }
 	
 void RhoConnectClientImpl::getSslVerifyPeer(rho::apiGenerator::CMethodResult& oResult) {
-	//TODO
+	oResult.set( getSyncEngine().getSslVerifyPeer() );
 }
 	
 void RhoConnectClientImpl::setSslVerifyPeer( bool value, rho::apiGenerator::CMethodResult& oResult) {

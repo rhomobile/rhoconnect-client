@@ -57,6 +57,7 @@ class CClientRegister : protected common::CRhoThread
     unsigned int            m_nPollInterval;
 public:
     static void SetSslVerifyPeer(boolean b);
+    static bool GetSslVerifyPeer();
     static void AddLoginListener(ILoginListener* listener);
     static CClientRegister* Get();
     static CClientRegister* Create();

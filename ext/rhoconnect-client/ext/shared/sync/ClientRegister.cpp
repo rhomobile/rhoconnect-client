@@ -98,6 +98,10 @@ VectorPtr<ILoginListener*> CClientRegister::s_loginListeners;
         m_pInstance->m_NetRequest.setSslVerifyPeer(b);
 }
 
+bool CClientRegister::GetSslVerifyPeer()
+{
+    return s_sslVerifyPeer;
+}
 
 /*static*/void CClientRegister::AddLoginListener(ILoginListener* listener)
 {
