@@ -34,4 +34,9 @@ class ImageBase < SourceAdapter
     puts "Removing: #{name_value_list.inspect}"
     S3Object.delete name_value_list['id'], @bucket
   end
+
+  def store_blob(obj,field_name,blob)
+    obj['filename'] = blob[:filename]
+    obj['image_uri'] = blob[:tempfile].path
+  end
 end
