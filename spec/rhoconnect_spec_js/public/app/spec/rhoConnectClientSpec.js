@@ -6,7 +6,7 @@ function log(message) {
 describe("<RhoConnectClient specs>", function(){
          
     it("Sets sync server", function() {         
-         var SYNC_SERVER_URL = "http://"+SYNC_SERVER_HOST+":"+SYNC_SERVER_PORT+"/application";
+         var SYNC_SERVER_URL = "http://"+SYNC_SERVER_HOST+":"+SYNC_SERVER_PORT;
        
          Rho.RhoConnectClient.syncServer=SYNC_SERVER_URL;         
          expect(Rho.RhoConnectClient.syncServer).toEqual(SYNC_SERVER_URL);

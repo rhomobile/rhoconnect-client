@@ -26,7 +26,7 @@
   :mdsserver: 127.0.0.1
   :mdsserverport: 8080
   :redis: localhost:6379
-  :syncserver: http://localhost:9292/application/
+  :syncserver: http://localhost:9292/
   :bulk_sync_poll_interval: 10
 :test: 
   :licensefile: settings/license.key
@@ -37,7 +37,7 @@
   :mdsserver: 127.0.0.1
   :mdsserverport: 8080
   :redis: localhost:6379:2
-  :syncserver: http://localhost:9292/application/
+  :syncserver: http://localhost:9292/
   :bulk_sync_poll_interval: 10
 :production: 
   :licensefile: settings/license.key
@@ -48,5 +48,5 @@
   :mdsserver: 127.0.0.1
   :mdsserverport: 8080
   :redis: localhost:6379
-  :syncserver: http://localhost:9292/application/
+  :syncserver: http://localhost:9292/
   :bulk_sync_poll_interval: 10
