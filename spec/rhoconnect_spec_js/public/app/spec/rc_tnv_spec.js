@@ -233,7 +233,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		    	  expect(callbackCalled).toEqual(true);
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toBeGreaterThan(0);
-		    	  //alert(myString);
+		    	  dispCurrentProcess(myString);
 		       });
 		});
 		
