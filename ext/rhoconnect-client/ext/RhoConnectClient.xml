@@ -325,81 +325,7 @@
             <!--  This section is used for the supported platform images at the top -->
         </PLATFORM>
         
-        <REMARKS>
-            
-            <REMARK title="Notification Parameters">
-                <DESC>
-                    <![CDATA[
-                        When the notification is called, it will receive a variable called @params, just like a normal Rhodes controller action.
-                        
-                        Common Parameters
-                        These parameters are included in all notifications.
-                        
-                        @params["source_id"] - The id of the current model that is synchronizing.
-                        @params["source_name"] - Name of the model (i.e. "Product")
-                        @params["sync_type"] - Type of sync used for this model: "incremental" or "bulk"
-                        @params["status"] - Status of the current sync process: "in_progress", "error", "ok", "complete", "schema-changed"
-                        
-                        "in_progress" - incremental sync
-                        
-                        @params["total_count"] - Total number of records that exist for this RhoConnect source.
-                        @params["processed_count"] - Number of records included in the sync page.
-                        @params["cumulative_count"] - Number of records the SyncEngine has processed so far for this source.
-                        
-                        "in_progress" - bulk sync
-                        
-                        @params["bulk_status"] - The state of the bulk sync process:
-                        "start": when bulk sync start and when specific partition is start syncing
-                        
-                        "download": when client start downloading database from server
-                        
-                        "change_db": when client start applying new database
-                        
-                        "blobs": when client start downloading remote blob files
-                        
-                        "ok": when sync of partition finished without error
-                        
-                        "complete": when bulk sync finished for all partitions without errors
-                        
-                        @params["partition"] - Current bulk sync partition.
-                        
-                        "error"
-                        
-                        @params["error_code"] - HTTP response code of the RhoConnect server error: 401, 500, 404, etc.
-                        @params["error_message"] - Response body (if any)
-                        @params["server_errors"] - Hash of Type objects of RhoConnect adapter error (if exists): "login-error", "query-error", "create-error", "update-error", "delete-error", "logoff-error"
-                        For "login-error", "query-error", "logoff-error": Type object is hash contains 'message' from server: @params["server_errors"]["query-error"]['message']
-                        
-                        For "create-error", "update-error", "delete-error": Type object is hash each containing an "object" as a key (that failed to create) and a corresponding "message" and "attributes": @params["server_errors"]["create-error"][object]['message'], @params["server_errors"]["create-error"][object]['attributes']
-                        
-                        
-                        "create-error" has to be handled in sync callback. Otherwise sync will stop on this model. To fix create errors you should call Model.on_sync_create_error or SyncEngine.on_sync_create_error
-                        "ok"
-                        @params["total_count"] - Total number of records that exist for this RhoConnect source.
-                        @params["processed_count"] - Number of records included in the last sync page.
-                        @params["cumulative_count"] - Number of records the SyncEngine has processed so far for this source.
-                        "complete"
-                        This status returns only when the SyncEngine process is complete.
-                        
-                        "schema-changed"
-                        This status returns for bulk-sync models that use FixedSchema when the schema has changed in the RhoConnect server.
-                        
-                        
-                        In this scenario the sync callback should notify the user with a wait screen and start the bulk sync process.
-                    ]]>
-                    
-                </DESC>
-            </REMARK>
-            
-            <REMARK title="Backround synchronization on iOS">
-                <DESC>
-                    <![CDATA[
-                        On iOS, if application is put to background, it will be suspended. To allow application finish sync after application goes to background, you can use 'finish_sync_in_background' parameter in rhoconfig.txt. When this parameter is set to '1', if sync is active in the time of background transition ( e.g. started from app_deactivate handler ), application will not be suspended until sync is finished.
-                    ]]>
-                    
-                </DESC>
-            </REMARK>
-        </REMARKS>
+        
         <EXAMPLES>
             <EXAMPLE title="Sync Authentication">
                 <DESC>
@@ -412,7 +338,7 @@
                         </DESC>
                         <CODE>
                           <RUBY>
-                            <![CDATA[
+<![CDATA[
 RhoConnectClient.login(
   @params['login'],
   @params['password'],
@@ -420,7 +346,7 @@ RhoConnectClient.login(
 )]]>
                           </RUBY>
                           <JAVASCRIPT>
-                            <![CDATA[
+<![CDATA[
 Rho.RhoConnectClient.login('john','password',function(result){
    loginCallback(result);
 });]]>
@@ -433,7 +359,7 @@ Rho.RhoConnectClient.login('john','password',function(result){
                         </DESC>
                         <CODE>
                           <RUBY>
-                            <![CDATA[
+<![CDATA[
 # Error codes:
 # ERR_NONE = 0
 # ERR_NETWORK = 1
@@ -468,7 +394,7 @@ def login_callback
 end]]>
                           </RUBY>
                           <JAVASCRIPT>
-                            <![CDATA[
+<![CDATA[
 // Error codes:
 // ERR_NONE = 0
 // ERR_NETWORK = 1
@@ -496,51 +422,43 @@ function loginCallback(result) {
                     </SECTION>
                 </SECTIONS>
             </EXAMPLE>
-            
             <EXAMPLE title="Notifications">
                 <DESC>In this example, once the sync process for the Account model is complete, the view will be directed to the sync_notify action (with params 'sync_complete=true') if user is on the same page.</DESC>
                 <SECTIONS>
                     <SECTION>
                         <DESC>To set a notification for a model, you can use the following method:</DESC>
                         <CODE lang='ruby'>
-                            <![CDATA[
-                            RhoConnectClient.setNotification(
-                                'Account',
-                                url_for(:action => :sync_notify),
-                                "sync_complete=true"
-                            )
-                            ]]>
+<![CDATA[
+RhoConnectClient.setNotification(
+  'Account',
+  url_for(:action => :sync_notify),
+  "sync_complete=true"
+)]]>
                         </CODE>
                     </SECTION>
-                    
                     <SECTION>
                         <DESC>Which is the same as:</DESC>
                         <CODE lang='ruby'>
-                            <![CDATA[
-                            Account.setNotification(
-                                url_for(:action => :sync_notify),
-                                "sync_complete=true"
-                            )
-                            ]]>
+<![CDATA[
+Account.setNotification(
+  url_for(:action => :sync_notify),
+  "sync_complete=true"
+)]]>
                         </CODE>
                     </SECTION>
-                    
                     <SECTION>
                         <DESC>You can also set a notification for all models:</DESC>
                         <CODE lang='ruby'>
-                            <![CDATA[
-                            RhoConnectClient.setNotification(
-                                '*',
-                                url_for(:action => :sync_notify),
-                                "sync_complete=true"
-                            )
-                            ]]>
+<![CDATA[
+RhoConnectClient.setNotification(
+  '*',
+  url_for(:action => :sync_notify),
+  "sync_complete=true"
+)]]>
                         </CODE>
                     </SECTION>
-                    
                 </SECTIONS>
             </EXAMPLE>
-            
             <EXAMPLE title="Object notifications">
                 <DESC></DESC>
                 <SECTIONS>
@@ -691,5 +609,72 @@ function loginCallback(result) {
             
             
         </EXAMPLES>
+        <REMARKS>
+            
+            <REMARK title="Notification Parameters">
+                <DESC>
+                  <![CDATA[
+When the notification is called, it will receive a variable called @params, just like a normal Rhodes controller action.
+
+### Common Parameters
+
+These parameters are included in all notifications.
+
+* @params["source_id"] - The id of the current model that is synchronizing.
+* @params["source_name"] - Name of the model (i.e. "Product")
+* @params["sync_type"] - Type of sync used for this model: "incremental" or "bulk"
+* @params["status"] - Status of the current sync process: "in_progress", "error", "ok", "complete", "schema-changed"
+
+### "in_progress" - incremental sync
+
+* @params["total_count"] - Total number of records that exist for this RhoConnect source.
+* @params["processed_count"] - Number of records included in the sync page.
+* @params["cumulative_count"] - Number of records the SyncEngine has processed so far for this source.
+
+### "in_progress" - bulk sync
+
+* @params["bulk_status"] - The state of the bulk sync process:
+  * "start": when bulk sync start and when specific partition is start syncing
+  * "download": when client start downloading database from server
+  * "change_db": when client start applying new database
+  * "blobs": when client start downloading remote blob files
+  * "ok": when sync of partition finished without error
+  * "complete": when bulk sync finished for all partitions without errors
+
+* @params["partition"] - Current bulk sync partition.
+
+### "error"
+
+* @params["error_code"] - HTTP response code of the RhoConnect server error: 401, 500, 404, etc.
+* @params["error_message"] - Response body (if any)
+* @params["server_errors"] - Hash of Type objects of RhoConnect adapter error (if exists): "login-error", "query-error", "create-error", "update-error", "delete-error", "logoff-error"
+
+For "login-error", "query-error", "logoff-error": Type object is hash contains 'message' from server: @params["server_errors"]["query-error"]['message']
+
+For "create-error", "update-error", "delete-error": Type object is hash each containing an "object" as a key (that failed to create) and a corresponding "message" and "attributes": @params["server_errors"]["create-error"][object]['message'], @params["server_errors"]["create-error"][object]['attributes']
+
+
+"create-error" has to be handled in sync callback. Otherwise sync will stop on this model. To fix create errors you should call Model.on_sync_create_error or SyncEngine.on_sync_create_error
+"ok"
+* @params["total_count"] - Total number of records that exist for this RhoConnect source.
+* @params["processed_count"] - Number of records included in the last sync page.
+* @params["cumulative_count"] - Number of records the SyncEngine has processed so far for this source.
+
+### "complete"
+This status returns only when the SyncEngine process is complete.
+
+### "schema-changed"
+This status returns for bulk-sync models that use FixedSchema when the schema has changed in the RhoConnect server. In this scenario the sync callback should notify the user with a wait screen and start the bulk sync process.
+                    ]]>
+                </DESC>
+            </REMARK>
+            <REMARK title="Backround synchronization on iOS">
+                <DESC>
+                  <![CDATA[
+On iOS, if application is put to background, it will be suspended. To allow application finish sync after application goes to background, you can use 'finish_sync_in_background' parameter in rhoconfig.txt. When this parameter is set to '1', if sync is active in the time of background transition ( e.g. started from app_deactivate handler ), application will not be suspended until sync is finished.
+                ]]>
+                </DESC>
+            </REMARK>
+        </REMARKS>
     </MODULE>
 </API>
