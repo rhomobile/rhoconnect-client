@@ -150,5 +150,10 @@ var search_callback = function(args){
 };
 
 
+var dispCurrentProcess = function (data){
+	document.getElementById('detailsdiv').innerHTML = data;
+}
+
+
 
 
