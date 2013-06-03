@@ -23,6 +23,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 					searchCallback_paramsValue.status="";
 					searchCallback_paramsValue.search_params="";
 					myString="";
+					dispCurrentProcess(myString);
 					//Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
 					// reset values
 		});
@@ -176,6 +177,39 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		    	  expect(callbackCalled).toEqual(true);
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toBeGreaterThan(0);
+		    	  dispCurrentProcess(myString);
+		       });
+		});
+		
+		
+		it("VT295-012 | Check persistency of notification callback when set for specific source model | Notification callback should not fire", function() {  
+			Rho.RhoConnectClient.setNotification('Product', sync_notify_callback);
+			 runs(function () {
+		            Rho.RhoConnectClient.doSync();
+		            setTimeout(function() {
+						displayflag = true;
+					}, 15000);
+		       });
+			 
+			  waitsFor(function() {
+					return displayflag;
+				}, "wait", 16000);
+			  
+			  runs(function () {
+				    callbackCalled = false;  //setting callback to false again for checking persistency
+		            Rho.RhoConnectClient.doSync();
+		            setTimeout(function() {
+						displayflag = true;
+					}, 15000);
+		       });
+			 
+			  waitsFor(function() {
+					return displayflag;
+				}, "wait", 16000);
+			
+			 
+			 runs(function() {
+		    	  expect(callbackCalled).toEqual(true);
 		       });
 		});
 		
@@ -203,7 +237,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		});
 		
 		
-		it("VT295-014 | set notification for all sources | callback should get fire", function() {  
+		it("VT295-014 | set notification for all sources with  controller action URL callback | callback should get fire", function() {  
 			dbreset();
 			Rho.RhoConnectClient.setNotification('*', '/app/Settings/controller_syncnotify_callback');
 			 runs(function () {
@@ -214,6 +248,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
+				   dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -233,7 +268,6 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		    	  expect(callbackCalled).toEqual(true);
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toBeGreaterThan(0);
-		    	  dispCurrentProcess(myString);
 		       });
 		});
 		
@@ -242,6 +276,39 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 			Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
 			Rho.RhoConnectClient.clearNotification('*');
 			 runs(function () {
+		            Rho.RhoConnectClient.doSync();
+		            setTimeout(function() {
+						displayflag = true;
+					}, 10000);
+		       });
+			 
+			  waitsFor(function() {
+					return displayflag;
+				}, "wait", 11000);
+			
+			 
+			 runs(function() {
+		    	  expect(callbackCalled).toEqual(false);
+		    	  expect(myString).toEqual('');
+		       });
+		});
+		
+		
+		it("VT295-016 | Check persistency of notification callback when set for all sources  | callback should fire each time", function() {  
+			Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
+			 runs(function () {
+		            Rho.RhoConnectClient.doSync();
+		            setTimeout(function() {
+						displayflag = true;
+					}, 10000);
+		       });
+			 
+			  waitsFor(function() {
+					return displayflag;
+				}, "wait", 11000);
+			  
+			  runs(function () {
+				   callbackCalled = false;  //for checking persistency
 		            Rho.RhoConnectClient.doSync();
 		            setTimeout(function() {
 						displayflag = true;
@@ -273,6 +340,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
+		    	    dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -292,7 +360,6 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		    	  expect(callbackCalled).toEqual(true);
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toBeGreaterThan(0);
-		    	  //alert(myString);
 		       });
 		});
 		
@@ -308,6 +375,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
+		    	    dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -344,6 +412,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
+				  dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -360,7 +429,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 				}, "wait", 6000);
 			 
 			 runs(function() {
-		    	  //expect(callbackCalled).toEqual(true);
+		    	  expect(callbackCalled).toEqual(true);
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toEqual(0);
 		    	  //alert(myString);
@@ -380,6 +449,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
+				   dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -799,6 +869,66 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 		});
 		
+		it("VT295-047 | search method if sync_changes set to true", function() {  
+			dbreset();
+			 runs(function () {
+				 create_product_record(1,"VT295-047");
+				 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0, maxResults : 5, syncChanges : true }, search_callback );
+				 });
+			  waitsFor(function() {
+					return callbackCalled;
+				}, "timeout", 10000);
+			  	  
+			  runs(function() {
+		    	   modelrecordtest();
+		    	   setTimeout(function() {
+						displayflag1 = true;
+					}, 5000);
+		      	 
+		       });
+		       waitsFor(function() {
+					return displayflag1;
+				}, "wait", 6000);
+			 
+			 runs(function() {
+		    	  expect(callbackCalled).toEqual(true);
+		    	  expect(product_record_count).toEqual(5);
+		    	  expect(searchCallback_paramsValue.status).toMatch('complete');
+		    	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
+		    	  expect(Rho.ORM.haveLocalChanges).toEqual(false);
+		       });
+		});
+		
+		it("VT295-048 | search method if sync_changes set to false", function() {  
+			dbreset();
+			 runs(function () {
+				 create_product_record(1,"VT295-047");
+				 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0, maxResults : 5, syncChanges : false }, search_callback );
+				 });
+			  waitsFor(function() {
+					return callbackCalled;
+				}, "timeout", 10000);
+			  	  
+			  runs(function() {
+		    	   modelrecordtest();
+		    	   setTimeout(function() {
+						displayflag1 = true;
+					}, 5000);
+		      	 
+		       });
+		       waitsFor(function() {
+					return displayflag1;
+				}, "wait", 6000);
+			 
+			 runs(function() {
+		    	  expect(callbackCalled).toEqual(true);
+		    	  expect(product_record_count).toEqual(5);
+		    	  expect(searchCallback_paramsValue.status).toMatch('complete');
+		    	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
+		    	  expect(Rho.ORM.haveLocalChanges).toEqual(true);
+		       });
+		});
+		
 		
 		it("VT295-049 | search method with no parameters | Exception should be thrown", function() {  
 			 var Exception_Message = "";
@@ -815,6 +945,36 @@ describe("Rhoconnect Client module Test Starts Here", function() {
           
 			 expect(Exception_Message).toMatch("argument error exception");
 	
+		});
+		
+		it("VT295-054 | pollInterval property when set to 30 seconds | call back should fire after each 30 seconds ", function() {  
+			Rho.RhoConnectClient.pollInterval= 30;
+			Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
+			runs(function () {
+	            setTimeout(function() {
+					displayflag = true;
+				}, 30000);
+	        });
+		   waitsFor(function() {
+				return displayflag;
+			}, "wait", 31000);
+		   
+		   runs(function() {
+		    	  expect(callbackCalled).toEqual(true);
+		    	  callbackCalled=false;
+		       });
+			runs(function () {
+	            setTimeout(function() {
+					displayflag = true;
+				}, 30000);
+	        });
+		   waitsFor(function() {
+				return displayflag;
+			}, "wait", 31000);
+		   
+			 runs(function() {
+		    	  expect(callbackCalled).toEqual(true);
+		       });
 		});
 		
 		
@@ -926,8 +1086,6 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 			 expect(Exception_Message).toMatch("exception");
 	
 		});
-		
-		
 		
 		
 		it("VT295-006 | Call isLoggedIn() when client is not logged in to server | false", function() {
