@@ -13,6 +13,10 @@ sync_server*
 bin/
 tmp/
 config.yml
+faillog.txt
+*.changes
+rhosimulator/
+rholog.txt
 
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
