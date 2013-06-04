@@ -177,7 +177,6 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		    	  expect(callbackCalled).toEqual(true);
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toBeGreaterThan(0);
-		    	  dispCurrentProcess(myString);
 		       });
 		});
 		
@@ -199,12 +198,12 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 				    callbackCalled = false;  //setting callback to false again for checking persistency
 		            Rho.RhoConnectClient.doSync();
 		            setTimeout(function() {
-						displayflag = true;
+						displayflag1 = true;
 					}, 15000);
 		       });
 			 
 			  waitsFor(function() {
-					return displayflag;
+					return displayflag1;
 				}, "wait", 16000);
 			
 			 
@@ -311,18 +310,18 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 				   callbackCalled = false;  //for checking persistency
 		            Rho.RhoConnectClient.doSync();
 		            setTimeout(function() {
-						displayflag = true;
+						displayflag1 = true;
 					}, 10000);
 		       });
 			 
 			  waitsFor(function() {
-					return displayflag;
+					return displayflag1;
 				}, "wait", 11000);
 			
 			 
 			 runs(function() {
-		    	  expect(callbackCalled).toEqual(false);
-		    	  expect(myString).toEqual('');
+		    	  expect(callbackCalled).toEqual(true);
+		    	  expect(myString).not.toEqual('');
 		       });
 		});
 		
@@ -340,7 +339,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
-		    	    dispCurrentProcess(myString);
+				    dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -360,6 +359,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		    	  expect(callbackCalled).toEqual(true);
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toBeGreaterThan(0);
+		    	  //alert(myString);
 		       });
 		});
 		
@@ -375,7 +375,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
-		    	    dispCurrentProcess(myString);
+				    dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -412,7 +412,6 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
-				  dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -449,7 +448,6 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			 
 			  waitsFor(function() {
-				   dispCurrentProcess(myString);
 					return displayflag;
 				}, "wait", 16000);
 			
@@ -948,16 +946,16 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		});
 		
 		it("VT295-054 | pollInterval property when set to 30 seconds | call back should fire after each 30 seconds ", function() {  
-			Rho.RhoConnectClient.pollInterval= 30;
 			Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
+			Rho.RhoConnectClient.pollInterval= 30;
 			runs(function () {
 	            setTimeout(function() {
 					displayflag = true;
-				}, 30000);
+				}, 32000);
 	        });
 		   waitsFor(function() {
 				return displayflag;
-			}, "wait", 31000);
+			}, "wait", 33000);
 		   
 		   runs(function() {
 		    	  expect(callbackCalled).toEqual(true);
@@ -965,12 +963,12 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 			runs(function () {
 	            setTimeout(function() {
-					displayflag = true;
-				}, 30000);
+	            	displayflag1 = true;
+				}, 32000);
 	        });
 		   waitsFor(function() {
-				return displayflag;
-			}, "wait", 31000);
+				return displayflag1;
+			}, "wait", 33000);
 		   
 			 runs(function() {
 		    	  expect(callbackCalled).toEqual(true);
@@ -988,7 +986,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	        });
 		   waitsFor(function() {
 				return displayflag;
-			}, "wait", 61000);
+			}, "wait", 62000);
 			 runs(function() {
 		    	  expect(callbackCalled).toEqual(false);
 		       });
@@ -1107,8 +1105,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 			Rho.RhoConnectClient.logout();
 			Rho.RhoConnectClient.doSync();
 		    runs(function() {
-		    	//res['error_code'].to_i.should == ::Rho::RhoError::ERR_CLIENTISNOTLOGGEDIN
-		    	   expect(myString).toMatch('error client is not logged in');
+		    	   expect(callbackCalled).toEqual(false);
 		       });
 		});  
 
