@@ -124,68 +124,6 @@ describe "SyncEngine_test" do
     Rho::RhoConfig.sources[getProduct_str]['full_update'] = false
   end
 
-if !defined?(RHO_WP7)
-  it "should database_full_reset_ex raise an exception" do  
-    exc = false	
-    begin
-       Rhom::Rhom.database_full_reset_ex( :models => [getProduct_str], :reset_client_info => true )    
-    rescue => e
-        exc = true
-    end
-    
-    exc.should be_true
-  end
-end  
-
-  it "should database_full_reset_ex support different parameters" do
-    Rhom::Rhom.database_full_reset_ex()
-    Rhom::Rhom.database_full_reset_ex( :reset_client_info => true )
-    Rhom::Rhom.database_full_reset_ex( :reset_local_models => true )
-    Rhom::Rhom.database_full_reset_ex( :reset_local_models => true, :reset_client_info => false )
-  end
-
-  it "should database_full_reset_ex support models" do  
-  
-    getProduct.create({:name=> 'prod1'})
-    getCustomer.create({:city => 'SPB'})
-
-    res = getProduct().find(:all)
-    res.length.should > 0
-    
-    res = getCustomer().find(:count)
-    res.should > 0    
-    
-    Rhom::Rhom.database_full_reset_ex( :models => [getProduct_str(), getCustomer_str] )
-    Rho::RhoConfig.reset_models.should == "#{getProduct_str},#{getCustomer_str}"
-    
-    res = getProduct().find(:all)
-    res.length.should == 0
-    
-    res = getCustomer().find(:count)
-    res.should == 0    
-  end
-
-  it "should database_full_reset_ex support one model" do  
-  
-    getProduct.create({:name=> 'prod1'})
-    getCustomer.create({:city => 'SPB'})
-
-    res = getProduct().find(:all)
-    res.length.should > 0
-    
-    res = getCustomer().find(:count)
-    res.should > 0    
-  
-    Rhom::Rhom.database_full_reset_ex( :models => [getProduct_str] )
-    Rho::RhoConfig.reset_models.should == "#{getProduct_str}"
-    
-    res = getProduct().find(:all)
-    res.length.should == 0
-    
-    res = getCustomer().find(:count)
-    res.should > 0    
-  end
-
  
   it "should update syncserver at runtime" do
   
@@ -193,11 +131,7 @@ end
     dbRes.length.should == 0
   
     saveSrv =  Rho::RhoConfig.syncserver
-    
-	  # temporary commented until fix bug with sync thread stop hang
-	  #    SyncEngine.set_syncserver('')
-	  #Rho::RhoConfig.syncserver.should == ''
-    
+
     SyncEngine.set_syncserver('http://example.com/sources/')
     Rho::RhoConfig.syncserver.should == 'http://example.com/sources/'
     
@@ -209,7 +143,7 @@ end
   it "should not sync without login" do
     SyncEngine.logged_in.should == 0
   
-    res =  getProduct.sync( "/app/Settings/sync_notify")
+    res =  getProduct.sync
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_CLIENTISNOTLOGGEDIN
 
   end
