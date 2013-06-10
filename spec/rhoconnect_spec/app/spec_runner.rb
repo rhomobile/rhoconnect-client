@@ -19,7 +19,6 @@ class SpecRunner < MSpecScript
     end
     
 		config[:files] << "spec/ssl_spec"
-
   end
 
   def run

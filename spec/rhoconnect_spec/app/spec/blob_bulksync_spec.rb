@@ -24,31 +24,17 @@ require 'sync_server'
 describe "BlobBulkSync_test" do
 
   before(:all)  do
-    SyncEngine.set_threaded_mode(false)
-  
-    ::Rhom::Rhom.database_full_reset_and_logout
-    
-	SyncEngine.set_syncserver("http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}")
-	  
-	Rho::RhoConfig.bulksync_state='1'
+    Rho::RhoConnectClient.threadedMode = false
+		Rho::RhoConnectClient.syncServer = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}"
   end
 	
-  after(:all)  do
-	Rho::RhoConfig.bulksync_state='1'
-	sleep(2)
-  end
-
-  
-  it "should login" do
-
-    login_name = System.get_property('platform') + System.get_property('device_name')    
-    res =  SyncEngine.login('login_name', '', "/app/Settings/login_callback")
+  before(:each) do  
+  	::Rhom::Rhom.database_full_reset_and_logout
+    res =  Rho::RhoConnectClient.login('login_name', '', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
-    
-    SyncEngine.logged_in.should == 1
-    
-    Rho::RhoConfig.bulksync_state='1'
 
+    Rho::RhoConnectClient.isLoggedIn.should == true
+    Rho::RhoConfig.bulksync_state = '1'  
   end
 
   def copy_file(src, dst_dir)
@@ -61,14 +47,12 @@ end
   end
 
   def createBlob(model,dir,filename)
-	  SyncEngine.logged_in.should == 1
-	  
 	  file_name = File.join(Rho::RhoApplication::get_model_path('app',dir),filename)
 	  copy_file(file_name, Rho::RhoApplication::get_blob_folder() )
 	  file_name = File.join(Rho::RhoApplication::get_blob_folder(), filename)
 	  File.exists?(file_name).should == true
 	  if !defined?(RHO_WP7)   
-		file_size = File.size(file_name)
+			file_size = File.size(file_name)
 	  end    
 	  file_content = File.read(file_name)
 							
@@ -84,12 +68,11 @@ end
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 						
 	  if (File.exists?(file_name))
-		File.delete(file_name)
+			File.delete(file_name)
 	  end
 	  File.exists?(file_name).should == false
 							
 	  return file_size,file_content
-
   end
 							
   propBagSize = 0
@@ -98,50 +81,48 @@ end
   fixedSchemaContent = nil
 
   it "should create property bag blob" do
-	propBagSize, propBagContent = createBlob(BlobBulkTest,'BlobBulkTest','blob_bulk_test.png')
+		propBagSize, propBagContent = createBlob(BlobBulkTest,'BlobBulkTest','blob_bulk_test.png')
   end
 
   it "should create fixed schema blob" do
-	fixedSchemaSize, fixedSchemaContent = createBlob(BlobBulkTest_s,'BlobBulkTest_s','blob_bulk_test_s.png')
+		fixedSchemaSize, fixedSchemaContent = createBlob(BlobBulkTest_s,'BlobBulkTest_s','blob_bulk_test_s.png')
   end
 							
   def checkBlob(model,size,content,old_filename)
-	items = model.find(:all, :conditions => { :name => old_filename} )
-	items.should_not == nil
-	items.length.should == 1
-	puts "items = #{items.inspect}"
+		items = model.find(:all, :conditions => { :name => old_filename} )
+		items.should_not == nil
+		items.length.should == 1
+		puts "items = #{items.inspect}"
 							
-	items[0].image_uri.should_not == old_filename
-	new_file_name = File.join(Rho::RhoApplication::get_blob_path(items[0].image_uri))
-	File.exists?(new_file_name).should == true
-	if !defined?(RHO_WP7)    
-	  File.size(new_file_name).should == size
-	end    
-	content_new = File.read(new_file_name)
-	content_new.should == content
+		items[0].image_uri.should_not == old_filename
+		new_file_name = File.join(Rho::RhoApplication::get_blob_path(items[0].image_uri))
+		File.exists?(new_file_name).should == true
+		if !defined?(RHO_WP7)    
+	  	File.size(new_file_name).should == size
+		end    
+		content_new = File.read(new_file_name)
+		content_new.should == content
   end
 
   it "should bulk sync blobs" do
-	Rho::RhoConfig.bulksync_state='0'
-	res =  SyncEngine.dosync
+		Rho::RhoConfig.bulksync_state='0'
+		res =  Rho::RhoConnectClient.dosync
 							
-	res['status'].should == 'complete'
-	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
+		res['status'].should == 'complete'
+		res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 							
-	checkBlob(BlobBulkTest,propBagSize,propBagContent,'blob_bulk_test.png')
-	checkBlob(BlobBulkTest_s,fixedSchemaSize,fixedSchemaContent,'blob_bulk_test_s.png')
+		checkBlob(BlobBulkTest,propBagSize,propBagContent,'blob_bulk_test.png')
+		checkBlob(BlobBulkTest_s,fixedSchemaSize,fixedSchemaContent,'blob_bulk_test_s.png')
   end
 							
-  def deleteBlob(model)
-	SyncEngine.logged_in.should == 1
+  def deleteBlob(model)					
+		model.delete_all
+		Rho::RhoConfig.bulksync_state='1'
+		model.sync("/app/Settings/SyncNotify")
 							
-	model.delete_all
-	Rho::RhoConfig.bulksync_state='1'
-	model.sync("/app/Settings/SyncNotify")
-							
-	items = model.find(:all)
-	items.should_not == nil
-	items.length.should == 0
+		items = model.find(:all)
+		items.should_not == nil
+		items.length.should == 0
   end
 
   it "should create objects after bulk sync" do
@@ -154,78 +135,64 @@ end
     schemaItem.should_not be_nil
   end
 
-it "should export database after blob bulk sync" do
-	Rhom::Rhom.database_full_reset
-	login_name = System.get_property('platform') + System.get_property('device_name')
-	res =  SyncEngine.login('login_name', '', "/app/Settings/login_callback")
-	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
-	SyncEngine.logged_in.should == 1
-	
-	sleep(15)
-	
-	Rho::RhoConfig.bulksync_state='0'
-	res =  SyncEngine.dosync
-	
-	res['status'].should == 'complete'
-	res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
-	
-	items = BlobBulkTest.find(:all)
-	items.size.should_not == 0
-	pbSize = items.size
-	items.each do |item|
-		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
-		puts "item = #{item.inspect}, path = #{path}"
-		File.exists?(path).should == true
+	it "should export database after blob bulk sync" do
+		Rho::RhoConfig.bulksync_state='0'
+		res =  Rho::RhoConnectClient.dosync
+		
+		res['status'].should == 'complete'
+		res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
+		
+		items = BlobBulkTest.find(:all)
+		items.size.should_not == 0
+		pbSize = items.size
+		items.each do |item|
+			path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
+			puts "item = #{item.inspect}, path = #{path}"
+			File.exists?(path).should == true
+		end
+		items = BlobBulkTest_s.find(:all)
+		items.size.should_not == 0
+		shSize = items.size
+		items.each do |item|
+			path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
+			puts "item = #{item.inspect}, path = #{path}"
+			File.exists?(path).should == true
+		end
+		
+		exportPath = ::Rhom::Rhom.database_export('user')
+		exportPath.should_not be_nil
+		File.exists?(exportPath).should == true
+		File.size(exportPath).should_not == 0
+		
+		Rhom::Rhom.database_full_reset
+		
+		items = BlobBulkTest_s.find(:all)
+		puts "BlobBulkTest_s = #{items}"
+		items.size.should == 0
+		
+		items = BlobBulkTest.find(:all)
+		puts "BlobBulkTest = #{items}"
+		items.size.should == 0
+		
+		::Rhom::Rhom.database_import('user',exportPath).should == true
+		
+		items = BlobBulkTest_s.find(:all)
+		items.size.should == shSize
+		items.each do |item|
+			path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
+			puts "item = #{item.inspect}, path = #{path}"
+			File.exists?(path).should == true
+		end
+		
+		items = BlobBulkTest.find(:all)
+		items.size.should == pbSize
+		items.each do |item|
+			path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
+			puts "item = #{item.inspect}, path = #{path}"
+			File.exists?(path).should == true
+		end
+		
+		File.delete(exportPath)
+		File.exists?(exportPath).should == false
 	end
-	items = BlobBulkTest_s.find(:all)
-	items.size.should_not == 0
-	shSize = items.size
-	items.each do |item|
-		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
-		puts "item = #{item.inspect}, path = #{path}"
-		File.exists?(path).should == true
-	end
-	
-	exportPath = ::Rhom::Rhom.database_export('user')
-	exportPath.should_not be_nil
-	File.exists?(exportPath).should == true
-	File.size(exportPath).should_not == 0
-	
-	Rhom::Rhom.database_full_reset
-	
-	items = BlobBulkTest_s.find(:all)
-	puts "BlobBulkTest_s = #{items}"
-	items.size.should == 0
-	
-	items = BlobBulkTest.find(:all)
-	puts "BlobBulkTest = #{items}"
-	items.size.should == 0
-	
-	::Rhom::Rhom.database_import('user',exportPath).should == true
-	
-	items = BlobBulkTest_s.find(:all)
-	items.size.should == shSize
-	items.each do |item|
-		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
-		puts "item = #{item.inspect}, path = #{path}"
-		File.exists?(path).should == true
-	end
-	
-	items = BlobBulkTest.find(:all)
-	items.size.should == pbSize
-	items.each do |item|
-		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
-		puts "item = #{item.inspect}, path = #{path}"
-		File.exists?(path).should == true
-	end
-	
-	File.delete(exportPath)
-	File.exists?(exportPath).should == false
-end
-
-  it "should logout" do
-    SyncEngine.logout()
-  
-    SyncEngine.logged_in.should == 0
-  end
 end
