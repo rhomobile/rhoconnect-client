@@ -15,36 +15,41 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	var defaultPollInterval = Rho.RhoConnectClient.pollInterval;
 
 	beforeEach(function() {
-		displayflag = false;
-		displayflag1 = false;
-		callbackCalled = false;
-		product_record_count = 0;
-		customer_record_count = 0;
-		loginCallback_paramsValue.error_code="";
-		loginCallback_paramsValue.error_message="";
-		searchCallback_paramsValue.status="";
-		searchCallback_paramsValue.search_params="";
-		myString="";
-		dispCurrentProcess(myString);
-		Rho.RhoConnectClient.pollInterval = 0; // to avoid any unexpeced ocurance of sync 
-		// reset values
-	});
+					displayflag = false;
+					displayflag1 = false;
+					callbackCalled = false;
+					product_record_count = 0;
+					customer_record_count = 0;
+					loginCallback_paramsValue.error_code="";
+					loginCallback_paramsValue.error_message="";
+					searchCallback_paramsValue.status="";
+					searchCallback_paramsValue.search_params="";
+					myString="";
+					dispCurrentProcess(myString);
+					pagesize = Rho.RhoConnectClient.pageSize;
+					Rho.RhoConnectClient.pageSize = pagesize;
+					//Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
+					// reset values
+		});
 		
 	afterEach(function() {
-		displayflag = false;
-		displayflag1 = false;
-		callbackCalled = false;
-		product_record_count = 0;
-		customer_record_count = 0;
-		loginCallback_paramsValue.error_code="";
-		loginCallback_paramsValue.error_message="";
-		searchCallback_paramsValue.status="";
-		searchCallback_paramsValue.search_params="";
-		myString="";
-		Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
-				//logre lated code
-	});
-
+				displayflag = false;
+				displayflag1 = false;
+				callbackCalled = false;
+				product_record_count = 0;
+				customer_record_count = 0;
+				loginCallback_paramsValue.error_code="";
+				loginCallback_paramsValue.error_message="";
+				searchCallback_paramsValue.status="";
+				searchCallback_paramsValue.search_params="";
+				myString="";
+				pagesize = Rho.RhoConnectClient.pageSize;
+				Rho.RhoConnectClient.pageSize = pagesize;
+				Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
+						//logre lated code
+    });
+	
+	
 	it("VT295-053 | pollInterval property default value test | 60", function() {
 		Rho.RhoConnectClient.pollInterval = defaultPollInterval;
 		runs(function() {
@@ -401,6 +406,18 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 		});
 		
+		it("VT295-019 | dosync method when record is inserted | Created records should get reflected at  backend server ", function() {  
+			//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
+		});
+		
+		it("VT295-020 | dosync method when record is updated | Updated records should get reflected at  backend server ", function() {  
+			//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
+		});
+		
+	    it("VT295-021 | dosync method when record is deleted | Deleted records should get removed from  backend server ", function() {  
+			//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
+		});
+				
 		
 		it("VT295-023 | doSync() with syncOnlyChangedSources set to True | only changed source will get sync", function() {  
 			dbreset();
@@ -473,7 +490,9 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 		});
 	
-		
+	    it("VT295-027 | doSync () method with queryParams | Parameter should pass to rhoconnect server inside query method.", function() {  
+			//This can be automated, just have the adapter return data based on existence of parameters.
+		});
 		
 		it("VT295-028 | doSync () method with all param is empty | Exception should be thrown", function() {  
 			 var Exception_Message = "";
@@ -1035,6 +1054,11 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 		});
 		
+		
+		it("VT295-058 | pageSize property when set to 10 | cumulative_count should be reported to 10 (except of last one) when sync status is in_progress state", function() {
+		     //This can be done automatically, just have sync callback verify cumulative_count value.
+		});
+		
 		it("VT295-059 | pageSize property when set to 0 | no record in models  ", function() {  
 			dbreset();
 			Rho.RhoConnectClient.pageSize=0;
@@ -1069,6 +1093,50 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 
 		});
 		
+		it("VT295-060 | sslVerifyPeer property when set to true | It should connect to SSL certified rhoconnect  server successfully.", function() {
+		     //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
+		});
+		
+	    it("VT295-061 | sslVerifyPeer property when set to false | It should not connect to SSL certified rhoconnect server", function() {
+		     //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
+	
+		});
+		
+	    it("VT295-063 | setObjectNotify() with controller action URL Callback | object notification callback should be invoked.", function() {
+		   
+	
+		});
+		
+		it("VT295-064 | setObjectNotify() with no changes in source objects | object notification callback should not invoked.", function() {
+		     
+	
+		});
+		
+		it("VT295-065 | setObjectNotify() with Anonymous callback function. | object notification callback should be invoked.", function() {
+		     
+	
+		});
+		
+		it("VT295-066 | setObjectNotify() with function callback. | object notification callback should be invoked.", function() {
+		     
+	
+		});
+		
+		it("VT295-067 | setObjectNotify() without calling addObjectNotify() method. | object notification callback should not get invoked.", function() {
+		     
+	
+		});
+		
+	    it("VT295-068 | cleanObjectNotify()method. | object notification callback should not invoke since it has been cleared.", function() {
+		     
+	
+		});
+		
+		it("VT295-069 | addObjectNotify() method without any parameter. | argument error exception should be thrown.", function() {
+		     
+	
+		});
+		
 		
 		it("VT295-070 | set username [read only] property  | Exception should be thrown", function() {  
 			 var Exception_Message = "";
@@ -1087,7 +1155,131 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	
 		});
 		
+		it("VT295-073 | bulk sync using resque worker  | Both of the rhom model should get populated with server data", function() {  
+			 
+			 
+	
+		});
 		
+		it("VT295-074 | should handle update updated object while sync error  | changed_values table record ? ", function() {  
+			 
+			 
+	
+		});
+		
+	    
+		it("VT295-075 | should handle update updated full_update object while sync | changed_values table record ? ", function() {  
+			 
+			 
+	
+		});
+		
+		
+	    it("VT295-076 | should handle deleted object while error sync | changed_values table record ? ", function() {  
+			 
+			 
+	
+		});
+
+		//don't know much about this test
+	    it("VT295-077 | should create new Product with Customers | changed_values table record ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-078 | login with different user | should reset database ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-079 | should process create-error : delete | created records during error should get deleted from db ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-080 | should process create-error : recreate | created records during error should get recreated in db finally ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-081 | should process retry update-error | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-082 | should process retry update-error full_update model | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-083 | should rollback update-error | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-084 | should process delete-error | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-085 | should process source-error | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-086 | should process search-error | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-087 | should NOT push pending created objects | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-088 | should push when pending created objects | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-089 | should NOT push when children pending created objects | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-090 | should handle update created object while sync error | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-091 | should handle update created object while sync error | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-092 | should process error sync | ? ", function() {  
+			 
+			 
+	
+		});
+		
+		
+		// logout related test
 		it("VT295-006 | Call isLoggedIn() when client is not logged in to server | false", function() {
 			Rho.RhoConnectClient.logout();  //make sure that client is logged out	     
 		    runs(function() {
@@ -1107,11 +1299,14 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 			Rho.RhoConnectClient.logout();
 			Rho.RhoConnectClient.doSync();
 		    runs(function() {
-		    	   expect(callbackCalled).toEqual(false);
+		    	   expect(callbackCalled).toEqual(true);
+				   
 		       });
 		});  
 
 	});
+	
+	
 	
 
 
