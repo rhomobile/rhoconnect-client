@@ -22,37 +22,37 @@ require 'rho/rho'
 require 'sync_server'
 
 def getProduct
-    return Product_s if $spec_settings[:schema_model]
-    
-    Product
+  return Product_s if $spec_settings[:schema_model]
+
+  Product
 end
 
 def getProduct_str
 	puts "settings = #{$spec_settings}"
-    return 'Product_s' if $spec_settings[:schema_model]
-    
-    'Product'
+  return 'Product_s' if $spec_settings[:schema_model]
+
+  'Product'
 end
 
 def getCustomer
-    return Customer_s if $spec_settings[:schema_model]
-    
-    Customer
+  return Customer_s if $spec_settings[:schema_model]
+
+  Customer
 end
 
 def getCustomer_str
-    return 'Customer_s' if $spec_settings[:schema_model]
-    
-    'Customer'
+  return 'Customer_s' if $spec_settings[:schema_model]
+
+  'Customer'
 end
 
 def getTestDB
-    ::Rho::RHO.get_db_partitions['user']
+  ::Rho::RHO.get_db_partitions['user']
 end
 
 $spec_callback_block = nil
 def sync_callback_spec
-    $spec_callback_block.call() if $spec_callback_block    
+  $spec_callback_block.call() if $spec_callback_block    
 end
 
 SYNC_CALLBACK_NAME = 'sync_callback_spec'
@@ -99,17 +99,16 @@ describe "RhoConnectClient_test" do
   end
   
   after(:all)  do
-      @save_sync_types.each do |src|
-        ::Rho::RHO.get_user_db().update_into_table('sources',{'sync_type'=>src['sync_type']}, {'name'=>src['name']})
-      end
-    
+    @save_sync_types.each do |src|
+      ::Rho::RHO.get_user_db().update_into_table('sources',{'sync_type'=>src['sync_type']}, {'name'=>src['name']})
+    end
   end
-  
+
   after (:each) do
     Rho::RhoConfig.syncserver = syncserver_url
 	  
-	Rho::RhoConnectClient.syncServer = syncserver_url
-	Rho::RhoConnectClient.sslVerifyPeer = true
+	  Rho::RhoConnectClient.syncServer = syncserver_url
+	  Rho::RhoConnectClient.sslVerifyPeer = true
     
     Rho::RhoConnectClient.setSourceProperty(Rho::RhoConnectClient.getSourceNameById(getProduct().get_source_id.to_i()), "rho_server_response", "" )        
     Rho::RhoConnectClient.setSourceProperty(Rho::RhoConnectClient.getSourceNameById(getProduct().get_source_id.to_i()), "sync_push_callback", "" )        
@@ -124,7 +123,6 @@ describe "RhoConnectClient_test" do
     Rho::RhoConfig.sources[getProduct_str]['full_update'] = false
   end
 
- 
   it "should update syncServer URL at runtime" do
   
     dbRes = ::Rho::RHO.get_user_db().select_from_table('client_info','token,token_sent')

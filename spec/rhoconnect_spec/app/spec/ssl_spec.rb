@@ -1,4 +1,4 @@
-describe "SyncEngine_test" do
+describe "RhoConnectClient_test" do
 	before(:all)  do
 		Rho::RhoConnectClient.threadedMode = false
 	end

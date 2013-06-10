@@ -28,7 +28,7 @@ describe "BulkSync_test" do
   
     ::Rhom::Rhom.database_full_reset_and_logout
     
-    SyncEngine.syncServer = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}"
+    Rho::RhoConnectClient.syncServer = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}"
     Rho::RhoConfig.bulksync_state='0'
 
     Rho::RHO.load_all_sources()
