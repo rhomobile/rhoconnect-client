@@ -7,52 +7,54 @@ var loginCallback_paramsValue = [{ "error_code" : "" , "error_message" : "" }];
 var searchCallback_paramsValue = [{ "status" : "" , "search_params" : "" }];
 var myString=""; // for displaying sync parameter values and results
 //var syncCallback_paramsValue = [in_progress { "in_progress" : "" , "error_message" : "" }];
-
-var sync_server_url='http://localhost:9292/application';
+var sync_server_url = "http://"+SYNC_SERVER_HOST+":"+SYNC_SERVER_PORT;
 //var Product = ORM.AddModel('Product'); 
 
 describe("Rhoconnect Client module Test Starts Here", function() {
+
+	var defaultPollInterval = Rho.RhoConnectClient.pollInterval;
+
 	beforeEach(function() {
-					displayflag = false;
-					displayflag1 = false;
-					callbackCalled = false;
-					product_record_count = 0;
-					customer_record_count = 0;
-					loginCallback_paramsValue.error_code="";
-					loginCallback_paramsValue.error_message="";
-					searchCallback_paramsValue.status="";
-					searchCallback_paramsValue.search_params="";
-					myString="";
-					dispCurrentProcess(myString);
-					//Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
-					// reset values
-		});
+		displayflag = false;
+		displayflag1 = false;
+		callbackCalled = false;
+		product_record_count = 0;
+		customer_record_count = 0;
+		loginCallback_paramsValue.error_code="";
+		loginCallback_paramsValue.error_message="";
+		searchCallback_paramsValue.status="";
+		searchCallback_paramsValue.search_params="";
+		myString="";
+		dispCurrentProcess(myString);
+		Rho.RhoConnectClient.pollInterval = 0; // to avoid any unexpeced ocurance of sync 
+		// reset values
+	});
 		
 	afterEach(function() {
-				displayflag = false;
-				displayflag1 = false;
-				callbackCalled = false;
-				product_record_count = 0;
-				customer_record_count = 0;
-				loginCallback_paramsValue.error_code="";
-				loginCallback_paramsValue.error_message="";
-				searchCallback_paramsValue.status="";
-				searchCallback_paramsValue.search_params="";
-				myString="";
-				Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
-						//logre lated code
-    });
-	
-	
-	it("VT295-053 | pollInterval property default value test | 60", function() {
-	      runs(function() {
-	           expect(Rho.RhoConnectClient.pollInterval).toEqual(60);
-	       });
+		displayflag = false;
+		displayflag1 = false;
+		callbackCalled = false;
+		product_record_count = 0;
+		customer_record_count = 0;
+		loginCallback_paramsValue.error_code="";
+		loginCallback_paramsValue.error_message="";
+		searchCallback_paramsValue.status="";
+		searchCallback_paramsValue.search_params="";
+		myString="";
+		Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
+				//logre lated code
 	});
-	
+
+	it("VT295-053 | pollInterval property default value test | 60", function() {
+		Rho.RhoConnectClient.pollInterval = defaultPollInterval;
+		runs(function() {
+			expect(Rho.RhoConnectClient.pollInterval).toEqual(60);
+		});
+	});
+
 	it("VT295-005 | login to incorrect syncserver url | errorcode non zero", function() {
 		Rho.RhoConnectClient.logout();  //make sure that client is logged out
-		Rho.RhoConnectClient.syncServer = sync_server_url+'hello'; //incorrect syncserver url
+		Rho.RhoConnectClient.syncServer = 'http://localhost/foo'; //incorrect syncserver url
 		 runs(function () {
 	            Rho.RhoConnectClient.login('testclient','testclient',callbackFunction);
 	       });
