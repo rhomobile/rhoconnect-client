@@ -188,7 +188,7 @@ describe "RhoConnectClient_test" do
 
     Rho::RhoConnectClient.setNotification(getProduct_str, "/app/Settings/sync_notify", "")
 
-    res =  Rho::RhoConnectClient.dosync_source( getProduct_str )
+    res =  Rho::RhoConnectClient.doSyncSource( getProduct_str )
     res['status'].should == 'ok'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
   end
@@ -216,7 +216,7 @@ describe "RhoConnectClient_test" do
   it "should sync all" do
     Rho::RhoConnectClient.isLoggedIn.should == true
   
-    res =  Rho::RhoConnectClient.dosync
+    res =  Rho::RhoConnectClient.doSync
 
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
@@ -411,7 +411,7 @@ describe "RhoConnectClient_test" do
     item2 = getProduct.find(item.object)
     item2.vars.should == item.vars
     
-    res =  Rho::RhoConnectClient.dosync
+    res =  Rho::RhoConnectClient.doSync
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -537,7 +537,7 @@ describe "RhoConnectClient_test" do
         item.destroy
     end    
 
-    res =  Rho::RhoConnectClient.dosync
+    res =  Rho::RhoConnectClient.doSync
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     
@@ -1136,7 +1136,7 @@ describe "RhoConnectClient_test" do
 	  
 	  Rhom::Rhom.have_local_changes.should == true
 	  
-	  res =  Rho::RhoConnectClient.dosync	  
+	  res =  Rho::RhoConnectClient.doSync	  
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  	  
@@ -1149,7 +1149,7 @@ describe "RhoConnectClient_test" do
 	  
 	  Rhom::Rhom.have_local_changes.should == true
 	  
-	  res =  Rho::RhoConnectClient.dosync(false,'',true)
+	  res =  Rho::RhoConnectClient.doSync(false,'',true)
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  	  
@@ -1164,7 +1164,7 @@ describe "RhoConnectClient_test" do
 	  Rhom::Rhom.database_full_reset
 	  Rho::RhoConfig.bulksync_state='1' 
 	  
-	  res =  Rho::RhoConnectClient.dosync
+	  res =  Rho::RhoConnectClient.doSync
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 	  	  
@@ -1189,7 +1189,7 @@ describe "RhoConnectClient_test" do
 		  item.destroy
 	  end
 	  
-	  res =  Rho::RhoConnectClient.dosync
+	  res =  Rho::RhoConnectClient.doSync
 	  res['status'].should == 'complete'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
   end

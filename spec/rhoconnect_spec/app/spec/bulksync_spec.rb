@@ -58,7 +58,7 @@ describe "BulkSync_test" do
     puts "Waiting #{towait} secs for next bulk data"
     sleep(towait)
     Rho::RhoConfig.bulksync_state='0'
-    res =  Rho::RhoConnectClient.dosync
+    res =  Rho::RhoConnectClient.doSync
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
     Rho::RhoConfig.bulksync_state.should=='1'
@@ -74,7 +74,7 @@ describe "BulkSync_test" do
 
   it "should bulk sync with create" do
     Rho::RhoConfig.bulksync_state='1'
-    res =  Rho::RhoConnectClient.dosync
+    res =  Rho::RhoConnectClient.doSync
     res['status'].should == 'complete'
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 

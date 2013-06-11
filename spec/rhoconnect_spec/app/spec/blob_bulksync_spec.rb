@@ -106,7 +106,7 @@ end
 
   it "should bulk sync blobs" do
 		Rho::RhoConfig.bulksync_state='0'
-		res =  Rho::RhoConnectClient.dosync
+		res =  Rho::RhoConnectClient.doSync
 							
 		res['status'].should == 'complete'
 		res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
@@ -137,7 +137,7 @@ end
 
 	it "should export database after blob bulk sync" do
 		Rho::RhoConfig.bulksync_state='0'
-		res =  Rho::RhoConnectClient.dosync
+		res =  Rho::RhoConnectClient.doSync
 		
 		res['status'].should == 'complete'
 		res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
