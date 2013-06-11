@@ -37,28 +37,20 @@ end
 describe "BlobSync_test" do
 
   before(:all)  do
-    SyncEngine.set_threaded_mode(false)
+    Rho::RhoConnectClient.threadedMode = false
   
     ::Rhom::Rhom.database_full_reset_and_logout
-    
-	  #    SyncEngine.set_syncserver('http://rhodes-samples-server.heroku.com/application')
-	SyncEngine.set_syncserver("http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}")
-	  
-    
+
+	Rho::RhoConnectClient.syncServer = "http://#{SYNC_SERVER_HOST}:#{SYNC_SERVER_PORT}"    
   end
   
-  it "should login" do
-
-    login_name = System.get_property('platform') + System.get_property('device_name')    
-    res =  SyncEngine.login('login_name', '', "/app/Settings/login_callback")
+  before(:each) do  
+    res =  Rho::RhoConnectClient.login('login_name', '', "/app/Settings/login_callback")
     res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
-    
-    SyncEngine.logged_in.should == 1
-    
-    Rho::RhoConfig.bulksync_state='1'    
+
+    Rho::RhoConnectClient.isLoggedIn.should == true
+    Rho::RhoConfig.bulksync_state = '1'  
   end
-
-
 
   def copy_file(src, dst_dir)
 if !defined?(RHO_WP7)  
@@ -70,8 +62,6 @@ end
   end
   
   it "should create new BlobTest" do
-    SyncEngine.logged_in.should == 1
-
     file_name = File.join(Rho::RhoApplication::get_model_path('app',getBlobTest_str()), 'test.png')
     copy_file(file_name, Rho::RhoApplication::get_blob_folder() )
     file_name = File.join(Rho::RhoApplication::get_blob_folder(), 'test.png')
@@ -106,8 +96,6 @@ end
   end
 
   it "should modify BlobTest" do
-    SyncEngine.logged_in.should == 1
-  
     item = getBlobTest.find(:first)
     item.should_not == nil
     saved_obj = item.object
@@ -140,11 +128,5 @@ end
 #    content_new = File.read(new_file_name)
 #    content_new.should == file_content
     
-  end
-
-  it "should logout" do
-    SyncEngine.logout()
-  
-    SyncEngine.logged_in.should == 0
   end
 end
