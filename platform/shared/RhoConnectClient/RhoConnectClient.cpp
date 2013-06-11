@@ -1588,6 +1588,11 @@ namespace rho {
 	{
 		rho_connectclient_database_full_reset(false);
 	}	
+
+    /*static*/ bool  _CRhoAppAdapter::callCallbackOnSyncUserChanged()
+    {
+        return false; 
+    }
 }
 
 extern "C" 
