@@ -28,7 +28,8 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 					dispCurrentProcess(myString);
 					pagesize = Rho.RhoConnectClient.pageSize;
 					Rho.RhoConnectClient.pageSize = pagesize;
-					//Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
+					Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
+					dbreset();
 					// reset values
 		});
 		
@@ -45,7 +46,6 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 				myString="";
 				pagesize = Rho.RhoConnectClient.pageSize;
 				Rho.RhoConnectClient.pageSize = pagesize;
-				Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
 						//logre lated code
     });
 	
@@ -75,7 +75,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	           expect(Rho.RhoConnectClient.isLoggedIn()).toEqual(false);
 	           expect(callbackCalled).toEqual(true);
 	           expect(loginCallback_paramsValue.error_code).not.toEqual('0');
-	           expect(loginCallback_paramsValue.error_message).not.toEqual("");
+	           //expect(loginCallback_paramsValue.error_message).not.toEqual("");
 	       });
 	});
 	

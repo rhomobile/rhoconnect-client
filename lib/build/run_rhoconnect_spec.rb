@@ -17,7 +17,7 @@ require File.join($rho_root,'lib','build','rhoconnect_helper.rb')
 		$app_config = Jake.config(File.open(File.join($app_path, "build.yml")))
 		config = Jake.config(File.open(rhobuildyml,'r'))
 
-		source_path = File.expand_path(File.join($app_path,'server'))
+		source_path = File.expand_path(File.join($app_path,'..','server'))
 		$tmp_path = File.join(File.dirname(__FILE__),'..','..','tmp')
 		
 		cleanup_apps
