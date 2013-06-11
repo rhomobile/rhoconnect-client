@@ -18,6 +18,7 @@ faillog.txt
 rhosimulator/
 rholog.txt
 sync_server.*
+*.rdb
 
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
