@@ -18,4 +18,8 @@ describe "RhoConnectClient_test" do
 		res =  Rho::RhoConnectClient.login('test', 'test', "/app/Settings/login_callback")
 		res['error_code'].to_i.should == ::Rho::RhoError::ERR_UNATHORIZED
 	end
+
+	it "should connect to trusted SSL server" do
+		# TODO: implement
+	end
 end
