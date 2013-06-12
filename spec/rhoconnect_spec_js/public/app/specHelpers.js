@@ -67,10 +67,6 @@ function showResult(data) {
     //alert(record_count);
 }
 
-var dbreset = function(){
-	$.get('/app/Settings/do_dbreset');
-};
-
 var create_product_record = function(count,data){
 	$.get('/app/Settings/create_product_record?loopcount='+count+'&data='+data);
 };
