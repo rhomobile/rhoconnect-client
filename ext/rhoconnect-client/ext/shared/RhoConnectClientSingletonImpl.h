@@ -30,6 +30,8 @@ namespace rho {
 		virtual void AddObjectNotify( int64 sourceId,  const rho::StringW& object, rho::apiGenerator::CMethodResult& oResult) = 0;
 		virtual void CleanObjectNotify(rho::apiGenerator::CMethodResult& oResult) = 0;
 		virtual void GetLastSyncObjectCount( int64 sourceId, rho::apiGenerator::CMethodResult& oResult) = 0;
+		virtual void GetBulksyncState( rho::apiGenerator::CMethodResult& oResult) = 0;
+    virtual void SetBulksyncState( const int state, rho::apiGenerator::CMethodResult& oResult) = 0;		
 		virtual void GetPageSize(rho::apiGenerator::CMethodResult& oResult) = 0;
 		virtual void SetPageSize( int64 pageSize, rho::apiGenerator::CMethodResult& oResult) = 0;
 		virtual void SetThreadedMode( bool threadedModeEnabled, rho::apiGenerator::CMethodResult& oResult) = 0;
@@ -39,7 +41,6 @@ namespace rho {
 		virtual void SetSslVerifyPeer( bool verifyPeer, rho::apiGenerator::CMethodResult& oResult) = 0;
 		virtual void IsSyncing(rho::apiGenerator::CMethodResult& oResult) = 0;
 		virtual void RegisterPush(rho::apiGenerator::CMethodResult& oResult) = 0;
-		
 		
 		virtual void addCommandToQueue(rho::common::IRhoRunnable* pFunctor) = 0;
 		virtual void callCommandInThread(rho::common::IRhoRunnable* pFunctor) = 0;

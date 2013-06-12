@@ -1,4 +1,5 @@
 #include "RhoConnectClientImpl.h"
+#include "common/RhoSettingsDefs.h"
 #include "logging/RhoLog.h"
 #include "json/JSONIterator.h"
 #include "net/URI.h"
@@ -32,6 +33,14 @@ void RhoConnectClientImpl::getSyncServer(rho::apiGenerator::CMethodResult& oResu
 	
 void RhoConnectClientImpl::setSyncServer( const rho::String& value, rho::apiGenerator::CMethodResult& oResult) {
 	rho_sync_set_syncserver(value.c_str());
+}
+
+void RhoConnectClientImpl::getBulksyncState(rho::apiGenerator::CMethodResult& oResult) {
+	oResult.set( RHOCONF().getInt(RHO_SETTING_BULKSYNC_STATE) );
+}
+
+void RhoConnectClientImpl::setBulksyncState(const int state, rho::apiGenerator::CMethodResult& oResult) {
+	RHOCONF().setInt(RHO_SETTING_BULKSYNC_STATE, state, true);
 }
 	
 void RhoConnectClientImpl::getPageSize(rho::apiGenerator::CMethodResult& oResult) {

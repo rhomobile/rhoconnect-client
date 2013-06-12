@@ -23,7 +23,11 @@
 			<PROPERTY name="syncServer" type="STRING">
 				<DESC>Sync server URL.</DESC>
 			</PROPERTY>
-			
+
+      <PROPERTY name="bulksyncState" type="INTEGER" default="1">
+        <DESC>Set 0 to force bulk sync on next synchronization cycle.  After sync is complete, bulksyncState will be set to 1.</DESC>
+      </PROPERTY>
+
 			<PROPERTY name="pageSize" type="INTEGER">
 				<DESC>Page size for RhoConnectClient. Default size is 2000.</DESC>
 			</PROPERTY>

@@ -49,7 +49,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 
     waitsFor(function(){
       return callbackCalled;
-    },"Waiting for callback.", 5000);
+    },"Waiting for callback.", 10000);
 
     runs(function(){
       expect(errorCode).toEqual(9);
