@@ -129,22 +129,22 @@
 									
 				</PARAMS>
 				<RETURN type="HASH">
-                    <DESC>Will return value only if threadedMode set to false. Otherwise search results returned in callback.</DESC>
-                </RETURN>
-                <CALLBACK>
-                    <PARAMS>
-                        <PARAM name="status" type="STRING">
-                            <DESC>Resulting status of search. 'ok' of completed successfully, 'error' otherwise.</DESC>
-                        </PARAM>
-                        
-                        <PARAM name="search_params" type="HASH">
-                            <DESC>search_params originally provided for the search call. Typically you want to forward the original search_params to your view that displays the results so you can perform the same query locally. Please see examples section.
-                            </DESC>
-                        </PARAM>
+            <DESC>Will return value only if threadedMode set to false. Otherwise search results returned in callback.</DESC>
+        </RETURN>
+        <CALLBACK>
+            <PARAMS>
+                <PARAM name="status" type="STRING">
+                    <DESC>Resulting status of search. 'ok' of completed successfully, 'error' otherwise.</DESC>
+                </PARAM>
+                
+                <PARAM name="search_params" type="HASH">
+                    <DESC>search_params originally provided for the search call. Typically you want to forward the original search_params to your view that displays the results so you can perform the same query locally. Please see examples section.
+                    </DESC>
+                </PARAM>
 
-                    </PARAMS>
-                </CALLBACK>
-            </METHOD>
+            </PARAMS>
+        </CALLBACK>
+      </METHOD>
             
 			<METHOD name="doSync">
 				<DESC>Start the SyncEngine process and display an optional status popup.</DESC>
@@ -240,23 +240,23 @@
 			<METHOD name="setObjectNotification" hasCallback="mandatory" runInThread="none">
 				<DESC>The RhoConnectClient can send a notification when a specific object on the current page has been modified. This is useful if you have frequently-changing data like feeds or timelines in your application and want them to update without the user taking any action.</DESC>
                 
-                <CALLBACK>
-                    <PARAMS>
-                        <PARAM name="created" type="ARRAY">
-                            <DESC>Array of created objects.</DESC>
-                        </PARAM>
-                        
-                        <PARAM name="updated" type="ARRAY">
-                            <DESC>Array of updated objects.</DESC>
-                        </PARAM>
+          <CALLBACK>
+              <PARAMS>
+                  <PARAM name="created" type="ARRAY">
+                      <DESC>Array of created objects.</DESC>
+                  </PARAM>
+                  
+                  <PARAM name="updated" type="ARRAY">
+                      <DESC>Array of updated objects.</DESC>
+                  </PARAM>
 
-                        <PARAM name="deleted" type="ARRAY">
-                            <DESC>Array of deleted objects.</DESC>
-                        </PARAM>
+                  <PARAM name="deleted" type="ARRAY">
+                      <DESC>Array of deleted objects.</DESC>
+                  </PARAM>
 
-                    </PARAMS>
-                </CALLBACK>
-            </METHOD>
+              </PARAMS>
+          </CALLBACK>
+      </METHOD>
 			
 			<METHOD name="addObjectNotify">
 				<DESC>Add the object notification by passing in an object ID</DESC>
@@ -427,34 +427,64 @@ function loginCallback(result) {
                 <SECTIONS>
                     <SECTION>
                         <DESC>To set a notification for a model, you can use the following method:</DESC>
-                        <CODE lang='ruby'>
+                        <CODE>
+                          <RUBY>
 <![CDATA[
 RhoConnectClient.setNotification(
   'Account',
   url_for(:action => :sync_notify),
   "sync_complete=true"
 )]]>
+                          </RUBY>
+                          <JAVASCRIPT>
+<![CDATA[
+function syncNotify() {
+  // handle notifications...
+}
+Rho.RhoConnectClient.setNotification('Account', syncNotify);
+]]>
+                          </JAVASCRIPT>
                         </CODE>
                     </SECTION>
                     <SECTION>
                         <DESC>Which is the same as:</DESC>
-                        <CODE lang='ruby'>
+                        <CODE>
+                          <RUBY>
 <![CDATA[
 Account.setNotification(
   url_for(:action => :sync_notify),
   "sync_complete=true"
 )]]>
+                          </RUBY>
+                          <JAVASCRIPT>
+<![CDATA[
+function syncNotify() {
+  // handle notifications...
+}
+Account.setNotification(syncNotify);
+]]>
+                          </JAVASCRIPT>
                         </CODE>
                     </SECTION>
                     <SECTION>
                         <DESC>You can also set a notification for all models:</DESC>
-                        <CODE lang='ruby'>
+                        <CODE>
+                          <RUBY>
 <![CDATA[
 RhoConnectClient.setNotification(
   '*',
   url_for(:action => :sync_notify),
   "sync_complete=true"
 )]]>
+                          </RUBY>
+                          <JAVASCRIPT>
+<![CDATA[
+function syncNotify() {
+  // handle notifications...
+}
+Rho.RhoConnectClient.setNotification('*', syncNotify);
+]]>
+                          </JAVASCRIPT>
                         </CODE>
                     </SECTION>
                 </SECTIONS>
