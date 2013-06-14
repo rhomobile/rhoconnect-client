@@ -28,8 +28,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 					dispCurrentProcess(myString);
 					pagesize = Rho.RhoConnectClient.pageSize;
 					Rho.RhoConnectClient.pageSize = pagesize;
-					Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
-					dbreset();
+					//Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
 					// reset values
 		});
 		
@@ -46,6 +45,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 				myString="";
 				pagesize = Rho.RhoConnectClient.pageSize;
 				Rho.RhoConnectClient.pageSize = pagesize;
+				Rho.RhoConnectClient.pollInterval=0; // to avoid any unexpeced ocurance of sync 
 						//logre lated code
     });
 	
@@ -75,7 +75,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	           expect(Rho.RhoConnectClient.isLoggedIn()).toEqual(false);
 	           expect(callbackCalled).toEqual(true);
 	           expect(loginCallback_paramsValue.error_code).not.toEqual('0');
-	           //expect(loginCallback_paramsValue.error_message).not.toEqual("");
+	           expect(loginCallback_paramsValue.error_message).not.toEqual("");
 	       });
 	});
 	
@@ -417,6 +417,11 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	    it("VT295-021 | dosync method when record is deleted | Deleted records should get removed from  backend server ", function() {  
 			//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
 		});
+		
+		it("VT295-022 | dosync method when record is created at server | Record should get created in product model on device ", function() {  
+			//can it be automated or should we do it manually?
+		});
+		
 				
 		
 		it("VT295-023 | doSync() with syncOnlyChangedSources set to True | only changed source will get sync", function() {  
@@ -490,6 +495,15 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		       });
 		});
 	
+	
+	    it("VT295-025 | doSync () method when showStatusPopup set to True | Sync status popup window should be shown on device during sync.", function() {  
+			//Is there a way to verify popup automatically?
+		});
+		
+		it("VT295-026 | doSync () method when showStatusPopup set to False | Sync status popup window should not be shown on device during sync.", function() {  
+			//Is there a way to verify popup automatically?
+		});
+		
 	    it("VT295-027 | doSync () method with queryParams | Parameter should pass to rhoconnect server inside query method.", function() {  
 			//This can be automated, just have the adapter return data based on existence of parameters.
 		});
@@ -694,6 +708,18 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 		    	  expect(product_record_count).toBeGreaterThan(0);
 		    	  expect(customer_record_count).toBeGreaterThan(0);
 		       });
+		});
+		
+		it("VT295-038 | doSyncSource method for product model | Only product model should get populate with server data.", function() {  
+			
+		});
+		
+		it("VT295-039 | doSyncSource method with showStatusPopup set to true | Sync status popup window should be shown on device during sync of product model.", function() {  
+			//Is there a way to verify popup automatically?
+		});
+		
+	   it("VT295-044 | set notification for specific source model and call doSyncSource() method | Notification call back should get fire and all sync status should be reported", function() {  
+			//should report all sync status [in progress,ok and complete]
 		});
 		
 		it("VT295-040 | doSyncSource method with empty parameters | Exception should be thrown", function() {  
@@ -966,6 +992,21 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	
 		});
 		
+		it("VT295-050 | showStatusPopup property default value test| default value showStatusPopup property should be true", function() {  
+			
+	
+		});
+		
+	    it("VT295-051 | showStatusPopup property set to true | Sync status popup window should be shown on device during sync ", function() {  
+			
+	       //Is there a way to verify popup automatically?  
+		});
+		
+		it("VT295-052 | showStatusPopup property set to false | Sync status popup window should not be shown on device during sync ", function() {  
+			//Is there a way to verify popup automatically?  
+	
+		});
+		
 		it("VT295-054 | pollInterval property when set to 30 seconds | call back should fire after each 30 seconds ", function() {  
 			Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
 			Rho.RhoConnectClient.pollInterval= 30;
@@ -1093,13 +1134,9 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 
 		});
 		
-		it("VT295-060 | sslVerifyPeer property when set to true | It should connect to SSL certified rhoconnect  server successfully.", function() {
-		     //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
-		});
 		
-	    it("VT295-061 | sslVerifyPeer property when set to false | It should not connect to SSL certified rhoconnect server", function() {
-		     //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
-	
+		it("VT295-062 | Sync the record data when device comes back into network | Sync should be successful.", function() {
+		     // it should be manual
 		});
 		
 	    it("VT295-063 | setObjectNotify() with controller action URL Callback | object notification callback should be invoked.", function() {
@@ -1155,11 +1192,18 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	
 		});
 		
-		it("VT295-073 | bulk sync using resque worker  | Both of the rhom model should get populated with server data", function() {  
+		it("VT295-071 | Record Sync stress Test  | All created records should get reflected at server side", function() {  
 			 
-			 
+			 //memory leak test - Should be possible to run this as a script on a device every night or something
 	
 		});
+		
+		it("VT295-072 | Reset Sync stress Test   |  sync should be successful after 8 hours", function() {  
+			 
+			 //memory leak test - Should be possible to run this as a script on a device every night or something.
+	
+		});
+		
 		
 		it("VT295-074 | should handle update updated object while sync error  | changed_values table record ? ", function() {  
 			 
@@ -1183,6 +1227,12 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 
 		//don't know much about this test
 	    it("VT295-077 | should create new Product with Customers | changed_values table record ? ", function() {  
+			 
+			 
+	
+		});
+		
+		it("VT295-0XX | should process error sync | ? ", function() {  
 			 
 			 
 	
@@ -1266,7 +1316,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 	
 		});
 		
-		it("VT295-091 | should handle update created object while sync error | ? ", function() {  
+		it("VT295-091 | should not sync non-exist properties from freezed model | ? ", function() {  
 			 
 			 
 	
@@ -1277,7 +1327,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 			 
 	
 		});
-		
+				
 		
 		// logout related test
 		it("VT295-006 | Call isLoggedIn() when client is not logged in to server | false", function() {
@@ -1300,63 +1350,9 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 			Rho.RhoConnectClient.doSync();
 		    runs(function() {
 		    	   expect(callbackCalled).toEqual(true);
-				   
+				   //res['error_code'].to_i.should == ::Rho::RhoError::ERR_CLIENTISNOTLOGGEDIN
 		       });
 		});  
 
 	});
 	
-	
-	
-
-
- 
-//		describe("VT295-017 | set notification with with Anonymous callback function | callback should get fire", function() {
-//			dbreset();
-//			Rho.RhoConnectClient.setNotification('*', function(args) {
-//				sync_notify_callback(args);
-//			});
-//			
-//			it("Call Sync using Do Sync Check Callback", function() {  
-//			 runs(function () {
-//		            Rho.RhoConnectClient.doSync();
-//		            setTimeout(function() {
-//						displayflag = true;
-//					}, 15000);
-//		       });
-//			 
-//			  waitsFor(function() {
-//					return displayflag;
-//				}, "wait", 16000);
-//			  
-//			 runs(function() {
-//		    	  expect(callbackCalled).toEqual(true);
-//		    	  //alert(myString);
-//		       });
-//			});
-//			
-//			it("Product Record Test", function() {
-//			  runs(function() {
-//		    	   modelrecordtest();
-//		    	   setTimeout(function() {
-//						displayflag1 = true;
-//					}, 5000);
-//
-//		       });
-//			  
-//		       waitsFor(function() {
-//					return displayflag1;
-//				}, "wait", 6000);
-//			 
-//			 runs(function() {
-//		    	  expect(product_record_count).toBeGreaterThan(0);
-//		       });
-//		});
-//			it("Customer Record Test", function() {
-//		    	  expect(customer_record_count).toBeGreaterThan(0);
-//
-//		    });
-//
-//});
-
-
