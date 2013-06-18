@@ -150,8 +150,8 @@
         </CALLBACK>
       </METHOD>
             
-			<METHOD name="doSync" hasCallback="optional">
-				<DESC>Start the RhoConnect sync process and display an optional status popup.</DESC>
+			<METHOD name="doSync">
+				<DESC>Start the SyncEngine process and display an optional status popup.</DESC>
 				<PARAMS>
 					<PARAM name="showStatusPopup" type="BOOLEAN">
 						<DESC>Set to true to show status popup.</DESC>
