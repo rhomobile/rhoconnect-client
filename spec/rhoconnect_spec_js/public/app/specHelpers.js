@@ -1,37 +1,4 @@
-function sharedBehaviorForRhoconnectClient(context) {
-  describe("(shared)", function() {
-    var context.loginCallback_paramsValue = [{ "error_code" : "" , "error_message" : "" }],
-      context.searchCallback_paramsValue = [{ "status" : "" , "search_params" : "" }],
-      context.syncServerUrl = "http://"+SYNC_SERVER_HOST+":"+SYNC_SERVER_PORT,
-      context.defaultPollInterval = Rho.RhoConnectClient.pollInterval,
-      context.defaultSyncServer = Rho.RhoConnectClient.syncServer,
-      context.callbackCalled = false,
-      context.Product = null;
 
-    beforeEach(function() {
-      context.callbackCalled = false;
-      Rho.RhoConnectClient.syncServer = syncServerUrl;
-      Rho.RhoConnectClient.pollInterval = 0;
-      Rho.ORM.clear();
-      var db = new Rho.Database.SQLite3(Rho.Application.databaseFilePath('user'), 'user');
-      db.execute("DELETE FROM SOURCES");
-      db.execute("DELETE FROM CLIENT_INFO");
-      db.execute("DELETE FROM OBJECT_VALUES");
-      context.Product = Rho.ORM.addModel( function(model){
-        model.modelName("Product");
-        model.enable("sync");
-      });
-    });
-  });
-}
-//TNV Code For RhoConnect Client
-
-// var callbackFunction = function ( args ) {
-//   //expect(args.error_code).toEqual('0');
-//   loginCallback_paramsValue.error_code = args.error_code.toString();
-//   loginCallback_paramsValue.error_message = args.error_message.toString();
-//   callbackCalled = true;
-// };
        
 // var modelrecordtest = function (){
 // 	$.get('/app/Settings/recordtest').success(function(data){showResult(data)});
