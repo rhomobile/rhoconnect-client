@@ -151,7 +151,7 @@
       </METHOD>
             
 			<METHOD name="doSync" hasCallback="optional">
-				<DESC>Start the SyncEngine process and display an optional status popup.</DESC>
+				<DESC>Start the RhoConnect sync process and display an optional status popup.</DESC>
 				<PARAMS>
 					<PARAM name="showStatusPopup" type="BOOLEAN">
 						<DESC>Set to true to show status popup.</DESC>
@@ -442,7 +442,7 @@ RhoConnectClient.setNotification(
                           </RUBY>
                           <JAVASCRIPT>
 <![CDATA[
-function syncNotify() {
+function syncNotify(params) {
   // handle notifications...
 }
 Rho.RhoConnectClient.setNotification('Account', syncNotify);
@@ -483,7 +483,7 @@ RhoConnectClient.setNotification(
                           </RUBY>
                           <JAVASCRIPT>
 <![CDATA[
-function syncNotify() {
+function syncNotify(params) {
   // handle notifications...
 }
 Rho.RhoConnectClient.setNotification('*', syncNotify);
@@ -498,153 +498,188 @@ Rho.RhoConnectClient.setNotification('*', syncNotify);
                 <SECTIONS>
                     <SECTION>
                         <DESC>To use object notifications, first set the notification callback in application.rb#initialize</DESC>
-                        <CODE lang='ruby'>
-                            <![CDATA[
-                                class AppApplication < Rho::RhoApplication
-                                    def initialize
-                                        super
-                                
-                                        RhoConnectClient.setObjectNotify(
-                                            url_for(
-                                                :controller => "Product",
-                                                :action => :sync_object_notify
-                                            )
-                                        )
-                                    end
-                                end
-                            ]]>
+                        <CODE>
+                          <RUBY>
+<![CDATA[
+class AppApplication < Rho::RhoApplication
+  def initialize
+    super
+    RhoConnectClient.setObjectNotification(
+      url_for(
+        :controller => "Product",
+        :action => :sync_object_notified
+      )
+    )
+  end
+end
+]]>
+                          </RUBY>
+                          <JAVASCRIPT>
+<![CDATA[
+function syncObjectNotified(params) {
+  // handle notifications...
+}
+Rho.RhoConnectClient.setObjectNotification(syncObjectNotified);
+]]>
+                          </JAVASCRIPT>
                         </CODE>
-                        
                     </SECTION>
-                    
                     <SECTION>
                         <DESC>Next, in your controller action that displays the object(s), add the object notification by passing in a record or collection of records:</DESC>
-                        <CODE lang='ruby'>
-                            <![CDATA[
-                                class ProductController < Rho::RhoController
-                                
-                                    # GET /Product
-                                    def index
-                                        @products = Product.find(:all)
-                                
-                                        RhoConnectClient.addObjectnotify('Product',@products)
-                                        render
-                                    end
-                                
-                                    # ...
-                                
-                                    def sync_object_notify
-                                        #... do something with notification data ...
-                                
-                                        # refresh the current page
-                                        WebView.refresh
-                                        # or call System.execute_js to call javascript function which will update list
-                                    end
-                                end
-                            ]]>
+                        <CODE>
+                          <RUBY>
+<![CDATA[
+class ProductController < Rho::RhoController
+  # GET /Product
+  def index
+    @product = Product.find(:first)
+
+    RhoConnectClient.addObjectNotify('Product', @product.id)
+    render
+  end
+
+  # ...
+
+  def sync_object_notified
+    # process notification data ...
+
+    # refresh the current page
+    WebView.refresh
+    # or call System.execute_js to update part of the page
+  end
+end
+]]>
+                          </RUBY>
+                          <JAVASCRIPT>
+<![CDATA[
+function syncObjectNotified(params) {
+  // handle notifications...
+}
+
+var product = Product.find('first');
+
+Rho.RhoConnectClient.addObjectNotify('Product', product.id);
+]]>
+                          </JAVASCRIPT>
                         </CODE>
-                        
                     </SECTION>
-                    
                 </SECTIONS>
             </EXAMPLE>
-            
             <EXAMPLE title="Using search">
                 <DESC></DESC>
                 <SECTIONS>
                     <SECTION>
                         <DESC>First, call search from your controller action:</DESC>
-                        <CODE lang='ruby'>
-                            <![CDATA[
-                                def search
-                                    page = @params['page'] || 0
-                                    page_size = @params['page_size'] || 10
-                                    RhoConnectClient.search(
-                                        {
-                                            'Contact',
-                                            :from => 'search',
-                                            :search_params => {
-                                                :FirstName => @params['FirstName'],
-                                                :LastName => @params['LastName'],
-                                                :Company => @params['Company']
-                                            },
-                                            :offset => page * page_size,
-                                            :max_results => page_size
-                                        }
-                                        url_for(:action => :search_callback)
-                                    )
-                                    render :action => :search_wait
-                                end
-                            ]]>
+                        <CODE>
+                          <RUBY>
+<![CDATA[
+def search
+  page = @params['page'] || 0
+  page_size = @params['page_size'] || 10
+  RhoConnectClient.search(
+    {
+      'Contact',
+      :from => 'search',
+      :search_params => {
+        :FirstName => @params['FirstName'],
+        :LastName => @params['LastName'],
+        :Company => @params['Company']
+      },
+      :offset => page * page_size,
+      :max_results => page_size
+    }
+    url_for(:action => :search_callback)
+  )
+  render :action => :search_wait
+end
+]]>
+                          </RUBY>
+                          <JAVASCRIPT>
+<![CDATA[
+var page = params.page || params.pageSize,
+    pageSize = 10;
+Rho.RhoConnectClient.search(
+  {
+    'Contact',
+    'from': 'search',
+    'search_params': {
+      'FirstName': params.FirstName,
+      'LastName': params.LastName,
+      'Company': params.Company
+    },
+    'offset': page,
+    'max_results': pageSize
+  },
+  searchCallback
+);
+]]>
+                          </JAVASCRIPT>
                         </CODE>
-                        
                     </SECTION>
-                    
                     <SECTION>
-                        <DESC>Your callback might look like:</DESC>
-                        <CODE lang='ruby'>
-                            <![CDATA[
-                                def search_callback
-                                    status = @params["status"]
-                                    if (status and status == "ok")
-                                    WebView.navigate(
-                                        url_for(
-                                            :action => :show_page,
-                                            :query => @params['search_params']
-                                        )
-                                    )
-                                    else
-                                        render :action => :search_error
-                                    end
-                                end
-                            ]]>
+                        <DESC>The `search_params` will be forwarded to your callback so you can update the view with the results:</DESC>
+                        <CODE>
+                          <RUBY>
+<![CDATA[
+def search_callback
+  status = @params["status"]
+  if (status and status == "ok")
+  WebView.navigate(
+    url_for(
+      :action => :show_page,
+      :query => @params['search_params']
+    )
+  )
+  else
+    render :action => :search_error
+  end
+end
+
+def show_page
+  @contacts = Contact.find(
+    :all,
+    :conditions => {
+    {
+      :func => 'LOWER',
+      :name => 'FirstName',
+      :op => 'LIKE'
+    } => @params[:FirstName],
+    {
+      :func => 'LOWER',
+      :name=>'LastName',
+      :op=>'LIKE'
+    } => @params[:LastName],
+    {
+      :func=>'LOWER',
+      :name=>'Company',
+      :op=>'LIKE'
+    } => @params[:Company],
+    },
+    :op => 'OR',
+    :select => ['FirstName','LastName', 'Company'],
+    :per_page => page_size,
+    :offset => page * page_size
+  )
+  render :action => :show_page
+end
+]]>
+                          </RUBY>
+                          <JAVASCRIPT>
+<![CDATA[
+function searchCallback(params) {
+  if(params.status && params.status === "ok") {
+    // TODO: Fill in JS Sample
+    // reload relevant sections of the page
+  }
+}
+]]>
+                          </JAVASCRIPT>
                         </CODE>
-                        
                     </SECTION>
-                    
-                    <SECTION>
-                        <DESC>Typically you want to forward the original search query @params['search_params'] to your view that displays the results so you can perform the same query locally. Next, the resulting action :show_page will be called. Here we demonstrate using Rhom's advanced find query syntax since we are filtering a very large dataset:</DESC>
-                        <CODE lang='ruby'>
-                            <![CDATA[
-                                def show_page
-                                    @contacts = Contact.find(
-                                        :all,
-                                        :conditions => {
-                                        {
-                                            :func => 'LOWER',
-                                            :name => 'FirstName',
-                                            :op => 'LIKE'
-                                        } => @params[:FirstName],
-                                        {
-                                            :func => 'LOWER',
-                                            :name=>'LastName',
-                                            :op=>'LIKE'
-                                        } => @params[:LastName],
-                                        {
-                                            :func=>'LOWER',
-                                            :name=>'Company',
-                                            :op=>'LIKE'
-                                        } => @params[:Company],
-                                        },
-                                        :op => 'OR',
-                                        :select => ['FirstName','LastName', 'Company'],
-                                        :per_page => page_size,
-                                        :offset => page * page_size
-                                    )
-                                    render :action => :show_page
-                                end
-                            ]]>
-                        </CODE>
-                        
-                    </SECTION>
-                    
                 </SECTIONS>
             </EXAMPLE>
-            
-            
         </EXAMPLES>
         <REMARKS>
-            
             <REMARK title="Notification Parameters">
                 <DESC>
                   <![CDATA[

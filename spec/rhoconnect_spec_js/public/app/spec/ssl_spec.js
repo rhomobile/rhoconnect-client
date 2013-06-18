@@ -1,5 +1,5 @@
 
-describe("Rhoconnect Client module Test Starts Here", function() {
+describe("Rhoconnect Client: SSL Settings", function() {
   var defaultSyncServer = Rho.RhoConnectClient.syncServer;
 
   beforeEach(function(){
