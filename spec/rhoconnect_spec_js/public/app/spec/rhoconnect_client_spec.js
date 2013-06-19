@@ -279,7 +279,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	it("VT295-016 | Check persistence of notification callback when set for all sources | callback should fire each time", function() {
+	it("VT295-016 | Check persistence of notification callback when set for all sources | callback should be called each time", function() {
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
 				Rho.RhoConnectClient.setNotification('*', callbackFunction);
@@ -309,41 +309,25 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-		// it("VT295-017 | set notification with with Anonymous callback function | callback should get fire", function() {
-		// 	Rho.RhoConnectClient.setNotification('*', function(args) {
-		// 		sync_notify_callback(args);
-		// 	});
-		// 	 runs(function () {
-		//             Rho.RhoConnectClient.doSync();
-		//             setTimeout(function() {
-		// 				displayflag = true;
-		// 			}, 15000);
-		//        });
+	it("VT295-017 | set notification with with anonymous callback function | callback should be called", function() {
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', function(){
+					callbackCalled = true;
+				});
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
-		// 	  waitsFor(function() {
-		// 		    dispCurrentProcess(myString);
-		// 			return displayflag;
-		// 		}, "wait", 16000);
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
 
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toBeGreaterThan(0);
-		//     	  //alert(myString);
-		//        });
-		// });
+		runs(function() {
+			expect(callbackCalled).toEqual(true);
+			expect(Product.find('all').length).toBeGreaterThan(0);
+		});
+	});
 
 
 		// it("VT295-018 | set notification with with function callback. | callback should get fire", function() {
