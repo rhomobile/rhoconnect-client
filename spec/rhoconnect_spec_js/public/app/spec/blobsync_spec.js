@@ -1,4 +1,4 @@
-describe("Rhoconnect Client module Test Starts Here", function() {
+describe("RC- Blob Sync Test Starts Here", function() {
       //Rho.RhoConnectClient.syncServer = setSyncSever to valid one
 	   var BlobTest = null;
 	   var callbackCalled = false;
@@ -26,7 +26,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
     });
 	
 	
-		it("VT295-108 | Create blob and do sync   | image uri property of particular blob file should get changed after sync", function() {  
+		it("VT295-108 | Create blob and do sync  | image uri property of particular blob file should get changed after sync", function() {  
 		     var status="";
 			 var error_code ="";
 		     var myCallback = function(args){
@@ -59,7 +59,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 						return callbackCalled;
 						}, "Callback was not yet called.", 10000);
 						
-				var items = BlobTest.find("all",{conditions: {name: "BlobTestItem"}});
+				var items = BlobTest.find("all",{conditions: {'name': "BlobTestItem"}});
 				/*new_file_name = File.join(Rho::RhoApplication::get_blob_path(items[0].image_uri))
                 content_new = File.read(new_file_name)*/
 			    var new_file_name = Rho.Application.expandDatabaseBlobFilePath(items[0].image_uri);
@@ -124,7 +124,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 					}
 					
 				// destroy the existing synced blob object
-				var item_selected = BlobTest.find("all",{conditions: {name: "BlobTestItem"}});
+				var item_selected = BlobTest.find("all",{conditions: {'name': "BlobTestItem"}});
                 item_selected.destroy();
 				
 				Rho.RhoConnectClient.setNotification('BlobTest', myCallback);
@@ -137,7 +137,7 @@ describe("Rhoconnect Client module Test Starts Here", function() {
 						return callbackCalled;
 						}, "Callback was not yet called.", 10000);
 						
-				var items = BlobTest.find("all",{conditions: {name: "BlobTestItem"}});
+				var items = BlobTest.find("all",{conditions: {'name': "BlobTestItem"}});
 
 
 				runs(function() {
