@@ -329,44 +329,43 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
+	// TODO: This is duplicate of other callback tests
+	// it("VT295-018 | set notification with with function callback. | callback should get fire", function() {
+	// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
+	// 	runs(function () {
+	// 		Rho.RhoConnectClient.doSync();
+	// 		setTimeout(function() {
+	// 			displayflag = true;
+	// 		}, 15000);
+	// 	});
 
-		// it("VT295-018 | set notification with with function callback. | callback should get fire", function() {
-		// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-		// 	 runs(function () {
-		//             Rho.RhoConnectClient.doSync();
-		//             setTimeout(function() {
-		// 				displayflag = true;
-		// 			}, 15000);
-		//        });
+	// 	waitsFor(function() {
+	// 		dispCurrentProcess(myString);
+	// 		return displayflag;
+	// 	}, "wait", 16000);
 
-		// 	  waitsFor(function() {
-		// 		    dispCurrentProcess(myString);
-		// 			return displayflag;
-		// 		}, "wait", 16000);
+	// 	runs(function() {
+	// 		modelrecordtest();
+	// 		setTimeout(function() {
+	// 			displayflag1 = true;
+	// 		}, 5000);
 
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
+	// 	});
 
-		//        });
+	// 	waitsFor(function() {
+	// 		return displayflag1;
+	// 	}, "wait", 6000);
 
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
+	// 	runs(function() {
+	// 		expect(callbackCalled).toEqual(true);
+	// 		expect(product_record_count).toBeGreaterThan(0);
+	// 		expect(customer_record_count).toBeGreaterThan(0);
+	// 	});
+	// });
 
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toBeGreaterThan(0);
-		//     	  //alert(myString);
-		//        });
-		// });
-
-		// it("VT295-019 | dosync method when record is inserted | Created records should get reflected at  backend server ", function() {
-		// 	//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
-		// });
+	it("VT295-019 | dosync method when record is inserted | new records display in backend server ", function() {
+		//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
+	});
 
 		// it("VT295-020 | dosync method when record is updated | Updated records should get reflected at  backend server ", function() {
 		// 	//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
@@ -381,39 +380,50 @@ describe("Rhoconnect Client", function() {
     // });
 
 
-		// it("VT295-023 | doSync() with syncOnlyChangedSources set to True | only changed source will get sync", function() {
-		// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-		// 	create_product_record(1,"VT295-023");
-		// 	 runs(function () {
-		//             Rho.RhoConnectClient.doSync(false,'',true);
-		//             setTimeout(function() {
-		// 				displayflag = true;
-		// 			}, 15000);
-		//        });
+	it("VT295-023 | doSync() with syncOnlyChangedSources set true | only changed source should sync", function() {
+		var callCount = 0,
+				timeoutCalled = false;
 
-		// 	  waitsFor(function() {
-		// 			return displayflag;
-		// 		}, "wait", 16000);
+		var singleCallback = function(args) {
+			callCount++;
+			callbackCalled = true;
+		};
 
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
+		// Sync first time
+		runs(function () {
+			Rho.RhoConnectClient.login('testuser','testuser',function(){
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
-		//        });
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
 
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
+		Product.create({brand: 'Apple', name: 'iPhone5', price: 199.99});
 
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toEqual(0);
-		//     	  //alert(myString);
-		//        });
-		// });
+		runs(function () {
+			Rho.RhoConnectClient.login('testuser','testuser',function(){
+				Rho.RhoConnectClient.setNotification('*', singleCallback);
+				Rho.RhoConnectClient.doSync(false,'',true);
+			});
+			setTimeout(function(){
+				timeoutCalled = true;
+			}, 5000);
+		});
+
+		waitsFor(function() {
+			return timeoutCalled;
+		}, "wait", 6000);
+
+		runs(function() {
+			expect(callbackCalled).toEqual(true);
+			expect(callCount).toEqual(3); // Customer notification doesn't include 2nd request
+			expect(Product.find('all').length).toBeGreaterThan(0);
+			expect(Customer.find('all').length).toEqual(0);
+		});
+	});
 
 
 		// it("VT295-024 | doSync() with syncOnlyChangedSources set to False | all source will get sync", function() {
@@ -1302,14 +1312,4 @@ describe("Rhoconnect Client", function() {
 			expect(Rho.RhoConnectClient.userName).toEqual('testclient');
 		});
 	});
-
-		// it("VT295-010 | Check logout functionality | Server Error", function() {
-		// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-		// 	Rho.RhoConnectClient.logout();
-		// 	Rho.RhoConnectClient.doSync();
-		//     runs(function() {
-		//     	   expect(callbackCalled).toEqual(true);
-
-		//        });
-		// });
 });
