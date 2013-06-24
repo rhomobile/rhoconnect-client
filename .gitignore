@@ -19,6 +19,7 @@ rhosimulator/
 rholog.txt
 sync_server.*
 *.rdb
+rhoapi-modules.js
 
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
