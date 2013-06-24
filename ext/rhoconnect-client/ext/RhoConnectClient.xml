@@ -482,30 +482,21 @@ Rho.RhoConnectClient.setNotification('*', syncNotify);
                 <SECTIONS>
                     <SECTION>
                         <DESC>To use object notifications, first set the notification callback in application.rb#initialize</DESC>
-                        <CODE>
-                          <RUBY>
-<![CDATA[
-class AppApplication < Rho::RhoApplication
-  def initialize
-    super
-    RhoConnectClient.setObjectNotification(
-      url_for(
-        :controller => "Product",
-        :action => :sync_object_notified
-      )
-    )
-  end
-end
-]]>
-                          </RUBY>
-                          <JAVASCRIPT>
-<![CDATA[
-function syncObjectNotified(params) {
-  // handle notifications...
-}
-Rho.RhoConnectClient.setObjectNotification(syncObjectNotified);
-]]>
-                          </JAVASCRIPT>
+                        <CODE lang='ruby'>
+                            <![CDATA[
+                                class AppApplication < Rho::RhoApplication
+                                    def initialize
+                                        super
+                                
+                                        RhoConnectClient.setObjectNotification(
+                                            url_for(
+                                                :controller => "Product",
+                                                :action => :sync_object_notify
+                                            )
+                                        )
+                                    end
+                                end
+                            ]]>
                         </CODE>
                     </SECTION>
                     <SECTION>
