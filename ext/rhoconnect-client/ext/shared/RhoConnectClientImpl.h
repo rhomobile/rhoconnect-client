@@ -18,6 +18,8 @@ public:
     virtual void setPollInterval( int value, rho::apiGenerator::CMethodResult& oResult);
     virtual void getSyncServer(rho::apiGenerator::CMethodResult& oResult);
     virtual void setSyncServer( const rho::String& value, rho::apiGenerator::CMethodResult& oResult);
+    virtual void getBulksyncState( rho::apiGenerator::CMethodResult& oResult);
+    virtual void setBulksyncState( const int state, rho::apiGenerator::CMethodResult& oResult);
     virtual void getPageSize(rho::apiGenerator::CMethodResult& oResult);
     virtual void setPageSize( int value, rho::apiGenerator::CMethodResult& oResult);
     virtual void getThreadedMode(rho::apiGenerator::CMethodResult& oResult);
@@ -43,7 +45,6 @@ public:
     virtual void getLastSyncObjectCount( const rho::String& sourceName, rho::apiGenerator::CMethodResult& oResult);
     virtual void setSourceProperty( const rho::String& sourceName,  const rho::String& propertyName,  const rho::String& propertyValue, rho::apiGenerator::CMethodResult& oResult);
     virtual void getSourceProperty( const rho::String& sourceName,  const rho::String& propertyName, rho::apiGenerator::CMethodResult& oResult);
-    
 	
 private:
 	void handleSyncResult(rho::apiGenerator::CMethodResult& oResult);

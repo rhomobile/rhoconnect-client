@@ -1,31 +1,65 @@
-var sync_server_url = "http://"+SYNC_SERVER_HOST+":"+SYNC_SERVER_PORT;
 
-describe("Rhoconnect Client module Test Starts Here", function() {
+describe("Rhoconnect Client: SSL Settings", function() {
+  var callbackCalled = false;
 
-	var defaultPollInterval = Rho.RhoConnectClient.pollInterval;
+  beforeEach(function(){
+    callbackCalled = false;
+    Rho.ORM.clear();
+    var db = new Rho.Database.SQLite3(Rho.Application.databaseFilePath('user'), 'user');
+    db.execute("DELETE FROM SOURCES");
+    db.execute("DELETE FROM CLIENT_INFO");
+    db.execute("DELETE FROM OBJECT_VALUES");
+  });
 
-	beforeEach(function() {
-					
-		});
-		
-	afterEach(function() {
-				
+  it(" | should not connect to self-signed SSL with enabled peer check | unexpected server response", function(){
+    Rho.RhoConnectClient.syncServer = 'https://ssl-test.rhohub.com';
+    Rho.RhoConnectClient.sslVerifyPeer = true;
+
+    expect(Rho.RhoConnectClient.sslVerifyPeer).toEqual(true);
+    var errorCode = null;
+    var callbackCalled = false;
+
+    runs(function(){
+      Rho.RhoConnectClient.login('test','test', function(result){
+        errorCode = parseInt(result.error_code);
+        callbackCalled = true;
+      });
     });
-	
-	   it("VT295-060 | sslVerifyPeer property when set to true when client has no SSL certificate | It should fail to connect and error code 1 should return", function() {
-		     //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
-		});
-		
-	    it("VT295-061 | sslVerifyPeer property when set to false | It should fail to authorize and error code 9 should be returned", function() {
-		     //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
-	
-		});
-		
-		 it("VT295-062 | sslVerifyPeer property when set to true when client has SSL certificate | login should be successful(error code 0)", function() {
-		     //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
-	
-		});
-	
 
+    waitsFor(function(){
+      return callbackCalled;
+    },"Waiting for callback.", 10000);
 
-	});
+    runs(function(){
+      expect(errorCode).toEqual(1);
+    });
+
+  });
+
+  it(" | should connect to self-signed SSL with disabled peer check | no error", function(){
+    Rho.RhoConnectClient.syncServer = 'https://ssl-test.rhohub.com';
+    Rho.RhoConnectClient.sslVerifyPeer = false;
+    var errorCode = null;
+
+    runs(function(){
+      Rho.RhoConnectClient.login('test','test', function(result){
+        errorCode = parseInt(result.error_code);
+        callbackCalled = true;
+      });
+    });
+
+    waitsFor(function(){
+      return callbackCalled;
+    },"Waiting for callback.", 10000);
+
+    runs(function(){
+      expect(errorCode).toEqual(0);
+    });
+
+  });
+
+  xit(" | should connect to trusted SSL server | login successfully", function(){
+
+  });
+
+});

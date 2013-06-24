@@ -1,27 +1,26 @@
-#sdk: "../.."
-sdk: /Users/alexepifanoff/repos/rhodes
+---
+sdk: ../../../rhodes
 sdkversion: 3.5.0
 name: RhoConnectClientSpec_js
 version: 1.0
 vendor: rhomobile
-build: debug
+build: release
 bbver: 4.6
 applog: rholog.txt
 iphone:
   configuration: Release
   sdk: iphonesimulator6.1
-  provisionprofile:
-  codesignidentity:
-  entitlements:
+  provisionprofile: 
+  codesignidentity: 
+  entitlements: 
 wp:
-  productid: '0b698de0-7218-0130-547c-001a925f2369'
+  productid: 0b698de0-7218-0130-547c-001a925f2369
 symbian:
   uid: '0xef6036c4'
 android:
-  version: 2.1
-
+  version: 4.2.2
 paths:
   extensions: ../../ext
-
-extensions: ["json","rhoconnect-client"]
-#extensions: ["json"]
+extensions:
+- json
+- rhoconnect-client
