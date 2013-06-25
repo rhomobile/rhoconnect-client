@@ -386,7 +386,6 @@ describe("Rhoconnect Client", function() {
 
 		var singleCallback = function(args) {
 			callCount++;
-			callbackCalled = true;
 		};
 
 		// Sync first time
@@ -401,9 +400,9 @@ describe("Rhoconnect Client", function() {
 			return callbackCalled;
 		}, "wait", 6000);
 
-		Product.create({brand: 'Apple', name: 'iPhone5', price: 199.99});
 
 		runs(function () {
+			Product.create({brand: 'Apple', name: 'test-iphone', price: '$1'});
 			Rho.RhoConnectClient.login('testuser','testuser',function(){
 				Rho.RhoConnectClient.setNotification('*', singleCallback);
 				Rho.RhoConnectClient.doSync(false,'',true);
@@ -419,46 +418,56 @@ describe("Rhoconnect Client", function() {
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
-			expect(callCount).toEqual(3); // Customer notification doesn't include 2nd request
+			expect(callCount).toEqual(4); // 2 Product, 1 customer, 1 complete
 			expect(Product.find('all').length).toBeGreaterThan(0);
 			expect(Customer.find('all').length).toEqual(0);
 		});
 	});
 
 
-		// it("VT295-024 | doSync() with syncOnlyChangedSources set to False | all source will get sync", function() {
-		// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-		// 	create_product_record(1,"VT295-024");
-		// 	 runs(function () {
-		//             Rho.RhoConnectClient.doSync(false,'',false);
-		//             setTimeout(function() {
-		// 				displayflag = true;
-		// 			}, 15000);
-		//        });
+	it("VT295-024 | doSync() with syncOnlyChangedSources set to False | all sources should sync", function() {
+		var callCount = 0,
+				timeoutCalled = false;
 
-		// 	  waitsFor(function() {
-		// 			return displayflag;
-		// 		}, "wait", 16000);
+		var singleCallback = function(args) {
+			callCount++;
+		};
 
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
+		// Sync first time
+		runs(function () {
+			Rho.RhoConnectClient.login('testuser','testuser',function(){
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
-		//        });
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
 
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
 
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toBeGreaterThan(0);
-		//     	  //alert(myString);
-		//        });
-		// });
+		runs(function () {
+			Product.create({brand: 'Apple', name: 'test-iphone', price: '$1'});
+			Rho.RhoConnectClient.login('testuser','testuser',function(){
+				Rho.RhoConnectClient.setNotification('*', singleCallback);
+				Rho.RhoConnectClient.doSync(false,'',false);
+			});
+			setTimeout(function(){
+				timeoutCalled = true;
+			}, 5000);
+		});
+
+		waitsFor(function() {
+			return timeoutCalled;
+		}, "wait", 6000);
+
+		runs(function() {
+			expect(callbackCalled).toEqual(true);
+			expect(callCount).toEqual(5); // 2 Product, 1 customer, 1 complete
+			expect(Product.find('all').length).toBeGreaterThan(0);
+			expect(Customer.find('all').length).toBeGreaterThan(0);
+		});
+	});
 
   	// it("VT295-025 | doSync () method when showStatusPopup set to True | Sync status popup window should be shown on device during sync.", function() {
    //    //Is there a way to verify popup automatically?
@@ -1296,6 +1305,7 @@ describe("Rhoconnect Client", function() {
 	it("VT295-009 | Get username when user is logged out | string", function() {
 		runs(function () {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
 				Rho.RhoConnectClient.doSync();
 			});
 		});
