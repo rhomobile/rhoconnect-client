@@ -28,13 +28,6 @@ class BlobBulkTest_s < ImageBase
     @result
   end
 
-=begin
-  def query(params=nil)
-    puts "BlobBulkTest_s query params = #{params}"
-    super(params)
-  end
-=end
-
   def schema
     {
       'version' => '1.0',

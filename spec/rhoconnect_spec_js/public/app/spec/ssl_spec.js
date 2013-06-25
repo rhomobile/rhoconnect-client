@@ -1,6 +1,7 @@
 
 describe("Rhoconnect Client: SSL Settings", function() {
-  var callbackCalled = false;
+  var callbackCalled = false,
+      errorCode = 0;
 
   beforeEach(function(){
     callbackCalled = false;
@@ -16,12 +17,11 @@ describe("Rhoconnect Client: SSL Settings", function() {
     Rho.RhoConnectClient.sslVerifyPeer = true;
 
     expect(Rho.RhoConnectClient.sslVerifyPeer).toEqual(true);
-    var errorCode = null;
     var callbackCalled = false;
 
     runs(function(){
       Rho.RhoConnectClient.login('test','test', function(result){
-        errorCode = parseInt(result.error_code);
+        errorCode = parseInt(result.error_code, 10);
         callbackCalled = true;
       });
     });
@@ -39,11 +39,10 @@ describe("Rhoconnect Client: SSL Settings", function() {
   it(" | should connect to self-signed SSL with disabled peer check | no error", function(){
     Rho.RhoConnectClient.syncServer = 'https://ssl-test.rhohub.com';
     Rho.RhoConnectClient.sslVerifyPeer = false;
-    var errorCode = null;
 
     runs(function(){
       Rho.RhoConnectClient.login('test','test', function(result){
-        errorCode = parseInt(result.error_code);
+        errorCode = parseInt(result.error_code, 10);
         callbackCalled = true;
       });
     });
