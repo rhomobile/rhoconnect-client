@@ -463,7 +463,7 @@ describe("Rhoconnect Client", function() {
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
-			expect(callCount).toEqual(5); // 2 Product, 1 customer, 1 complete
+			expect(callCount).toEqual(5); // 2 Product, 2 customer, 1 complete
 			expect(Product.find('all').length).toBeGreaterThan(0);
 			expect(Customer.find('all').length).toBeGreaterThan(0);
 		});
