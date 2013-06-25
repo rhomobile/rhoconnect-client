@@ -40,7 +40,6 @@ using namespace rho::common;
 using namespace rho::db;
 
 static const int THREAD_WAIT_TIMEOUT = 10;
-static const char * const PUSH_PIN_NAME = "push_pin";
 
 
 IMPLEMENT_LOGCLASS(CClientRegister,"ClientRegister");
@@ -60,11 +59,14 @@ VectorPtr<ILoginListener*> CClientRegister::s_loginListeners;
 
 /*static*/ CClientRegister* CClientRegister::Create()
 {
+    LOG(TRACE) + "Loading rhoconnect session...";
     String session = CSyncThread::getSyncEngine().loadSession();
     if (session.length() > 0)
     {
+        LOG(TRACE) + "Loaded";
         Get()->setRhoconnectCredentials("", "", session);
     }
+    LOG(TRACE) + "Starting ClientRegister";
     Get()->startUp();
     return m_pInstance;
 }
@@ -141,7 +143,6 @@ void CClientRegister::dropRhoconnectCredentials(const String& session)
 void CClientRegister::setDevicehPin(const String& pin)
 {
     m_strDevicePin = pin;
-    RHOCONF().setString(PUSH_PIN_NAME, pin, true);
 
     if (pin.length() > 0)
     {
@@ -218,10 +219,6 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
         m_nPollInterval = POLL_INTERVAL_INFINITE;
         LOG(INFO)+"Session is empty, do register later";
         return false;
-    }
-    if ( m_strDevicePin.length() == 0 )
-    {
-        m_strDevicePin = RHOCONF().getString(PUSH_PIN_NAME);
     }
     if ( m_strDevicePin.length() == 0 )
     {
