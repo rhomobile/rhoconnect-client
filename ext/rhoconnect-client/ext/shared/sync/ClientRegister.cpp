@@ -121,7 +121,10 @@ void CClientRegister::setRhoconnectCredentials(const String& user, const String&
     {
         (*I)->onLogin(user, pass, session);
     }
-    startUp();
+    
+    if (!isAlive()) {
+        startUp();
+    }
 }
 
 void CClientRegister::dropRhoconnectCredentials(const String& session)
@@ -213,8 +216,6 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
         return false;
     }
     
-    Get()->setRhoconnectCredentials("", "", session);
-
     if ( m_strDevicePin.length() == 0 )
     {
         m_nPollInterval = POLL_INTERVAL_INFINITE;
@@ -238,6 +239,8 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
 		{
 			//token in db same as new one and it was already send to the server
 			//so we do nothing
+            setRhoconnectCredentials("","",session);
+            
 			return true; 
 		}
     }
@@ -251,8 +254,11 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
 //					LOG.ERROR("Error saving token_sent to the DB...");
 //				}	
 		LOG(INFO)+"Registered client sucessfully...";
-		return true;
-	}
+        
+        setRhoconnectCredentials("","",session);
+        return true;
+
+    }
 
 	LOG(WARNING)+"Network error: "+ resp.getRespCode();
 	return false;
