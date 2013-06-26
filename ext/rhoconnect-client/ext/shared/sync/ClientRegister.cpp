@@ -59,13 +59,6 @@ VectorPtr<ILoginListener*> CClientRegister::s_loginListeners;
 
 /*static*/ CClientRegister* CClientRegister::Create()
 {
-    LOG(TRACE) + "Loading rhoconnect session...";
-    String session = CSyncThread::getSyncEngine().loadSession();
-    if (session.length() > 0)
-    {
-        LOG(TRACE) + "Loaded";
-        Get()->setRhoconnectCredentials("", "", session);
-    }
     LOG(TRACE) + "Starting ClientRegister";
     Get()->startUp();
     return m_pInstance;
@@ -113,7 +106,6 @@ bool CClientRegister::GetSslVerifyPeer()
 CClientRegister::CClientRegister() : m_nPollInterval(POLL_INTERVAL_SECONDS)
 {
     m_NetRequest.setSslVerifyPeer(s_sslVerifyPeer);
-
 }
 
 CClientRegister::~CClientRegister()
@@ -220,6 +212,9 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
         LOG(INFO)+"Session is empty, do register later";
         return false;
     }
+    
+    Get()->setRhoconnectCredentials("", "", session);
+
     if ( m_strDevicePin.length() == 0 )
     {
         m_nPollInterval = POLL_INTERVAL_INFINITE;
@@ -234,7 +229,7 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
         LOG(WARNING)+"Sync client_id is empty, do register later";
 		return false;
 	}
-
+    
     IDBResult res = CDBAdapter::getUserDB().executeSQL("SELECT token,token_sent from client_info");
     if ( !res.isEnd() ) {
 		String token = res.getStringByIdx(0); 
