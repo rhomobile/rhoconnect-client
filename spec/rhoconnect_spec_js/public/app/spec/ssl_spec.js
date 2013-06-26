@@ -16,10 +16,8 @@ describe("Rhoconnect Client: SSL Settings", function() {
     Rho.RhoConnectClient.syncServer = 'https://ssl-test.rhohub.com';
     Rho.RhoConnectClient.sslVerifyPeer = true;
 
-    expect(Rho.RhoConnectClient.sslVerifyPeer).toEqual(true);
-    var callbackCalled = false;
-
     runs(function(){
+      expect(Rho.RhoConnectClient.sslVerifyPeer).toEqual(true);
       Rho.RhoConnectClient.login('test','test', function(result){
         errorCode = parseInt(result.error_code, 10);
         callbackCalled = true;
@@ -28,7 +26,7 @@ describe("Rhoconnect Client: SSL Settings", function() {
 
     waitsFor(function(){
       return callbackCalled;
-    },"Waiting for callback.", 10000);
+    },"wait", 10000);
 
     runs(function(){
       expect(errorCode).toEqual(1);
@@ -49,7 +47,7 @@ describe("Rhoconnect Client: SSL Settings", function() {
 
     waitsFor(function(){
       return callbackCalled;
-    },"Waiting for callback.", 10000);
+    },"wait", 10000);
 
     runs(function(){
       expect(errorCode).toEqual(0);
