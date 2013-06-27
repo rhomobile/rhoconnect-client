@@ -323,41 +323,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	// TODO: This is duplicate of other callback tests
-	// it("VT295-018 | set notification with with function callback. | callback should get fire", function() {
-	// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-	// 	runs(function () {
-	// 		Rho.RhoConnectClient.doSync();
-	// 		setTimeout(function() {
-	// 			displayflag = true;
-	// 		}, 15000);
-	// 	});
-
-	// 	waitsFor(function() {
-	// 		dispCurrentProcess(myString);
-	// 		return displayflag;
-	// 	}, "wait", 16000);
-
-	// 	runs(function() {
-	// 		modelrecordtest();
-	// 		setTimeout(function() {
-	// 			displayflag1 = true;
-	// 		}, 5000);
-
-	// 	});
-
-	// 	waitsFor(function() {
-	// 		return displayflag1;
-	// 	}, "wait", 6000);
-
-	// 	runs(function() {
-	// 		expect(callbackCalled).toEqual(true);
-	// 		expect(product_record_count).toBeGreaterThan(0);
-	// 		expect(customer_record_count).toBeGreaterThan(0);
-	// 	});
-	// });
-
-	it("VT295-019 | dosync method when record is inserted | new record displays in backend server ", function() {
+	it("VT295-019 | doSync method when record is inserted | new record displays in backend server ", function() {
 		var expectedCount = 0,
 				callback1 = false,
 				callback2 = false,
@@ -411,20 +377,114 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-		// it("VT295-020 | dosync method when record is updated | Updated records should get reflected at  backend server ", function() {
-		// 	//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
-		// });
+	it("VT295-020 | doSync method when record is updated | updated record displays in backend server", function() {
+		var callback1 = false,
+				callback2 = false,
+				callback3 = false,
+				testName = new Date().getTime().toString();
 
-	 	// it("VT295-021 | dosync method when record is deleted | Deleted records should get removed from  backend server ", function() {
-		// 	//This can be reflected by query method, if the record isn't in the backend then it won't show up in query
-		// });
+		// Sync first time
+		Rho.RhoConnectClient.login('testuser','testuser',function(){
+			Rho.RhoConnectClient.setNotification('*', function(args){ callback1 = true; });
+			Rho.RhoConnectClient.doSync();
+		});
 
-    // it("VT295-022 | dosync method when record is created at server | Record should get created in product model on device ", function() {
-    //   //can it be automated or should we do it manually?
-    // });
+		waitsFor(function() {
+			return callback1;
+		}, "wait", 6000);
 
+		//TODO: Wait function is not ideal
+		waits(1000);
 
-	it("VT295-023 | doSync() with syncOnlyChangedSources set true | only changed source should sync", function() {
+		runs(function () {
+			var p = Product.find('first');
+			p.set('name', testName);
+			p.save();
+			Rho.RhoConnectClient.clearNotification('*');
+			Rho.RhoConnectClient.setNotification('*', function(args){ callback2 = true; });
+			Rho.RhoConnectClient.doSync();
+		});
+
+		waitsFor(function() {
+			return callback2;
+		}, "wait", 6000);
+
+		runs(function() {
+			Rho.RhoConnectClient.logout();
+			Rho.RhoConnectClient.login('testuser2','testuser2',function(){
+				Rho.RhoConnectClient.clearNotification('*');
+				Rho.RhoConnectClient.setNotification('*', function(args){ callback3 = true; });
+				Rho.RhoConnectClient.doSync();
+			});
+		});
+
+		waitsFor(function() {
+			return callback3;
+		}, "wait", 6000);
+
+		runs(function() {
+			var products = Product.find('all',{conditions: {name: testName}});
+			expect(products.length).toEqual(1);
+			expect(products[0].get('name')).toEqual(testName);
+		});
+	});
+
+	it("VT295-021 | doSync method when record is deleted | deleted record is removed from backend server", function() {
+		var expectedCount = 0,
+				callback1 = false,
+				callback2 = false,
+				callback3 = false,
+				deletedName = null;
+
+		// Sync first time
+		Rho.RhoConnectClient.login('testuser','testuser',function(){
+			Rho.RhoConnectClient.setNotification('*', function(args){ callback1 = true; });
+			Rho.RhoConnectClient.doSync();
+		});
+
+		waitsFor(function() {
+			return callback1;
+		}, "wait", 6000);
+
+		//TODO: Wait function is not ideal
+		waits(1000);
+
+		runs(function () {
+			expectedCount = Product.count();
+			var deleted = Product.find('first');
+			deletedName = deleted.get('name');
+			console.log("count: " + expectedCount + " found record: " + deleted.get('name'));
+			deleted.destroy();
+			Rho.RhoConnectClient.clearNotification('*');
+			Rho.RhoConnectClient.setNotification('*', function(args){ callback2 = true; });
+			Rho.RhoConnectClient.doSync();
+		});
+
+		waitsFor(function() {
+			return callback2;
+		}, "wait", 6000);
+
+		runs(function() {
+			Rho.RhoConnectClient.logout();
+			Rho.RhoConnectClient.login('testuser2','testuser2',function(){
+				Rho.RhoConnectClient.clearNotification('*');
+				Rho.RhoConnectClient.setNotification('*', function(args){ callback3 = true; });
+				Rho.RhoConnectClient.doSync();
+			});
+		});
+
+		waitsFor(function() {
+			return callback3;
+		}, "wait", 6000);
+
+		runs(function() {
+			expect(Product.count()).toEqual(expectedCount - 1);
+			var products = Product.find('all',{conditions: {name: deletedName}});
+			expect(products.length).toEqual(0);
+		});
+	});
+
+	it("VT295-023 | doSync with syncOnlyChangedSources set true | only changed source should sync", function() {
 		var callCount = 0,
 				timeoutCalled = false;
 
@@ -469,7 +529,7 @@ describe("Rhoconnect Client", function() {
 	});
 
 
-	it("VT295-024 | doSync() with syncOnlyChangedSources set to false | all sources should sync", function() {
+	it("VT295-024 | doSync with syncOnlyChangedSources set to false | all sources should sync", function() {
 		var callCount = 0,
 				timeoutCalled = false;
 
@@ -512,36 +572,8 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-  	// it("VT295-025 | doSync () method when showStatusPopup set to True | Sync status popup window should be shown on device during sync.", function() {
-   //    //Is there a way to verify popup automatically?
-   // 	});
-
-   //  it("VT295-026 | doSync () method when showStatusPopup set to False | Sync status popup window should not be shown on device during sync.", function() {
-   //    //Is there a way to verify popup automatically?
-   //  });
-
 	 //    it("VT295-027 | doSync () method with queryParams | Parameter should pass to rhoconnect server inside query method.", function() {
 		// 	//This can be automated, just have the adapter return data based on existence of parameters.
-		// });
-
-		// it("VT295-028 | doSync () method with all param is empty | Exception should be thrown", function() {
-		// 	 var Exception_Message = "";
-		// 	 runs(function () {
-		// 	 try
-		// 	  {
-		//             Rho.RhoConnectClient.doSync("","","");
-		// 	  }
-		// 	 catch(ex)
-		// 	  {
-		// 	     Exception_Message = ex.message;
-		// 	  }
-		//       });
-
-		// 	 expect(Exception_Message).toMatch("argument error exception");
-
-		// });
-
-
 
 		// it("VT295-029 | getLastSyncObjectCount method after resetting the DB | Number of server records", function() {
 		// 	 runs(function () {
@@ -645,27 +677,29 @@ describe("Rhoconnect Client", function() {
 
 		// });
 
-		// it("VT295-034 | isSyncing() method when sync is in progress | true ", function() {
-		// 	 runs(function () {
-		//             Rho.RhoConnectClient.doSync();
-		//        });
+	it("VT295-034 | isSyncing() method when sync is in progress | true ", function() {
+		var myCallback = function(args) {
+			expect(Rho.RhoConnectClient.isSyncing()).toEqual(true);
+			callbackCalled = true;
+		};
 
-		// 	 runs(function() {
-		//     	  expect(Rho.RhoConnectClient.isSyncing()).toEqual(true);
-		//        });
-		// });
+		runs(function() {
+			Rho.RhoConnectClient.login('testuser','testuser',function(){
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
-		// it("VT295-035 | isSyncing() method when sync is not in progress | False ", function() {
-		// 	 setTimeout(function() {
-		// 			displayflag = true;
-		// 		}, 15000);
-		// 	 waitsFor(function() {
-		// 			return displayflag;
-		// 		}, "wait", 16000);
-		// 	 runs(function() {
-		//     	  expect(Rho.RhoConnectClient.isSyncing()).toEqual(false);
-		//        });
-		// });
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
+	});
+
+	it("VT295-035 | isSyncing() method when sync is not in progress | false ", function() {
+		runs(function() {
+			expect(Rho.RhoConnectClient.isSyncing()).toEqual(false);
+		});
+	});
 
 		// it("VT295-036 | stopSync() method | Number of server records", function() {
 		// 	 runs(function () {
@@ -748,268 +782,8 @@ describe("Rhoconnect Client", function() {
 
 		// });
 
-
-		// // search() method related spec and make sure that more than 5 records (VT295-041) exist at backend server.
-
-		// it("VT295-041 | search method for all sources with controller action URL Callback | Callback should fire and model should populate ", function() {
-		// 	 runs(function () {
-		// 		 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0 }, '/app/Settings/controller_search_callback');
-		// 		 });
-		// 	  waitsFor(function() {
-		// 			return callbackCalled;
-		// 		}, "timeout", 10000);
-
-		// 	  runs(function () {
-		// 		    callbackCalled =false; // setting false again here since will get true in search block
-		// 		    Rho.RhoConnectClient.search( { sourceNames : ['Customer'], from :'search', searchParams : { first :'VT295-041'}, offset : 0 }, '/app/Settings/controller_search_callback');
-		// 			 });
-		// 	    waitsFor(function() {
-		// 				return callbackCalled;
-		// 			}, "timeout", 10000);
-
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		// 		  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toBeGreaterThan(0);
-		//        });
-		// });
-
-
-		// it("VT295-042 | search method for all sources with with Anonymous callback function | Callback should fire and model should populate", function() {
-		// 	 runs(function () {
-		// 		 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0 }, function(result){
-		// 			 search_callback(result); });
-		// 		 });
-		// 	  waitsFor(function() {
-		// 			return callbackCalled;
-		// 		}, "timeout", 10000);
-
-		// 	  runs(function () {
-		// 		    callbackCalled =false; // setting false again here since will get true in search block
-		// 			 Rho.RhoConnectClient.search( { sourceNames : ['Customer'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0 }, function(result){
-		// 				 search_callback(result); });
-		// 			 });
-		// 	    waitsFor(function() {
-		// 				return callbackCalled;
-		// 			}, "timeout", 10000);
-
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toBeGreaterThan(0);
-		//     	  expect(searchCallback_paramsValue.status).toMatch('complete');
-		//     	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
-		//        });
-		// });
-
-
-		// it("VT295-043 | search method for all sources with with function callback | Callback should fire and model should populate", function() {
-		// 	 runs(function () {
-		// 		 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0 }, search_callback );
-		// 		 });
-		// 	  waitsFor(function() {
-		// 			return callbackCalled;
-		// 		}, "timeout", 10000);
-
-		// 	  runs(function () {
-		// 		    callbackCalled =false; // setting false again here since will get true in search block
-		// 			 Rho.RhoConnectClient.search( { sourceNames : ['Customer'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0 }, search_callback);
-		// 			 });
-		// 	    waitsFor(function() {
-		// 				return callbackCalled;
-		// 			}, "timeout", 10000);
-
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toBeGreaterThan(0);
-		//     	  expect(searchCallback_paramsValue.status).toMatch('complete');
-		//     	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
-		//        });
-		// });
-
     //  it("VT295-044 | set notification for specific source model and call doSyncSource() method | Notification call back should get fire and all sync status should be reported", function() {
     //   //should report all sync status [in progress,ok and complete]
-    // });
-
-		// it("VT295-045 | Search method when :from parameter is set to non default source adapter method | Callback should fire and model should populate", function() {
-		// 	 runs(function () {
-		// 		 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'user_product_search', searchParams : { sku : 'VT295-041'}, offset : 0 }, search_callback );
-		// 		 });
-		// 	  waitsFor(function() {
-		// 			return callbackCalled;
-		// 		}, "timeout", 10000);
-
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toEqual(0);
-		//     	  expect(searchCallback_paramsValue.status).toMatch('complete');
-		//     	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
-		//        });
-		// });
-
-		// it("VT295-046 | search method if backend server has more records than max_results  ", function() {
-		// 	 runs(function () {
-		// 		 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0, maxResults : 5 }, search_callback );
-		// 		 });
-		// 	  waitsFor(function() {
-		// 			return callbackCalled;
-		// 		}, "timeout", 10000);
-
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toEqual(5);
-		//     	  expect(searchCallback_paramsValue.status).toMatch('complete');
-		//     	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
-		//        });
-		// });
-
-		// it("VT295-047 | search method if sync_changes set to true", function() {
-		// 	 runs(function () {
-		// 		 create_product_record(1,"VT295-047");
-		// 		 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0, maxResults : 5, syncChanges : true }, search_callback );
-		// 		 });
-		// 	  waitsFor(function() {
-		// 			return callbackCalled;
-		// 		}, "timeout", 10000);
-
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toEqual(5);
-		//     	  expect(searchCallback_paramsValue.status).toMatch('complete');
-		//     	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
-		//     	  expect(Rho.ORM.haveLocalChanges).toEqual(false);
-		//        });
-		// });
-
-		// it("VT295-048 | search method if sync_changes set to false", function() {
-		// 	 runs(function () {
-		// 		 create_product_record(1,"VT295-047");
-		// 		 Rho.RhoConnectClient.search( { sourceNames : ['Product'], from : 'search', searchParams : { sku : 'VT295-041'}, offset : 0, maxResults : 5, syncChanges : false }, search_callback );
-		// 		 });
-		// 	  waitsFor(function() {
-		// 			return callbackCalled;
-		// 		}, "timeout", 10000);
-
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
-
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toEqual(5);
-		//     	  expect(searchCallback_paramsValue.status).toMatch('complete');
-		//     	  expect(searchCallback_paramsValue.search_params).not.toBeNull();
-		//     	  expect(Rho.ORM.haveLocalChanges).toEqual(true);
-		//        });
-		// });
-
-
-		// it("VT295-049 | search method with no parameters | Exception should be thrown", function() {
-		// 	 var Exception_Message = "";
-		// 	 runs(function () {
-		// 	 try
-		// 	  {
-		// 		  Rho.RhoConnectClient.search();
-		// 	  }
-		// 	 catch(ex)
-		// 	  {
-		// 	    Exception_Message =	ex.message;
-		// 	  }
-		//       });
-
-		// 	 expect(Exception_Message).toMatch("argument error exception");
-
-		// });
-
-    // it("VT295-050 | showStatusPopup property default value test| default value showStatusPopup property should be true", function() {
-
-
-    // });
-
-    //   it("VT295-051 | showStatusPopup property set to true | Sync status popup window should be shown on device during sync ", function() {
-
-    //      //Is there a way to verify popup automatically?
-    // });
-
-    // it("VT295-052 | showStatusPopup property set to false | Sync status popup window should not be shown on device during sync ", function() {
-    //   //Is there a way to verify popup automatically?
-
     // });
 
 		// it("VT295-054 | pollInterval property when set to 30 seconds | call back should fire after each 30 seconds ", function() {
