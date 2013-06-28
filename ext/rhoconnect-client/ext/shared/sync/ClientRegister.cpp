@@ -30,6 +30,7 @@
 #include "common/RhoConf.h"
 #include "common/RhodesApp.h"
 #include "System.h"
+#include "Push.h"
 
 rho::String rho_sysimpl_get_phone_id();
 
@@ -185,12 +186,17 @@ void CClientRegister::run()
 
 String CClientRegister::getRegisterBody(const String& strClientID)
 {
-	IRhoPushClient* pushClient = RHODESAPP().getDefaultPushClient();
-	int port = RHOCONF().getInt("push_port");
+    String strPushType = rho::push::CPushManager::getInstance()->getDefaultID();
+    if(strPushType == "rhoconnect")
+    {
+        strPushType = "rhoconnect_push";
+    }
+
+    int port = RHOCONF().getInt("push_port");
 
 	String body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, m_strDevicePin,
 		port > 0 ? port : DEFAULT_PUSH_PORT, rho_rhodesapp_getplatform(), rho::System::getPhoneId(),
-        /*device_push_type*/ (0 != pushClient) ? pushClient->getType() : "" /*it means native push type*/);
+		                strPushType);
 
 	LOG(INFO)+"getRegisterBody() BODY is: " + body;
 	return body;
