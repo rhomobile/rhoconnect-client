@@ -1,7 +1,7 @@
 
 describe("Rhoconnect Client: SSL Settings", function() {
   var callbackCalled = false,
-      errorCode = 0;
+  errorCode = 0;
 
   beforeEach(function(){
     callbackCalled = false;
