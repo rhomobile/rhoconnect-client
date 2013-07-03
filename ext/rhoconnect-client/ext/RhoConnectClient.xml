@@ -141,7 +141,7 @@
     </METHOD>
 
     <METHOD name="doSync">
-      <DESC>Start the SyncEngine process and display an optional status popup.</DESC>
+      <DESC>Start the RhoConnectClient sync process.</DESC>
       <PARAMS>
         <PARAM name="showStatusPopup" type="BOOLEAN">
           <DESC>Set to true to show status popup.</DESC>
@@ -160,7 +160,7 @@
     </METHOD>
 
     <METHOD name="doSyncSource">
-      <DESC>Start sync for a given source name.</DESC>
+      <DESC>Start RhoConnectClient sync process for a given source name.</DESC>
       <PARAMS>
         <PARAM name="sourceName" type="STRING">
           <DESC>Source name.</DESC>
@@ -392,7 +392,7 @@ function loginCallback(result) {
                 </SECTIONS>
             </EXAMPLE>
             <EXAMPLE title="Notifications">
-                <DESC>In this example, once the sync process for the Account model is complete, a callback will be invoked (we define as `sync_notify here) with the status and errors (if any).</DESC>
+                <DESC>In this example, once the sync process for the Account model is complete, a callback will be invoked (we define as `sync_notify` here) with the status and errors (if any).</DESC>
                 <SECTIONS>
                     <SECTION>
                         <DESC>First, assign a sync notification for the Account model:</DESC>
