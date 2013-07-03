@@ -43,4 +43,5 @@ JavaScript
 * rake run:iphone:rhoconnect_spec_js
 * rake run:win32:rhoconnect_spec_js
 
-Local Rhoconnect server will be launched and pack of tests will be performed.
+
+**NOTE: The test server, http://rhostore.herokuapp.com, that is used by these tests is reset every hour.  Therefore you may see failures if you run tests exactly at the top of the hour.**
