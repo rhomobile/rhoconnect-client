@@ -254,4 +254,22 @@ namespace "run" do
           exit $failed.to_i
       end
   end
+
+    namespace "wp8" do
+    task :rhoconnect_spec do
+      require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+
+      run_rhoconnect_spec('wp8','rhoconnect_spec', { :ruby => true } )
+      exit 1 if $total.to_i==0
+      exit $failed.to_i
+    end
+      
+      task :rhoconnect_spec_js do
+          require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+          
+          run_rhoconnect_spec('wp8','rhoconnect_spec_js', { :js => true } )
+          exit 1 if $total.to_i==0
+          exit $failed.to_i
+      end
+  end
 end
