@@ -715,21 +715,26 @@ describe("Rhoconnect Client", function() {
 	});
 
 
-		// it("VT295-055 | pollInterval property when set to 0 seconds | call back should not get fire  ", function() {
-		// 	Rho.RhoConnectClient.pollInterval=0;
-		// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-		// 	runs(function() {
-	 //            setTimeout(function() {
-		// 			displayflag = true;
-		// 		}, 60000);
-	 //        });
-		//    waitsFor(function() {
-		// 		return displayflag;
-		// 	}, "wait", 62000);
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(false);
-		//        });
-		// });
+	it("VT295-055 | pollInterval property when set to 0 seconds | callback should not fire ", function() {
+		var timeoutCalled = false;
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
+				Rho.RhoConnectClient.pollInterval = 0;
+			});
+			setTimeout(function(){
+				timeoutCalled = true;
+			}, 5000);
+		});
+
+		waitsFor(function() {
+			return timeoutCalled;
+		}, "wait", 6000);
+
+		runs(function() {
+			expect(callbackCalled).toBe(false);
+		});
+	});
 
 		// it("VT295-056 | Check sync method when pollInterval property  set to 0 seconds | call back should get fire  ", function() {
 		// 	Rho.RhoConnectClient.pollInterval=0;
