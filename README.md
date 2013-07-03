@@ -31,5 +31,16 @@ This repo contains rhoconnect-client library that can be used by your native app
 ##Running specs
 
 Copy `config.yml.sample` to `config.yml` and edit it with the path to your rhodes and rhoconnect workspaces.
-Use "rake run:android:rhoconnect_spec", "rake run:iphone:rhoconnect_spec" or "rake run:win32:rhoconnect_spec" to run specs on respective platform.
+Use the following tasks to run specs on respective platform:
+
+Ruby:
+* rake run:android:rhoconnect_spec
+* rake run:iphone:rhoconnect_spec
+* rake run:win32:rhoconnect_spec
+
+JavaScript
+* rake run:android:rhoconnect_spec_js
+* rake run:iphone:rhoconnect_spec_js
+* rake run:win32:rhoconnect_spec_js
+
 Local Rhoconnect server will be launched and pack of tests will be performed.
