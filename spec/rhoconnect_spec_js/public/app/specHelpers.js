@@ -1,11 +1,15 @@
 var callbackFunction = function(args) {
+  processArgs(args);
+  callbackCalled = true;
+};
+
+var processArgs = function(args) {
   if(args.error_code) {
     loginCallback_paramsValue.error_code = args.error_code.toString();
   }
   if(args.error_message) {
     loginCallback_paramsValue.error_message = args.error_message.toString();
   }
-  callbackCalled = true;
 };
 
 var createProducts = function(count, data) {
