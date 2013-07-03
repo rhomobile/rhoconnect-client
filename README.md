@@ -11,7 +11,7 @@ To use latest code from github repo you will need to build and install rhoconnec
 
 First you will need to set up paths to the Rhodes and Rhoconnect folders. To do this, copy 'config.yml.sample' to 'config.yml' and edit it with the path to your rhodes and rhoconnect workspaces.
 
-To build gem run 'rake gem:make_gem' command from repo root. Gem file will be created in the same folder. Install it using 'gem install ./rhoconnect-client-<version>.gem'
+To build gem run `rake gem:make_gem` command from repo root. Gem file will be created in the same folder. Install it using `gem install ./rhoconnect-client-<version>.gem`
 
 ##Creating Rhodes application that uses Rhoconnect client
 
@@ -34,14 +34,14 @@ Copy `config.yml.sample` to `config.yml` and edit it with the path to your rhode
 Use the following tasks to run specs on respective platform:
 
 Ruby:
-* rake run:android:rhoconnect_spec
-* rake run:iphone:rhoconnect_spec
-* rake run:win32:rhoconnect_spec
+* `rake run:android:rhoconnect_spec`
+* `rake run:iphone:rhoconnect_spec`
+* `rake run:win32:rhoconnect_spec`
 
 JavaScript
-* rake run:android:rhoconnect_spec_js
-* rake run:iphone:rhoconnect_spec_js
-* rake run:win32:rhoconnect_spec_js
+* `rake run:android:rhoconnect_spec_js`
+* `rake run:iphone:rhoconnect_spec_js`
+* `rake run:win32:rhoconnect_spec_js`
 
 
 **NOTE: The test server, http://rhostore.herokuapp.com, that is used by these tests is reset every hour.  Therefore you may see failures if you run tests exactly at the top of the hour.**
