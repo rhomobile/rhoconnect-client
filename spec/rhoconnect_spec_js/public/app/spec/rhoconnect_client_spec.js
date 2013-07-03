@@ -311,9 +311,10 @@ describe("Rhoconnect Client", function() {
 		});
 
 		waitsFor(function() {
-			//alert('inside callback1');
 			return callback1;
 		}, "wait 1", 6000);
+
+		waits(1000);
 
 		runs(function() {
 			expectedCount = Product.count();
@@ -364,6 +365,8 @@ describe("Rhoconnect Client", function() {
 			return callback1;
 		}, "wait 1", 6000);
 
+		waits(1000);
+
 		runs(function() {
 			var p = Product.find('first');
 			p.set('name', testName);
@@ -413,6 +416,8 @@ describe("Rhoconnect Client", function() {
 		waitsFor(function() {
 			return callback1;
 		}, "wait 1", 6000);
+
+		waits(1000);
 
 		runs(function() {
 			expectedCount = Product.count();
@@ -814,23 +819,6 @@ describe("Rhoconnect Client", function() {
 
 		// });
 
-		// it("VT295-060 | sslVerifyPeer property when set to true | It should connect to SSL certified rhoconnect  server successfully.", function() {
-		//      //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
-		// });
-
-	 //    it("VT295-061 | sslVerifyPeer property when set to false | It should not connect to SSL certified rhoconnect server", function() {
-		//      //Rho.RhoConnectClient.syncServer = 'https://nagios.rhomobile.com';
-
-		// });
-
-    // it("VT295-062 | Sync the record data when device comes back into network | Sync should be successful.", function() {
-    //      // it should be manual
-    //  });
-	 //    it("VT295-063 | setObjectNotify() with controller action URL Callback | object notification callback should be invoked.", function() {
-
-
-		// });
-
 		// it("VT295-064 | setObjectNotify() with no changes in source objects | object notification callback should not invoked.", function() {
 
 
@@ -862,22 +850,28 @@ describe("Rhoconnect Client", function() {
 		// });
 
 
-		// it("VT295-070 | set username [read only] property  | Exception should be thrown", function() {
-		// 	 var Exception_Message = "";
-		// 	 runs(function() {
-		// 	 try
-		// 	  {
-		// 		  Rho.RhoConnectClient.userName ="Hello"
-		// 	  }
-		// 	 catch(ex)
-		// 	  {
-		// 	     Exception_Message =ex.message;
-		// 	  }
-		//       });
+	it("VT295-070 | set userName [read only] property  | raises an exception", function() {
+		var message = '';
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				try {
+					Rho.RhoConnectClient.userName = 'hello';
+				} catch(ex) {
+					message = ex.message;
+					callbackCalled = true;
+				}
+			});
+		});
 
-		// 	 expect(Exception_Message).toMatch("exception");
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
 
-		// });
+		runs(function(){ 
+			expect(Rho.RhoConnectClient.userName).toEqual('testclient');
+			expect(message).toMatch('setting a property that has only a getter');
+		});
+	});
 
 	// it("VT295-071 | Record Sync stress Test  | All created records should get reflected at server side", function() {
 

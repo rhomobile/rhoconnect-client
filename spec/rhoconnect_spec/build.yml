@@ -1,27 +1,25 @@
---- 
+---
 name: rhoconnect_spec
 bbver: 6.0
-sdk: C:\projects\rhodes
-#applog: rholog.txt
+sdk: /Users/lars/Dev/code/rhodes
 version: 1.0.0
 vendor: rhomobile
 sdkversion: 3.4
-
-iphone: 
+iphone:
   sdk: iphonesimulator6.0
-  entitlements: ""
-  codesignidentity: ""
+  entitlements: ''
+  codesignidentity: ''
   configuration: Release
-  extensions: ["barcode"]
-
+  extensions:
+  - barcode
 paths:
   extensions: ../../ext
-     
-extensions: ["mspec", "fileutils","rhoconnect-client"]
-
+extensions:
+- mspec
+- fileutils
+- rhoconnect-client
 wp:
-  productid: 'fd55c4d0-51fa-012e-7844-6caec51bd50e'
-
+  productid: fd55c4d0-51fa-012e-7844-6caec51bd50e
 android:
-  apikey: "0tLch9tZSX1G7PQRWwmqvINECUGtJ8ReArpPJxw"
+  apikey: 0tLch9tZSX1G7PQRWwmqvINECUGtJ8ReArpPJxw
   version: 2.3.3
