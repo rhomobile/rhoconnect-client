@@ -880,7 +880,7 @@ describe("Rhoconnect Client", function() {
 		// });
 
 
-	it("VT295-070 | set userName [read only] property  | raises an exception", function() {
+	xit("VT295-070 | set userName [read only] property  | raises an exception", function() {
 		var message = '';
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){

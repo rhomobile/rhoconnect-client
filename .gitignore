@@ -20,6 +20,7 @@ rholog.txt
 sync_server.*
 *.rdb
 rhoapi-modules.js
+license.key
 
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
