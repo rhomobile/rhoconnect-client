@@ -306,7 +306,11 @@ describe("Rhoconnect Client", function() {
 
 		// Sync first time
 		Rho.RhoConnectClient.login('testuser','testuser',function(){
-			Rho.RhoConnectClient.setNotification('*', function(args){ callback1 = true; });
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback1 = true;
+				}
+			});
 			Rho.RhoConnectClient.doSync();
 		});
 
@@ -314,13 +318,15 @@ describe("Rhoconnect Client", function() {
 			return callback1;
 		}, "wait 1", 6000);
 
-		waits(1000);
-
 		runs(function() {
 			expectedCount = Product.count();
 			Product.create({name: testName});
 			Rho.RhoConnectClient.clearNotification('*');
-			Rho.RhoConnectClient.setNotification('*', function(args){ callback2 = true; });
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback2 = true;
+				}
+			});
 			Rho.RhoConnectClient.doSync();
 		});
 
@@ -332,7 +338,11 @@ describe("Rhoconnect Client", function() {
 			Rho.RhoConnectClient.logout();
 			Rho.RhoConnectClient.login('testuser2','testuser2',function(){
 				Rho.RhoConnectClient.clearNotification('*');
-				Rho.RhoConnectClient.setNotification('*', function(args){ callback3 = true; });
+				Rho.RhoConnectClient.setNotification('*', function(args){ 
+					if(args.status == 'complete') {
+						callback3 = true;
+					}
+				});
 				Rho.RhoConnectClient.doSync();
 			});
 		});
@@ -357,7 +367,11 @@ describe("Rhoconnect Client", function() {
 
 		// Sync first time
 		Rho.RhoConnectClient.login('testuser','testuser',function(){
-			Rho.RhoConnectClient.setNotification('*', function(args){ callback1 = true; });
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback1 = true;
+				}
+			});
 			Rho.RhoConnectClient.doSync();
 		});
 
@@ -365,14 +379,16 @@ describe("Rhoconnect Client", function() {
 			return callback1;
 		}, "wait 1", 6000);
 
-		waits(1000);
-
 		runs(function() {
 			var p = Product.find('first');
 			p.set('name', testName);
 			p.save();
 			Rho.RhoConnectClient.clearNotification('*');
-			Rho.RhoConnectClient.setNotification('*', function(args){ callback2 = true; });
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback2 = true;
+				}
+			});
 			Rho.RhoConnectClient.doSync();
 		});
 
@@ -384,7 +400,11 @@ describe("Rhoconnect Client", function() {
 			Rho.RhoConnectClient.logout();
 			Rho.RhoConnectClient.login('testuser2','testuser2',function(){
 				Rho.RhoConnectClient.clearNotification('*');
-				Rho.RhoConnectClient.setNotification('*', function(args){ callback3 = true; });
+				Rho.RhoConnectClient.setNotification('*', function(args){ 
+					if(args.status == 'complete') {
+						callback3 = true;
+					}
+				});
 				Rho.RhoConnectClient.doSync();
 			});
 		});
@@ -409,7 +429,11 @@ describe("Rhoconnect Client", function() {
 
 		// Sync first time
 		Rho.RhoConnectClient.login('testuser','testuser',function(){
-			Rho.RhoConnectClient.setNotification('*', function(args){ callback1 = true; });
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback1 = true;
+				}
+			});
 			Rho.RhoConnectClient.doSync();
 		});
 
@@ -417,15 +441,17 @@ describe("Rhoconnect Client", function() {
 			return callback1;
 		}, "wait 1", 6000);
 
-		waits(1000);
-
 		runs(function() {
 			expectedCount = Product.count();
 			var deleted = Product.find('first');
 			deletedName = deleted.get('name');
 			deleted.destroy();
 			Rho.RhoConnectClient.clearNotification('*');
-			Rho.RhoConnectClient.setNotification('*', function(args){ callback2 = true; });
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback2 = true;
+				}
+			});
 			Rho.RhoConnectClient.doSync();
 		});
 
@@ -437,7 +463,11 @@ describe("Rhoconnect Client", function() {
 			Rho.RhoConnectClient.logout();
 			Rho.RhoConnectClient.login('testuser2','testuser2',function(){
 				Rho.RhoConnectClient.clearNotification('*');
-				Rho.RhoConnectClient.setNotification('*', function(args){ callback3 = true; });
+				Rho.RhoConnectClient.setNotification('*', function(args){ 
+					if(args.status == 'complete') {
+						callback3 = true;
+					}
+				});
 				Rho.RhoConnectClient.doSync();
 			});
 		});
