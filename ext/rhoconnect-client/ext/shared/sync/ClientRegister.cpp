@@ -123,9 +123,7 @@ void CClientRegister::setRhoconnectCredentials(const String& user, const String&
         (*I)->onLogin(user, pass, session);
     }
     
-    if (!isAlive()) {
-        startUp();
-    }
+    startUp();
 }
 
 void CClientRegister::dropRhoconnectCredentials(const String& session)
