@@ -3,6 +3,7 @@ var loginCallback_paramsValue = [{ "error_code" : "" , "error_message" : "" }],
 		syncServerUrl = "http://"+SYNC_SERVER_HOST+":"+SYNC_SERVER_PORT,
 		defaultPollInterval = Rho.RhoConnectClient.pollInterval,
 		defaultSyncServer = Rho.RhoConnectClient.syncServer,
+		defaultPageSize = Rho.RhoConnectClient.pageSize,
 		callbackCalled = false,
 		Product = null,
 		Customer = null;
@@ -12,6 +13,7 @@ describe("Rhoconnect Client", function() {
     callbackCalled = false;
     Rho.RhoConnectClient.syncServer = syncServerUrl;
     Rho.RhoConnectClient.pollInterval = defaultPollInterval;
+    Rho.RhoConnectClient.pageSize = defaultPageSize;
     loginCallback_paramsValue.error_code = "";
     loginCallback_paramsValue.error_message = "";
     Rho.ORM.clear();
@@ -101,14 +103,14 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	it("VT295-004 | Get sync server url value | syncServerUrl", function() {
+	it("VT295-004 | syncServerUrl value | syncServerUrl", function() {
 		Rho.RhoConnectClient.syncServer = syncServerUrl;
 		runs(function() {
 			expect(Rho.RhoConnectClient.syncServer).toEqual(syncServerUrl);
 		});
 	});
 
-	it("VT295-007 | Call isLoggedIn() when client is logged in to server | true", function() {
+	it("VT295-007 | isLoggedIn when client is logged in to server | true", function() {
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',callbackFunction);
 		});
@@ -594,7 +596,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	it("VT295-034 | isSyncing() method when sync is in progress | true ", function() {
+	it("VT295-034 | isSyncing method when sync is in progress | true ", function() {
 		var myCallback = function(args) {
 			expect(Rho.RhoConnectClient.isSyncing()).toEqual(true);
 			callbackCalled = true;
@@ -612,13 +614,13 @@ describe("Rhoconnect Client", function() {
 		}, "wait", 6000);
 	});
 
-	it("VT295-035 | isSyncing() method when sync is not in progress | false ", function() {
+	it("VT295-035 | isSyncing method when sync is not in progress | false ", function() {
 		runs(function() {
 			expect(Rho.RhoConnectClient.isSyncing()).toEqual(false);
 		});
 	});
 
-	it("VT295-036 | stopSync() method | zero records", function() {
+	it("VT295-036 | stopSync method | zero records", function() {
 		var timeoutCalled = false;
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
@@ -632,43 +634,42 @@ describe("Rhoconnect Client", function() {
 		});
 
 		waitsFor(function() {
-			return timeoutCalled && !callbackCalled;
-		}, "wait", 6000);
+			return timeoutCalled;
+		}, "wait", 7000);
 
 		runs(function() {
+			expect(callbackCalled).toBe(false);
 			expect(Product.count()).toEqual(0);
 			expect(Customer.count()).toEqual(0);
 		});
 	});
 
 
-	// it("VT295-037 | stopSync() followed by doSync() | records should be synchronized", function() {
-	// 	var timeoutCalled = false;
-	// 	runs(function() {
-	// 		Rho.RhoConnectClient.login('testclient','testclient',function(){
-	// 			Rho.RhoConnectClient.setNotification('*', callbackFunction);
-	// 			Rho.RhoConnectClient.doSync();
-	// 			Rho.RhoConnectClient.stopSync();
-	// 		});
-	// 		setTimeout(function(){
-	// 			timeoutCalled = true;
-	// 		}, 5000);
-	// 	});
+	it("VT295-037 | stopSync followed by doSync | records should be synchronized", function() {
+		var timeoutCalled = false,
+				callback1 = false;
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', function(args){
+					if(args.status == 'complete') {
+						callbackCalled = true;
+					}
+				});
+				Rho.RhoConnectClient.doSync();
+				Rho.RhoConnectClient.stopSync();
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
-	// 	waitsFor(function() {
-	// 		return timeoutCalled && !callbackCalled;
-	// 	}, "wait", 6000);
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
 
-	// 	runs(function() {
-	// 		Rho.RhoConnectClient.setNotification('*', callbackFunction);
-	// 		Rho.RhoConnectClient.doSync();
-	// 	});
-
-	// 	runs(function() {
-	// 		expect(Product.count()).toBeGreaterThan(0);
-	// 		expect(Customer.count()).toBeGreaterThan(0);
-	// 	});
-	// });
+		runs(function() {
+			expect(Product.count()).toBeGreaterThan(0);
+			expect(Customer.count()).toBeGreaterThan(0);
+		});
+	});
 
 	it("VT295-038 | doSyncSource method for product model | only product model should sync", function() {
 		runs(function() {
@@ -688,7 +689,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	it("VT295-040 | doSyncSource() method with empty parameters | callback should not be called", function() {
+	it("VT295-040 | doSyncSource method with empty parameters | callback should not be called", function() {
 		var timeoutCalled = false;
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
@@ -750,7 +751,7 @@ describe("Rhoconnect Client", function() {
 	});
 
 
-	it("VT295-055 | pollInterval property when set to 0 seconds | callback should not fire ", function() {
+	it("VT295-055 | pollInterval set to 0 seconds | callback should not fire", function() {
 		var timeoutCalled = false;
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
@@ -771,83 +772,84 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-		// it("VT295-056 | Check sync method when pollInterval property  set to 0 seconds | call back should get fire  ", function() {
-		// 	Rho.RhoConnectClient.pollInterval=0;
-		// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-		// 		runs(function() {
-		//             Rho.RhoConnectClient.doSync();
-		//             setTimeout(function() {
-		// 				displayflag = true;
-		// 			}, 15000);
-		//        });
+	it("VT295-056 | doSync when pollInterval set to 0 seconds | callback should still fire", function() {
+		var timeoutCalled = false;
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
+				Rho.RhoConnectClient.pollInterval = 0;
+				Rho.RhoConnectClient.doSync();
+			});
+			setTimeout(function(){
+				timeoutCalled = true;
+			}, 5000);
+		});
 
-		// 	  waitsFor(function() {
-		// 			return displayflag;
-		// 		}, "wait", 16000);
+		waitsFor(function() {
+			return timeoutCalled;
+		}, "wait", 6000);
 
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
+		runs(function() {
+			expect(callbackCalled).toBe(true);
+			expect(Product.count()).toBeGreaterThan(0);
+			expect(Customer.count()).toBeGreaterThan(0);
+		});
 
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
-
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toBeGreaterThan(0);
-		//     	  expect(customer_record_count).toBeGreaterThan(0);
-		//        });
-
-		// });
+	});
 
 
-		// it("VT295-057 | pageSize property default value test | 2000", function() {
-		//       runs(function() {
-		//            expect(Rho.RhoConnectClient.pageSize).toEqual(2000);
-		//        });
-		// });
+	it("VT295-057 | pageSize property default value test | 2000", function() {
+		runs(function() {
+			expect(Rho.RhoConnectClient.pageSize).toEqual(2000);
+		});
+	});
 
 
-		// it("VT295-058 | pageSize property when set to 10 | cumulative_count should be reported to 10 (except of last one) when sync status is in_progress state", function() {
-		//      //This can be done automatically, just have sync callback verify cumulative_count value.
-		// });
+	xit("VT295-058 | pageSize property when set to 1 | cumulative_count should increment by 1", function() {
+		var cumulative = 0,
+				actual = 0;
+		Rho.RhoConnectClient.pageSize = 1;
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', function(args){
+					cumulative++;
+					if(args.cumulative_count === args.total_count) {
+						callbackCalled = true;
+					}
+				});
+				Rho.RhoConnectClient.doSync('Product');
+			});
+		});
 
-		// it("VT295-059 | pageSize property when set to 0 | no record in models  ", function() {
-		// 	Rho.RhoConnectClient.pageSize=0;
-		// 	Rho.RhoConnectClient.setNotification('*', sync_notify_callback);
-		// 	 runs(function() {
-		//             Rho.RhoConnectClient.doSync();
-		//             setTimeout(function() {
-		// 				displayflag = true;
-		// 			}, 15000);
-		//        });
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
 
-		// 	  waitsFor(function() {
-		// 			return displayflag;
-		// 		}, "wait", 16000);
+		runs(function(){
+			expect(actual).toEqual(cumulative);
+		});
+	});
 
-		// 	  runs(function() {
-		//     	   modelrecordtest();
-		//     	   setTimeout(function() {
-		// 				displayflag1 = true;
-		// 			}, 5000);
+	it("VT295-059 | pageSize property when set to 0 | zero records", function() {
+		Rho.RhoConnectClient.pageSize = 0;
+		var timeoutCalled = false;
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.doSync('Product');
+			});
+			setTimeout(function(){
+				timeoutCalled = true;
+			}, 5000);
+		});
 
-		//        });
-		//        waitsFor(function() {
-		// 			return displayflag1;
-		// 		}, "wait", 6000);
+		waitsFor(function() {
+			return timeoutCalled;
+		}, "wait", 6000);
 
-		// 	 runs(function() {
-		//     	  expect(callbackCalled).toEqual(true);
-		//     	  expect(product_record_count).toEqual(0);
-		//     	  expect(customer_record_count).toEqual(0);
-		//        });
-
-		// });
+		runs(function(){
+			expect(Product.count()).toEqual(0);
+		})
+	});
 
 		// it("VT295-064 | setObjectNotify() with no changes in source objects | object notification callback should not invoked.", function() {
 
@@ -903,23 +905,72 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	// it("VT295-071 | Record Sync stress Test  | All created records should get reflected at server side", function() {
+	it("VT295-071 | Record Sync stress Test  | All created records should get reflected at server side", function() {
+		var expectedCount = 0,
+				callback1 = false,
+				callback2 = false,
+				callback3 = false,
+				testName = new Date().getTime().toString();
 
- //       //memory leak test - Should be possible to run this as a script on a device every night or something
+		// Sync first time
+		Rho.RhoConnectClient.login('testuser','testuser',function(){
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback1 = true;
+				}
+			});
+			Rho.RhoConnectClient.doSync();
+		});
 
- //    });
+		waitsFor(function() {
+			return callback1;
+		}, "wait 1", 6000);
+
+		runs(function() {
+			expectedCount = Product.count();
+			for(var i = 0; i < 25; i++) {
+				Product.create({name: testName + '-' + i.toString()});
+			}
+			Rho.RhoConnectClient.clearNotification('*');
+			Rho.RhoConnectClient.setNotification('*', function(args){ 
+				if(args.status == 'complete') {
+					callback2 = true;
+				}
+			});
+			Rho.RhoConnectClient.doSync();
+		});
+
+		waitsFor(function() {
+			return callback2;
+		}, "wait 2", 30000);
+
+		runs(function() {
+			Rho.RhoConnectClient.logout();
+			Rho.RhoConnectClient.login('testuser2','testuser2',function(){
+				Rho.RhoConnectClient.clearNotification('*');
+				Rho.RhoConnectClient.setNotification('*', function(args){ 
+					if(args.status == 'complete') {
+						callback3 = true;
+					}
+				});
+				Rho.RhoConnectClient.doSync();
+			});
+		});
+
+		waitsFor(function() {
+			return callback3;
+		}, "wait 3", 6000);
+
+		runs(function() {
+			expect(Product.count()).toEqual(expectedCount + 25);
+		});
+ 	});
 
  //    it("VT295-072 | Reset Sync stress Test   |  sync should be successful after 8 hours", function() {
 
  //       //memory leak test - Should be possible to run this as a script on a device every night or something.
 
  //     });
-
-		// it("VT295-073 | bulk sync using resque worker  | Both of the rhom model should get populated with server data", function() {
-
-
-
-		// });
 
 		// it("VT295-074 | should handle update updated object while sync error  | changed_values table record ? ", function() {
 

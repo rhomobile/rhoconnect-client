@@ -1,6 +1,10 @@
 var callbackFunction = function(args) {
   processArgs(args);
-  callbackCalled = true;
+  if((args.status && args.status == 'complete') || !args.status) {
+    callbackCalled = true;
+  } else if(args.total_count === args.cumulative_count) {
+    callbackCalled = true;
+  }
 };
 
 var processArgs = function(args) {
