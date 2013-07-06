@@ -85,6 +85,9 @@ private:
     void doStop();
     boolean doRegister(CSyncEngine& oSync);
     net::CNetRequestWrapper getNet(){ return getNetRequest(&m_NetRequest); }
+    
+    void notifyLoggedIn(const String& user, const String& pass, const String& session);
+    void notifyLoggedOut(const String& session);
 
 };
 

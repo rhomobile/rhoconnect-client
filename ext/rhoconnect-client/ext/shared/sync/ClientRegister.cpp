@@ -118,15 +118,25 @@ void CClientRegister::setRhoconnectCredentials(const String& user, const String&
 {
     LOG(INFO) + "New Sync credentials - user: " + user + ", sess: " + session;
 
-    for(VectorPtr<ILoginListener*>::iterator I = s_loginListeners.begin(); I != s_loginListeners.end(); ++I)
-    {
-        (*I)->onLogin(user, pass, session);
-    }
+    notifyLoggedIn(user,pass,session);
     
     startUp();
 }
 
 void CClientRegister::dropRhoconnectCredentials(const String& session)
+{
+    notifyLoggedOut(session);
+}
+    
+void CClientRegister::notifyLoggedIn(const String& user, const String& pass, const String& session)
+{
+    for(VectorPtr<ILoginListener*>::iterator I = s_loginListeners.begin(); I != s_loginListeners.end(); ++I)
+    {
+        (*I)->onLogin(user, pass, session);
+    }
+}
+
+void CClientRegister::notifyLoggedOut(const String& session)
 {
     for(VectorPtr<ILoginListener*>::iterator I = s_loginListeners.begin(); I != s_loginListeners.end(); ++I)
     {
@@ -222,7 +232,7 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
     
     if ( m_strDevicePin.length() == 0 )
     {
-        setRhoconnectCredentials("","",session);
+        notifyLoggedIn("","",session);
         m_nPollInterval = POLL_INTERVAL_INFINITE;
         LOG(INFO)+"Device PUSH pin is empty, do register later";
         return false;
@@ -235,7 +245,6 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
         LOG(WARNING)+"Sync client_id is empty, do register later";
 		return false;
 	}
-    
     
     IDBResult res = CDBAdapter::getUserDB().executeSQL("SELECT token,token_sent from client_info");
     if ( !res.isEnd() ) {
@@ -250,6 +259,7 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
 			return true; 
 		}
     }
+    
 	String strBody = getRegisterBody(client_id);
     NetResponse resp = getNet().pushData( oSync.getProtocol().getClientRegisterUrl(client_id), strBody, &oSync );
 	if( resp.isOK() )
