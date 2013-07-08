@@ -905,7 +905,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	it("VT295-071 | Record Sync stress Test  | All created records should get reflected at server side", function() {
+	it("VT295-071 | create record stress test | records should be created", function() {
 		var expectedCount = 0,
 				callback1 = false,
 				callback2 = false,
@@ -966,17 +966,24 @@ describe("Rhoconnect Client", function() {
 		});
  	});
 
- //    it("VT295-072 | Reset Sync stress Test   |  sync should be successful after 8 hours", function() {
+	xit(" | call Model.sync | specific model should sync", function() {
+		Rho.RhoConnectClient.login('testclient','testclient',function(){
+			Product.sync(callbackFunction, false, '');
+		});
 
- //       //memory leak test - Should be possible to run this as a script on a device every night or something.
+		waitsFor(function() {
+			callbackCalled;
+		}, "wait", 6000);
 
- //     });
+		runs(function() {
+			expect(Product.count()).toBeGreaterThan(0);
+			expect(Customer.count()).toEqual(0);
+		});
+	});
 
-		// it("VT295-074 | should handle update updated object while sync error  | changed_values table record ? ", function() {
+	// it("VT295-074 | should handle update updated object while sync error | updated object should sync after error", function() {
 
-
-
-		// });
+	// });
 
 
 		// it("VT295-075 | should handle update updated full_update object while sync | changed_values table record ? ", function() {
@@ -1041,17 +1048,47 @@ describe("Rhoconnect Client", function() {
 
 		// });
 
-		// it("VT295-085 | should process source-error | ? ", function() {
+	it("VT295-085 | should process source-error | error message should be correct", function() {
+		var message = '',
+				code = 0,
+				error = [
+			{"version": 3},
+			{"token": ""},
+			{"count": 0},
+			{"progress_count": 0},
+			{"total_count": 0},
+			{"source-error":
+				{"query-error":
+					{"message": "Error during query"}
+				}
+			}
+		];
 
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', function(args) {
+					console.log('args: ' + JSON.stringify(args));
+					if(args.status == "error") {
+						actual = args.error_message;
+						callbackCalled = true;
+					}
+				});
+				Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', '1');			
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
+		waitsFor(function() {
+			callbackCalled;
+		}, "wait", 6000);
 
-		// });
-
-		// it("VT295-086 | should process search-error | ? ", function() {
-
-
-
-		// });
+		runs(function() {
+			expect(Product.count()).toEqual(0);
+			expect(Customer.count()).toEqual(0);
+			expect(message).toEqual('Error during query');
+			expect(code).toEqual('4');
+		});
+	});
 
 		// it("VT295-087 | should NOT push pending created objects | ? ", function() {
 
