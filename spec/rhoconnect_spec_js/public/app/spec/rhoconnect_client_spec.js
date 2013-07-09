@@ -57,7 +57,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(Rho.RhoConnectClient.isLoggedIn()).toEqual(false);
@@ -76,7 +76,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "Timeout", 6000);
+		}, "Timeout", 20000);
 
 		runs(function() {
 			expect(Rho.RhoConnectClient.isLoggedIn()).toEqual(true);
@@ -93,7 +93,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "Timeout", 6000);
+		}, "Timeout", 20000);
 
 		runs(function() {
 			expect(Rho.RhoConnectClient.isLoggedIn()).toEqual(true);
@@ -117,7 +117,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(Rho.RhoConnectClient.isLoggedIn()).toEqual(true);
@@ -131,7 +131,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(Rho.RhoConnectClient.userName).toEqual('testclient');
@@ -148,7 +148,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
@@ -168,7 +168,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCount === 1;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCount).toEqual(1);
@@ -178,12 +178,12 @@ describe("Rhoconnect Client", function() {
 			Rho.RhoConnectClient.doSync();
 			setTimeout(function() {
 				clearedNotify = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return clearedNotify;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCount).toEqual(1);
@@ -200,12 +200,12 @@ describe("Rhoconnect Client", function() {
 			});
 			setTimeout(function() {
 				clearedNotify = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return clearedNotify && !callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toEqual(false);
@@ -222,7 +222,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
@@ -240,12 +240,12 @@ describe("Rhoconnect Client", function() {
 			});
 			setTimeout(function() {
 				clearedNotify = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return clearedNotify;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toEqual(false);
@@ -263,7 +263,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callCount === 1;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callCount).toEqual(1);
@@ -272,7 +272,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callCount === 2;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callCount).toEqual(2);
@@ -291,7 +291,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
@@ -318,7 +318,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback1;
-		}, "wait 1", 6000);
+		}, "wait 1", 20000);
 
 		runs(function() {
 			expectedCount = Product.count();
@@ -334,7 +334,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback2;
-		}, "wait 2", 6000);
+		}, "wait 2", 20000);
 
 		runs(function() {
 			Rho.RhoConnectClient.logout();
@@ -351,7 +351,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback3;
-		}, "wait 3", 6000);
+		}, "wait 3", 20000);
 
 		runs(function() {
 			expect(Product.count()).toEqual(expectedCount + 1);
@@ -379,7 +379,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback1;
-		}, "wait 1", 6000);
+		}, "wait 1", 20000);
 
 		runs(function() {
 			var p = Product.find('first');
@@ -396,7 +396,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback2;
-		}, "wait 2", 6000);
+		}, "wait 2", 20000);
 
 		runs(function() {
 			Rho.RhoConnectClient.logout();
@@ -413,7 +413,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback3;
-		}, "wait 3", 6000);
+		}, "wait 3", 20000);
 
 		runs(function() {
 			var products = Product.find('all',{conditions: {name: testName}});
@@ -441,7 +441,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback1;
-		}, "wait 1", 6000);
+		}, "wait 1", 20000);
 
 		runs(function() {
 			expectedCount = Product.count();
@@ -459,7 +459,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback2;
-		}, "wait 2", 6000);
+		}, "wait 2", 20000);
 
 		runs(function() {
 			Rho.RhoConnectClient.logout();
@@ -476,7 +476,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback3;
-		}, "wait 3", 6000);
+		}, "wait 3", 20000);
 
 		runs(function() {
 			expect(Product.count()).toEqual(expectedCount - 1);
@@ -503,7 +503,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 
 		runs(function() {
@@ -514,12 +514,12 @@ describe("Rhoconnect Client", function() {
 			});
 			setTimeout(function(){
 				timeoutCalled = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return timeoutCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
@@ -548,7 +548,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			createProducts(1, 'VT295-024');
@@ -558,12 +558,12 @@ describe("Rhoconnect Client", function() {
 			});
 			setTimeout(function(){
 				timeoutCalled = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return timeoutCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
@@ -601,7 +601,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			var expectedProduct = Product.count();
@@ -626,7 +626,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 	});
 
 	it("VT295-035 | isSyncing method when sync is not in progress | false ", function() {
@@ -678,7 +678,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(Product.count()).toBeGreaterThan(0);
@@ -696,7 +696,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function(){
 			expect(Product.count()).toBeGreaterThan(0);
@@ -712,13 +712,13 @@ describe("Rhoconnect Client", function() {
 				Rho.RhoConnectClient.doSyncSource();
 				setTimeout(function(){
 					timeoutCalled = true;
-				}, 5000);
+				}, 20000);
 			});
 		});
 
 		waitsFor(function() {
 			return !callbackCalled && timeoutCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function(){
 			expect(Product.count()).toEqual(0);
@@ -741,18 +741,18 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback1;
-		}, "wait 1", 10000);
+		}, "wait 1", 20000);
 
 		runs(function() {
 			Rho.RhoConnectClient.setNotification('*', callbackFunction);
 			setTimeout(function(){
 				timeoutCalled = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return timeoutCalled;
-		}, "wait 2", 6000);
+		}, "wait 2", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toBe(true);
@@ -771,12 +771,12 @@ describe("Rhoconnect Client", function() {
 			});
 			setTimeout(function(){
 				timeoutCalled = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return timeoutCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			expect(callbackCalled).toBe(false);
@@ -793,12 +793,12 @@ describe("Rhoconnect Client", function() {
 			});
 			setTimeout(function(){
 				timeoutCalled = true;
-			}, 5000);
+			}, 30000);
 		});
 
 		waitsFor(function() {
 			return timeoutCalled;
-		}, "wait", 6000);
+		}, "wait", 30000);
 
 		runs(function() {
 			expect(callbackCalled).toBe(true);
@@ -834,7 +834,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function(){
 			expect(actual).toEqual(cumulative);
@@ -850,12 +850,12 @@ describe("Rhoconnect Client", function() {
 			});
 			setTimeout(function(){
 				timeoutCalled = true;
-			}, 5000);
+			}, 20000);
 		});
 
 		waitsFor(function() {
 			return timeoutCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function(){
 			expect(Product.count()).toEqual(0);
@@ -908,7 +908,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function(){ 
 			expect(Rho.RhoConnectClient.userName).toEqual('testclient');
@@ -935,7 +935,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback1;
-		}, "wait 1", 6000);
+		}, "wait 1", 20000);
 
 		runs(function() {
 			expectedCount = Product.count();
@@ -970,7 +970,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callback3;
-		}, "wait 3", 6000);
+		}, "wait 3", 20000);
 
 		runs(function() {
 			expect(Product.count()).toEqual(expectedCount + 25);
@@ -1171,7 +1171,7 @@ describe("Rhoconnect Client", function() {
 
 		waitsFor(function() {
 			return callbackCalled;
-		}, "wait", 6000);
+		}, "wait", 20000);
 
 		runs(function() {
 			Rho.RhoConnectClient.logout();
