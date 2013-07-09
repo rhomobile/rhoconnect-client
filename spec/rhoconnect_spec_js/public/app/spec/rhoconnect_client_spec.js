@@ -905,7 +905,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	it("VT295-071 | Record Sync stress Test  | All created records should get reflected at server side", function() {
+	it("VT295-071 | create record stress test | records should be created", function() {
 		var expectedCount = 0,
 				callback1 = false,
 				callback2 = false,
@@ -966,17 +966,24 @@ describe("Rhoconnect Client", function() {
 		});
  	});
 
- //    it("VT295-072 | Reset Sync stress Test   |  sync should be successful after 8 hours", function() {
+	xit(" | call Model.sync | specific model should sync", function() {
+		Rho.RhoConnectClient.login('testclient','testclient',function(){
+			Product.sync(callbackFunction, false, '');
+		});
 
- //       //memory leak test - Should be possible to run this as a script on a device every night or something.
+		waitsFor(function() {
+			callbackCalled;
+		}, "wait", 6000);
 
- //     });
+		runs(function() {
+			expect(Product.count()).toBeGreaterThan(0);
+			expect(Customer.count()).toEqual(0);
+		});
+	});
 
-		// it("VT295-074 | should handle update updated object while sync error  | changed_values table record ? ", function() {
+	// it("VT295-074 | should handle update updated object while sync error | updated object should sync after error", function() {
 
-
-
-		// });
+	// });
 
 
 		// it("VT295-075 | should handle update updated full_update object while sync | changed_values table record ? ", function() {
@@ -1041,17 +1048,47 @@ describe("Rhoconnect Client", function() {
 
 		// });
 
-		// it("VT295-085 | should process source-error | ? ", function() {
+	it("VT295-085 | should process source-error | error message should be correct", function() {
+		var message = '',
+				code = 0,
+				error = [
+			{"version": 3},
+			{"token": ""},
+			{"count": 0},
+			{"progress_count": 0},
+			{"total_count": 0},
+			{"source-error":
+				{"query-error":
+					{"message": "Error during query"}
+				}
+			}
+		];
 
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', function(args) {
+					console.log('args: ' + JSON.stringify(args));
+					if(args.status == "error") {
+						actual = args.error_message;
+						callbackCalled = true;
+					}
+				});
+				Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', '1');			
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
+		waitsFor(function() {
+			callbackCalled;
+		}, "wait", 6000);
 
-		// });
-
-		// it("VT295-086 | should process search-error | ? ", function() {
-
-
-
-		// });
+		runs(function() {
+			expect(Product.count()).toEqual(0);
+			expect(Customer.count()).toEqual(0);
+			expect(message).toEqual('Error during query');
+			expect(code).toEqual('4');
+		});
+	});
 
 		// it("VT295-087 | should NOT push pending created objects | ? ", function() {
 
@@ -1113,5 +1150,453 @@ describe("Rhoconnect Client", function() {
 			Rho.RhoConnectClient.logout();
 			expect(Rho.RhoConnectClient.userName).toEqual('testclient');
 		});
+	});
+
+	xdescribe("JS ORM Sync Related Test", function() {
+
+		var userloggedIn = false;
+		var countBeforeSync ='';
+		var	countAfterSync = '';
+		var callback = false;
+		var modelSyncCallbackFired = false;
+		var callbackdata = '';
+
+		var modelSyncCallback = function (args){
+			alert(JSON.stringify(args));
+			modelSyncCallbackFired = true;
+			callbackdata = args['data'];
+
+		}
+		
+		beforeEach(function() {
+			userloggedIn = false;
+			countBeforeSync ='';
+			countAfterSync = '';
+			callback = false;
+			modelSyncCallbackFired = false;
+			callbackdata = '';
+		});
+
+		afterEach(function(){
+
+		});
+
+		it('VT302-0230 | Call haveLocalChanges after adding some data to synced model',function(){
+
+        var itemTypes = ['Electronics','Softwares'];
+
+        for (var i=0;i<=100;i++){
+            var nameValue = "Item "+i;
+            var itemType = itemTypes[Math.floor(Math.random()*itemTypes.length)];
+            Product.create({id: i, name: nameValue, type: itemType});
+        }
+        
+        Rho.RhoConnectClient.login('testuser','testuser',function(){
+            Rho.RhoConnectClient.setNotification('*', function(args){ 
+                if(args.status == 'complete') {
+                    callback = true;
+                }
+            });
+            Rho.RhoConnectClient.doSync();
+        });
+
+        waitsFor(function() {
+            return callback;
+        }, "waiting for sync", 6000);
+
+        runs(function(){
+
+            for (var i=0;i<=20;i++){
+            var nameValue = "Item "+i;
+            var itemType = itemTypes[Math.floor(Math.random()*itemTypes.length)];
+            Product.create({id: i, name: nameValue, type: itemType});
+            }
+
+            var value = Rho.ORMModel.haveLocalChanges('Product');
+            var value1 = Product.haveLocalChanges();
+
+            expect(value).toEqual(true);
+            expect(value1).toEqual(true);
+        });
+    });
+
+
+    it('VT302-0231 | Call haveLocalChanges just after sync got finished',function(){
+
+        var itemTypes = ['Electronics','Softwares'];
+
+        for (var i=0;i<=100;i++){
+            var nameValue = "Item "+i;
+            var itemType = itemTypes[Math.floor(Math.random()*itemTypes.length)];
+            Product.create({id: i, name: nameValue, type: itemType});
+        }
+        
+        Rho.RhoConnectClient.login('testuser','testuser',function(){
+            Rho.RhoConnectClient.setNotification('*', function(args){ 
+                if(args.status == 'complete') {
+                    callback = true;
+                }
+            });
+            Rho.RhoConnectClient.doSync();
+        });
+
+        waitsFor(function() {
+            return callback;
+        }, "waiting for sync", 6000);
+
+        runs(function(){
+
+            var value = Rho.ORMModel.haveLocalChanges('Product');
+            var value1 = Product.haveLocalChanges();
+
+            expect(value).toEqual(false);
+            expect(value1).toEqual(false);
+        });
+    });
+
+		  xit("VT302-236 | Call sync ORMModel without passing any arguments",function(){
+
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-236'});
+
+					Rho.RhoConnectClient.setNotification('Product', function(args){ 
+						if(args.status == 'complete') {
+							callback = true;
+						}
+					});
+
+					Product.sync();
+
+				});
+
+				waitsFor(function() {
+					return callback;
+				}, "wait 1", 6000);
+
+				runs(function(){
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-236'}}).length
+					).toEqual(1);
+
+				});
+
+		  })
+
+		  xit("VT302-237 | Call sync OrmModel passing callback as an argument and check callback is getting fired or not",function(){
+
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-236'});
+					Product.sync(modelSyncCallback);
+
+				});
+
+				waitsFor(function() {
+					return modelSyncCallbackFired;
+				}, "Waiting for callback to be fired Model Specific", 6000);
+
+				runs(function(){
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-236'}}).length
+					).toEqual(1);
+
+				});
+
+		  });
+
+		  xit("VT302-238 | Call sync ORMModel passing callback and callbackdata as arguments",function(){
+
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-236'});
+					Product.sync(modelSyncCallback,"This Will Get Captured In Callback");
+				});
+
+				waitsFor(function() {
+					return modelSyncCallbackFired;
+				}, "Waiting for callback to be fired Model Specific", 6000);
+
+				runs(function(){
+					expect(callbackdata).toBe('This Will Get Captured In Callback');
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-236'}}).length
+					).toEqual(1);
+
+				});
+
+		  });
+
+		  xit("VT302-239 | Call sync ORMModel without passing callback but with callbackdata",function(){
+
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-239'});
+
+					Rho.RhoConnectClient.setNotification('Product', function(args){ 
+						if(args.status == 'complete') {
+							callback = true;
+						}
+					});
+
+					Product.sync('',"This data won't get captued in callback");
+
+				});
+
+				waitsFor(function() {
+					return callback;
+				}, "wait 1", 6000);
+
+				runs(function(){
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-239'}}).length
+					).toEqual(1);
+
+				});
+
+		  });
+
+		  xit("VT302-245 | Call sync ORMModel with callback, callbackdata, showStatusPopup as false and urlencoded query params",function(){
+
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-236'});
+					Product.sync(modelSyncCallback,"This Will Get Captured In Callback",false,'data1=hello&data2=world');
+				});
+
+				waitsFor(function() {
+					return modelSyncCallbackFired;
+				}, "Waiting for callback to be fired Model Specific", 6000);
+
+				runs(function(){
+					expect(callbackdata).toBe('This Will Get Captured In Callback');
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-236'}}).length
+					).toEqual(1);
+
+				});
+		  });
+
+		  xit("VT302-246 | Call sync ORMModel with callback, callbackdata, showStatusPopup as false and query params as null",function(){
+
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-236'});
+					Product.sync(modelSyncCallback,"This Will Get Captured In Callback",false,undefined);
+				});
+
+				waitsFor(function() {
+					return modelSyncCallbackFired;
+				}, "Waiting for callback to be fired Model Specific", 6000);
+
+				runs(function(){
+					expect(callbackdata).toBe('This Will Get Captured In Callback');
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-236'}}).length
+					).toEqual(1);
+
+				});
+		  });
+
+		  xit("VT302-247 | Call sync with ORMModel with url encoded query params, callback and calldata as null",function(){
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-247'});
+
+					Rho.RhoConnectClient.setNotification('Product', function(args){ 
+						if(args.status == 'complete') {
+							callback = true;
+						}
+					});
+
+					Product.sync('','',false,'data1=hello&data2=world');
+
+				});
+
+				waitsFor(function() {
+					return callback;
+				}, "wait 1", 6000);
+
+				runs(function(){
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-247'}}).length
+					).toEqual(1);
+
+				});
+		  });
+
+		  xit("VT302-248 | Call sync with ORMModel with empty string For e.g ORMModel.sync('','',false,'')",function(){
+
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-247'});
+
+					Rho.RhoConnectClient.setNotification('Product', function(args){ 
+						if(args.status == 'complete') {
+							callback = true;
+						}
+					});
+
+					Product.sync('','',false,'');
+
+				});
+
+				waitsFor(function() {
+					return callback;
+				}, "wait 1", 6000);
+
+				runs(function(){
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-247'}}).length
+					).toEqual(1);
+
+				});
+
+		  });
+
+		  xit("VT302-249 | call sync with ORMModel by passing undefined as arguments for e.g ORMModel.sync(undefined,undefined,undefined,undefined)",function(){
+		  		runs(function(){
+			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
+			  			userloggedIn = true;
+					});
+				});
+
+				waitsFor(function(){
+					return userloggedIn;
+				},"Waiting for user to login",2000);
+
+				runs(function(){
+
+					countBeforeSync = Product.count();
+					Product.create({name: 'VT302-247'});
+
+					Rho.RhoConnectClient.setNotification('Product', function(args){ 
+						if(args.status == 'complete') {
+							callback = true;
+						}
+					});
+
+					Product.sync('','',false,'');
+
+				});
+
+				waitsFor(function() {
+					return callback;
+				}, "wait 1", 6000);
+
+				runs(function(){
+					countAfterSync = Product.count();
+					expect(countAfterSync).toEqual(countBeforeSync);
+					expect(
+						Product.find('all',{conditions: {name: 'VT302-247'}}).length
+					).toEqual(1);
+
+				});
+		  });
+
 	});
 });
