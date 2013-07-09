@@ -26,7 +26,7 @@ describe("Rhoconnect Client: SSL Settings", function() {
 
     waitsFor(function(){
       return callbackCalled;
-    },"wait", 10000);
+    },"wait", 20000);
 
     runs(function(){
       expect(errorCode).toEqual(1);
@@ -47,7 +47,7 @@ describe("Rhoconnect Client: SSL Settings", function() {
 
     waitsFor(function(){
       return callbackCalled;
-    },"wait", 10000);
+    },"wait", 20000);
 
     runs(function(){
       expect(errorCode).toEqual(0);
