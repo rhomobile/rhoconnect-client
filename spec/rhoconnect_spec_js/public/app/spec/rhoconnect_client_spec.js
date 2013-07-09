@@ -573,8 +573,23 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	 //    it("VT295-027 | doSync () method with queryParams | Parameter should pass to rhoconnect server inside query method.", function() {
-		// 	//This can be automated, just have the adapter return data based on existence of parameters.
+	xit("VT295-027 | doSyncSource method with query params | results match the query", function() {
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
+				Rho.RhoConnectClient.doSyncSource('Customer',false,'first=Bill');
+			});
+		});
+
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
+
+		runs(function() {
+			expect(Product.count()).toEqual(0);
+			expect(Customer.count()).toEqual(1);
+		});		
+	});
 
 	it("VT295-029 | getLastSyncObjectCount after sync | count of records", function() {
 		runs(function() {
@@ -710,10 +725,6 @@ describe("Rhoconnect Client", function() {
 			expect(Customer.count()).toEqual(0);
 		});
 	});
-
-    //  it("VT295-044 | set notification for specific source model and call doSyncSource() method | Notification call back should get fire and all sync status should be reported", function() {
-    //   //should report all sync status [in progress,ok and complete]
-    // });
 
 	it("VT295-054 | pollInterval when set to 5 seconds | callback should fire after 5 seconds ", function() {
 		var callback1 = false,
@@ -972,7 +983,7 @@ describe("Rhoconnect Client", function() {
 		});
 
 		waitsFor(function() {
-			callbackCalled;
+			return callbackCalled;
 		}, "wait", 6000);
 
 		runs(function() {
@@ -985,26 +996,6 @@ describe("Rhoconnect Client", function() {
 
 	// });
 
-
-		// it("VT295-075 | should handle update updated full_update object while sync | changed_values table record ? ", function() {
-
-
-
-		// });
-
-
-	 //    it("VT295-076 | should handle deleted object while error sync | changed_values table record ? ", function() {
-
-
-
-		// });
-
-		// //don't know much about this test
-	 //    it("VT295-077 | should create new Product with Customers | changed_values table record ? ", function() {
-
-
-
-		// });
 
 		// it("VT295-078 | login with different user | should reset database ", function() {
 
@@ -1042,51 +1033,93 @@ describe("Rhoconnect Client", function() {
 
 		// });
 
-		// it("VT295-084 | should process delete-error | ? ", function() {
-
-
-
-		// });
-
-	it("VT295-085 | should process source-error | error message should be correct", function() {
-		var message = '',
+	xit("VT295-084 | should process delete-error | error should be correct", function() {
+		var errors = '',
+				status = '',
 				code = 0,
-				error = [
-			{"version": 3},
-			{"token": ""},
-			{"count": 0},
-			{"progress_count": 0},
-			{"total_count": 0},
-			{"source-error":
-				{"query-error":
-					{"message": "Error during query"}
-				}
-			}
-		];
+				callback2 = false,
+				expected = null;
 
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
-				Rho.RhoConnectClient.setNotification('*', function(args) {
-					console.log('args: ' + JSON.stringify(args));
-					if(args.status == "error") {
-						actual = args.error_message;
-						callbackCalled = true;
-					}
-				});
-				Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', '1');			
+				Rho.RhoConnectClient.setNotification('*', callbackFunction);
 				Rho.RhoConnectClient.doSync();
 			});
 		});
 
 		waitsFor(function() {
-			callbackCalled;
+			return callbackCalled;
+		}, "wait", 6000);
+
+		runs(function() {
+			var p = Product.find('all')[0];
+			var errorObj = {};
+			errorObj['delete-error'] = {};
+			errorObj['delete-error'][p.get('object')] = {name: p.get('name'), price: p.get('price')};
+			errorObj['delete-error'][p.get('object') + '-error'] = {'message': 'Error during delete'};
+			expected = buildErrorMessage(errorObj);
+			p.destroy();
+			Rho.RhoConnectClient.setNotification('*', function(args) {
+				console.log(" ************* SOME ARGS ******** " + JSON.stringify(args));
+				if(args.status == "error") {
+					status = args.status;
+					errors = args.server_errors;
+					code = args.error_code;
+					callback2 = true;
+				}
+			});
+			Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', JSON.stringify(expected));
+			Rho.RhoConnectClient.doSync('Product');
+		});
+
+		waitsFor(function() {
+			return callback2;
 		}, "wait", 6000);
 
 		runs(function() {
 			expect(Product.count()).toEqual(0);
 			expect(Customer.count()).toEqual(0);
-			expect(message).toEqual('Error during query');
-			expect(code).toEqual('4');
+			expect(status).toEqual('error');
+			expect(
+				errors['delete-error']['message']
+			).toEqual(expected[5]['delete-error']['message']);
+			expect(code).toEqual('8');
+		});
+	});
+
+	xit("VT295-085 | should process source-error | error should be correct", function() {
+		var errors = '',
+				status = '',
+				code = 0,
+				expected = buildErrorMessage({'query-error':'Error During Query'});
+
+		runs(function() {
+			Rho.RhoConnectClient.login('testclient','testclient',function(){
+				Rho.RhoConnectClient.setNotification('*', function(args) {
+					if(args.status == "error") {
+						status = args.status;
+						errors = args.server_errors;
+						code = args.error_code;
+						callbackCalled = true;
+					}
+				});
+				Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', JSON.stringify(expected));			
+				Rho.RhoConnectClient.doSync();
+			});
+		});
+
+		waitsFor(function() {
+			return callbackCalled;
+		}, "wait", 6000);
+
+		runs(function() {
+			expect(Product.count()).toEqual(0);
+			expect(Customer.count()).toEqual(0);
+			expect(status).toEqual('error');
+			expect(
+				errors['query-error']['message']
+			).toEqual(expected[5]['source-error']['query-error']['message']);
+			expect(code).toEqual('8');
 		});
 	});
 
@@ -1115,12 +1148,6 @@ describe("Rhoconnect Client", function() {
 		// });
 
 		// it("VT295-091 | should handle update created object while sync error | ? ", function() {
-
-
-
-		// });
-
-		// it("VT295-092 | should process error sync | ? ", function() {
 
 
 

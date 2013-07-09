@@ -27,3 +27,14 @@ var createCustomers = function(count, data) {
     Customer.create({first: data + '-first', last: data + '-last'});
   }
 };
+
+var buildErrorMessage = function(data) {
+  return [
+    {"version": 3},
+    {"token": ""},
+    {"count": 0},
+    {"progress_count": 0},
+    {"total_count": 0},
+    {"source-error": data}
+  ]
+}
