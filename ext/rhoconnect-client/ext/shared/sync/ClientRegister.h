@@ -55,6 +55,19 @@ class CClientRegister : protected common::CRhoThread
     NetRequest              m_NetRequest;
     String                  m_strDevicePin;
     unsigned int            m_nPollInterval;
+    
+    
+    enum EnState
+    {
+        stRegister,
+        stUnregister
+    };
+    
+    EnState m_state;
+    common::CMutex m_mxStateAccess;
+    String m_unregisterSession;
+    String m_unregisterClientID;
+        
 public:
     static void SetSslVerifyPeer(boolean b);
     static bool GetSslVerifyPeer();
@@ -67,7 +80,7 @@ public:
     static CClientRegister* getInstance() { return m_pInstance; }
 
     void setRhoconnectCredentials(const String& user, const String& pass, const String& session);
-    void dropRhoconnectCredentials(const String& session);
+    void dropRhoconnectCredentials(const String& session,const String& clientID);
     void setDevicehPin(const String& pin);
     const String& getDevicePin() const { return m_strDevicePin; }
 
@@ -78,16 +91,22 @@ protected:
 
 private:
     String getRegisterBody(const String& strClientID);
-
+    String getUnregisterBody(const String& strClientID);
+    
     CClientRegister();
     ~CClientRegister();
 
     void doStop();
     boolean doRegister(CSyncEngine& oSync);
+    boolean doUnregister(CSyncEngine& oSync);
+    
     net::CNetRequestWrapper getNet(){ return getNetRequest(&m_NetRequest); }
     
     void notifyLoggedIn(const String& user, const String& pass, const String& session);
     void notifyLoggedOut(const String& session);
+    
+    void setState( EnState st );
+    EnState getState();
 
 };
 

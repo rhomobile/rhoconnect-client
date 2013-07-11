@@ -104,7 +104,7 @@ bool CClientRegister::GetSslVerifyPeer()
     s_loginListeners.addElement(listener);
 }
 
-CClientRegister::CClientRegister() : m_nPollInterval(POLL_INTERVAL_SECONDS)
+CClientRegister::CClientRegister() : m_nPollInterval(POLL_INTERVAL_SECONDS), m_state(stRegister)
 {
     m_NetRequest.setSslVerifyPeer(s_sslVerifyPeer);
 }
@@ -117,15 +117,26 @@ CClientRegister::~CClientRegister()
 void CClientRegister::setRhoconnectCredentials(const String& user, const String& pass, const String& session)
 {
     LOG(INFO) + "New Sync credentials - user: " + user + ", sess: " + session;
+    
+    setState(stRegister);
 
     notifyLoggedIn(user,pass,session);
     
     startUp();
 }
 
-void CClientRegister::dropRhoconnectCredentials(const String& session)
+void CClientRegister::dropRhoconnectCredentials(const String& session,const String& clientID)
 {
+    LOG(INFO) + "Dropping credentials - sess: " + session;
+    
+    setState(stUnregister);
+    
+    m_unregisterSession = session;
+    m_unregisterClientID = clientID;
+
     notifyLoggedOut(session);
+    
+    startUp();
 }
     
 void CClientRegister::notifyLoggedIn(const String& user, const String& pass, const String& session)
@@ -175,14 +186,18 @@ void CClientRegister::run()
 	while(!isStopping()) 
 	{
         i++;
-        LOG(INFO)+"Try to register: " + i;
+        LOG(INFO)+"Try to (un)register: " + i;
         if ( CSyncThread::getInstance() != null )
 		{
-			if ( doRegister(CSyncThread::getSyncEngine()) )
+            EnState state = getState();
+			if ( (stRegister==state) && doRegister(CSyncThread::getSyncEngine()) )
 			{
 			    LOG(INFO)+"Registered: " + i;
 				break;
-			}
+			} else if  ( (stUnregister==state) && doUnregister(CSyncThread::getSyncEngine()) ) {
+                LOG(INFO)+"Unregistered: " + i;
+				break;
+            }
 		} else
 		    LOG(INFO)+"SyncThread is not ready";
 		
@@ -208,16 +223,13 @@ String CClientRegister::getRegisterBody(const String& strClientID)
 
 	LOG(INFO)+"getRegisterBody() BODY is: " + body;
 	return body;
-
-	/*
-    if(m_isAns)
-		body = CSyncThread::getSyncEngine().getProtocol().getClientAnsRegisterBody( strClientID, m_strDevicePin,
-			port > 0 ? port : DEFAULT_PUSH_PORT, rho_rhodesapp_getplatform(), rho_sysimpl_get_phone_id() );
-	else
-		body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, m_strDevicePin,
-			port > 0 ? port : DEFAULT_PUSH_PORT, rho_rhodesapp_getplatform(), rho_sysimpl_get_phone_id() );
-	*/
-
+}
+    
+String CClientRegister::getUnregisterBody(const String& strClientID)
+{    
+	String body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, "", DEFAULT_PUSH_PORT, "", "", "" );
+	LOG(INFO)+"getUnregisterBody() BODY is: " + body;
+	return body;
 }
 
 boolean CClientRegister::doRegister(CSyncEngine& oSync)
@@ -264,11 +276,7 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
     NetResponse resp = getNet().pushData( oSync.getProtocol().getClientRegisterUrl(client_id), strBody, &oSync );
 	if( resp.isOK() )
     {
-//				try {
-			CDBAdapter::getUserDB().executeSQL("UPDATE client_info SET token_sent=?, token=?", 1, m_strDevicePin );
-//				} catch(Exception ex) {
-//					LOG.ERROR("Error saving token_sent to the DB...");
-//				}	
+        CDBAdapter::getUserDB().executeSQL("UPDATE client_info SET token_sent=?, token=?", 1, m_strDevicePin );
 		LOG(INFO)+"Registered client sucessfully...";
         
         return true;
@@ -277,6 +285,83 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
 
 	LOG(WARNING)+"Network error: "+ resp.getRespCode();
 	return false;
+}
+    
+boolean CClientRegister::doUnregister(CSyncEngine& oSync)
+{
+    String session = m_unregisterSession;
+    if ( session.length() == 0 )
+    {
+        m_unregisterSession = "";
+        m_unregisterClientID = "";
+
+        LOG(INFO)+"Session is empty, don't need to unregister";
+        return true;
+    }    
+
+    m_nPollInterval = POLL_INTERVAL_SECONDS;
+
+	String client_id = m_unregisterClientID;
+	if ( client_id.length() == 0 )
+	{
+        m_unregisterSession = "";
+        m_unregisterClientID = "";
+
+        LOG(WARNING)+"Sync client_id is empty, don't need to unregister";
+		return true;
+	}
+        
+    String strBody = getUnregisterBody(client_id);    
+    LOG(INFO)+"Unregistered client with body = " + strBody;
+    
+    class UnregisterSession : public net::IRhoSession {
+        String m_session;
+        String m_contentType;
+    public:
+        UnregisterSession(const String& session, const String& contentType) : m_session(session), m_contentType(contentType) {}
+      	virtual void logout() {}
+        virtual const String& getSession() {
+            return m_session;
+        }
+        virtual const String& getContentType() {
+            return m_contentType;
+        }
+    };
+    
+    UnregisterSession unregSession(session, oSync.getProtocol().getContentType() );
+    
+    NetResponse resp = getNet().pushData( oSync.getProtocol().getClientRegisterUrl(client_id), strBody, &unregSession );
+	if( resp.isOK() )
+    {
+        m_unregisterSession = "";
+        m_unregisterClientID = "";
+
+        CDBAdapter::getUserDB().executeSQL("UPDATE client_info SET token_sent=?", 0 );
+		LOG(INFO)+"Unregistered client sucessfully...";
+        
+        return true;
+        
+    }
+    
+	LOG(WARNING)+"Network error: "+ resp.getRespCode();
+	return false;
+}
+    
+void CClientRegister::setState( EnState st ) {
+    synchronized(m_mxStateAccess)
+    {
+        m_state = st;
+    }
+}
+    
+CClientRegister::EnState CClientRegister::getState() {
+    EnState state = stRegister;
+    synchronized(m_mxStateAccess)
+    {
+        state = m_state;
+    }
+
+    return state;
 }
 
 void CClientRegister::doStop()

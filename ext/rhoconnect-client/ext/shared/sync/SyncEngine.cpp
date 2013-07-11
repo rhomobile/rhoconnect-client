@@ -1140,7 +1140,7 @@ String CSyncEngine::loadSession()
 
 void CSyncEngine::logout_int()
 {
-    CClientRegister::Get()->dropRhoconnectCredentials(m_strSession);
+    CClientRegister::Get()->dropRhoconnectCredentials(m_strSession,getClientID());
     //CClientRegister::Destroy();
 
     getUserDB().executeSQL( "UPDATE client_info SET session=NULL" );
