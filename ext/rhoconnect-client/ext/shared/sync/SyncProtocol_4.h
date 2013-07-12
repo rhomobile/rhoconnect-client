@@ -101,11 +101,16 @@ struct CSyncProtocol_4 : public ISyncProtocol
 
     String getClientRegisterBody( const String& /*strClientID*/, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType)
     {
+        String strPort = "";
+        if (nPort != 0) {
+            strPort = common::convertToStringA(nPort);
+        }
+        
         return "{\"device_pin\":" + json::CJSONEntry::quoteValue(strPin) +
             ( strPhoneID.length() > 0 ? ",\"phone_id\":" + json::CJSONEntry::quoteValue(strPhoneID) : "") +
-            ",\"device_port\":" + json::CJSONEntry::quoteValue(common::convertToStringA(nPort)) +
+            ",\"device_port\":" + json::CJSONEntry::quoteValue(strPort) +
             ",\"device_type\":" + json::CJSONEntry::quoteValue(strType) +
-            ((strDevicePushType.length() > 0) ? (",\"device_push_type\":" + json::CJSONEntry::quoteValue(strDevicePushType)) : String("")) +
+            ",\"device_push_type\":" + json::CJSONEntry::quoteValue(strDevicePushType) +
             "}";
     }
 

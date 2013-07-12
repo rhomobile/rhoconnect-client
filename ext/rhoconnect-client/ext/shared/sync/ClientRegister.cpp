@@ -227,7 +227,7 @@ String CClientRegister::getRegisterBody(const String& strClientID)
     
 String CClientRegister::getUnregisterBody(const String& strClientID)
 {    
-	String body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, "", DEFAULT_PUSH_PORT, "", "", "" );
+	String body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, "", 0, "", "", "" );
 	LOG(INFO)+"getUnregisterBody() BODY is: " + body;
 	return body;
 }
