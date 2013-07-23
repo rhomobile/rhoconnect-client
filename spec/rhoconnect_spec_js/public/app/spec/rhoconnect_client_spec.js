@@ -10,6 +10,23 @@ var loginCallback_paramsValue = [{ "error_code" : "" , "error_message" : "" }],
 
 describe("Rhoconnect Client", function() {
   beforeEach(function() {
+		var has_reset = false;
+		var resetCallback = function() {
+      has_reset =true;
+    };
+    runs(function() {
+			var resetProps = {
+				url: syncServerUrl + '/rc/v1/system/reset',
+				headers: {'X-RhoConnect-API-TOKEN':'my-rhoconnect-token',
+        'Content-Type':'application/json'}
+			};
+			Rho.Network.post(resetProps, resetCallback);
+		});
+
+		waitsFor(function() {
+			return has_reset;
+		}, "Timeout", 20000);
+
     callbackCalled = false;
     Rho.RhoConnectClient.syncServer = syncServerUrl;
     Rho.RhoConnectClient.pollInterval = defaultPollInterval;
@@ -17,10 +34,10 @@ describe("Rhoconnect Client", function() {
     loginCallback_paramsValue.error_code = "";
     loginCallback_paramsValue.error_message = "";
     Rho.ORM.clear();
-    var db = new Rho.Database.SQLite3(Rho.Application.databaseFilePath('user'), 'user');
-    db.execute("DELETE FROM SOURCES");
-    db.execute("DELETE FROM CLIENT_INFO");
-    db.execute("DELETE FROM OBJECT_VALUES");
+    var db = Rho.ORMHelper.dbConnection("user");
+    db.$execute_sql("DELETE FROM SOURCES");
+    db.$execute_sql("DELETE FROM CLIENT_INFO");
+    db.$execute_sql("DELETE FROM OBJECT_VALUES");
     Product = Rho.ORM.addModel( function(model){
       model.modelName("Product");
       model.enable("sync");
@@ -366,7 +383,6 @@ describe("Rhoconnect Client", function() {
 				callback2 = false,
 				callback3 = false,
 				testName = new Date().getTime().toString();
-
 		// Sync first time
 		Rho.RhoConnectClient.login('testuser','testuser',function(){
 			Rho.RhoConnectClient.setNotification('*', function(args){ 
@@ -567,7 +583,7 @@ describe("Rhoconnect Client", function() {
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
-			expect(callCount).toEqual(5); // 2 Product, 2 customer, 1 complete
+			expect(callCount).toEqual(4); // 2 Product, 2 customer, 1 complete
 			expect(Product.count()).toBeGreaterThan(0);
 			expect(Customer.count()).toBeGreaterThan(0);
 		});
@@ -575,6 +591,8 @@ describe("Rhoconnect Client", function() {
 
 	xit("VT295-027 | doSyncSource method with query params | results match the query", function() {
 		runs(function() {
+			expect(Product.count()).toEqual(0);
+      expect(Customer.count()).toEqual(0);
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
 				Rho.RhoConnectClient.setNotification('*', callbackFunction);
 				Rho.RhoConnectClient.doSyncSource('Customer',false,'first=Bill');
@@ -1033,95 +1051,190 @@ describe("Rhoconnect Client", function() {
 
 		// });
 
-	xit("VT295-084 | should process delete-error | error should be correct", function() {
-		var errors = '',
-				status = '',
-				code = 0,
-				callback2 = false,
-				expected = null;
+	it("VT295-084 | should process delete-error | error should be correct", function() {
+    var errors = '',
+        status = '',
+        code = 0,
+        callback2 = false,
+        expected = null;
 
-		runs(function() {
-			Rho.RhoConnectClient.login('testclient','testclient',function(){
-				Rho.RhoConnectClient.setNotification('*', callbackFunction);
-				Rho.RhoConnectClient.doSync();
-			});
-		});
+    runs(function() {
+      Rho.RhoConnectClient.login('testclient','testclient',function(){
+        Rho.RhoConnectClient.setNotification('*', callbackFunction);
+        Rho.RhoConnectClient.doSync();
+      });
+    });
 
-		waitsFor(function() {
-			return callbackCalled;
-		}, "wait", 6000);
+    waitsFor(function() {
+      return callbackCalled;
+    }, "wait", 6000);
 
-		runs(function() {
-			var p = Product.find('all')[0];
-			var errorObj = {};
-			errorObj['delete-error'] = {};
-			errorObj['delete-error'][p.get('object')] = {name: p.get('name'), price: p.get('price')};
-			errorObj['delete-error'][p.get('object') + '-error'] = {'message': 'Error during delete'};
-			expected = buildErrorMessage(errorObj);
-			p.destroy();
-			Rho.RhoConnectClient.setNotification('*', function(args) {
-				console.log(" ************* SOME ARGS ******** " + JSON.stringify(args));
-				if(args.status == "error") {
-					status = args.status;
-					errors = args.server_errors;
-					code = args.error_code;
-					callback2 = true;
-				}
-			});
-			Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', JSON.stringify(expected));
-			Rho.RhoConnectClient.doSync('Product');
-		});
+    runs(function() {
+      expected = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"delete-error\":{\"broken_object_id\":{\"name\":\"wrongname\",\"an_attribute\":\"error delete\"},\"broken_object_id-error\":{\"message\":\"Error delete record\"}}}]"
+      Rho.RhoConnectClient.setNotification('Product', function(args) {
+        console.log(" ************* SOME ARGS ******** " + JSON.stringify(args));
+        if(args.status == "error") {
+          status = args.status;
+          errors = args.server_errors;
+          code = args.error_code;
+          callback2 = true;
+        }
+      });
+      Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', expected);
+      Rho.RhoConnectClient.doSync('Product');
 
-		waitsFor(function() {
-			return callback2;
-		}, "wait", 6000);
+      waitsFor(function() {
+      return callback2;
+    }, "wait", 6000);
 
-		runs(function() {
-			expect(Product.count()).toEqual(0);
-			expect(Customer.count()).toEqual(0);
-			expect(status).toEqual('error');
-			expect(
-				errors['delete-error']['message']
-			).toEqual(expected[5]['delete-error']['message']);
-			expect(code).toEqual('8');
-		});
-	});
+    runs(function() {
+      expect(status).toEqual('error');
+      expect(
+        errors['delete-error']['broken_object_id']['message']
+      ).toEqual("Error delete record");
+      expect(code).toEqual('8');
+    });
+    });
+  })
 
-	xit("VT295-085 | should process source-error | error should be correct", function() {
-		var errors = '',
-				status = '',
-				code = 0,
-				expected = buildErrorMessage({'query-error':'Error During Query'});
 
-		runs(function() {
-			Rho.RhoConnectClient.login('testclient','testclient',function(){
-				Rho.RhoConnectClient.setNotification('*', function(args) {
-					if(args.status == "error") {
-						status = args.status;
-						errors = args.server_errors;
-						code = args.error_code;
-						callbackCalled = true;
-					}
-				});
-				Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', JSON.stringify(expected));			
-				Rho.RhoConnectClient.doSync();
-			});
-		});
+  it("VT295-085| should process query-error | error should be correct", function() {
+      var errors = '',
+          status = '',
+          code = 0,
+          callback2 = false,
+          expected = null;
 
-		waitsFor(function() {
-			return callbackCalled;
-		}, "wait", 6000);
+      runs(function() {
+        Rho.RhoConnectClient.login('testclient','testclient',function(){
+          Rho.RhoConnectClient.setNotification('*', callbackFunction);
+          Rho.RhoConnectClient.doSync();
+        });
+      });
 
-		runs(function() {
-			expect(Product.count()).toEqual(0);
-			expect(Customer.count()).toEqual(0);
-			expect(status).toEqual('error');
-			expect(
-				errors['query-error']['message']
-			).toEqual(expected[5]['source-error']['query-error']['message']);
-			expect(code).toEqual('8');
-		});
-	});
+      waitsFor(function() {
+        return callbackCalled;
+      }, "wait", 6000);
+
+      runs(function() {
+        expected = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"update-rollback\": {\"#{obj_id}\": {\"name\": \"OLD_NAME\"}},\"update-error\":{\"testid\":{\"name\":\"wrongname\",\"an_attribute\":\"error update\"},\"testid-error\":{\"message\":\"error update\"}}}]"
+        Rho.RhoConnectClient.setNotification('Product', function(args) {
+          console.log(" ************* SOME ARGS ******** " + JSON.stringify(args));
+          if(args.status == "error") {
+            status = args.status;
+            errors = args.server_errors;
+            code = args.error_code;
+            callback2 = true;
+          }
+        });
+        Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', expected);
+        Rho.RhoConnectClient.doSync('Product');
+
+        waitsFor(function() {
+        return callback2;
+      }, "wait", 6000);
+
+      runs(function() {
+        expect(status).toEqual('error');
+        expect(
+          errors['update-error']['testid']['message']
+        ).toEqual("error update");
+        expect(code).toEqual('8');
+      });
+    });
+   });
+
+    it("VT295-086| should process create-error | error should be correct", function() {
+      var errors = '',
+          status = '',
+          code = 0,
+          callback2 = false,
+          expected = null;
+
+      runs(function() {
+        Rho.RhoConnectClient.login('testclient','testclient',function(){
+          Rho.RhoConnectClient.setNotification('*', callbackFunction);
+          Rho.RhoConnectClient.doSync();
+        });
+      });
+
+      waitsFor(function() {
+        return callbackCalled;
+      }, "wait", 6000);
+
+      runs(function() {
+        expected = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"create-error\":{\"testid\":{\"name\":\"wrongname\",\"an_attribute\":\"error create\"},\"testid-error\":{\"message\":\"error create\"}}}]";
+         Rho.RhoConnectClient.setNotification('Product', function(args) {
+          console.log(" ************* SOME ARGS ******** " + JSON.stringify(args));
+          if(args.status == "error") {
+            status = args.status;
+            errors = args.server_errors;
+            code = args.error_code;
+            callback2 = true;
+          }
+        });
+        Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', expected);
+        Rho.RhoConnectClient.doSync('Product');
+
+        waitsFor(function() {
+        return callback2;
+      }, "wait", 6000);
+
+      runs(function() {
+        expect(status).toEqual('error');
+        expect(
+          errors['create-error']['testid']['message']
+        ).toEqual("error create");
+        expect(code).toEqual('8');
+      });
+    });
+  });
+
+ it("VT295-087| should process update-error | error should be correct", function() {
+      var errors = '',
+          status = '',
+          code = 0,
+          callback2 = false,
+          expected = null;
+
+      runs(function() {
+        Rho.RhoConnectClient.login('testclient','testclient',function(){
+          Rho.RhoConnectClient.setNotification('*', callbackFunction);
+          Rho.RhoConnectClient.doSync();
+        });
+      });
+
+      waitsFor(function() {
+        return callbackCalled;
+      }, "wait", 6000);
+
+      runs(function() {
+        expected = "[{\"version\":3},{\"token\":\"\"},{\"count\":0},{\"progress_count\":0},{\"total_count\":0},{\"update-error\":{\"broken_object_id\":{\"name\":\"wrongname\",\"an_attribute\":\"error update\"},\"broken_object_id-error\":{\"message\":\"error update\"}}}]";
+        Rho.RhoConnectClient.setNotification('Product', function(args) {
+          console.log(" ************* SOME ARGS ******** " + JSON.stringify(args));
+          if(args.status == "error") {
+            status = args.status;
+            errors = args.server_errors;
+            code = args.error_code;
+            callback2 = true;
+          }
+        });
+        Rho.RhoConnectClient.setSourceProperty('Product', 'rho_server_response', expected);
+        Rho.RhoConnectClient.doSync('Product');
+
+        waitsFor(function() {
+        return callback2;
+      }, "wait", 6000);
+
+      runs(function() {
+        expect(status).toEqual('error');
+        expect(
+          errors['update-error']['broken_object_id']['message']
+        ).toEqual("error update");
+        expect(code).toEqual('8');
+      });
+    });
+  });
 
 		// it("VT295-087 | should NOT push pending created objects | ? ", function() {
 
@@ -1217,7 +1330,6 @@ describe("Rhoconnect Client", function() {
             var itemType = itemTypes[Math.floor(Math.random()*itemTypes.length)];
             Product.create({id: i, name: nameValue, type: itemType});
         }
-        
         Rho.RhoConnectClient.login('testuser','testuser',function(){
             Rho.RhoConnectClient.setNotification('*', function(args){ 
                 if(args.status == 'complete') {
@@ -1281,7 +1393,7 @@ describe("Rhoconnect Client", function() {
         });
     });
 
-		  xit("VT302-236 | Call sync ORMModel without passing any arguments",function(){
+		  it("VT302-236 | Call sync ORMModel without passing any arguments",function(){
 
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
@@ -1323,7 +1435,7 @@ describe("Rhoconnect Client", function() {
 
 		  })
 
-		  xit("VT302-237 | Call sync OrmModel passing callback as an argument and check callback is getting fired or not",function(){
+		  it("VT302-237 | Call sync OrmModel passing callback as an argument and check callback is getting fired or not",function(){
 
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
@@ -1358,7 +1470,7 @@ describe("Rhoconnect Client", function() {
 
 		  });
 
-		  xit("VT302-238 | Call sync ORMModel passing callback and callbackdata as arguments",function(){
+		  it("VT302-238 | Call sync ORMModel passing callback and callbackdata as arguments",function(){
 
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
@@ -1393,7 +1505,7 @@ describe("Rhoconnect Client", function() {
 
 		  });
 
-		  xit("VT302-239 | Call sync ORMModel without passing callback but with callbackdata",function(){
+		  it("VT302-239 | Call sync ORMModel without passing callback but with callbackdata",function(){
 
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
@@ -1435,7 +1547,7 @@ describe("Rhoconnect Client", function() {
 
 		  });
 
-		  xit("VT302-245 | Call sync ORMModel with callback, callbackdata, showStatusPopup as false and urlencoded query params",function(){
+		  it("VT302-245 | Call sync ORMModel with callback, callbackdata, showStatusPopup as false and urlencoded query params",function(){
 
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
@@ -1469,7 +1581,7 @@ describe("Rhoconnect Client", function() {
 				});
 		  });
 
-		  xit("VT302-246 | Call sync ORMModel with callback, callbackdata, showStatusPopup as false and query params as null",function(){
+		  it("VT302-246 | Call sync ORMModel with callback, callbackdata, showStatusPopup as false and query params as null",function(){
 
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
@@ -1503,7 +1615,7 @@ describe("Rhoconnect Client", function() {
 				});
 		  });
 
-		  xit("VT302-247 | Call sync with ORMModel with url encoded query params, callback and calldata as null",function(){
+		  it("VT302-247 | Call sync with ORMModel with url encoded query params, callback and calldata as null",function(){
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
 			  			userloggedIn = true;
@@ -1543,7 +1655,7 @@ describe("Rhoconnect Client", function() {
 				});
 		  });
 
-		  xit("VT302-248 | Call sync with ORMModel with empty string For e.g ORMModel.sync('','',false,'')",function(){
+		  it("VT302-248 | Call sync with ORMModel with empty string For e.g ORMModel.sync('','',false,'')",function(){
 
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
@@ -1585,7 +1697,7 @@ describe("Rhoconnect Client", function() {
 
 		  });
 
-		  xit("VT302-249 | call sync with ORMModel by passing undefined as arguments for e.g ORMModel.sync(undefined,undefined,undefined,undefined)",function(){
+		  it("VT302-249 | call sync with ORMModel by passing undefined as arguments for e.g ORMModel.sync(undefined,undefined,undefined,undefined)",function(){
 		  		runs(function(){
 			  		Rho.RhoConnectClient.login('testuser','testuser',function(args){
 			  			userloggedIn = true;
