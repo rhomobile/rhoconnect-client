@@ -6,7 +6,8 @@ version: 1.0.0
 vendor: rhomobile
 sdkversion: 3.4
 iphone:
-  sdk: iphonesimulator6.0
+  sdk: iphonesimulator4.3
+  # sdk: iphonesimulator6.0
   entitlements: ''
   codesignidentity: ''
   configuration: Release
