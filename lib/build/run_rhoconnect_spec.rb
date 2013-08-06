@@ -91,7 +91,8 @@ require File.join($rho_root,'lib','build','rhoconnect_helper.rb')
 		puts "run specs"
 		chdir $rho_root
 		Rake::Task.tasks.each { |t| t.reenable }
-    Rake::Task["run:#{platform}:#{$device}:spec"].invoke
+		run_specs = $device ? "run:#{platform}:#{$device}:spec" : "run:#{platform}:spec"
+    Rake::Task[run_specs].invoke
 
 	ensure
 		RhoconnectHelper.stop_rhoconnect_stack
