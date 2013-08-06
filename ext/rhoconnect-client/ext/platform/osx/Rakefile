@@ -25,8 +25,8 @@ def build_extension(name, arch)
     args << "-I\"#{$rootdir}/platform/shared\""
     args << "-I\"#{$rootdir}/platform/shared/sync\""
     args << "-I\"#{$rootdir}/platform/shared\""
-    args << "-I\"#{$srcroot}\""
-    args << "-I\"#{$srcroot}/sync\""
+    args << "-I\"#{srcroot}\""
+    args << "-I\"#{srcroot}/sync\""
       
     args << "-D_XOPEN_SOURCE"
     args << "-D_DARWIN_C_SOURCE"
