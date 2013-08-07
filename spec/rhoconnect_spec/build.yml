@@ -1,12 +1,13 @@
 ---
+sdk: ../../../rhodes
+sdkversion: 4.0.0
 name: rhoconnect_spec
 bbver: 6.0
-sdk: /Users/lars/Dev/code/rhodes
 version: 1.0.0
 vendor: rhomobile
 sdkversion: 3.4
 iphone:
-  sdk: iphonesimulator6.1
+  sdk: iphonesimulator6.0
   entitlements: ''
   codesignidentity: ''
   configuration: Release
@@ -23,4 +24,3 @@ wp:
 android:
   # apikey: 0tLch9tZSX1G7PQRWwmqvINECUGtJ8ReArpPJxw
   version: 4.2.2
-  # version: 2.3.3
