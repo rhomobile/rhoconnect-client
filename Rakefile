@@ -70,7 +70,7 @@ dirs = [
 ]
 
 files = ["README.md",
-         "CHANGELOG",
+         "CHANGELOG.md",
 		 "CREDITS",
 		 "LICENSE"
 		]

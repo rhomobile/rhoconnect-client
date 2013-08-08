@@ -495,9 +495,9 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
 					
 					String error;
 					if ( strError.length() > 0 ) {
-                        error = URI::urlEncode(strError);
+                        error = strError;
 					} else if ( src != null ) {
-                        error = URI::urlEncode( (*src).m_strError);
+                        error = (*src).m_strError;
 					}
 					
 					result.put("error_message",error);
