@@ -30,3 +30,9 @@ license.key
 ext/rhoconnect-client/ext/platform/*/generated
 ext/rhoconnect-client/ext/shared/generated
 ext/rhoconnect-client/public/api/generated
+
+test_results.xml
+spec/rhoconnect_spec/RhoLogSpec.txt
+
+spec/rhoconnect_spec/build.yml
+spec/rhoconnect_spec_js/build.yml
