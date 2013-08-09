@@ -657,22 +657,21 @@ describe("Rhoconnect Client", function() {
 		var timeoutCalled = false;
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
-				Rho.RhoConnectClient.setNotification('*', callbackFunction);
+				Rho.RhoConnectClient.setNotification('*', function(args){
+					Rho.RhoConnectClient.stopSync();
+					callbackFunction(args);
+				});
 				Rho.RhoConnectClient.doSync();
-				Rho.RhoConnectClient.stopSync();
 			});
-			setTimeout(function(){
-				timeoutCalled = true;
-			}, 5000);
 		});
 
 		waitsFor(function() {
-			return timeoutCalled;
+			return callbackCalled;
 		}, "wait", 7000);
 
 		runs(function() {
-			expect(callbackCalled).toBe(false);
-			expect(Product.count()).toEqual(0);
+			expect(callbackCalled).toBe(true);
+			expect(Product.count()).toBeGreaterThan(0);
 			expect(Customer.count()).toEqual(0);
 		});
 	});
