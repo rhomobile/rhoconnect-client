@@ -5,7 +5,6 @@ name: rhoconnect_spec
 bbver: 6.0
 version: 1.0.0
 vendor: rhomobile
-sdkversion: 3.4
 iphone:
   sdk: iphonesimulator6.0
   entitlements: ''
