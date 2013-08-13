@@ -100,8 +100,8 @@ def run_rhoconnect_spec(platform,appname,flags)
       f.puts "var SYNC_SERVER_PORT = #{RhoconnectHelper.port};"
     end
     File.open(File.join($app_path, 'public', 'app', 'local_server.js'), 'w') do |f|
-			f.puts "var SPEC_LOCAL_SERVER_HOST = '#{addr}'"
- 			f.puts "var SPEC_LOCAL_SERVER_PORT = #{port}"
+			f.puts "var SPEC_LOCAL_SERVER_HOST = '#{addr}';"
+ 			f.puts "var SPEC_LOCAL_SERVER_PORT = #{port};"
     end
   end
 
