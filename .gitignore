@@ -10,6 +10,7 @@ rholog-*
 xcuserdata/
 project.xcworkspace/
 sync_server*
+local_server*
 bin/
 tmp/
 config.yml

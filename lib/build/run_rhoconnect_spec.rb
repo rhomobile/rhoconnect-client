@@ -1,14 +1,10 @@
 require 'fileutils'
-
 require File.join($rho_root,'lib','build','jake.rb')
 require File.join($rho_root,'lib','build','rhoconnect_helper.rb')
 
-
 def run_rhoconnect_spec(platform,appname,flags)
 	test_appname = "testapp"
-
 	puts "run_spec_app(#{platform},#{appname})"
-
 
 	rhobuildyml = File.join($rho_root,'rhobuild.yml')
 	$app_path = File.expand_path(File.join(File.dirname(__FILE__),'..','..','spec',appname))
@@ -43,6 +39,19 @@ def run_rhoconnect_spec(platform,appname,flags)
 
 	RhoconnectHelper.stop_rhoconnect_stack
 
+	server, addr, port = Jake.run_local_server(8081)
+	server.mount_proc('/', nil) do |req, res|
+	  # query = req.query
+	  # puts "Local server:"
+	  # puts " Headers: #{req.header.inspect}"
+	  # puts " Query: #{query.inspect}"
+	  # puts " Body: #{req.body}"
+		res_file = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'test_results.xml'))
+ 		File.open(res_file, "w") { |f| f << req.body }
+
+	  res.status = 200
+	end
+	trap(:INT) { server.shutdown }
 
 	puts "generate app"
 	res = RhoconnectHelper.generate_app($tmp_path,test_appname)
@@ -76,8 +85,12 @@ def run_rhoconnect_spec(platform,appname,flags)
 
   if generateRuby then
     File.open(File.join($app_path, 'app', 'sync_server.rb'), 'w') do |f|
-      f.puts "SYNC_SERVER_HOST = '#{RhoconnectHelper.host}'"
-      f.puts "SYNC_SERVER_PORT = #{RhoconnectHelper.port}"
+  		f.puts "SYNC_SERVER_HOST = '#{RhoconnectHelper.host}'"
+   		f.puts "SYNC_SERVER_PORT = #{RhoconnectHelper.port}"
+    end
+    File.open(File.join($app_path, 'app', 'local_server.rb'), 'w') do |f|
+ 			f.puts "SPEC_LOCAL_SERVER_HOST = '#{addr}'"
+ 			f.puts "SPEC_LOCAL_SERVER_PORT = #{port}"
     end
   end
 
@@ -86,31 +99,28 @@ def run_rhoconnect_spec(platform,appname,flags)
       f.puts "var SYNC_SERVER_HOST = '#{RhoconnectHelper.host}';"
       f.puts "var SYNC_SERVER_PORT = #{RhoconnectHelper.port};"
     end
+    File.open(File.join($app_path, 'app', 'local_server.rb'), 'w') do |f|
+			f.puts "var SPEC_LOCAL_SERVER_HOST = '#{addr}'"
+ 			f.puts "var SPEC_LOCAL_SERVER_PORT = #{port}"
+    end
   end
 
-	puts "run specs"
+	puts "Running specs ..."
 	chdir $rho_root
 	Rake::Task.tasks.each { |t| t.reenable }
 	run_specs = $device ? "run:#{platform}:#{$device}:spec" : "run:#{platform}:spec"
 	Rake::Task[run_specs].invoke
 
-	if platform == "android"
-		path_to_results = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
-	  if system("adb -d pull /data/data/#{$app_package_name}/rhodata/apps/test_results.xml #{path_to_results}") # if $app_package_name
-	  	puts "Test results pulled from device to #{path_to_results}/test_results.xml file"
-	  end
-	end
-	Rake::Task["uninstall:#{platform}:device"].invoke
-
+rescue Exception => e
+	# FIXME: iphone rake tasks throw exception!
+	# puts e.backtrace.join("\n")
 ensure
 	RhoconnectHelper.stop_rhoconnect_stack
 	cleanup_apps
 	puts "run_spec_app(#{platform},#{appname}) done"
-
 end
 
 def cleanup_apps
 	puts "cleanup"
 	FileUtils.rm_r File.expand_path($tmp_path) if File.directory?($tmp_path)
 end
-
