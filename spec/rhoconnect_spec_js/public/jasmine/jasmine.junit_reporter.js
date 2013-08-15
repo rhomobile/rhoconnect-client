@@ -171,7 +171,8 @@
   			{	// code for IE6, IE5
   				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
   			}
-  			var requestString = 'http://localhost:8888/savetestresult.do?filename=' + filename + '&junitreport=' + text;
+            var requestString = "http://"+SPEC_LOCAL_SERVER_HOST+":SPEC_LOCAL_SERVER_PORT"+"/savetestresult.do?filename=" + filename + "&junitreport=" + text;
+  			//var requestString = 'http://localhost:8888/savetestresult.do?filename=' + filename + '&junitreport=' + text;
   			xmlhttp.open("GET", requestString, false);
 			xmlhttp.send();
         },
