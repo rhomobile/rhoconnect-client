@@ -8,6 +8,7 @@
     <script type="text/javascript" charset="utf-8" src="/public/jquery/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="/public/api/rhoapi-modules.js"></script>
 
+    <script type="text/javascript" src="local_server.js"></script>
     <script type="text/javascript" src="/public/jasmine/jasmine.js"></script>
     <script type="text/javascript" src="/public/jasmine/jasmine-html.js"></script>
     <script type="text/javascript" src="/public/jasmine/jasmine.junit_reporter.js"></script>
@@ -21,12 +22,12 @@
     <script type="text/javascript" src="spec/ssl_spec.js"></script>
     <script type="text/javascript" src="specHelpers.js"></script>
     <script type="text/javascript" src="spec/rhoconnect_client_spec.js"></script>
-	
+
     <script type="text/javascript">
         (function () {
-        
+
             Rho.Application.nativeMenu = [ {'label':'Exit', 'action': 'exit'} ];
-            
+
             var jasmineEnv = jasmine.getEnv();
             jasmineEnv.updateInterval = 1000;
 

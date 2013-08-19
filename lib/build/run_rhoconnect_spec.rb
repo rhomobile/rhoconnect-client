@@ -39,19 +39,22 @@ def run_rhoconnect_spec(platform,appname,flags)
 
 	RhoconnectHelper.stop_rhoconnect_stack
 
-	server, addr, port = Jake.run_local_server(8081)
-	server.mount_proc('/', nil) do |req, res|
-	  # query = req.query
-	  # puts "Local server:"
-	  # puts " Headers: #{req.header.inspect}"
-	  # puts " Query: #{query.inspect}"
-	  # puts " Body: #{req.body}"
-		res_file = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'test_results.xml'))
- 		File.open(res_file, "w") { |f| f << req.body }
-
+  @mutex  = Mutex.new
+  # @signal = ConditionVariable.new
+  @server, @addr, @port = Jake.run_local_server(8081)
+	@server.mount_proc('/', nil) do |req, res|
 	  res.status = 200
+    @mutex.synchronize do
+      # puts " query_string: #{req.query_string}"
+      # puts " Body: #{req.body}"
+      @file_name =  req.query_string.split("=")[1]
+      xml_file = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', @file_name))
+      File.open(xml_file, "w") { |f| f << req.body }
+      puts "Test results are saved in #{@file_name}"
+      # @signal.signal
+    end
 	end
-	trap(:INT) { server.shutdown }
+	trap(:INT) { @server.shutdown }
 
 	puts "generate app"
 	res = RhoconnectHelper.generate_app($tmp_path,test_appname)
@@ -89,8 +92,8 @@ def run_rhoconnect_spec(platform,appname,flags)
    		f.puts "SYNC_SERVER_PORT = #{RhoconnectHelper.port}"
     end
     File.open(File.join($app_path, 'app', 'local_server.rb'), 'w') do |f|
- 			f.puts "SPEC_LOCAL_SERVER_HOST = '#{addr}'"
- 			f.puts "SPEC_LOCAL_SERVER_PORT = #{port}"
+ 			f.puts "SPEC_LOCAL_SERVER_HOST = '#{@addr}'"
+ 			f.puts "SPEC_LOCAL_SERVER_PORT = #{@port}"
     end
   end
 
@@ -100,8 +103,8 @@ def run_rhoconnect_spec(platform,appname,flags)
       f.puts "var SYNC_SERVER_PORT = #{RhoconnectHelper.port};"
     end
     File.open(File.join($app_path, 'public', 'app', 'local_server.js'), 'w') do |f|
-			f.puts "var SPEC_LOCAL_SERVER_HOST = '#{addr}';"
- 			f.puts "var SPEC_LOCAL_SERVER_PORT = #{port};"
+			f.puts "var SPEC_LOCAL_SERVER_HOST = '#{@addr}';"
+ 			f.puts "var SPEC_LOCAL_SERVER_PORT = #{@port};"
     end
   end
 
@@ -115,6 +118,11 @@ rescue Exception => e
 	# FIXME: iphone rake tasks throw exception!
 	# puts e.backtrace.join("\n")
 ensure
+  # @mutex.synchronize do
+  #   @signal.wait(@mutex, 30) # wait timeout
+  #   puts "Processed #{@file_name}"
+  # end
+
 	RhoconnectHelper.stop_rhoconnect_stack
 	cleanup_apps
 	puts "run_spec_app(#{platform},#{appname}) done"

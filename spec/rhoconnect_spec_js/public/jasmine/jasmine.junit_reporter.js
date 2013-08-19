@@ -30,7 +30,7 @@
             .replace(/\"/g, "&quot;")
             .replace(/\'/g, "&apos;");
     }
-	
+
 	/**
      * Generates JUnit XML for the given spec run.
      * Allows the test results to be used in java based CI
@@ -159,10 +159,10 @@
             }
             return output;
         },
-		
+
 		writeFile: function(filename, text)
 		{
-			var xmlhttp;
+			var xmlhttp = null;
 			if (window.XMLHttpRequest)
   			{	// code for IE7+, Firefox, Chrome, Opera, Safari
 	  			xmlhttp=new XMLHttpRequest();
@@ -171,10 +171,20 @@
   			{	// code for IE6, IE5
   				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
   			}
-            var requestString = "http://"+SPEC_LOCAL_SERVER_HOST+":SPEC_LOCAL_SERVER_PORT"+"/savetestresult.do?filename=" + filename + "&junitreport=" + text;
-  			//var requestString = 'http://localhost:8888/savetestresult.do?filename=' + filename + '&junitreport=' + text;
-  			xmlhttp.open("GET", requestString, false);
-			xmlhttp.send();
+            // xmlhttp.onreadystatechange=function() {
+            //   if (xmlhttp.readyState==4) {
+            //     if(xmlhttp.status==200) {
+            //       alert("Got the response!");
+            //     } else {
+            //       alert("Error in response!" + JSON.stringify(xmlhttp));
+            //     }
+            //   }
+            // };
+
+            var requestString = "http://" + SPEC_LOCAL_SERVER_HOST + ":" + SPEC_LOCAL_SERVER_PORT + "?filename=" + filename;
+            xmlhttp.open("POST", requestString, true);
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlhttp.send(text);
         },
 
         getFullName: function(suite, isFilename) {

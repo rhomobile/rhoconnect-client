@@ -22,6 +22,7 @@ sync_server.*
 *.rdb
 rhoapi-modules.js
 license.key
+README
 
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
@@ -37,3 +38,4 @@ spec/rhoconnect_spec/RhoLogSpec.txt
 
 spec/rhoconnect_spec/build.yml
 spec/rhoconnect_spec_js/build.yml
+spec/rhoconnect_spec_js/RhoLogSpec.txt
