@@ -111,12 +111,14 @@ def run_rhoconnect_spec(platform,appname,flags)
 	puts "Running specs ..."
 	chdir $rho_root
 	Rake::Task.tasks.each { |t| t.reenable }
-	run_specs = $device ? "run:#{platform}:#{$device}:spec" : "run:#{platform}:spec"
-	Rake::Task[run_specs].invoke
+	# run_specs = $device ? "run:#{platform}:#{$device}:spec" : "run:#{platform}:spec"
+  uninstall_app = false
+	Rake::Task["run:#{platform}:#{$device}:spec"].invoke(uninstall_app)
 
 rescue Exception => e
 	# FIXME: iphone rake tasks throw exception!
 	# puts e.backtrace.join("\n")
+
 ensure
   # @mutex.synchronize do
   #   @signal.wait(@mutex, 30) # wait timeout
@@ -125,6 +127,7 @@ ensure
 
 	RhoconnectHelper.stop_rhoconnect_stack
 	cleanup_apps
+  Rake::Task["stop:#{platform}:#{$device}"].invoke
 	puts "run_spec_app(#{platform},#{appname}) done"
 end
 

@@ -201,11 +201,13 @@ namespace "run" do
   namespace "iphone" do
     task :rhoconnect_spec do
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+      $device = 'emulator'
       run_rhoconnect_spec('iphone','rhoconnect_spec', { :ruby => true } )
     end
 
     task :rhoconnect_spec_js do
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+      $device = 'emulator'
       run_rhoconnect_spec('iphone','rhoconnect_spec_js', { :js => true } )
     end
 
