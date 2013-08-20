@@ -27,7 +27,7 @@ class SpecRunner < MSpecScript
     exit_code = MSpec.exit_code
 
     postProps = Hash.new
-    postProps['url'] = "http://#{SPEC_LOCAL_SERVER_HOST}:#{SPEC_LOCAL_SERVER_PORT}"
+    postProps['url'] = "http://#{SPEC_LOCAL_SERVER_HOST}:#{SPEC_LOCAL_SERVER_PORT}?filename=#{File.basename(@results_path)}"
     contents = File.read(@results_path)
     postProps['body'] = contents
     res = Rho::Network.post(postProps)
