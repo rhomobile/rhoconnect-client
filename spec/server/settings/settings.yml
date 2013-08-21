@@ -28,6 +28,7 @@
   :redis: localhost:6379
   :syncserver: http://localhost:9292
   :bulk_sync_poll_interval: 10
+  :api_token: my-rhoconnect-token
 :test: 
   :licensefile: settings/license.key
   :iphonecertfile: settings/apple_push_cert.pem
@@ -39,6 +40,7 @@
   :redis: localhost:6379:2
   :syncserver: http://localhost:9292
   :bulk_sync_poll_interval: 10
+  :api_token: my-rhoconnect-token
 :production: 
   :licensefile: settings/license.key
   :iphonecertfile: settings/apple_push_cert.pem
@@ -50,3 +52,4 @@
   :redis: localhost:6379
   :syncserver: http://localhost:9292
   :bulk_sync_poll_interval: 10
+  :api_token: my-rhoconnect-token

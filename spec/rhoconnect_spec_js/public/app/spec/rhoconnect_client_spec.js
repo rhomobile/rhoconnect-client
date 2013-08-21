@@ -583,7 +583,7 @@ describe("Rhoconnect Client", function() {
 
 		runs(function() {
 			expect(callbackCalled).toEqual(true);
-			expect(callCount).toEqual(4); // 2 Product, 2 customer, 1 complete
+			expect(callCount).toEqual(5); // 2 Product, 2 customer, 1 complete
 			expect(Product.count()).toBeGreaterThan(0);
 			expect(Customer.count()).toBeGreaterThan(0);
 		});
