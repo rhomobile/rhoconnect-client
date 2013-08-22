@@ -18,7 +18,8 @@ describe("Rhoconnect Client", function() {
 			var resetProps = {
 				url: syncServerUrl + '/rc/v1/system/reset',
 				headers: {'X-RhoConnect-API-TOKEN':'my-rhoconnect-token',
-        'Content-Type':'application/json'}
+				          'Content-Type': 'application/x-www-form-urlencoded'
+				}
 			};
 			Rho.Network.post(resetProps, resetCallback);
 		});
