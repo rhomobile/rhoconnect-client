@@ -31,7 +31,7 @@ class SpecRunner < MSpecScript
     contents = File.read(@results_path)
     postProps['body'] = contents
     res = Rho::Network.post(postProps)
-    puts "Post 'test_results.xml' to local server. Status: #{res['status']}"
+    puts "Post #{File.basename(@results_path)} to local server. Status: #{res['status']}"
 
     exit_code
   end
