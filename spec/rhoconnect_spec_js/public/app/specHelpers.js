@@ -2,9 +2,14 @@ var callbackFunction = function(args) {
   processArgs(args);
   if((args.status && args.status == 'complete') || !args.status) {
     callbackCalled = true;
-  } else if(args.total_count === args.cumulative_count) {
+  }; 
+};
+
+var okCallbackFunction = function(args) {
+  processArgs(args);
+  if((args.status && args.status == 'ok') || !args.status) {
     callbackCalled = true;
-  }
+  };
 };
 
 var processArgs = function(args) {
