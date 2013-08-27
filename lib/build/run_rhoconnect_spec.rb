@@ -24,15 +24,13 @@ def run_rhoconnect_spec(platform,appname,flags)
 	$rhoconnect_bin = "#{$rhoconnect_root}/bin/rhoconnect"
 	puts "$rhoconnect_bin: #{$rhoconnect_bin}"
 
-	RhoconnectHelper.set_rhoconnect_bin "#{$rhoconnect_root}/bin/rhoconnect"
+	RhoconnectHelper.set_rhoconnect_bin $rhoconnect_root
 	puts "rhoconnect_bin: #{RhoconnectHelper.rhoconnect_bin}"
-
 
 	RhoconnectHelper.set_rc_out File.open( File.join($app_path, "rhoconnect.log" ), "w")
 	RhoconnectHelper.set_redis_out File.open( File.join($app_path, "redis.log" ), "w")
 	RhoconnectHelper.set_resque_out File.open( File.join($app_path, "resque.log" ), "w")
 	RhoconnectHelper.set_rc_push_out File.open( File.join($app_path, "rc_push.log" ), "w")
-
 	RhoconnectHelper.set_enable_push(false)
 	RhoconnectHelper.set_enable_rails(false)
 	RhoconnectHelper.set_enable_redis($rhoconnect_use_redis)
@@ -56,30 +54,23 @@ def run_rhoconnect_spec(platform,appname,flags)
 	end
 	trap(:INT) { @server.shutdown }
 
-	puts "generate app"
-	res = RhoconnectHelper.generate_app($tmp_path,test_appname)
+  puts "Generating app ..."
+  # Generate app, set rhoconnect gem path to its sources, but do not run bundler
+	res = RhoconnectHelper.generate_app($tmp_path, test_appname, false)
 
-	puts "patching Gemfile with correct rhoconnect path"
-	target_gemfile = File.join(server_path, 'Gemfile')
-	file = File.read(target_gemfile)
-	file.gsub!(/(gem 'rhoconnect'*.*)/, "gem 'rhoconnect', :path => '#{$rhoconnect_root}'")
-	File.open(target_gemfile, 'w') {|f| f.write file}
-
-	puts "patching Gemfile with aws-s3"
+  target_gemfile = File.join(server_path, 'Gemfile')
+	puts "Patching Gemfile with aws-s3 ..."
 	File.open(target_gemfile, 'a') {|f| f.puts "gem 'aws-s3', '>= 0.6.3'" }
-
-	puts "patching Gemfile with sqlite3"
+	puts "Patching Gemfile with sqlite3 ..."
 	File.open(target_gemfile, 'a') {|f| f.puts "gem 'sqlite3', '>= 1.3.3'" }
-
-	puts "bundle install"
+	puts "Bundle install ..."
 	Kernel.system("bundle","install",:chdir => server_path)
 
-	puts "adding source files"
+	puts "Adding source files ..."
 	FileUtils.cp_r ["#{source_path}/sources","#{source_path}/settings"], server_path
 
-	puts "cleanup rhoconnect data"
+	puts "Cleanup rhoconnect data ..."
 	FileUtils.rm_r(File.join(server_path,"data")) if File.directory?(File.join(server_path,"data"))
-
 
 	RhoconnectHelper.start_rhoconnect_stack(server_path,true)
 
