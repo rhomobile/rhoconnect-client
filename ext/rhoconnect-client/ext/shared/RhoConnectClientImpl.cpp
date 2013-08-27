@@ -180,7 +180,7 @@ void RhoConnectClientImpl::doSync( bool showStatusPopup,  const rho::String& que
 }
 	
 void RhoConnectClientImpl::doSyncSource( const rho::String& sourceName,  bool showStatusPopup,  const rho::String& queryParams, rho::apiGenerator::CMethodResult& oResult) {
-    getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncCommand(sync::CSyncThread::scSyncOne, sourceName, 0, false, "" ) );
+    getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncCommand(sync::CSyncThread::scSyncOne, sourceName, 0, false, queryParams.c_str() ) );
 	
 	handleSyncResult(oResult);
 }
