@@ -158,36 +158,26 @@ describe("Rhoconnect Client", function() {
 
 	it("VT295-011 | sets notification for specific source model | callback should fire", function() {
 
-		var inProgressCalled = true;
-		var okCalled = false;
+		var sourceCallbackCalled = false;
 		var processCallback = function(args) {
-			if(args.status == 'in_progress') {
-				inProgressCalled = true;
-			};
-			if(args.status == 'ok') {
-				okCalled = true;
-			};
+			sourceCallbackCalled = true;
 		};
 
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
 				Rho.RhoConnectClient.setNotification('Product', function(args){
 					processCallback(args);
-					Rho.RhoConnectClient.setNotification('Product', function(args) {
-						processCallback(args);
-					});
 				});
 				Rho.RhoConnectClient.doSync();
 			});
 		});
 
 		waitsFor(function() {
-			return okCalled;
+			return sourceCallbackCalled;
 		}, "wait", 20000);
 
 		runs(function() {
-			expect(inProgressCalled).toEqual(true);
-			expect(okCalled).toEqual(true);
+			expect(sourceCallbackCalled).toEqual(true);
 			expect(Product.count()).toBeGreaterThan(0);
 		});
 	});
