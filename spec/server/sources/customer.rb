@@ -9,13 +9,12 @@ class Customer < SourceAdapter
   end
  
   def query(params=nil)
-	  #	  sleep(100)
-
     parsed=JSON.parse(RestClient.get("#{@base}.json").body)
-    
+    parsed_params = JSON.parse(params) if params
+
     @result={}
     parsed.each do |item|
-      if not params or (params and params["first"].downcase == item["customer"]["first"].downcase)
+      if not parsed_params or (parsed_params and parsed_params["first"].downcase == item["customer"]["first"].downcase)
         @result[item["customer"]["id"].to_s] = item["customer"]
       end
     end if parsed    

@@ -598,7 +598,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	xit("VT295-027 | doSyncSource method with query params | results match the query", function() {
+	it("VT295-027 | doSyncSource method with query params | results match the query", function() {
 		var hashParams = {};
 		hashParams['first'] = 'Bill';
 		var queryParams = 'query=' + encodeURIComponent(JSON.stringify(hashParams));
@@ -607,7 +607,6 @@ describe("Rhoconnect Client", function() {
       expect(Customer.count()).toEqual(0);
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
 				Rho.RhoConnectClient.setNotification('*', okCallbackFunction);
-
 				Rho.RhoConnectClient.doSyncSource('Customer',false,queryParams);
 			});
 		});
