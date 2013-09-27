@@ -306,7 +306,7 @@ unsigned long rho_sync_is_syncing()
 #endif //RHO_NO_RUBY
 
 extern "C" void
-source_iter(const char* szName, void* parSources)
+source_iter(const char* szName, int nameLen, void* parSources)
 {
     rho::Vector<rho::String>& arSources = *((rho::Vector<rho::String>*)(parSources));
     arSources.addElement(szName);
