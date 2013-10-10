@@ -108,14 +108,13 @@ def run_rhoconnect_spec(platform,appname,flags)
 
 rescue Exception => e
 	# FIXME: iphone rake tasks throw exception!
-	# puts e.backtrace.join("\n")
-
+  puts e.message
+  puts e.backtrace.join("\n")
 ensure
   # @mutex.synchronize do
   #   @signal.wait(@mutex, 30) # wait timeout
   #   puts "Processed #{@file_name}"
   # end
-
 	RhoconnectHelper.stop_rhoconnect_stack
 	cleanup_apps
   Rake::Task["stop:#{platform}:#{$device}"].invoke
