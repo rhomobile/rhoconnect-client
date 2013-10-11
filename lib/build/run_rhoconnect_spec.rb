@@ -106,8 +106,10 @@ def run_rhoconnect_spec(platform,appname,flags)
   uninstall_app = false
 	Rake::Task["run:#{platform}:#{$device}:spec"].invoke(uninstall_app)
 
+rescue SystemExit => e
+  # FIXME: iphone rake task throws SystemExit exception. Swallow it!
+  # puts "Got exception: #{e}"
 rescue Exception => e
-	# FIXME: iphone rake tasks throw exception!
   puts e.message
   puts e.backtrace.join("\n")
 ensure
