@@ -5,6 +5,10 @@ TEMPLATE = lib
 
 CONFIG += staticlib warn_on
 
+isEmpty(RHODES_ROOT) {
+  RHODES_ROOT = ../../../../../../rhodes
+}
+
 INCLUDEPATH += \
 $$RHODES_ROOT/lib/commonAPI/coreapi/ext/shared\
 $$RHODES_ROOT/platform/shared/common\
