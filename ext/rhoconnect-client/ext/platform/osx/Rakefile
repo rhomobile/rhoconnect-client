@@ -1,6 +1,6 @@
 def build_extension(name)
   require File.join($rootdir, 'lib/build/jake.rb')
-  args = ['-o', 'Makefile', '-r', '-spec', 'macx-g++', "#{name}.pro", "QMAKE_MAC_SDK='#{$sdkroot}'", "RHODES_ROOT='#{$rootdir}'"]
+  args = ['-o', 'Makefile', '-r', '-spec', $qmake_spec, "#{name}.pro", "QMAKE_MAC_SDK='#{$sdkroot}'", "RHODES_ROOT='#{$rootdir}'"]
   puts Jake.run($qmake,args)
   fail "[qmake #{name}.pro]" unless $? == 0
   puts Jake.run($make, ['clean'])
@@ -11,13 +11,21 @@ end
 
 namespace "build" do
   task :config do
+    $platform = ENV['RHO_PLATFORM']
+    raise "RHO_PLATFORM is not set" if $platform.nil?
     $rootdir = ENV['RHO_ROOT']
     raise "RHO_ROOT is not set" if $rootdir.nil?
-    $sdkroot = ENV['SDKROOT']
-    raise "SDKROOT is not set" if $sdkroot.nil?
     $qmake = ENV['RHO_QMAKE']
     raise "RHO_QMAKE is not set" if $qmake.nil?
-    $make = "make"
+    if $platform == 'win32'
+      $qmake_spec = 'win32-msvc2010'
+      $make = 'nmake'
+    else
+      $sdkroot = ENV['SDKROOT']
+      raise "SDKROOT is not set" if $sdkroot.nil?
+      $qmake_spec = 'macx-g++'
+      $make = "make"
+    end
   end
 
   task :all => :config do
