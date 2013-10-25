@@ -434,7 +434,8 @@ unsigned long rho_sync_get_attrs(const char* szPartition, int nSrcID)
 
 void rho_sync_setobjectnotify_url(const char* szUrl)
 {
-    CSyncNotify::setObjectNotification(new CObjectNotification(szUrl));
+    // commented out because it will cause a crash: constructor parameter should be a MethodResult, not char*
+    //CSyncNotify::setObjectNotification(new CObjectNotification(szUrl));
 }
 
 void rho_sync_setobjectnotify_url_c(/*RHOC_CALLBACK*/void* callback, void* callback_data)
