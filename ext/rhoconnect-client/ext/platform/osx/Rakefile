@@ -1,6 +1,6 @@
 def build_extension(name)
   require File.join($rootdir, 'lib/build/jake.rb')
-  args = ['-o', 'Makefile', '-r', '-spec', $qmake_spec, "#{name}.pro", "QMAKE_MAC_SDK='#{$sdkroot}'", 'CONFIG-=debug', 'CONFIG+=release', 'CONFIG+=no_fixpath', "RHODES_ROOT='#{$rootdir}'", $qmakevars]
+  args = ['-o', 'Makefile', '-r', '-spec', $qmake_spec, "#{name}.pro", 'CONFIG-=debug', 'CONFIG+=release', 'CONFIG+=no_fixpath', "RHODES_ROOT='#{$rootdir}'", $qmakevars]
   puts Jake.run($qmake,args)
   fail "[qmake #{name}.pro]" unless $? == 0
   puts Jake.run($make, ['clean'])
@@ -22,8 +22,6 @@ namespace "build" do
       $qmake_spec = 'win32-msvc2010'
       $make = 'nmake'
     else
-      $sdkroot = ENV['SDKROOT']
-      raise "SDKROOT is not set" if $sdkroot.nil?
       $qmake_spec = 'macx-g++'
       $make = "make"
     end
