@@ -33,10 +33,7 @@ end
 
 
 cfgfilename = File.join(File.dirname(__FILE__),'config.yml')
-
 $rho_root = nil
-$rhoconnect_use_redis = true
-
 chdir File.dirname(__FILE__)
 
 if File.file?(cfgfilename)
