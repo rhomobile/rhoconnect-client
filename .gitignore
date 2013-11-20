@@ -40,4 +40,4 @@ spec/rhoconnect_spec/build.yml
 spec/rhoconnect_spec_js/build.yml
 spec/rhoconnect_spec_js/RhoLogSpec.txt
 
-ext/rhoconnect-client/ext/platform/osx/Makefile*
+ext/rhoconnect-client/ext/platform/qt/Makefile*

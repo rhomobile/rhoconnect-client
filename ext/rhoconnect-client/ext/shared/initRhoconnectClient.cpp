@@ -96,7 +96,9 @@ public:
 	}
 	
 	virtual unsigned long login(const char* loginStr, const char* password, const char* callback) {
-		return rho_sync_login(loginStr, password, callback);
+        // commented out because it will cause a crash: callback should be a MethodResult, not char*
+        //return rho_sync_login(login, password, callback);
+        return 0;
 	}
 	
 	virtual void logout() {

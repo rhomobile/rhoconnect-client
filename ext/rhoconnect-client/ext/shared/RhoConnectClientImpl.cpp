@@ -39,7 +39,7 @@ void RhoConnectClientImpl::getBulksyncState(rho::apiGenerator::CMethodResult& oR
 	oResult.set( RHOCONF().getInt(RHO_SETTING_BULKSYNC_STATE) );
 }
 
-void RhoConnectClientImpl::setBulksyncState(const int state, rho::apiGenerator::CMethodResult& oResult) {
+void RhoConnectClientImpl::setBulksyncState(int state, rho::apiGenerator::CMethodResult& oResult) {
 	RHOCONF().setInt(RHO_SETTING_BULKSYNC_STATE, state, true);
 }
 	

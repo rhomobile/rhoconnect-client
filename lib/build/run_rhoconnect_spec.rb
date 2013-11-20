@@ -33,7 +33,8 @@ def run_rhoconnect_spec(platform,appname,flags)
 	RhoconnectHelper.set_rc_push_out File.open( File.join($app_path, "rc_push.log" ), "w")
 	RhoconnectHelper.set_enable_push(false)
 	RhoconnectHelper.set_enable_rails(false)
-	RhoconnectHelper.set_enable_redis($rhoconnect_use_redis)
+  pong = `redis-cli ping`
+	RhoconnectHelper.set_enable_redis(!(pong =~ /PONG/)) # Do not touch redis if it's running
 
 	RhoconnectHelper.stop_rhoconnect_stack
 
@@ -120,6 +121,8 @@ ensure
 	RhoconnectHelper.stop_rhoconnect_stack
 	cleanup_apps
   Rake::Task["stop:#{platform}:#{$device}"].invoke
+  # TODO:
+  # `killall iphonesim_43 2> /dev/null` if platform == 'iphone'
 	puts "run_spec_app(#{platform},#{appname}) done"
 end
 

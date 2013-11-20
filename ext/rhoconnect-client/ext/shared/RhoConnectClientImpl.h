@@ -19,7 +19,7 @@ public:
     virtual void getSyncServer(rho::apiGenerator::CMethodResult& oResult);
     virtual void setSyncServer( const rho::String& value, rho::apiGenerator::CMethodResult& oResult);
     virtual void getBulksyncState( rho::apiGenerator::CMethodResult& oResult);
-    virtual void setBulksyncState( const int state, rho::apiGenerator::CMethodResult& oResult);
+    virtual void setBulksyncState( int state, rho::apiGenerator::CMethodResult& oResult);
     virtual void getPageSize(rho::apiGenerator::CMethodResult& oResult);
     virtual void setPageSize( int value, rho::apiGenerator::CMethodResult& oResult);
     virtual void getThreadedMode(rho::apiGenerator::CMethodResult& oResult);
