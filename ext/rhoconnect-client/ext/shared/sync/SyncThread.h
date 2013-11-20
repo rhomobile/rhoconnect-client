@@ -184,6 +184,7 @@ int rho_sync_logged_in();
 void rho_sync_logout();
 void rho_sync_set_notification(int source_id, const rho::apiGenerator::CMethodResult& oResult);
 void rho_sync_clear_notification(int source_id);
+void rho_sync_set_source_property(int source_id, const char* propName, const char* propValue);
 int rho_sync_set_pollinterval(int nInterval);
 int rho_sync_get_pollinterval();
 void rho_sync_set_bulksyncstate(int new_state);

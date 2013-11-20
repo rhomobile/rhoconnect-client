@@ -177,6 +177,10 @@ public:
 		rho_sync_clear_notification(srcID);
 	}
 
+	virtual void set_source_property(int srcID, const char* propName, const char* propValue) {
+		rho_sync_set_source_property(srcID, propName, propValue);
+	}
+
 
 };
 
