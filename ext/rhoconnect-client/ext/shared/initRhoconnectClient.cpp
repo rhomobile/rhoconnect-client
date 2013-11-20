@@ -95,8 +95,8 @@ public:
 		return rho_sync_logged_in();
 	}
 	
-	virtual unsigned long login(const char* login, const char* password, const char* callback) {
-		return rho_sync_login(login, password, callback);
+	virtual unsigned long login(const char* loginStr, const char* password, const char* callback) {
+		return rho_sync_login(loginStr, password, callback);
 	}
 	
 	virtual void logout() {
@@ -106,11 +106,23 @@ public:
 	virtual void stop() {
 		rho_sync_stop();
 	}
+
+	virtual void set_bulksyncstate( int new_state ) {
+		rho_sync_set_bulksyncstate(new_state);
+	}
+
+	virtual bool has_bulksyncstate() {
+		return rho_sync_has_bulksyncstate();
+	}
+
+	virtual int get_bulksyncstate() {
+		return rho_sync_get_bulksyncstate();
+	}
 	
 	virtual int set_pollinterval( int interval ) {
 		return rho_sync_set_pollinterval(interval);
 	}
-	
+
 	virtual int get_pollinterval() {
 		return rho_sync_get_pollinterval();
 	}

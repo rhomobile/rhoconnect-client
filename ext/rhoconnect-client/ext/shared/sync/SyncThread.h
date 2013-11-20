@@ -186,6 +186,9 @@ void rho_sync_set_notification(int source_id, const rho::apiGenerator::CMethodRe
 void rho_sync_clear_notification(int source_id);
 int rho_sync_set_pollinterval(int nInterval);
 int rho_sync_get_pollinterval();
+void rho_sync_set_bulksyncstate(int new_state);
+bool rho_sync_has_bulksyncstate();
+int rho_sync_get_bulksyncstate();
 void rho_sync_set_syncserver(const char* syncserver);
 void rho_sync_setobjectnotify_url(const char* szUrl);
 void rho_sync_clear_object_notification();    

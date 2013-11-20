@@ -26,6 +26,7 @@
 
 #include "SyncThread.h"
 #include "common/RhoTime.h"
+#include "common/RhoSettingsDefs.h"
 #include "common/RhoConf.h"
 #include "common/RhoFilePath.h"
 
@@ -287,6 +288,23 @@ unsigned long rho_sync_doSyncSource(unsigned long nSrcID,int show_status_popup, 
     return CSyncThread::getInstance()->getRetValue();
 }	
 #endif //RHO_NO_RUBY
+
+void rho_sync_set_bulksyncstate(const int new_state)
+{
+    RHOCONF().setInt(RHO_SETTING_BULKSYNC_STATE, new_state, true);
+}
+
+int rho_sync_get_bulksyncstate()
+{
+    if(!RHOCONF().isExist(RHO_SETTING_BULKSYNC_STATE))
+        return -1;
+    return RHOCONF().getInt(RHO_SETTING_BULKSYNC_STATE);
+}
+
+bool rho_sync_has_bulksyncstate()
+{
+    return RHOCONF().isExist(RHO_SETTING_BULKSYNC_STATE);
+}
 
 void rho_sync_stop()
 {
