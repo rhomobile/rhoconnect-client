@@ -1,18 +1,18 @@
 /*------------------------------------------------------------------------
 * (The MIT License)
-* 
+*
 * Copyright (c) 2008-2011 Rhomobile, Inc.
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in
 * all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +20,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
-* 
+*
 * http://rhomobile.com
 *------------------------------------------------------------------------*/
 
@@ -73,7 +73,7 @@ CSyncSource::CSyncSource(CSyncEngine& syncEngine, db::CDBAdapter& db  ) : m_sync
     m_nProgressStep = 0;
     m_nCurPageCount = 0;
     m_nInserted = 0;
-    m_nDeleted = 0;                                     
+    m_nDeleted = 0;
     m_nTotalCount = 0;
     m_nRefreshTime = 0;
 
@@ -95,7 +95,7 @@ CSyncSource::CSyncSource(int id, const String& strName, const String& strSyncTyp
     m_nRefreshTime = 0;
 
     m_nErrCode = RhoAppAdapter.ERR_NONE;
-	
+
     IDBResult res = db.executeSQL("SELECT token,associations from sources WHERE source_id=?", m_nID);
     if ( !res.isEnd() )
     {
@@ -119,12 +119,12 @@ void CSyncSource::parseAssociations(const String& strAssociations)
     CTokenizer oTokenizer( strAssociations, "," );
 
     String strSrcName = "";
-    while (oTokenizer.hasMoreTokens()) 
+    while (oTokenizer.hasMoreTokens())
     {
 	    String tok = oTokenizer.nextToken();
 	    if (tok.length() == 0)
 		    continue;
-        
+
         if ( strSrcName.length() > 0 )
         {
             m_arAssociations.addElement( CAssociation(strSrcName, tok) );
@@ -151,9 +151,9 @@ void CSyncSource::sync()
 //    {
         if ( isEmptyToken() )
             processToken(1);
-	
+
 			syncClientChanges();
-			syncServerChanges();		
+			syncServerChanges();
 
 /*
         boolean bSyncedServer = syncClientChanges();
@@ -167,12 +167,12 @@ void CSyncSource::sync()
     int nSyncSucess = m_nErrCode == RhoAppAdapter.ERR_NONE ? 1 : 0;
     if ( nSyncSucess > 0 )
         getDB().executeSQL( "UPDATE sources set last_updated=?,last_inserted_size=?,last_deleted_size=?, \
-						     last_sync_duration=?,last_sync_success=?, backend_refresh_time=? WHERE source_id=?", 
+						     last_sync_duration=?,last_sync_success=?, backend_refresh_time=? WHERE source_id=?",
                              CLocalTime().toULong(), getInsertedCount(), getDeletedCount(), (endTime-startTime).toULong(), nSyncSucess, m_nRefreshTime,
                              getID() );
     else
         getDB().executeSQL( "UPDATE sources set last_inserted_size=?,last_deleted_size=?, \
-						     last_sync_duration=?,last_sync_success=?, backend_refresh_time=? WHERE source_id=?", 
+						     last_sync_duration=?,last_sync_success=?, backend_refresh_time=? WHERE source_id=?",
                              getInsertedCount(), getDeletedCount(), (endTime-startTime).toULong(), nSyncSucess, m_nRefreshTime,
                              getID() );
 
@@ -207,7 +207,7 @@ boolean CSyncSource::syncClientChanges()
         getSync().setState(CSyncEngine::esStop);
     }
     else
-    {   
+    {
       	PROF_START("Pull");
 
         boolean bSyncClient = false;
@@ -273,7 +273,7 @@ void CSyncSource::checkIgnorePushObjects()
 
     if ( strAttribQuests.length() > 0 )
     {
-        IDBResult res = getDB().executeSQLEx( (String("SELECT object, attrib, value FROM changed_values where source_id=? and sent<=1 and attrib IN ( ") + strAttribQuests + " )").c_str(), 
+        IDBResult res = getDB().executeSQLEx( (String("SELECT object, attrib, value FROM changed_values where source_id=? and sent<=1 and attrib IN ( ") + strAttribQuests + " )").c_str(),
              arValues );
 
         for( ; !res.isEnd(); res.next() )
@@ -283,9 +283,9 @@ void CSyncSource::checkIgnorePushObjects()
             String strValue = res.getStringByIdx(2);
 
             IDBResult res2 = getDB().executeSQL(
-                "SELECT object FROM changed_values where source_id=? and sent>=2 and object=? LIMIT 1 OFFSET 0", 
+                "SELECT object FROM changed_values where source_id=? and sent>=2 and object=? LIMIT 1 OFFSET 0",
                 getBelongsToSrcID(strAttrib), strValue );
-            
+
             if (!res2.isEnd())
                 m_hashIgnorePushObjects.put(strObject, 1);
 
@@ -321,7 +321,7 @@ void CSyncSource::doSyncClientChanges()
             String strBlobAttrs = "";
             for ( int j = 0; j < (int)m_arBlobAttrs.size(); j++)
             {
-                if ( strBlobAttrs.length() > 0 )   
+                if ( strBlobAttrs.length() > 0 )
                     strBlobAttrs += ",";
 
                 strBlobAttrs += CJSONEntry::quoteValue(m_arBlobAttrs.elementAt(j));
@@ -350,7 +350,7 @@ void CSyncSource::doSyncClientChanges()
     {
         LOG(INFO) + "Push client changes to server. Source: " + getName() + "Size :" + strBody.length();
         if ( !RHOCONF().getBool("log_skip_post") )
-            LOG(TRACE) + "Push body: " + strBody;		
+            LOG(TRACE) + "Push body: " + strBody;
 
         if ( getSync().getSourceOptions().getBoolProperty(getID(), "set_sync_push_body" ) )
             getSync().getSourceOptions().setProperty(getID(), "sync_push_body", strBody.c_str() );
@@ -391,7 +391,7 @@ void CSyncSource::doSyncClientChanges()
             }
         }
 
-#ifndef RHO_NO_RUBY    
+#ifndef RHO_NO_RUBY
         if ( getSync().isNoThreadedMode() && getSync().getSourceOptions().getProperty(getID(), "sync_push_callback" ).length() > 0 )
             rho_ruby_callmethod( getSync().getSourceOptions().getProperty(getID(), "sync_push_callback" ).c_str() );
 #endif //RHO_NO_RUBY
@@ -550,7 +550,7 @@ void CSyncSource::makePushBody_Ver3(String& strBody, const String& strUpdateType
             strBody += CJSONEntry::quoteValue(strObject);
             strCurObject = strObject;
         }
-            
+
         if (!bFirst)
             strBody += ",";
 
@@ -609,7 +609,7 @@ void CSyncSource::syncServerChanges()
 {
     LOG(INFO) + "Sync server changes source ID :" + getID();
 
-    while( getSync().isContinueSync() && 
+    while( getSync().isContinueSync() &&
            ( m_nErrCode == RhoAppAdapter.ERR_NONE || m_nErrCode == RhoAppAdapter.ERR_CUSTOMSYNCSERVER) )
     {
         setCurPageCount(0);
@@ -621,10 +621,10 @@ void CSyncSource::syncServerChanges()
             strUrl += "&token=" + convertToStringA(getToken());
 
         if ( m_strQueryParams.length() > 0 )
-            strUrl += "&" + m_strQueryParams; 
+            strUrl += "&" + m_strQueryParams;
 
 		LOG(INFO) + "Pull changes from server. Url: " + strUrl;
-        PROF_START("Net");	    
+        PROF_START("Net");
         NetResponse resp = getNet().doRequest("GET", strUrl, "", &getSync(), &reqHeaders);
 	    PROF_STOP("Net");
 
@@ -683,7 +683,7 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
 		String strServerError = "";
 
         CJSONEntry errSrc = oCmds.getEntry(arErrTypes[i]);
-        
+
         String errorType = "";
         CJSONStructIterator errIter(errSrc);
 
@@ -691,50 +691,47 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
         {
             if ( errIter.getCurValue().hasName("message") ) {
                 errorType = errIter.getCurKey() + "-json";
-                strServerError = String("{message:\"")+errIter.getCurValue().getString("message")+"\"}";
+                strServerError = String("{\"message\":\"")+errIter.getCurValue().getString("message")+"\"}";
             }
         } else {
             //"create-error", "update-error", "delete-error", "update-rollback"
             errorType = String(arErrTypes[i]) + "-json";
-            
+
             Hashtable<String,String> objErrors;
-                        
+
             //iterate objects
             for( ; !errIter.isEnd(); errIter.next() )
             {
                 String strObject = errIter.getCurKey();
-                
+
 
                 if ( String_endsWith(strObject, "-error") )
                 {
                     strObject = strObject.substr(0, strObject.length()-6);
                 }
-                
+
                 String strValue = objErrors.get(strObject);
-                
+
                 if ( strValue.length() == 0 ) {
                     strValue = "{";
                 }
-                
+
                 if ( String_endsWith(strValue, "}") ) {
                     strValue = strValue.substr(0,strValue.length()-1);
                 }
-                
+
                 if ( errIter.getCurValue().hasName("message") )
                 {
                     if (strValue.length() > 1) {
                         strValue += ",";
                     }
-                    strValue += String("message:\"") + errIter.getCurValue().getString("message") + "\"";
-                } else {                
+                    strValue += String("\"message\":\"") + errIter.getCurValue().getString("message") + "\"";
+                } else {
                     CJSONStructIterator attrIter(errIter.getCurValue());
                     bool first = true;
                     String strAttrs = "";
                     if ( !attrIter.isEnd() ) {
-                        if (strValue.length() > 1) {
-                            strValue += ",";
-                        }
-                        strAttrs += "attributes:{";
+                        strAttrs += "\"attributes\":{";
                     }
 
                     for( ; !attrIter.isEnd(); attrIter.next() ) {
@@ -743,30 +740,30 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
                         } else {
                             strAttrs += ",";
                         }
-                    
+
                         String strAttrName = attrIter.getCurKey();
                         String strAttrValue = attrIter.getCurString();
-                    
+
                         strAttrs += "\""+strAttrName+"\":\""+strAttrValue+"\"";
                     }
-                    
+
                     if ( strAttrs.length() > 0 ) {
                         strAttrs += "}";
                     }
-                    
+
                     if ( strValue.length() > 1 ) {
                         strValue += ",";
                     }
-                    
+
                     strValue += strAttrs;
                 }
-                
+
                 strValue += "}";
-                
+
                 objErrors.put(strObject,strValue);
-                
+
             }
-            
+
             if ( objErrors.size() > 0 ) {
                 strServerError = "{";
                 for ( Hashtable<String,String>::const_iterator it = objErrors.begin(); it != objErrors.end(); ++it ) {
@@ -775,15 +772,15 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
                 strServerError += "}";
             }
         }
-    
-        
+
+
         if ( (errorType.length()>0) && (strServerError.size()>0) ) {
             errors.put(errorType,strServerError);
         }
 
-		
+
     }
-    
+
     if ( errors.size() > 0 ) {
         getNotify().fireSyncNotification2(this, true, RhoAppAdapter.ERR_CUSTOMSYNCSERVER, errors);
     }
@@ -1009,10 +1006,10 @@ void CSyncSource::updateAssociation(const String& strOldObject, const String& st
         getDB().executeSQL(strSqlUpdate.c_str(), strNewObject, strOldObject );
     }
     else
-        getDB().executeSQL("UPDATE object_values SET value=? where attrib=? and source_id=? and value=?", 
+        getDB().executeSQL("UPDATE object_values SET value=? where attrib=? and source_id=? and value=?",
             strNewObject, strAttrib, getID(), strOldObject );
 
-    getDB().executeSQL("UPDATE changed_values SET value=? where attrib=? and source_id=? and value=?", 
+    getDB().executeSQL("UPDATE changed_values SET value=? where attrib=? and source_id=? and value=?",
         strNewObject, strAttrib, getID(), strOldObject );
 }
 
@@ -1028,7 +1025,7 @@ void CSyncSource::processServerCmd_Ver3_Schema(const String& strCmd, const Strin
 
     	    if ( bCheckUIRequest && !checkFreezedProps(oAttrValue.m_strAttrib))
     		    continue;
-			
+
             if ( !processBlob(strCmd,strObject,oAttrValue) )
                 break;
 
@@ -1073,7 +1070,7 @@ void CSyncSource::processServerCmd_Ver3_Schema(const String& strCmd, const Strin
                 // oo conflicts
                 for( int i = 0; i < (int)vecAttrs.size(); i++ )
                 {
-                    getDB().executeSQL("UPDATE changed_values SET sent=4 where object=? and attrib=? and source_id=? and update_type=? and sent>1", 
+                    getDB().executeSQL("UPDATE changed_values SET sent=4 where object=? and attrib=? and source_id=? and update_type=? and sent>1",
                         strObject, vecAttrs.elementAt(i), getID(), "create" );
                 }
                 //
@@ -1134,7 +1131,7 @@ void CSyncSource::processServerCmd_Ver3_Schema(const String& strCmd, const Strin
             // oo conflicts
             for( int i = 0; i < (int)vecAttrs.size(); i++ )
             {
-                getDB().executeSQL("UPDATE changed_values SET sent=3 where object=? and attrib=? and source_id=? and update_type=?", 
+                getDB().executeSQL("UPDATE changed_values SET sent=3 where object=? and attrib=? and source_id=? and update_type=?",
                     strObject, vecAttrs.elementAt(i), getID(), "create" );
             }
             //
@@ -1200,25 +1197,25 @@ boolean CSyncSource::processBlob( const String& strCmd, const String& strObject,
     oAttrValue.m_strValue = strDbValue;
     return true;
 }
-	
+
 boolean CSyncSource::processServerBlobAttrs() {
 	if ( m_bSchemaSource ) {
 		return true;
 	} else {
 		static const String blobSfx = "-rhoblob";
-		
+
 		getDB().startTransaction();
 		IDBResult res = getDB().executeSQL( "SELECT source_attribs,blob_attribs from sources WHERE source_id=?", getID() );
-		
+
 		Vector<String> attrsToRename;
-		
+
 		String newAttrs = "";
-		
-		for ( ; !res.isEnd(); res.next() ) 
+
+		for ( ; !res.isEnd(); res.next() )
         {
 			String attrs = res.getStringByIdx(0);
 			String blobs = res.getStringByIdx(1);
-			
+
 			CTokenizer tokenizer(attrs,",");
 			while (tokenizer.hasMoreTokens()) {
 				String attrName = tokenizer.nextToken();
@@ -1226,8 +1223,8 @@ boolean CSyncSource::processServerBlobAttrs() {
 					break;
 				}
 				String attrVal = tokenizer.nextToken();
-				
-				
+
+
 				if ( String_endsWith( attrName, blobSfx ) ) {
 					if ( blobs.length() > 0 ) {
 						blobs += ",";
@@ -1241,13 +1238,13 @@ boolean CSyncSource::processServerBlobAttrs() {
 					newAttrs += attrName + "," + attrVal;
 				}
 			}
-			
+
 			LOG(TRACE) + "Updating attributes for source " + getName() + ". Old attribs=" + attrs + ", new attribs=" + newAttrs + ", blob attribs=" + blobs;
-			
+
 			getDB().executeSQL("UPDATE sources SET source_attribs=?,blob_attribs=? WHERE source_id=?", newAttrs, blobs, getID() );
 		}
-		
-		for ( int i = 0; i < (int)attrsToRename.size(); i++ ) 
+
+		for ( int i = 0; i < (int)attrsToRename.size(); i++ )
 		{
 			String strAttr = (String)attrsToRename.elementAt(i);
 			LOG(TRACE) + "Updating objects with blob attribute " + strAttr + " for source " + getName();
@@ -1259,97 +1256,97 @@ boolean CSyncSource::processServerBlobAttrs() {
 	return true;
 }
 
-	
-boolean CSyncSource::processAllBlobs() 
+
+boolean CSyncSource::processAllBlobs()
 {
 	if (m_bSchemaSource) {
 		Vector<String> blobAttrs = getDB().getAttrMgr().getBlobAttrs( getID() );
 
-		for ( int i = 0; i < (int)blobAttrs.size(); i ++ ) 
+		for ( int i = 0; i < (int)blobAttrs.size(); i ++ )
 		{
 			String strAttr = (String)blobAttrs.elementAt(i);
 			String sql = "SELECT object," + strAttr + " FROM " + getName();
-			
+
 			IDBResult res = getDB().executeSQL( sql.c_str() );
-			
+
 			LOG(TRACE) + "Processing blobs for source " + getName() + ", attribute " + strAttr;
-			
+
 			for ( ; !res.isEnd(); res.next() )
-			{ 
+			{
 				String object = res.getStringByIdx(0);
 				String value = res.getStringByIdx(1);
-				
+
 				if ( value.find("://") != String::npos ) {
 					LOG(TRACE) + "Processing remote blob: " + value;
 					CAttrValue attr( strAttr, value );
 					if ( !downloadBlob( attr ) ) {
 						return false;
 					}
-					
+
 					sql = "UPDATE " + getName() + " SET " + strAttr + "=? WHERE object=?";
-					
+
 					getDB().executeSQL( sql.c_str(), attr.m_strValue, object  );
 				}
 			}
 		}
 	} else {
 		Vector<String> blobAttrs = getDB().getAttrMgr().getBlobAttrs( getID() );
-	
-		for ( int i = 0; i < (int)blobAttrs.size(); i ++ ) 
+
+		for ( int i = 0; i < (int)blobAttrs.size(); i ++ )
 		{
 			String strAttr = (String)blobAttrs.elementAt(i);
 			IDBResult res = getDB().executeSQL("SELECT object,value FROM object_values WHERE attrib=? and source_id=?", strAttr, getID());
-		
+
 			LOG(TRACE) + "Processing blobs for source " + getName() + ", attribute " + strAttr;
-		
+
 			for ( ; !res.isEnd(); res.next() )
-			{ 
+			{
 				String object = res.getStringByIdx(0);
 				String value = res.getStringByIdx(1);
-			
+
 				if ( value.find("://") != String::npos ) {
 					LOG(TRACE) + "Processing remote blob: " + value;
 					CAttrValue attr( strAttr, value );
 					if ( !downloadBlob( attr ) ) {
 						return false;
 					}
-				
+
 					getDB().executeSQL("UPDATE object_values SET value=? where object=? and source_id=? and attrib=?", attr.m_strValue, object, getID(), strAttr);
 				}
 			}
 		}
 	}
-	
+
 	return true;
 }
 
 boolean CSyncSource::checkFreezedProps(String strProp)
 {
 	String strFreezedProps = getSync().getSourceOptions().getProperty(getID(), "freezed");
-	
+
 	if ( strFreezedProps.length() > 0 )
 	{
 		CTokenizer oTokenizer( strFreezedProps, "," );
 		boolean bFound =false;
-		while (oTokenizer.hasMoreTokens() && (!bFound) ) 
+		while (oTokenizer.hasMoreTokens() && (!bFound) )
 		{
 			String tok = oTokenizer.nextToken();
 			if (tok.length() == 0)
 				continue;
-		
+
 			if (tok.compare(strProp)==0)
 			{
 				bFound = true;
 			}
 		}
-	
+
 		if (!bFound)
 		{
 			LOG(INFO) + "Skip Non-exist property : " + strProp + ". For model : " + getName();
-			return false;				
+			return false;
 		}
 	}
-	
+
 	return true;
 }
 
@@ -1366,18 +1363,18 @@ void CSyncSource::processServerCmd_Ver3(const String& strCmd, const String& strO
             return;
 
         IDBResult resInsert = getDB().executeSQLReportNonUnique("INSERT INTO object_values \
-            (attrib, source_id, object, value) VALUES(?,?,?,?)", 
+            (attrib, source_id, object, value) VALUES(?,?,?,?)",
             oAttrValue.m_strAttrib, getID(), strObject, oAttrValue.m_strValue );
         if ( resInsert.isNonUnique() )
         {
             getDB().executeSQL("UPDATE object_values \
-                SET value=? WHERE object=? and attrib=? and source_id=?", 
+                SET value=? WHERE object=? and attrib=? and source_id=?",
                 oAttrValue.m_strValue, strObject, oAttrValue.m_strAttrib, getID() );
 
             if ( getSyncType().compare("none") != 0 )
             {
                 // oo conflicts
-                getDB().executeSQL("UPDATE changed_values SET sent=4 where object=? and attrib=? and source_id=? and update_type=? and sent>1", 
+                getDB().executeSQL("UPDATE changed_values SET sent=4 where object=? and attrib=? and source_id=? and update_type=? and sent>1",
                     strObject, oAttrValue.m_strAttrib, getID(), "create" );
                 //
             }
@@ -1416,7 +1413,7 @@ String CSyncSource::makeFileName(const CAttrValue& value)//throws Exception
 {
 	String strExt = "";
 
-    URI uri(value.m_strValue);    
+    URI uri(value.m_strValue);
     String strQuest = uri.getQueryString();
 
     if (strQuest.length() > 0)
@@ -1427,7 +1424,7 @@ String CSyncSource::makeFileName(const CAttrValue& value)//throws Exception
 			int nExtEnd = strQuest.find("&", nExt);
 			if (nExtEnd < 0 )
 				nExtEnd = strQuest.length();
-			
+
 			strExt = strQuest.substr(nExt+10, nExtEnd);
 		}
     }
@@ -1442,13 +1439,13 @@ String CSyncSource::makeFileName(const CAttrValue& value)//throws Exception
 
     if ( strExt.length() == 0 )
         strExt = ".bin";
-    else if ( strExt.at(0) != '.' )    
+    else if ( strExt.at(0) != '.' )
         strExt = "." + strExt;
 
     static int g_nBlobCounter = 0;
     String fName = RHODESAPPBASE().getBlobsDirPath() + "/id_" + CLocalTime().toString(true,true) + convertToStringA(g_nBlobCounter) + strExt;
     g_nBlobCounter++;
-	
+
 	return  fName;
 }
 
@@ -1468,9 +1465,9 @@ boolean CSyncSource::downloadBlob(CAttrValue& value)//throws Exception
 {
 	String fName = makeFileName( value );
 	String url = value.m_strValue;
-	
+
 	LOG(TRACE) + "Download blob: " + url + " => " + fName;
-	
+
 	const char* nQuest = strchr(url.c_str(),'?');
 	if ( nQuest > 0 )
 		url += "&";
@@ -1489,7 +1486,7 @@ boolean CSyncSource::downloadBlob(CAttrValue& value)//throws Exception
     }
 
     value.m_strValue = RHODESAPPBASE().getRelativeDBFilesPath( fName );
-    
+
     return true;
 }
 
