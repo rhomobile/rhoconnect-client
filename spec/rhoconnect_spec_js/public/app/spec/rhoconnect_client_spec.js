@@ -278,7 +278,7 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	it("VT295-016 | set notification callback is set for all sources | callback should be called each time", function() {
+	xit("VT295-016 | set notification callback is set for all sources | callback should be called each time", function() {
 		var callCount = 0;
 		runs(function() {
 			Rho.RhoConnectClient.login('testclient','testclient',function(){
@@ -447,68 +447,68 @@ describe("Rhoconnect Client", function() {
 		});
 	});
 
-	// it("VT295-021 | doSync method when record is deleted | deleted record is removed from backend server", function() {
-	// 	var expectedCount = 0,
-	// 			callback1 = false,
-	// 			callback2 = false,
-	// 			callback3 = false,
-	// 			deletedName = null;
+	xit("VT295-021 | doSync method when record is deleted | deleted record is removed from backend server", function() {
+		var expectedCount = 0,
+				callback1 = false,
+				callback2 = false,
+				callback3 = false,
+				deletedName = null;
 
-	// 	// Sync first time
-	// 	Rho.RhoConnectClient.login('testuser','testuser',function(){
-	// 		Rho.RhoConnectClient.setNotification('*', function(args){
-	// 			if(args.status == 'complete') {
-	// 				callback1 = true;
-	// 			}
-	// 		});
-	// 		Rho.RhoConnectClient.doSync();
-	// 	});
+		// Sync first time
+		Rho.RhoConnectClient.login('testuser','testuser',function(){
+			Rho.RhoConnectClient.setNotification('*', function(args){
+				if(args.status == 'complete') {
+					callback1 = true;
+				}
+			});
+			Rho.RhoConnectClient.doSync();
+		});
 
-	// 	waitsFor(function() {
-	// 		return callback1;
-	// 	}, "wait 1", 20000);
+		waitsFor(function() {
+			return callback1;
+		}, "wait 1", 20000);
 
-	// 	runs(function() {
-	// 		expectedCount = Product.count();
-	// 		var deleted = Product.find('first');
-	// 		deletedName = deleted.get('name');
-	// 		deleted.destroy();
-	// 		Rho.RhoConnectClient.clearNotification('*');
-	// 		Rho.RhoConnectClient.setNotification('*', function(args){
-	// 			if(args.status == 'complete') {
-	// 				callback2 = true;
-	// 			}
-	// 		});
-	// 		Rho.RhoConnectClient.doSync();
-	// 	});
+		runs(function() {
+			expectedCount = Product.count();
+			var deleted = Product.find('first');
+			deletedName = deleted.get('name');
+			deleted.destroy();
+			Rho.RhoConnectClient.clearNotification('*');
+			Rho.RhoConnectClient.setNotification('*', function(args){
+				if(args.status == 'complete') {
+					callback2 = true;
+				}
+			});
+			Rho.RhoConnectClient.doSync();
+		});
 
-	// 	waitsFor(function() {
-	// 		return callback2;
-	// 	}, "wait 2", 20000);
+		waitsFor(function() {
+			return callback2;
+		}, "wait 2", 20000);
 
-	// 	runs(function() {
-	// 		Rho.RhoConnectClient.logout();
-	// 		Rho.RhoConnectClient.login('testuser2','testuser2',function(){
-	// 			Rho.RhoConnectClient.clearNotification('*');
-	// 			Rho.RhoConnectClient.setNotification('*', function(args){
-	// 				if(args.status == 'complete') {
-	// 					callback3 = true;
-	// 				}
-	// 			});
-	// 			Rho.RhoConnectClient.doSync();
-	// 		});
-	// 	});
+		runs(function() {
+			Rho.RhoConnectClient.logout();
+			Rho.RhoConnectClient.login('testuser2','testuser2',function(){
+				Rho.RhoConnectClient.clearNotification('*');
+				Rho.RhoConnectClient.setNotification('*', function(args){
+					if(args.status == 'complete') {
+						callback3 = true;
+					}
+				});
+				Rho.RhoConnectClient.doSync();
+			});
+		});
 
-	// 	waitsFor(function() {
-	// 		return callback3;
-	// 	}, "wait 3", 20000);
+		waitsFor(function() {
+			return callback3;
+		}, "wait 3", 20000);
 
-	// 	runs(function() {
-	// 		expect(Product.count()).toEqual(expectedCount - 1);
-	// 		var products = Product.find('all',{conditions: {name: deletedName}});
-	// 		expect(products.length).toEqual(0);
-	// 	});
-	// });
+		runs(function() {
+			expect(Product.count()).toEqual(expectedCount - 1);
+			var products = Product.find('all',{conditions: {name: deletedName}});
+			expect(products.length).toEqual(0);
+		});
+	});
 
 	it("VT295-023 | doSync with syncOnlyChangedSources set true | only changed source should sync", function() {
 		var callCount = 0,
