@@ -95,7 +95,7 @@ public:
 		return rho_sync_logged_in();
 	}
 	
-	virtual unsigned long login(const char* login, const char* password, const char* callback) {
+	virtual unsigned long login(const char* loginStr, const char* password, const char* callback) {
         // commented out because it will cause a crash: callback should be a MethodResult, not char*
         //return rho_sync_login(login, password, callback);
         return 0;
@@ -108,11 +108,23 @@ public:
 	virtual void stop() {
 		rho_sync_stop();
 	}
+
+	virtual void set_bulksyncstate( int new_state ) {
+		rho_sync_set_bulksyncstate(new_state);
+	}
+
+	virtual bool has_bulksyncstate() {
+		return rho_sync_has_bulksyncstate();
+	}
+
+	virtual int get_bulksyncstate() {
+		return rho_sync_get_bulksyncstate();
+	}
 	
 	virtual int set_pollinterval( int interval ) {
 		return rho_sync_set_pollinterval(interval);
 	}
-	
+
 	virtual int get_pollinterval() {
 		return rho_sync_get_pollinterval();
 	}
@@ -163,6 +175,10 @@ public:
 	
 	virtual void clear_notification(int srcID) {
 		rho_sync_clear_notification(srcID);
+	}
+
+	virtual void set_source_property(int srcID, const char* propName, const char* propValue) {
+		rho_sync_set_source_property(srcID, propName, propValue);
 	}
 
 
