@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="RhoConnectClient"
 	ProjectGUID="{F6AB17D4-B0D0-4F10-9D15-87AE05590133}"
 	RootNamespace="RhoConnectClient"
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;"
+				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\shared&quot;;../../../../../rhodes/platform/shared/sync;../../../../../rhodes/lib\commonAPI\coreapi\ext\shared"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;RHO_NO_RUBY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -104,7 +104,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;"
+				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\shared&quot;;../../../../../rhodes/platform/shared/sync;../../../../../rhodes/lib\commonAPI\coreapi\ext\shared"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;RHO_NO_RUBY"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -479,67 +479,51 @@
 				Name="sync"
 				>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ClientRegister.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\initRhoconnectClient.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ClientRegister.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\ISyncProtocol.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ILoginListener.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncEngine.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\initRhoconnectClient.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncEngine.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\ISyncProtocol.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncNotify.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\rhodes\platform\shared\sync\RhoconnectClientManager.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncNotify.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\..\rhodes\platform\shared\sync\RhoconnectClientManager.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncProtocol_3.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncEngine.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncProtocol_4.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncEngine.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncSource.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncNotify.cpp"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncSource.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncNotify.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncThread.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncProtocol_3.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncSource.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncSource.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncThread.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src\sync\SyncThread.h"
+					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\SyncThread.h"
 					>
 				</File>
 			</Filter>
@@ -587,7 +571,67 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="api_generator"
+				>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\BaseClasses.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\GeneratorQueue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\js_helpers.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\js_helpers.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\JSONResultConvertor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\MethodResult.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\MethodResult.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\MethodResultConvertor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\RubyResultConvertor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\StringifyHelper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\api_generator\StringifyHelper.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
+		<File
+			RelativePath="..\..\..\..\..\rhodes\platform\shared\sync\ILoginListener.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\..\..\rhodes\platform\shared\sync\RhoconnectClientManager.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\..\..\rhodes\platform\shared\sync\RhoconnectClientManager.h"
+			>
+		</File>
 		<File
 			RelativePath="..\..\..\..\..\rhodes\platform\shared\sqlite\sqlite3.c"
 			>

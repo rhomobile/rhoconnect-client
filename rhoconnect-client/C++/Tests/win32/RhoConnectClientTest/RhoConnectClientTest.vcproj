@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="RhoConnectClientTest"
 	ProjectGUID="{0D5EBF57-73AF-443F-B8A0-D2149AB4C5C0}"
 	RootNamespace="RhoConnectClientTest"
@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;../../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;;../../../../../../rhodes/platform/shared;../../../../../platform/shared;../../../../../../rhodes/platform/shared/test/gtest/include;../../../../../../rhodes/platform/shared/test/gtest"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="&quot;../../../../..\ext\rhoconnect-client\ext\shared&quot;;../../../../../../rhodes/platform/shared;../../../../../platform/shared;../../../../../../rhodes/platform/shared/test/gtest/include;../../../../../../rhodes/platform/shared/test/gtest"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;RHO_NO_RUBY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -117,8 +117,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;../../../../..\ext\rhoconnect-client\ext\rhoconnect-client\shared\src&quot;;../../../../../../rhodes/platform/shared;../../../../../platform/shared;../../../../../../rhodes/platform/shared/test/gtest/include;../../../../../../rhodes/platform/shared/test/gtest"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="&quot;../../../../..\ext\rhoconnect-client\ext\shared&quot;;../../../../../../rhodes/platform/shared;../../../../../platform/shared;../../../../../../rhodes/platform/shared/test/gtest/include;../../../../../../rhodes/platform/shared/test/gtest"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;RHO_NO_RUBY"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"

@@ -30,6 +30,7 @@
 
 #include "common/RhodesAppBase.h"
 #include "sync/SyncThread.h"
+#include "sync/ClientRegister.h"
 #include "common/RhoFile.h"
 #include "common/Tokenizer.h"
 #include "common/RhoConf.h"
@@ -1624,5 +1625,36 @@ void rho_net_impl_network_indicator(int active)
 	const char* get_app_build_config_item(const char* key) 
 	{
 		return 0;
-	}	
+	}
+
+    const char* rho_webview_execute_js(const char* js, int index){ return "";}
+    const char* rho_webview_execute_js_sync(const char* js, int index){ return "";}
+
+    int  rho_ruby_is_started(){return 0;}
+    int rho_webview_active_tab(){return 0;}
+}
+
+namespace rho{
+namespace sync{
+
+     CClientRegister::CClientRegister(){}
+     CClientRegister::~CClientRegister(){}
+     void CClientRegister::SetSslVerifyPeer(boolean b){}
+     bool CClientRegister::GetSslVerifyPeer(){return true;}
+    
+     CClientRegister* CClientRegister::Get(){ if (!m_pInstance){ m_pInstance = new CClientRegister();} return m_pInstance;}
+    
+     void CClientRegister::Stop(){}
+     void CClientRegister::run(){}
+
+
+    void CClientRegister::setRhoconnectCredentials(const String& user, const String& pass, const String& session){}
+    void CClientRegister::dropRhoconnectCredentials(const String& session,const String& clientID){}
+    
+
+
+    
+CClientRegister* CClientRegister::m_pInstance = 0;
+
+}
 }
