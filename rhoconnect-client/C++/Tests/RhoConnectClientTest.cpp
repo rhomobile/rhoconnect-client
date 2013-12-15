@@ -23,6 +23,9 @@
 * 
 * http://rhomobile.com
 *------------------------------------------------------------------------*/
+//!!!!!!!!!!!!!!!!!!!!
+//Copy files(syncdb.schema, syncdb.triggers ) to this folders: rhoconnect-client\C++\Tests\win32\bin\Win32\RhoConnectClientTest\<Debug/Release>\rho\db
+//!!!!!!!!!!!!!!!!!!!!
 
 #define _CRT_SECURE_NO_WARNINGS 1
 #define _CRT_NON_CONFORMING_SWPRINTFS 1
