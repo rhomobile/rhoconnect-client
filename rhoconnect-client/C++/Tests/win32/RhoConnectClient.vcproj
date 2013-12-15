@@ -147,14 +147,6 @@
 		<Filter
 			Name="rho"
 			>
-			<File
-				RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhodesAppBase.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhodesAppBase.h"
-				>
-			</File>
 			<Filter
 				Name="common"
 				>
@@ -180,6 +172,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhoDefs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhodesAppBase.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\rhodes\platform\shared\common\RhodesAppBase.h"
 					>
 				</File>
 				<File
@@ -479,10 +479,6 @@
 				Name="sync"
 				>
 				<File
-					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\initRhoconnectClient.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\..\ext\rhoconnect-client\ext\shared\sync\ISyncProtocol.h"
 					>
 				</File>
@@ -550,10 +546,6 @@
 			<Filter
 				Name="rubyext"
 				>
-				<File
-					RelativePath="..\..\..\..\..\rhodes\platform\shared\rubyext\System.cpp"
-					>
-				</File>
 				<File
 					RelativePath="..\..\..\..\..\rhodes\platform\shared\rubyext\ZipFiles.cpp"
 					>

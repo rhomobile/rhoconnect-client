@@ -209,7 +209,7 @@ TEST(SyncClient, shouldLogin)
 {
     EXPECT_EQ(rho_sync_logged_in(), 0);
 
-    char* szRes = (char*)rho_sync_login("lars", "larspass", "");
+    char* szRes = (char*)rho_sync_login_c("lars", "larspass", 0, 0);
     RHO_CONNECT_NOTIFY oNotify = {0};
     rho_connectclient_parsenotify(szRes, &oNotify);
 

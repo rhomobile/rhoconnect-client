@@ -1388,7 +1388,8 @@ void rho_connectclient_free_syncnotify(RHO_CONNECT_NOTIFY* pNotify)
     
 void rho_connectclient_parse_objectnotify(const char* msg, RHO_CONNECT_OBJECT_NOTIFY* pNotify)
 {
-    {
+    //TODO: parse json and make tests
+/*    {
         CTokenizer oTokenizer( msg, "&" );
         while (oTokenizer.hasMoreTokens()) 
         {
@@ -1458,7 +1459,7 @@ void rho_connectclient_parse_objectnotify(const char* msg, RHO_CONNECT_OBJECT_NO
             }else if (String_startsWith(name, "created[][source_id]"))
                 convertFromStringA( value.c_str(), pNotify->created_source_ids[nCreated] );
         }
-    }
+    }*/
 }
     
 void rho_connectclient_free_sync_objectnotify(RHO_CONNECT_OBJECT_NOTIFY* pNotify)
