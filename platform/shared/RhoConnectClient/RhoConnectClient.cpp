@@ -37,10 +37,12 @@
 #include "common/RhoTime.h"
 #include "common/RhoAppAdapter.h"
 #include "net/URI.h"
+#include "json/JSONIterator.h"
 
 using namespace rho;
 using namespace rho::common;
 using namespace rho::sync;
+using namespace rho::json;
 const char* getSyncTypeName( RHOM_SYNC_TYPE sync_type )
 {
     switch( sync_type)
@@ -1118,9 +1120,45 @@ void rho_connectclient_set_synctype(const char* szModel, RHOM_SYNC_TYPE sync_typ
     db.executeSQL("UPDATE sources SET sync_type=? WHERE name=?", getSyncTypeName(sync_type), szModel );
 }
 
-void parseServerErrors( const char* szPrefix, const String& name, const String& value, unsigned long& errors_obj, unsigned long& errors_attrs )
+void parseServerErrors( CJSONEntry& oEntry, unsigned long& errors_obj, unsigned long& errors_attrs )
 {
-    int nPrefixLen = strlen(szPrefix)+1;
+    if (!errors_obj)
+        errors_obj = rho_connectclient_strarray_create();
+
+    CJSONStructIterator oIter(oEntry);
+    for( ; !oIter.isEnd(); oIter.next() )
+    {
+        CJSONEntry oObjEntry = oIter.getCurValue();
+
+        String strObject = oIter.getCurKey();
+        int nObj = rho_connectclient_strarray_find(errors_obj, strObject.c_str() ); 
+        if ( nObj < 0 )
+            nObj = rho_connectclient_strarray_add(errors_obj, strObject.c_str() );
+
+        if (oObjEntry.hasName("attributes"))
+        {
+            CJSONEntry oAttrEntry = oObjEntry.getEntry("attributes");
+            CJSONStructIterator oAttrIter(oAttrEntry);
+            for( ; !oAttrIter.isEnd(); oAttrIter.next() )
+            {
+                String strAttr = oAttrIter.getCurKey();
+                if (!errors_attrs)
+                    errors_attrs = rho_connectclient_strhasharray_create();
+
+                VectorPtr<Hashtable<String, String>* >& arAttrs = *((VectorPtr<Hashtable<String, String>* >*)errors_attrs);
+                if ( nObj < (int)arAttrs.size() )
+                    arAttrs[nObj]->put(strAttr, oAttrIter.getCurString());
+                else
+                {
+                    unsigned long hashAttrs = rho_connectclient_hash_create();
+                    rho_connectclient_hash_put(hashAttrs, strAttr.c_str(), oAttrIter.getCurString().c_str());
+                    arAttrs.addElement( (Hashtable<String, String>*)hashAttrs );
+                }
+            }
+        }
+    }
+
+/*    int nPrefixLen = strlen(szPrefix)+1;
     if (!errors_obj)
         errors_obj = rho_connectclient_strarray_create();
 
@@ -1147,24 +1185,26 @@ void parseServerErrors( const char* szPrefix, const String& name, const String& 
             arAttrs.addElement( (Hashtable<String, String>*)hashAttrs );
         }
 
-    }
+    }*/
 }
     
-void parseServerErrorMessage( const char* szPrefix, const String& name, const String& value, unsigned long& errors_obj )
+void parseServerErrorMessage( CJSONEntry& oEntry, unsigned long& errors_obj )
 {
-    int nPrefixLen = strlen(szPrefix)+1;
     if (!errors_obj)
         errors_obj = rho_connectclient_hash_create();
-    
-    String strObject = name.substr(nPrefixLen, name.find(']', nPrefixLen)-nPrefixLen );
-    
-    static const char* messageTag = "[message]";
-        
-    int nMsg = name.find(messageTag);
-    if ( nMsg >= 0 )
+
+    CJSONStructIterator oIter(oEntry);
+    for( ; !oIter.isEnd(); oIter.next() )
     {
-        rho_connectclient_hash_put(errors_obj, strObject.c_str(), value.c_str());
+        CJSONEntry oObjEntry = oIter.getCurValue();
+
+        if (oObjEntry.hasName("message"))
+        {
+            CJSONEntry oMsgEntry = oObjEntry.getEntry("message");
+            rho_connectclient_hash_put(errors_obj, oIter.getCurKey().c_str(), oMsgEntry.getString());
+        }
     }
+    
 }
 
 
@@ -1174,7 +1214,54 @@ void rho_connectclient_parsenotify(const char* msg, RHO_CONNECT_NOTIFY* pNotify)
     // so notification message may be NULL
     if (NULL == msg)
         return;
-    
+
+    CJSONEntry oMsg(msg);
+    if ( oMsg.hasName("total_count") )
+        convertFromStringA( oMsg.getString("total_count"), pNotify->total_count );
+    if ( oMsg.hasName("processed_count"))
+        convertFromStringA( oMsg.getString("processed_count"), pNotify->processed_count );
+    if ( oMsg.hasName("cumulative_count"))
+        convertFromStringA( oMsg.getString("cumulative_count"), pNotify->cumulative_count );
+    if ( oMsg.hasName("source_id"))
+        convertFromStringA( oMsg.getString("source_id"), pNotify->source_id );
+    if ( oMsg.hasName("error_code") )
+        convertFromStringA( oMsg.getString("error_code"), pNotify->error_code );
+    if ( oMsg.hasName("source_name") )
+        pNotify->source_name = strdup(oMsg.getString("source_name"));
+    if ( oMsg.hasName("sync_type") )
+        pNotify->sync_type = strdup(oMsg.getString("sync_type"));
+    if ( oMsg.hasName("bulk_status") )
+        pNotify->bulk_status = strdup(oMsg.getString("bulk_status"));
+    if ( oMsg.hasName("partition") )
+        pNotify->partition = strdup(oMsg.getString("partition"));
+    if ( oMsg.hasName("status") )
+        pNotify->status = strdup(oMsg.getString("status"));
+    if ( oMsg.hasName("error_message") )
+        pNotify->error_message = strdup(oMsg.getString("error_message"));
+
+    if ( oMsg.hasName("server_errors") )
+    {
+        CJSONEntry oSrvErrors = oMsg.getEntry("server_errors");
+        if ( oSrvErrors.hasName("create-error") )
+            parseServerErrorMessage(oSrvErrors.getEntry("create-error"), pNotify->create_errors_messages);
+        if ( oSrvErrors.hasName("update-error") )
+        {
+            parseServerErrors( oSrvErrors.getEntry("update-error"), pNotify->update_errors_obj, pNotify->update_errors_attrs );
+            parseServerErrorMessage(oSrvErrors.getEntry("update-error"), pNotify->update_errors_messages);
+        }
+        if ( oSrvErrors.hasName("update-rollback") )
+        {
+            parseServerErrors( oSrvErrors.getEntry("update-rollback"), pNotify->update_rollback_obj, pNotify->update_rollback_attrs );
+        }
+        if ( oSrvErrors.hasName("delete-error") )
+        {
+            parseServerErrors( oSrvErrors.getEntry("delete-error"), pNotify->delete_errors_obj, pNotify->delete_errors_attrs );
+            parseServerErrorMessage(oSrvErrors.getEntry("delete-error"), pNotify->delete_errors_messages);
+        }
+
+//{"cumulative_count":"0","error_code":"8","error_message":"","processed_count":"0","source_id":"2","source_name":"Product","status":"error","sync_type":"incremental","total_count":"0","server_errors":{"update-error":{"broken_object_id":{"attributes":{"name":"wrongname","an_attribute":"error update"},"message":"error update"}}}}
+    }
+/*    
     CTokenizer oTokenizer( msg, "&" );
     int nLastPos = 0;
     while (oTokenizer.hasMoreTokens()) 
@@ -1240,6 +1327,7 @@ void rho_connectclient_parsenotify(const char* msg, RHO_CONNECT_NOTIFY* pNotify)
 
     if ( nLastPos < (int)strlen(msg) )
         pNotify->callback_params = strdup(msg+nLastPos);
+*/
 }
 
 void rho_connectclient_free_syncnotify(RHO_CONNECT_NOTIFY* pNotify)

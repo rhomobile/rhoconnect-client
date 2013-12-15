@@ -193,7 +193,7 @@ TEST(SyncClient, shouldBulkSync)
 TEST(SyncClient, ResetAndLogout) 
 {
     //rho_sync_set_syncserver("http://rhodes-store-server.herokuapp.com/application");
-    rho_sync_set_syncserver("http://rhoconnect-spec-win32.heroku.com/application");
+    rho_sync_set_syncserver("http://rhoconnect-spec-win32.heroku.com");
     rho_conf_remove_property("bulksync_state");
     rho_connectclient_database_full_reset_and_logout();
 
@@ -484,9 +484,12 @@ unsigned long beforeProcessCreateError(RHO_CONNECT_NOTIFY& oNotify)
     records = rho_connectclient_findbysql(g_szProduct, "SELECT * FROM changed_values WHERE update_type='update'", 0 );
     EXPECT_NE( records, 0 );
     EXPECT_EQ(rho_connectclient_strhasharray_size(records), 1 );
-    rec0 = rho_connectclient_strhasharray_get(records, 0);
-    EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "attrib")), "price");
-    EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "sent")), "0");
+    if ( rho_connectclient_strhasharray_size(records) == 1)
+    {
+        rec0 = rho_connectclient_strhasharray_get(records, 0);
+        EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "attrib")), "price");
+        EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "sent")), "0");
+    }
     rho_connectclient_strhasharray_delete(records);
 
     return item;
@@ -546,16 +549,22 @@ TEST(SyncClient, shouldProcessCreateError_RecreateDeleted)
 
     unsigned long records = rho_connectclient_findbysql(g_szProduct, "SELECT * FROM changed_values WHERE update_type='create'", 0 );
     EXPECT_EQ(rho_connectclient_strhasharray_size(records), 3 );
-    unsigned long rec0 = rho_connectclient_strhasharray_get(records, 0);
-    EXPECT_NE( String(rho_connectclient_hash_get(rec0, "attrib")), "object");
-    EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "sent")), "2");
+    if (rho_connectclient_strhasharray_size(records)== 3)
+    {
+        unsigned long rec0 = rho_connectclient_strhasharray_get(records, 0);
+        EXPECT_NE( String(rho_connectclient_hash_get(rec0, "attrib")), "object");
+        EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "sent")), "2");
+    }
     rho_connectclient_strhasharray_delete(records);
 
     records = rho_connectclient_findbysql(g_szProduct, "SELECT * FROM changed_values WHERE update_type='delete'", 0 );
     EXPECT_EQ(rho_connectclient_strhasharray_size(records), 3 ); //7 for schema
-    rec0 = rho_connectclient_strhasharray_get(records, 0);
-    EXPECT_NE( String(rho_connectclient_hash_get(rec0, "attrib")), "object");
-    EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "sent")), "0");
+    if ( rho_connectclient_strhasharray_size(records)== 3)
+    {
+        unsigned long rec0 = rho_connectclient_strhasharray_get(records, 0);
+        EXPECT_NE( String(rho_connectclient_hash_get(rec0, "attrib")), "object");
+        EXPECT_EQ( String(rho_connectclient_hash_get(rec0, "sent")), "0");
+    }
     rho_connectclient_strhasharray_delete(records);
 
     rho_connectclient_on_sync_create_error(g_szProduct, &oNotify, "recreate" );

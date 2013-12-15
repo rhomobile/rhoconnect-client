@@ -26,10 +26,11 @@
 
 #include "SyncNotify.h"
 #include "SyncEngine.h"
-#include "net/URI.h"
+//#include "net/URI.h"
 #include "common/RhoFilePath.h"
 #include "common/RhoAppAdapter.h"
 #include "common/RhodesApp.h"
+#include "json/JSONIterator.h"
 
 #ifndef RHO_NO_RUBY
     #include "rubyext/WebView.h"
@@ -553,8 +554,8 @@ String CSyncNotify::notifyParamToStr( const Hashtable<String,String>& result, co
         
         static String& addNode( const String& key, const String& value, bool jsonValue, String& result ) {
             addCommaIfNeeded(result);
-            String quote = jsonValue?"":"\"";
-            result += "\"" + key + "\":" + quote + value + quote;
+            //String quote = jsonValue?"":"\"";
+            result += "\"" + key + "\":" + (jsonValue?value: rho::json::CJSONEntry::quoteValue(value));
             return result;
         }
         
@@ -697,7 +698,7 @@ void CSyncNotify::callLoginCallback(const CSyncNotification& oNotify, int nErrCo
 	
 	Hashtable<String, String> result;
 	String strErrorCode = convertToStringA(nErrCode);
-	String strEncodedMessage = URI::urlEncode(strMessage);
+	String strEncodedMessage = strMessage;//URI::urlEncode(strMessage);
 	
 	result.put("error_code", strErrorCode);
 	result.put("error_message", strEncodedMessage);
