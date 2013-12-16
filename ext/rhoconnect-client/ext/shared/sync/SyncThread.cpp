@@ -323,11 +323,12 @@ unsigned long rho_sync_is_syncing()
 }
 #endif //RHO_NO_RUBY
 
-extern "C" void
+void
 source_iter(const char* szName, int nameLen, void* parSources)
 {
     rho::Vector<rho::String>& arSources = *((rho::Vector<rho::String>*)(parSources));
     arSources.addElement(szName);
+}
 }
 
 #ifndef RHO_NO_RUBY
@@ -347,6 +348,8 @@ unsigned long rho_sync_doSearch(unsigned long ar_sources, const char *from, cons
 }	
 #endif //RHO_NO_RUBY
 
+extern "C"
+{
 unsigned long rho_sync_doSearchByNames(unsigned long ar_sources, const char *from, const char *params, bool sync_changes, int nProgressStep, 
     /*RHOC_CALLBACK*/void* callback, void* callback_data)
 {
