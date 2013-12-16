@@ -1120,7 +1120,7 @@ void rho_connectclient_set_synctype(const char* szModel, RHOM_SYNC_TYPE sync_typ
     db.executeSQL("UPDATE sources SET sync_type=? WHERE name=?", getSyncTypeName(sync_type), szModel );
 }
 
-void parseServerErrors( CJSONEntry& oEntry, unsigned long& errors_obj, unsigned long& errors_attrs )
+void parseServerErrors( CJSONEntry oEntry, unsigned long& errors_obj, unsigned long& errors_attrs )
 {
     if (!errors_obj)
         errors_obj = rho_connectclient_strarray_create();
@@ -1157,38 +1157,9 @@ void parseServerErrors( CJSONEntry& oEntry, unsigned long& errors_obj, unsigned 
             }
         }
     }
-
-/*    int nPrefixLen = strlen(szPrefix)+1;
-    if (!errors_obj)
-        errors_obj = rho_connectclient_strarray_create();
-
-    String strObject = name.substr(nPrefixLen, name.find(']', nPrefixLen)-nPrefixLen );
-
-    int nObj = rho_connectclient_strarray_find(errors_obj, strObject.c_str() ); 
-    if ( nObj < 0 )
-        nObj = rho_connectclient_strarray_add(errors_obj, strObject.c_str() );
-
-    int nAttrs = name.find("[attributes]");
-    if ( nAttrs >= 0 )
-    {
-        String strAttr = name.substr(nAttrs+13, name.find(']', nAttrs+13)-(nAttrs+13) );
-        if (!errors_attrs)
-            errors_attrs = rho_connectclient_strhasharray_create();
-
-        VectorPtr<Hashtable<String, String>* >& arAttrs = *((VectorPtr<Hashtable<String, String>* >*)errors_attrs);
-        if ( nObj < (int)arAttrs.size() )
-            arAttrs[nObj]->put(strAttr, value);
-        else
-        {
-            unsigned long hashAttrs = rho_connectclient_hash_create();
-            rho_connectclient_hash_put(hashAttrs, strAttr.c_str(), value.c_str());
-            arAttrs.addElement( (Hashtable<String, String>*)hashAttrs );
-        }
-
-    }*/
 }
     
-void parseServerErrorMessage( CJSONEntry& oEntry, unsigned long& errors_obj )
+void parseServerErrorMessage( CJSONEntry oEntry, unsigned long& errors_obj )
 {
     if (!errors_obj)
         errors_obj = rho_connectclient_hash_create();
@@ -1258,76 +1229,7 @@ void rho_connectclient_parsenotify(const char* msg, RHO_CONNECT_NOTIFY* pNotify)
             parseServerErrors( oSrvErrors.getEntry("delete-error"), pNotify->delete_errors_obj, pNotify->delete_errors_attrs );
             parseServerErrorMessage(oSrvErrors.getEntry("delete-error"), pNotify->delete_errors_messages);
         }
-
-//{"cumulative_count":"0","error_code":"8","error_message":"","processed_count":"0","source_id":"2","source_name":"Product","status":"error","sync_type":"incremental","total_count":"0","server_errors":{"update-error":{"broken_object_id":{"attributes":{"name":"wrongname","an_attribute":"error update"},"message":"error update"}}}}
     }
-/*    
-    CTokenizer oTokenizer( msg, "&" );
-    int nLastPos = 0;
-    while (oTokenizer.hasMoreTokens()) 
-    {
-        nLastPos = oTokenizer.getCurPos();
-
-	    String tok = oTokenizer.nextToken();
-	    if (tok.length() == 0)
-		    continue;
-
-        CTokenizer oValueTok( tok, "=" );
-        String name = net::URI::urlDecode(oValueTok.nextToken());
-        String value = net::URI::urlDecode(oValueTok.nextToken());
-
-        if ( name.compare("total_count") == 0)
-            convertFromStringA( value.c_str(), pNotify->total_count );
-        else if ( name.compare("processed_count") == 0)
-            convertFromStringA( value.c_str(), pNotify->processed_count );
-        else if ( name.compare("cumulative_count") == 0)
-            convertFromStringA( value.c_str(), pNotify->cumulative_count );
-        else if ( name.compare("source_id") == 0)
-            convertFromStringA( value.c_str(), pNotify->source_id );
-        else if ( name.compare("error_code") == 0)
-            convertFromStringA( value.c_str(), pNotify->error_code );
-        else if ( name.compare("source_name") == 0)
-            pNotify->source_name = strdup(value.c_str());
-        else if ( name.compare("sync_type") == 0)
-            pNotify->sync_type = strdup(value.c_str());
-        else if ( name.compare("bulk_status") == 0)
-            pNotify->bulk_status = strdup(value.c_str());
-        else if ( name.compare("partition") == 0)
-            pNotify->partition = strdup(value.c_str());
-        else if ( name.compare("status") == 0)
-            pNotify->status = strdup(value.c_str());
-        else if ( name.compare("error_message") == 0)
-            pNotify->error_message = strdup(value.c_str());
-        else if ( String_startsWith(name, "server_errors[create-error]") )
-        {
-            parseServerErrorMessage("server_errors[create-error]", name, value, pNotify->create_errors_messages);
-        }
-        else if ( String_startsWith(name, "server_errors[update-error]") || String_startsWith(name, "server_errors[update-rollback]") || String_startsWith(name, "server_errors[delete-error]") )
-        {
-            if ( String_startsWith(name, "server_errors[update-error]") )
-            {
-                parseServerErrors( "server_errors[update-error]", name, value, pNotify->update_errors_obj, pNotify->update_errors_attrs );
-                parseServerErrorMessage("server_errors[update-error]", name, value, pNotify->update_errors_messages);
-            }
-            else if ( String_startsWith(name, "server_errors[update-rollback]") )
-            {
-                parseServerErrors( "server_errors[update-rollback]", name, value, pNotify->update_rollback_obj, pNotify->update_rollback_attrs );
-            }
-            else if ( String_startsWith(name, "server_errors[delete-error]") )
-            {
-                parseServerErrors( "server_errors[delete-error]", name, value, pNotify->delete_errors_obj, pNotify->delete_errors_attrs );
-                parseServerErrorMessage("server_errors[delete-error]", name, value, pNotify->delete_errors_messages);
-            }
-
-        }else if ( name.compare("rho_callback") == 0)
-            break;
-
-        nLastPos = oTokenizer.getCurPos();
-    }
-
-    if ( nLastPos < (int)strlen(msg) )
-        pNotify->callback_params = strdup(msg+nLastPos);
-*/
 }
 
 void rho_connectclient_free_syncnotify(RHO_CONNECT_NOTIFY* pNotify)

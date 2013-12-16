@@ -139,7 +139,7 @@ int shouldCreateNewProduct()
 	NSDictionary* item3 = [product find:[item valueForKey:@"object"]];
 	if ( item3 )
 		return 0;
-
+/*
 	if ( !pObjectCallback.m_pNotify.created_objects )
         return 0;
 
@@ -148,7 +148,7 @@ int shouldCreateNewProduct()
     
 	if ( [[pObjectCallback.m_pNotify.created_objects objectAtIndex:0] compare: [item valueForKey:@"object"]] != 0 )
         return 0;
-    
+*/
     if ( [product is_changed] )
         return 0;
 
@@ -519,7 +519,7 @@ int runObjCClientTest()
         if ( !ResetAndLogout() )
             @throw e;
         
-        sclient.sync_server = @"http://rhodes-store-server.herokuapp.com/application";
+        sclient.sync_server = @"http://rhoconnect-spec-iphone.heroku.com/";
         //sclient.sync_server = @"http://192.168.0.103:9292/application";
         sclient.bulksync_state = 1;
         
@@ -817,7 +817,7 @@ int runObjCClientBlobTest()
         if ( !ResetAndLogout() )
             @throw e;
         
-        sclient.sync_server = @"http://rhodes-samples-server.heroku.com/application";
+        sclient.sync_server = @"http://rhodes-samples-server.heroku.com";
         sclient.bulksync_state = 1;
         
         if ( !shouldNotSyncWithoutLogin() )
@@ -1079,11 +1079,11 @@ int main(int argc, char *argv[]) {
     fileManager = [NSFileManager defaultManager];
 	
 	int retVal = runObjCClientTest();
-    if (0 < retVal)
+    /*if (0 < retVal)
         retVal = runObjCClientBlobTest();
     if (0 < retVal)
         retVal = runObjCClientBulkSyncTest();
-	
+	*/
 	if (retVal)
 		NSLog(@"SUCCESS");
 	else

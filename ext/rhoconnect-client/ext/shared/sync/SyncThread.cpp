@@ -391,6 +391,7 @@ void rho_sync_set_syncserver(const char* syncserver)
         CClientRegister::Stop();
     }
 }
+}
 
 unsigned long rho_sync_login(const char *name, const char *password, const rho::apiGenerator::CMethodResult& oResult)
 {
@@ -401,6 +402,8 @@ unsigned long rho_sync_login(const char *name, const char *password, const rho::
     return CSyncThread::getInstance()->getRetValue();
 }
 
+extern "C"
+{
 unsigned long rho_sync_login_c(const char *name, const char *password, /*RHOC_CALLBACK*/void* callback, void* callback_data)
 {
     rho_sync_stop();
@@ -426,12 +429,15 @@ void rho_sync_logout()
 	LOG(INFO) + "stopSyncByUser";
     CSyncThread::getSyncEngine().logout_int();
 }
+}
 
 void rho_sync_set_notification(int source_id, const rho::apiGenerator::CMethodResult& oResult)
 {
     CSyncThread::getSyncEngine().getNotify().setSyncNotification(source_id, new CSyncNotification(oResult, source_id != -1) );
 }
 
+extern "C"
+{
 void rho_sync_set_notification_c(int source_id, /*RHOC_CALLBACK*/void* callback, void* callback_data)
 {
     CSyncThread::getSyncEngine().getNotify().setSyncNotification(source_id, new CSyncNotification((RHOC_CALLBACK)callback, callback_data, source_id != -1) );

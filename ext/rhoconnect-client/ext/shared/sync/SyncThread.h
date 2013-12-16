@@ -166,6 +166,9 @@ private:
 
 }
 }
+unsigned long rho_sync_doSearch(unsigned long ar_sources, const char *from, const char *params, bool sync_changes, int nProgressStep, const rho::apiGenerator::CMethodResult& oResult);
+unsigned long rho_sync_login(const char *login, const char *password, const rho::apiGenerator::CMethodResult& oResult);
+void rho_sync_set_notification(int source_id, const rho::apiGenerator::CMethodResult& oResult);
 #endif //__cplusplus
 
 #ifdef __cplusplus
@@ -177,12 +180,12 @@ unsigned long rho_sync_doSyncSource(unsigned long nSrcID,int show_status_popup, 
 unsigned long rho_sync_doSyncSourceByID(int nSrcID);
 unsigned long rho_sync_doSyncSourceByName(const char* szSrcName);
 
-unsigned long rho_sync_doSearch(unsigned long ar_sources, const char *from, const char *params, bool sync_changes, int nProgressStep, const rho::apiGenerator::CMethodResult& oResult);
 
-unsigned long rho_sync_login(const char *login, const char *password, const rho::apiGenerator::CMethodResult& oResult);
+
+
 int rho_sync_logged_in();
 void rho_sync_logout();
-void rho_sync_set_notification(int source_id, const rho::apiGenerator::CMethodResult& oResult);
+
 void rho_sync_clear_notification(int source_id);
 void rho_sync_set_source_property(int source_id, const char* propName, const char* propValue);
 int rho_sync_set_pollinterval(int nInterval);

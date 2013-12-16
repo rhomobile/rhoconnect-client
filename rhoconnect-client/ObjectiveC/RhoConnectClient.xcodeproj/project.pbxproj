@@ -18,6 +18,27 @@
 		5CCB15A013DB5549001337D6 /* RhoError.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CCB159D13DB5549001337D6 /* RhoError.h */; };
 		5CCB15A113DB5549001337D6 /* RhoConnectClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CCB159E13DB5549001337D6 /* RhoConnectClient.h */; };
 		5CCB15A213DB5549001337D6 /* RhoConnectClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CCB159F13DB5549001337D6 /* RhoConnectClient.cpp */; };
+		65CC3732185E0FF1003C83EA /* ISyncProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3727185E0FF1003C83EA /* ISyncProtocol.h */; };
+		65CC3733185E0FF1003C83EA /* SyncEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CC3728185E0FF1003C83EA /* SyncEngine.cpp */; };
+		65CC3734185E0FF1003C83EA /* SyncEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3729185E0FF1003C83EA /* SyncEngine.h */; };
+		65CC3735185E0FF1003C83EA /* SyncNotify.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CC372A185E0FF1003C83EA /* SyncNotify.cpp */; };
+		65CC3736185E0FF1003C83EA /* SyncNotify.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC372B185E0FF1003C83EA /* SyncNotify.h */; };
+		65CC3737185E0FF1003C83EA /* SyncProtocol_3.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC372C185E0FF1003C83EA /* SyncProtocol_3.h */; };
+		65CC3738185E0FF1003C83EA /* SyncProtocol_4.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC372D185E0FF1003C83EA /* SyncProtocol_4.h */; };
+		65CC3739185E0FF1003C83EA /* SyncSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CC372E185E0FF1003C83EA /* SyncSource.cpp */; };
+		65CC373A185E0FF1003C83EA /* SyncSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC372F185E0FF1003C83EA /* SyncSource.h */; };
+		65CC373B185E0FF1003C83EA /* SyncThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CC3730185E0FF1003C83EA /* SyncThread.cpp */; };
+		65CC373C185E0FF1003C83EA /* SyncThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3731185E0FF1003C83EA /* SyncThread.h */; };
+		65CC374A185E274E003C83EA /* MethodResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CC3740185E274E003C83EA /* MethodResult.cpp */; };
+		65CC374B185E274E003C83EA /* MethodResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3741185E274E003C83EA /* MethodResult.h */; };
+		65CC374C185E274E003C83EA /* js_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CC3742185E274E003C83EA /* js_helpers.cpp */; };
+		65CC374D185E274E003C83EA /* JSONResultConvertor.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3743185E274E003C83EA /* JSONResultConvertor.h */; };
+		65CC374E185E274E003C83EA /* BaseClasses.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3744185E274E003C83EA /* BaseClasses.h */; };
+		65CC374F185E274E003C83EA /* GeneratorQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3745185E274E003C83EA /* GeneratorQueue.h */; };
+		65CC3750185E274E003C83EA /* js_helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3746185E274E003C83EA /* js_helpers.h */; };
+		65CC3751185E274E003C83EA /* MethodResultConvertor.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3747185E274E003C83EA /* MethodResultConvertor.h */; };
+		65CC3752185E274E003C83EA /* StringifyHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CC3748185E274E003C83EA /* StringifyHelper.cpp */; };
+		65CC3753185E274E003C83EA /* StringifyHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CC3749185E274E003C83EA /* StringifyHelper.h */; };
 		C518600A168B4EDE004D12AB /* RhoconnectClientManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5186009168B4EDE004D12AB /* RhoconnectClientManager.cpp */; };
 		C5186011168B58A3004D12AB /* RhoPushManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5186010168B58A3004D12AB /* RhoPushManager.cpp */; };
 		C5A8B0F1168B428A0020B206 /* ZipFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B0F0168B428A0020B206 /* ZipFiles.cpp */; };
@@ -252,20 +273,6 @@
 		C5A8B2BE168B44DC0020B206 /* URI.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2B6168B44DC0020B206 /* URI.h */; };
 		C5A8B2C1168B44F10020B206 /* sslimpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B2BF168B44F10020B206 /* sslimpl.cpp */; };
 		C5A8B2C2168B44F10020B206 /* sslimpl.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2C0168B44F10020B206 /* sslimpl.h */; };
-		C5A8B2D0168B45150020B206 /* ClientRegister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B2C3168B45150020B206 /* ClientRegister.cpp */; };
-		C5A8B2D1168B45150020B206 /* ClientRegister.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2C4168B45150020B206 /* ClientRegister.h */; };
-		C5A8B2D2168B45150020B206 /* ILoginListener.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2C5168B45150020B206 /* ILoginListener.h */; };
-		C5A8B2D3168B45150020B206 /* ISyncProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2C6168B45150020B206 /* ISyncProtocol.h */; };
-		C5A8B2D4168B45150020B206 /* SyncEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B2C7168B45150020B206 /* SyncEngine.cpp */; };
-		C5A8B2D5168B45150020B206 /* SyncEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2C8168B45150020B206 /* SyncEngine.h */; };
-		C5A8B2D6168B45150020B206 /* SyncNotify.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B2C9168B45150020B206 /* SyncNotify.cpp */; };
-		C5A8B2D7168B45150020B206 /* SyncNotify.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2CA168B45150020B206 /* SyncNotify.h */; };
-		C5A8B2D8168B45150020B206 /* SyncProtocol_3.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2CB168B45150020B206 /* SyncProtocol_3.h */; };
-		C5A8B2D9168B45150020B206 /* SyncSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B2CC168B45150020B206 /* SyncSource.cpp */; };
-		C5A8B2DA168B45150020B206 /* SyncSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2CD168B45150020B206 /* SyncSource.h */; };
-		C5A8B2DB168B45150020B206 /* SyncThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B2CE168B45150020B206 /* SyncThread.cpp */; };
-		C5A8B2DC168B45150020B206 /* SyncThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C5A8B2CF168B45150020B206 /* SyncThread.h */; };
-		C5A8B2DF168B453A0020B206 /* initRhoconnectClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5A8B2DD168B453A0020B206 /* initRhoconnectClient.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -280,6 +287,27 @@
 		5CCB159D13DB5549001337D6 /* RhoError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RhoError.h; path = ../../platform/shared/RhoConnectClient/RhoError.h; sourceTree = "<group>"; };
 		5CCB159E13DB5549001337D6 /* RhoConnectClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RhoConnectClient.h; path = ../../platform/shared/RhoConnectClient/RhoConnectClient.h; sourceTree = "<group>"; };
 		5CCB159F13DB5549001337D6 /* RhoConnectClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RhoConnectClient.cpp; path = ../../platform/shared/RhoConnectClient/RhoConnectClient.cpp; sourceTree = "<group>"; };
+		65CC3727185E0FF1003C83EA /* ISyncProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISyncProtocol.h; path = "../../ext/rhoconnect-client/ext/shared/sync/ISyncProtocol.h"; sourceTree = "<group>"; };
+		65CC3728185E0FF1003C83EA /* SyncEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncEngine.cpp; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncEngine.cpp"; sourceTree = "<group>"; };
+		65CC3729185E0FF1003C83EA /* SyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncEngine.h; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncEngine.h"; sourceTree = "<group>"; };
+		65CC372A185E0FF1003C83EA /* SyncNotify.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncNotify.cpp; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncNotify.cpp"; sourceTree = "<group>"; };
+		65CC372B185E0FF1003C83EA /* SyncNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncNotify.h; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncNotify.h"; sourceTree = "<group>"; };
+		65CC372C185E0FF1003C83EA /* SyncProtocol_3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncProtocol_3.h; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncProtocol_3.h"; sourceTree = "<group>"; };
+		65CC372D185E0FF1003C83EA /* SyncProtocol_4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncProtocol_4.h; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncProtocol_4.h"; sourceTree = "<group>"; };
+		65CC372E185E0FF1003C83EA /* SyncSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncSource.cpp; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncSource.cpp"; sourceTree = "<group>"; };
+		65CC372F185E0FF1003C83EA /* SyncSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncSource.h; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncSource.h"; sourceTree = "<group>"; };
+		65CC3730185E0FF1003C83EA /* SyncThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncThread.cpp; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncThread.cpp"; sourceTree = "<group>"; };
+		65CC3731185E0FF1003C83EA /* SyncThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncThread.h; path = "../../ext/rhoconnect-client/ext/shared/sync/SyncThread.h"; sourceTree = "<group>"; };
+		65CC3740185E274E003C83EA /* MethodResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MethodResult.cpp; path = ../../../rhodes/platform/shared/api_generator/MethodResult.cpp; sourceTree = "<group>"; };
+		65CC3741185E274E003C83EA /* MethodResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MethodResult.h; path = ../../../rhodes/platform/shared/api_generator/MethodResult.h; sourceTree = "<group>"; };
+		65CC3742185E274E003C83EA /* js_helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = js_helpers.cpp; path = ../../../rhodes/platform/shared/api_generator/js_helpers.cpp; sourceTree = "<group>"; };
+		65CC3743185E274E003C83EA /* JSONResultConvertor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONResultConvertor.h; path = ../../../rhodes/platform/shared/api_generator/JSONResultConvertor.h; sourceTree = "<group>"; };
+		65CC3744185E274E003C83EA /* BaseClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseClasses.h; path = ../../../rhodes/platform/shared/api_generator/BaseClasses.h; sourceTree = "<group>"; };
+		65CC3745185E274E003C83EA /* GeneratorQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeneratorQueue.h; path = ../../../rhodes/platform/shared/api_generator/GeneratorQueue.h; sourceTree = "<group>"; };
+		65CC3746185E274E003C83EA /* js_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = js_helpers.h; path = ../../../rhodes/platform/shared/api_generator/js_helpers.h; sourceTree = "<group>"; };
+		65CC3747185E274E003C83EA /* MethodResultConvertor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MethodResultConvertor.h; path = ../../../rhodes/platform/shared/api_generator/MethodResultConvertor.h; sourceTree = "<group>"; };
+		65CC3748185E274E003C83EA /* StringifyHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringifyHelper.cpp; path = ../../../rhodes/platform/shared/api_generator/StringifyHelper.cpp; sourceTree = "<group>"; };
+		65CC3749185E274E003C83EA /* StringifyHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringifyHelper.h; path = ../../../rhodes/platform/shared/api_generator/StringifyHelper.h; sourceTree = "<group>"; };
 		C5186009168B4EDE004D12AB /* RhoconnectClientManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RhoconnectClientManager.cpp; path = ../../../rhodes/platform/shared/sync/RhoconnectClientManager.cpp; sourceTree = "<group>"; };
 		C5186010168B58A3004D12AB /* RhoPushManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RhoPushManager.cpp; path = ../../../rhodes/platform/shared/common/push/RhoPushManager.cpp; sourceTree = "<group>"; };
 		C5A8B0F0168B428A0020B206 /* ZipFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZipFiles.cpp; path = ../../../rhodes/platform/shared/rubyext/ZipFiles.cpp; sourceTree = "<group>"; };
@@ -514,20 +542,6 @@
 		C5A8B2B6168B44DC0020B206 /* URI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = URI.h; path = ../../../rhodes/platform/shared/net/URI.h; sourceTree = "<group>"; };
 		C5A8B2BF168B44F10020B206 /* sslimpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sslimpl.cpp; path = ../../../rhodes/platform/shared/net/iphone/sslimpl.cpp; sourceTree = "<group>"; };
 		C5A8B2C0168B44F10020B206 /* sslimpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sslimpl.h; path = ../../../rhodes/platform/shared/net/iphone/sslimpl.h; sourceTree = "<group>"; };
-		C5A8B2C3168B45150020B206 /* ClientRegister.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientRegister.cpp; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/ClientRegister.cpp"; sourceTree = "<group>"; };
-		C5A8B2C4168B45150020B206 /* ClientRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientRegister.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/ClientRegister.h"; sourceTree = "<group>"; };
-		C5A8B2C5168B45150020B206 /* ILoginListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ILoginListener.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/ILoginListener.h"; sourceTree = "<group>"; };
-		C5A8B2C6168B45150020B206 /* ISyncProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISyncProtocol.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/ISyncProtocol.h"; sourceTree = "<group>"; };
-		C5A8B2C7168B45150020B206 /* SyncEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncEngine.cpp; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncEngine.cpp"; sourceTree = "<group>"; };
-		C5A8B2C8168B45150020B206 /* SyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncEngine.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncEngine.h"; sourceTree = "<group>"; };
-		C5A8B2C9168B45150020B206 /* SyncNotify.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncNotify.cpp; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncNotify.cpp"; sourceTree = "<group>"; };
-		C5A8B2CA168B45150020B206 /* SyncNotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncNotify.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncNotify.h"; sourceTree = "<group>"; };
-		C5A8B2CB168B45150020B206 /* SyncProtocol_3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncProtocol_3.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncProtocol_3.h"; sourceTree = "<group>"; };
-		C5A8B2CC168B45150020B206 /* SyncSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncSource.cpp; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncSource.cpp"; sourceTree = "<group>"; };
-		C5A8B2CD168B45150020B206 /* SyncSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncSource.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncSource.h"; sourceTree = "<group>"; };
-		C5A8B2CE168B45150020B206 /* SyncThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncThread.cpp; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncThread.cpp"; sourceTree = "<group>"; };
-		C5A8B2CF168B45150020B206 /* SyncThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncThread.h; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/sync/SyncThread.h"; sourceTree = "<group>"; };
-		C5A8B2DD168B453A0020B206 /* initRhoconnectClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = initRhoconnectClient.cpp; path = "../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src/initRhoconnectClient.cpp"; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libRhoConnectClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRhoConnectClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -578,6 +592,7 @@
 		5C0D080F121CFBC90022E83C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				65CC373F185E2704003C83EA /* api_generator */,
 				C5D2782315A1BDF200A7EFC7 /* rubyext */,
 				5C59ACEB12E82C3100ED4A1E /* sqlite */,
 				5C0D0A89121D2B380022E83C /* curl */,
@@ -606,21 +621,18 @@
 		5C0D0815121CFC730022E83C /* sync */ = {
 			isa = PBXGroup;
 			children = (
+				65CC3727185E0FF1003C83EA /* ISyncProtocol.h */,
+				65CC3728185E0FF1003C83EA /* SyncEngine.cpp */,
+				65CC3729185E0FF1003C83EA /* SyncEngine.h */,
+				65CC372A185E0FF1003C83EA /* SyncNotify.cpp */,
+				65CC372B185E0FF1003C83EA /* SyncNotify.h */,
+				65CC372C185E0FF1003C83EA /* SyncProtocol_3.h */,
+				65CC372D185E0FF1003C83EA /* SyncProtocol_4.h */,
+				65CC372E185E0FF1003C83EA /* SyncSource.cpp */,
+				65CC372F185E0FF1003C83EA /* SyncSource.h */,
+				65CC3730185E0FF1003C83EA /* SyncThread.cpp */,
+				65CC3731185E0FF1003C83EA /* SyncThread.h */,
 				C5186009168B4EDE004D12AB /* RhoconnectClientManager.cpp */,
-				C5A8B2DD168B453A0020B206 /* initRhoconnectClient.cpp */,
-				C5A8B2C3168B45150020B206 /* ClientRegister.cpp */,
-				C5A8B2C4168B45150020B206 /* ClientRegister.h */,
-				C5A8B2C5168B45150020B206 /* ILoginListener.h */,
-				C5A8B2C6168B45150020B206 /* ISyncProtocol.h */,
-				C5A8B2C7168B45150020B206 /* SyncEngine.cpp */,
-				C5A8B2C8168B45150020B206 /* SyncEngine.h */,
-				C5A8B2C9168B45150020B206 /* SyncNotify.cpp */,
-				C5A8B2CA168B45150020B206 /* SyncNotify.h */,
-				C5A8B2CB168B45150020B206 /* SyncProtocol_3.h */,
-				C5A8B2CC168B45150020B206 /* SyncSource.cpp */,
-				C5A8B2CD168B45150020B206 /* SyncSource.h */,
-				C5A8B2CE168B45150020B206 /* SyncThread.cpp */,
-				C5A8B2CF168B45150020B206 /* SyncThread.h */,
 			);
 			name = sync;
 			sourceTree = "<group>";
@@ -929,6 +941,23 @@
 			name = sqlite;
 			sourceTree = "<group>";
 		};
+		65CC373F185E2704003C83EA /* api_generator */ = {
+			isa = PBXGroup;
+			children = (
+				65CC3740185E274E003C83EA /* MethodResult.cpp */,
+				65CC3741185E274E003C83EA /* MethodResult.h */,
+				65CC3742185E274E003C83EA /* js_helpers.cpp */,
+				65CC3743185E274E003C83EA /* JSONResultConvertor.h */,
+				65CC3744185E274E003C83EA /* BaseClasses.h */,
+				65CC3745185E274E003C83EA /* GeneratorQueue.h */,
+				65CC3746185E274E003C83EA /* js_helpers.h */,
+				65CC3747185E274E003C83EA /* MethodResultConvertor.h */,
+				65CC3748185E274E003C83EA /* StringifyHelper.cpp */,
+				65CC3749185E274E003C83EA /* StringifyHelper.h */,
+			);
+			name = api_generator;
+			sourceTree = "<group>";
+		};
 		C5D2782315A1BDF200A7EFC7 /* rubyext */ = {
 			isa = PBXGroup;
 			children = (
@@ -954,9 +983,12 @@
 				C5A8B189168B42F50020B206 /* arpa_telnet.h in Headers */,
 				C5A8B18B168B42F50020B206 /* config-mac.h in Headers */,
 				C5A8B18C168B42F50020B206 /* config-symbian.h in Headers */,
+				65CC3753185E274E003C83EA /* StringifyHelper.h in Headers */,
 				C5A8B18D168B42F50020B206 /* config-win32.h in Headers */,
 				C5A8B18E168B42F50020B206 /* config-win32ce.h in Headers */,
+				65CC3732185E0FF1003C83EA /* ISyncProtocol.h in Headers */,
 				C5A8B190168B42F50020B206 /* connect.h in Headers */,
+				65CC3738185E0FF1003C83EA /* SyncProtocol_4.h in Headers */,
 				C5A8B192168B42F50020B206 /* content_encoding.h in Headers */,
 				C5A8B194168B42F50020B206 /* cookie.h in Headers */,
 				C5A8B196168B42F50020B206 /* curl_addrinfo.h in Headers */,
@@ -964,11 +996,13 @@
 				C5A8B198168B42F50020B206 /* curl_config.h in Headers */,
 				C5A8B199168B42F50020B206 /* curl_ldap.h in Headers */,
 				C5A8B19A168B42F50020B206 /* curl_md5.h in Headers */,
+				65CC3734185E0FF1003C83EA /* SyncEngine.h in Headers */,
 				C5A8B19B168B42F50020B206 /* curl_memory.h in Headers */,
 				C5A8B19D168B42F50020B206 /* curl_memrchr.h in Headers */,
 				C5A8B19F168B42F50020B206 /* curl_rand.h in Headers */,
 				C5A8B1A2168B42F50020B206 /* dict.h in Headers */,
 				C5A8B1A4168B42F50020B206 /* easyif.h in Headers */,
+				65CC374E185E274E003C83EA /* BaseClasses.h in Headers */,
 				C5A8B1A6168B42F50020B206 /* escape.h in Headers */,
 				C5A8B1A8168B42F50020B206 /* file.h in Headers */,
 				C5A8B1AA168B42F50020B206 /* formdata.h in Headers */,
@@ -977,11 +1011,13 @@
 				C5A8B1B1168B42F50020B206 /* gtls.h in Headers */,
 				C5A8B1B3168B42F50020B206 /* hash.h in Headers */,
 				C5A8B1B7168B42F50020B206 /* hostip.h in Headers */,
+				65CC373A185E0FF1003C83EA /* SyncSource.h in Headers */,
 				C5A8B1BD168B42F50020B206 /* http.h in Headers */,
 				C5A8B1BF168B42F50020B206 /* http_chunks.h in Headers */,
 				C5A8B1C1168B42F50020B206 /* http_digest.h in Headers */,
 				C5A8B1C3168B42F50020B206 /* http_negotiate.h in Headers */,
 				C5A8B1C5168B42F50020B206 /* http_ntlm.h in Headers */,
+				65CC3750185E274E003C83EA /* js_helpers.h in Headers */,
 				C5A8B1C7168B42F50020B206 /* if2ip.h in Headers */,
 				C5A8B1C9168B42F50020B206 /* inet_ntop.h in Headers */,
 				C5A8B1CB168B42F50020B206 /* inet_pton.h in Headers */,
@@ -1004,6 +1040,7 @@
 				C5A8B1F3168B42F50020B206 /* slist.h in Headers */,
 				C5A8B1F4168B42F50020B206 /* sockaddr.h in Headers */,
 				C5A8B1F6168B42F50020B206 /* socks.h in Headers */,
+				65CC374B185E274E003C83EA /* MethodResult.h in Headers */,
 				C5A8B1FA168B42F50020B206 /* speedcheck.h in Headers */,
 				C5A8B1FC168B42F50020B206 /* splay.h in Headers */,
 				C5A8B1FE168B42F50020B206 /* ssh.h in Headers */,
@@ -1016,11 +1053,14 @@
 				C5A8B20C168B42F50020B206 /* strtoofft.h in Headers */,
 				C5A8B20E168B42F50020B206 /* telnet.h in Headers */,
 				C5A8B210168B42F50020B206 /* tftp.h in Headers */,
+				65CC3751185E274E003C83EA /* MethodResultConvertor.h in Headers */,
 				C5A8B212168B42F50020B206 /* timeval.h in Headers */,
 				C5A8B214168B42F50020B206 /* transfer.h in Headers */,
 				C5A8B216168B42F50020B206 /* url.h in Headers */,
 				C5A8B217168B42F50020B206 /* urldata.h in Headers */,
+				65CC373C185E0FF1003C83EA /* SyncThread.h in Headers */,
 				C5A8B222168B434D0020B206 /* RhoClassfactory.h in Headers */,
+				65CC3737185E0FF1003C83EA /* SyncProtocol_3.h in Headers */,
 				C5A8B223168B434D0020B206 /* RhoCryptImpl.h in Headers */,
 				C5A8B243168B439D0020B206 /* AutoPointer.h in Headers */,
 				C5A8B244168B439D0020B206 /* InputStream.h in Headers */,
@@ -1043,12 +1083,14 @@
 				C5A8B25A168B439D0020B206 /* StringConverter.h in Headers */,
 				C5A8B25C168B439D0020B206 /* ThreadQueue.h in Headers */,
 				C5A8B25E168B439D0020B206 /* Tokenizer.h in Headers */,
+				65CC3736185E0FF1003C83EA /* SyncNotify.h in Headers */,
 				C5A8B26A168B43B90020B206 /* DBAdapter.h in Headers */,
 				C5A8B26C168B43B90020B206 /* DBAttrManager.h in Headers */,
 				C5A8B26E168B43B90020B206 /* DBImportTransaction.h in Headers */,
 				C5A8B270168B43B90020B206 /* DBRequestHelper.h in Headers */,
 				C5A8B272168B43B90020B206 /* DBResult.h in Headers */,
 				C5A8B278168B43E00020B206 /* unzip.h in Headers */,
+				65CC374D185E274E003C83EA /* JSONResultConvertor.h in Headers */,
 				C5A8B27A168B43E00020B206 /* zip.h in Headers */,
 				C5A8B28E168B44860020B206 /* arraylist.h in Headers */,
 				C5A8B28F168B44860020B206 /* bits.h in Headers */,
@@ -1070,14 +1112,7 @@
 				C5A8B2BC168B44DC0020B206 /* ssl.h in Headers */,
 				C5A8B2BE168B44DC0020B206 /* URI.h in Headers */,
 				C5A8B2C2168B44F10020B206 /* sslimpl.h in Headers */,
-				C5A8B2D1168B45150020B206 /* ClientRegister.h in Headers */,
-				C5A8B2D2168B45150020B206 /* ILoginListener.h in Headers */,
-				C5A8B2D3168B45150020B206 /* ISyncProtocol.h in Headers */,
-				C5A8B2D5168B45150020B206 /* SyncEngine.h in Headers */,
-				C5A8B2D7168B45150020B206 /* SyncNotify.h in Headers */,
-				C5A8B2D8168B45150020B206 /* SyncProtocol_3.h in Headers */,
-				C5A8B2DA168B45150020B206 /* SyncSource.h in Headers */,
-				C5A8B2DC168B45150020B206 /* SyncThread.h in Headers */,
+				65CC374F185E274E003C83EA /* GeneratorQueue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1161,12 +1196,14 @@
 				C5A8B19C168B42F50020B206 /* curl_memrchr.c in Sources */,
 				C5A8B19E168B42F50020B206 /* curl_rand.c in Sources */,
 				C5A8B1A0168B42F50020B206 /* curl_sspi.c in Sources */,
+				65CC373B185E0FF1003C83EA /* SyncThread.cpp in Sources */,
 				C5A8B1A1168B42F50020B206 /* dict.c in Sources */,
 				C5A8B1A3168B42F50020B206 /* easy.c in Sources */,
 				C5A8B1A5168B42F50020B206 /* escape.c in Sources */,
 				C5A8B1A7168B42F50020B206 /* file.c in Sources */,
 				C5A8B1A9168B42F50020B206 /* formdata.c in Sources */,
 				C5A8B1AB168B42F50020B206 /* ftp.c in Sources */,
+				65CC374C185E274E003C83EA /* js_helpers.cpp in Sources */,
 				C5A8B1AD168B42F50020B206 /* getenv.c in Sources */,
 				C5A8B1AE168B42F50020B206 /* getinfo.c in Sources */,
 				C5A8B1B0168B42F50020B206 /* gtls.c in Sources */,
@@ -1192,6 +1229,7 @@
 				C5A8B1CF168B42F50020B206 /* llist.c in Sources */,
 				C5A8B1D1168B42F50020B206 /* md5.c in Sources */,
 				C5A8B1D2168B42F50020B206 /* memdebug.c in Sources */,
+				65CC3739185E0FF1003C83EA /* SyncSource.cpp in Sources */,
 				C5A8B1D4168B42F50020B206 /* mprintf.c in Sources */,
 				C5A8B1D5168B42F50020B206 /* multi.c in Sources */,
 				C5A8B1D7168B42F50020B206 /* netrc.c in Sources */,
@@ -1215,6 +1253,7 @@
 				C5A8B1F9168B42F50020B206 /* speedcheck.c in Sources */,
 				C5A8B1FB168B42F50020B206 /* splay.c in Sources */,
 				C5A8B1FD168B42F50020B206 /* ssh.c in Sources */,
+				65CC3735185E0FF1003C83EA /* SyncNotify.cpp in Sources */,
 				C5A8B1FF168B42F50020B206 /* sslgen.c in Sources */,
 				C5A8B201168B42F50020B206 /* ssluse.c in Sources */,
 				C5A8B203168B42F50020B206 /* strdup.c in Sources */,
@@ -1251,9 +1290,11 @@
 				C5A8B295168B44860020B206 /* json_tokener.c in Sources */,
 				C5A8B297168B44860020B206 /* json_util.c in Sources */,
 				C5A8B299168B44860020B206 /* JSONIterator.cpp in Sources */,
+				65CC3733185E0FF1003C83EA /* SyncEngine.cpp in Sources */,
 				C5A8B29B168B44860020B206 /* linkhash.c in Sources */,
 				C5A8B29D168B44860020B206 /* printbuf.c in Sources */,
 				C5A8B2A7168B44B40020B206 /* RhoLog.cpp in Sources */,
+				65CC374A185E274E003C83EA /* MethodResult.cpp in Sources */,
 				C5A8B2AA168B44B40020B206 /* RhoLogConf.cpp in Sources */,
 				C5A8B2AC168B44B40020B206 /* RhoLogSink.cpp in Sources */,
 				C5A8B2AE168B44B40020B206 /* RhoPlainLog.cpp in Sources */,
@@ -1262,12 +1303,7 @@
 				C5A8B2BB168B44DC0020B206 /* ssl.cpp in Sources */,
 				C5A8B2BD168B44DC0020B206 /* URI.cpp in Sources */,
 				C5A8B2C1168B44F10020B206 /* sslimpl.cpp in Sources */,
-				C5A8B2D0168B45150020B206 /* ClientRegister.cpp in Sources */,
-				C5A8B2D4168B45150020B206 /* SyncEngine.cpp in Sources */,
-				C5A8B2D6168B45150020B206 /* SyncNotify.cpp in Sources */,
-				C5A8B2D9168B45150020B206 /* SyncSource.cpp in Sources */,
-				C5A8B2DB168B45150020B206 /* SyncThread.cpp in Sources */,
-				C5A8B2DF168B453A0020B206 /* initRhoconnectClient.cpp in Sources */,
+				65CC3752185E274E003C83EA /* StringifyHelper.cpp in Sources */,
 				C518600A168B4EDE004D12AB /* RhoconnectClientManager.cpp in Sources */,
 				C5186011168B58A3004D12AB /* RhoPushManager.cpp in Sources */,
 			);
@@ -1296,9 +1332,8 @@
 				HEADER_SEARCH_PATHS = (
 					../../../rhodes/platform/shared,
 					../../../rhodes/platform/shared/curl/include,
-					"../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src",
+					"../../ext/rhoconnect-client/ext/shared",
 					../../platform/shared,
-					../../../rhodes/platform/shared/sync,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1308,7 +1343,7 @@
 				RHO_NO_RUBY = 1;
 				SDKROOT = iphoneos;
 				SYMROOT = ../build;
-				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src ../../platform/shared ../../../rhodes/platform/shared/sync";
+				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/shared ../../platform/shared";
 			};
 			name = Debug;
 		};
@@ -1329,9 +1364,8 @@
 				HEADER_SEARCH_PATHS = (
 					../../../rhodes/platform/shared,
 					../../../rhodes/platform/shared/curl/include,
-					"../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src",
+					"../../ext/rhoconnect-client/ext/shared",
 					../../platform/shared,
-					../../../rhodes/platform/shared/sync,
 				);
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -1341,7 +1375,7 @@
 				RHO_NO_RUBY = 1;
 				SDKROOT = iphoneos;
 				SYMROOT = ../build;
-				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/rhoconnect-client/shared/src ../../platform/shared ../../../rhodes/platform/shared/sync";
+				USER_HEADER_SEARCH_PATHS = "../../../rhodes/platform/shared ../../../rhodes/platform/shared/curl/include ../../ext/rhoconnect-client/ext/shared ../../platform/shared";
 			};
 			name = Release;
 		};

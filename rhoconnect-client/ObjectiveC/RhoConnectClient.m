@@ -106,7 +106,7 @@ void rho_free_callbackdata(void* pData)
 {
 	self = [super init];
 	
-	initRhoconnectClient();
+	//initRhoconnectClient();
 	
 	return self;
 }
@@ -304,8 +304,8 @@ void rho_free_callbackdata(void* pData)
 
 - (RhoConnectNotify*) loginWithUser: (NSString*) user pwd:(NSString*) pwd
 {
-	char* res = (char*)rho_sync_login( [user cStringUsingEncoding:[NSString defaultCStringEncoding]],
-				   [pwd cStringUsingEncoding:[NSString defaultCStringEncoding]], "");
+	char* res = (char*)rho_sync_login_c( [user cStringUsingEncoding:[NSString defaultCStringEncoding]],
+				   [pwd cStringUsingEncoding:[NSString defaultCStringEncoding]], NULL, NULL );
 	
     RHO_CONNECT_NOTIFY oNotify = {0};
     rho_connectclient_parsenotify(res, &oNotify);
