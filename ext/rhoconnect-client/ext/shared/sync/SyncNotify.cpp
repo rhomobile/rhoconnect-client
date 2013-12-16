@@ -546,7 +546,7 @@ String CSyncNotify::notifyParamToStr( const Hashtable<String,String>& result, co
     struct JSONCreator {
         static String& addCommaIfNeeded( String& result ) {
             result = String_trimRight(result);
-            if ( (result.length()>0) && !(String_endsWith(result,"[" ) || String_endsWith(result,"{")) ) {
+            if ( (result.length()>0) && !(String_endsWith(result,"[" ) || String_endsWith(result,"{") || String_endsWith(result,",")) ) {
                 result += ",";
             }
             return result;
@@ -564,9 +564,9 @@ String CSyncNotify::notifyParamToStr( const Hashtable<String,String>& result, co
                 addCommaIfNeeded(result);
             }
             
-            if ( (objects.size()==0) && ((l2Hashes==0) || (l2Hashes->size()==0)) ) {
-                return result;
-            }
+            //if ( (objects.size()==0) && ((l2Hashes==0) || (l2Hashes->size()==0)) ) {
+            //    return result;
+            //}
             
             result += "{";
 
@@ -586,6 +586,7 @@ String CSyncNotify::notifyParamToStr( const Hashtable<String,String>& result, co
                 }
 
                 for ( Hashtable< String, Hashtable< String, String > >::const_iterator it = l2Hashes->begin(); it != l2Hashes->end(); ++it ) {
+                    addCommaIfNeeded(result);
                     result += "\"" + it->first + "\":";
                     addNode( it->second, 0, result, true );
                 }
