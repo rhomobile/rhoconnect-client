@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\shared&quot;;../../../../../rhodes/platform/shared/sync;../../../../../rhodes/lib\commonAPI\coreapi\ext\shared"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;RHO_NO_RUBY"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;RHO_NO_RUBY;RHORC_NO_RUBY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -105,7 +105,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories=".;../../../../../rhodes/platform/wm/rhodes;../../../../../rhodes/platform/shared;&quot;../../../..\ext\rhoconnect-client\ext\shared&quot;;../../../../../rhodes/platform/shared/sync;../../../../../rhodes/lib\commonAPI\coreapi\ext\shared"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;RHO_NO_RUBY"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;RHO_NO_RUBY;RHORC_NO_RUBY"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
