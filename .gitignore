@@ -23,6 +23,7 @@ sync_server.*
 rhoapi-modules.js
 license.key
 README
+.qmake.stash
 
 /rhoconnect-client/build
 /rhoconnect-client/Java/Android/test/gen
