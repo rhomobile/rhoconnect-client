@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -56,7 +56,6 @@
 		5C84C118122D0F6300B0873C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		5C84C12D122D0FF600B0873C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5C84C15B122D105400B0873C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		5C95B3181233EAD8008E7E7E /* libRhoConnectClient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRhoConnectClient.a; path = "/Users/evgeny/Projects/rhodes/rhosync-client/build/Debug-iphonesimulator/libRhoConnectClient.a"; sourceTree = "<absolute>"; };
 		65CC375B185EE957003C83EA /* RhoConnectClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RhoConnectClient.xcodeproj; path = ../../../ObjectiveC/RhoConnectClient.xcodeproj; sourceTree = "<group>"; };
 		65CC3769185EF35A003C83EA /* db */ = {isa = PBXFileReference; lastKnownFileType = folder; name = db; path = ../../../../../rhodes/platform/shared/db/res/db; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* store-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "store-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -128,7 +127,6 @@
 				5C84C118122D0F6300B0873C /* libsqlite3.dylib */,
 				5C84C12D122D0FF600B0873C /* libz.dylib */,
 				5C84C15B122D105400B0873C /* CFNetwork.framework */,
-				5C95B3181233EAD8008E7E7E /* libRhoConnectClient.a */,
 				5C59AD0912E82D7C00ED4A1E /* Security.framework */,
 			);
 			name = CustomTemplate;
@@ -200,9 +198,10 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "store" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -283,7 +282,7 @@
 				INFOPLIST_FILE = "store-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../build/Debug-iphonesimulator\"",
+					"\\\"$(SRCROOT)/../../../build/Debug-iphonesimulator\\\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lRhoConnectClient";
@@ -304,7 +303,7 @@
 				INFOPLIST_FILE = "store-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../build/Debug-iphonesimulator\"",
+					"\\\"$(SRCROOT)/../../../build/Debug-iphonesimulator\\\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lRhoConnectClient";
@@ -318,27 +317,26 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
