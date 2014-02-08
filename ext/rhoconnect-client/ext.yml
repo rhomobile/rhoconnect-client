@@ -8,3 +8,5 @@ project_paths:
   wm: ext/platform/wm/Rhoconnect-client.vcproj
 
 xml_api_paths: ext/RhoConnectClient.xml
+android:
+  exttype: rakefile
