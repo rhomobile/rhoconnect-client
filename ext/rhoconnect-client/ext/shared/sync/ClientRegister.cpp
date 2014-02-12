@@ -26,7 +26,7 @@
 
 #include "ClientRegister.h"
 #include "SyncThread.h"
-#include "ILoginListener.h"
+#include "sync/ILoginListener.h"
 #include "common/RhoConf.h"
 #include "common/RhodesApp.h"
 #include "System.h"

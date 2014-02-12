@@ -1,6 +1,6 @@
 entry: Init_Rhoconnectclient_extension	
 javaentry: com.rhoconnect-client.Rhoconnect-client
-android_additional_sources_list: ext/platform/android/ext_build.files
+android_additional_sources_list: ext/platform/android/ext_java.files
 libraries: ["Rhoconnect-client"]
 
 project_paths:
@@ -8,3 +8,5 @@ project_paths:
   wm: ext/platform/wm/Rhoconnect-client.vcproj
 
 xml_api_paths: ext/RhoConnectClient.xml
+android:
+  exttype: rakefile
