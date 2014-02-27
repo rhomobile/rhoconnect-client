@@ -86,11 +86,7 @@ public:
 	virtual bool syncEngineNotifyIsReportingEnabled() {
 		return rho::sync::CSyncThread::getInstance()->getSyncEngine().getNotify().isReportingEnabled();
 	}
-	
-	virtual int rho_sync_issyncing() {
-		return rho_sync_issyncing();
-	}
-	
+		
 	virtual int logged_in() {
 		return rho_sync_logged_in();
 	}
@@ -144,7 +140,7 @@ public:
 	virtual int get_lastsync_objectcount(int nSrcID) {
 		return rho_sync_get_lastsync_objectcount(nSrcID);
 	}
-	
+
 	virtual int issyncing() {
 		return rho_sync_issyncing();
 	}
