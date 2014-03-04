@@ -886,6 +886,8 @@ void CSyncSource::processServerResponse_ver3(CJSONArrayIterator& oJsonArr, bool 
 
             getDB().startTransaction();
 
+            LOG(INFO) + "SyncSource: pass_through = " +
+                getSync().getSourceOptions().getBoolProperty(getID(), "pass_through");
             if (getSync().getSourceOptions().getBoolProperty(getID(), "pass_through"))
             {
                 if ( m_bSchemaSource )
