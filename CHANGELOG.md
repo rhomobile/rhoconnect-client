@@ -1,4 +1,5 @@
 ## 4.1.0 (not released yet)
+* Fixed issue with enabling :pass_through option
 * #57824836 "Cannot consistently raise exception in JS adapter" - bug fix
 
 ## 4.0.0.beta.55 (2013-08-08)
