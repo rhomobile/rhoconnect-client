@@ -6,5 +6,6 @@ libraries: ["Rhoconnect-client"]
 project_paths:
   wp8: ext/platform/wp8/Rhoconnect-client.vcxproj
   wm: ext/platform/wm/Rhoconnect-client.vcproj
+  win32: ext/platform/wm/Rhoconnect-client.vcproj
 
 xml_api_paths: ext/RhoConnectClient.xml
