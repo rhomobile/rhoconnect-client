@@ -704,7 +704,6 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
             {
                 String strObject = errIter.getCurKey();
 
-
                 if ( String_endsWith(strObject, "-error") )
                 {
                     strObject = strObject.substr(0, strObject.length()-6);
@@ -765,11 +764,14 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
             }
 
             if ( objErrors.size() > 0 ) {
-                strServerError = "{";
+                rho::String strObjects = "";
                 for ( Hashtable<String,String>::const_iterator it = objErrors.begin(); it != objErrors.end(); ++it ) {
-                    strServerError += "\"" + it->first + "\":" + it->second;
+                    if ( strObjects.size() > 0 ) {
+                        strObjects += ",";
+                    }
+                    strObjects += "\"" + it->first + "\":" + it->second;
                 }
-                strServerError += "}";
+                strServerError = rho::String("{") + strObjects + "}";
             }
         }
 
