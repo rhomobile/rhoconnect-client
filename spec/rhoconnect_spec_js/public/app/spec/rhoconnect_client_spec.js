@@ -1,3 +1,6 @@
+var useNewOrm = false;
+var useNewOrm = Rho.NewORM.useNewOrm();
+
 var loginCallback_paramsValue = [{ "error_code" : "" , "error_message" : "" }],
 		searchCallback_paramsValue = [{ "status" : "" , "search_params" : "" }],
 		syncServerUrl = "http://"+SYNC_SERVER_HOST+":"+SYNC_SERVER_PORT,
@@ -10,23 +13,23 @@ var loginCallback_paramsValue = [{ "error_code" : "" , "error_message" : "" }],
 
 describe("Rhoconnect Client", function() {
   beforeEach(function() {
-		var has_reset = false;
-		var resetCallback = function() {
-      has_reset =true;
-    };
+	var has_reset = false;
+	var resetCallback = function() {
+		has_reset =true;
+	};
     runs(function() {
-			var resetProps = {
-				url: syncServerUrl + '/rc/v1/system/reset',
-				headers: {'X-RhoConnect-API-TOKEN':'my-rhoconnect-token',
-				          'Content-Type': 'application/x-www-form-urlencoded'
-				}
-			};
-			Rho.Network.post(resetProps, resetCallback);
-		});
+		var resetProps = {
+			url: syncServerUrl + '/rc/v1/system/reset',
+			headers: {'X-RhoConnect-API-TOKEN':'my-rhoconnect-token',
+					  'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		};
+		Rho.Network.post(resetProps, resetCallback);
+	});
 
-		waitsFor(function() {
-			return has_reset;
-		}, "Timeout", 20000);
+	waitsFor(function() {
+		return has_reset;
+	}, "Timeout", 20000);
 
     callbackCalled = false;
     Rho.RhoConnectClient.syncServer = syncServerUrl;
@@ -35,15 +38,44 @@ describe("Rhoconnect Client", function() {
     loginCallback_paramsValue.error_code = "";
     loginCallback_paramsValue.error_message = "";
     Rho.ORM.clear();
-    var db = Rho.ORMHelper.dbConnection("user");
-    db.$execute_sql("DELETE FROM SOURCES");
-    db.$execute_sql("DELETE FROM CLIENT_INFO");
-    db.$execute_sql("DELETE FROM OBJECT_VALUES");
-    Product = Rho.ORM.addModel( function(model){
-      model.modelName("Product");
-      model.enable("sync");
-    });
-    Customer = Rho.ORM.addModel( function(model){
+	var db = Rho.ORMHelper.dbConnection("user");
+	if(useNewOrm){
+	
+		db.executeSql("DELETE FROM SOURCES");
+		db.executeSql("DELETE FROM CLIENT_INFO");
+		db.executeSql("DELETE FROM OBJECT_VALUES");
+	
+		Product = Rho.ORM.addModel('Product',function(model){
+			model.enable("sync");
+		});
+		
+		Customer = Rho.ORM.addModel('Customer',function(model){
+			model.setModelProperty("address", "string", "");
+			model.setModelProperty("created_at", "string", "");
+			model.setModelProperty("city", "string", "");
+			model.setModelProperty("email", "string", "");
+			model.setModelProperty("last", "string", "");
+			model.setModelProperty("updated_at", "string", "");
+			model.setModelProperty("lat", "string", "");
+			model.setModelProperty("long", "string", "");
+			model.setModelProperty("phone", "string", "");
+			model.setModelProperty("state", "string", "");
+			model.setModelProperty("zip", "string", "");
+			model.enable("sync");
+		});
+
+	}else{
+	
+		db.$execute_sql("DELETE FROM SOURCES");
+		db.$execute_sql("DELETE FROM CLIENT_INFO");
+		db.$execute_sql("DELETE FROM OBJECT_VALUES");
+		
+		Product = Rho.ORM.addModel( function(model){
+			model.modelName("Product");
+			model.enable("sync");
+		});
+		
+		Customer = Rho.ORM.addModel( function(model){
 			model.modelName("Customer");
 			model.property("address", "string");
 			model.property("created_at", "string");
@@ -58,6 +90,10 @@ describe("Rhoconnect Client", function() {
 			model.property("zip", "string");
 			model.enable("sync");
 		});
+	
+	}
+
+
   });
 
 	it("VT295-053 | pollInterval property default value test | 60", function() {
@@ -1749,4 +1785,5 @@ describe("Rhoconnect Client", function() {
 		  });
 
 	});
+
 });
