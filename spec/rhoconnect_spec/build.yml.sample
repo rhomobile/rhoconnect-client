@@ -6,7 +6,7 @@ bbver: 6.0
 version: 1.0.0
 vendor: rhomobile
 iphone:
-  sdk: iphonesimulator6.0
+  sdk: iphonesimulator7.1
   entitlements: ''
   codesignidentity: ''
   configuration: Release
