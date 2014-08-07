@@ -7,7 +7,15 @@
 
     <script type="text/javascript" charset="utf-8" src="/public/jquery/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="/public/api/rhoapi-modules.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/public/api/rhoapi-modules-ORM.js"></script>
+	<script>
+	if(!Rho.NewORM.useNewOrm()) {
+		var oldORM = document.createElement('script');
+		oldORM.src = '/public/api/rhoapi-modules-ORM.js';
+		oldORM.type = 'text/javascript';
+		document.getElementsByTagName('head')[0].appendChild(oldORM);
+	}
+	</script>
+    <!--<script type="text/javascript" charset="utf-8" src="/public/api/rhoapi-modules-ORM.js"></script>-->
 
     <script type="text/javascript" src="local_server.js"></script>
     <script type="text/javascript" src="/public/jasmine/jasmine.js"></script>
