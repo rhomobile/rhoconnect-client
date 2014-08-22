@@ -60,6 +60,23 @@
             };
 
             function execJasmine() {
+
+                var oldCallback = jasmineEnv.currentRunner().finishCallback;
+                jasmineEnv.currentRunner().finishCallback = function()
+                {
+                    try
+                    {
+                        oldCallback.apply(this, arguments);
+                    }
+                    catch(e)
+                    {
+                        console.log
+                        ('Could not send results: ' + e);
+                    }
+
+                    Rho.Log.info('***Terminated','APP');
+                    return;
+                };
                 jasmineEnv.execute();
             }
         })();
