@@ -7,8 +7,12 @@ class SpecRunner < MSpecScript
 	  @results_path = File.join( Rho::RhoApplication.get_base_app_path(), 'test_results.xml' )
 	  # for android path is  /data/data/com.rhomobile.rhoconnect_spec/rhodata/apps/test_results.xml
 
-	  @formatter = JUnitFormatter.new(@results_path)
-	  @formatter.register
+    @@formatter = JUnitRhoLogFormatter.new( @results_path )
+    @@formatter.register
+
+    @@resulter = JasmineLikeFormatter.new()
+    @@resulter.register
+
 	  # turn on exception backtrace
 	  MSpec.backtrace = true
 
@@ -32,6 +36,8 @@ class SpecRunner < MSpecScript
     postProps['body'] = contents
     res = Rho::Network.post(postProps)
     puts "Post #{File.basename(@results_path)} to local server. Status: #{res['status']}"
+
+    Rho::Log.info("***Terminated","APP")
 
     exit_code
   end

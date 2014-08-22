@@ -103,9 +103,12 @@ def run_rhoconnect_spec(platform,appname,flags)
 	puts "Running specs ..."
 	chdir $rho_root
 	Rake::Task.tasks.each { |t| t.reenable }
-	# run_specs = $device ? "run:#{platform}:#{$device}:spec" : "run:#{platform}:spec"
+	run_specs = $device && $device != "emulator" ? "run:#{platform}:#{$device}:spec" : "run:#{platform}:spec"
+
   uninstall_app = false
-	Rake::Task["run:#{platform}:#{$device}:spec"].invoke(uninstall_app)
+
+  	Rake::Task[run_specs].invoke(uninstall_app)
+
 
 rescue SystemExit => e
   # FIXME: iphone rake task throws SystemExit exception. Swallow it!
