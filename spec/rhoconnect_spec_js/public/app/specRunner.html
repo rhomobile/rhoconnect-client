@@ -13,9 +13,19 @@
 		oldORM.src = '/public/api/rhoapi-modules-ORM.js';
 		oldORM.type = 'text/javascript';
 		document.getElementsByTagName('head')[0].appendChild(oldORM);
+		var oldORM = document.createElement('script');
+		oldORM.src = '/public/api/rhoapi-modules-ORMHelper.js';
+		oldORM.type = 'text/javascript';
+		document.getElementsByTagName('head')[0].appendChild(oldORM);
+		var oldORM = document.createElement('script');
+		oldORM.src = '/public/api/rhoapi-modules-Ruby-RunTime.js';
+		oldORM.type = 'text/javascript';
+		document.getElementsByTagName('head')[0].appendChild(oldORM);
 	}
 	</script>
     <!--<script type="text/javascript" charset="utf-8" src="/public/api/rhoapi-modules-ORM.js"></script>-->
+    <!--<script type="text/javascript" charset="utf-8" src="/public/api/rhoapi-modules-ORMHelper.js"></script>-->
+    <!--<script type="text/javascript" charset="utf-8" src="/public/api/rhoapi-modules-Ruby-RunTime.js"></script>-->
 
     <script type="text/javascript" src="local_server.js"></script>
     <script type="text/javascript" src="/public/jasmine/jasmine.js"></script>
