@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0A785FEF-1B00-4CD9-B261-A83C6FFE7199}</ProjectGuid>
+    <ProjectGuid>{12F7458F-04CD-445E-9232-C93A506E9B50}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <DefaultLanguage>en-US</DefaultLanguage>
     <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and '$(VisualStudioVersion)' == ''">$(VCTargetsPath11)</VCTargetsPath>
