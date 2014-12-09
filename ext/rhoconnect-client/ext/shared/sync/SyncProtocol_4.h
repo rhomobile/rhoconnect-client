@@ -142,6 +142,11 @@ struct CSyncProtocol_4 : public ISyncProtocol
         while(tokenizer.hasMoreTokens()) {
             String source_name = tokenizer.nextToken();
             if(source_name.length() > 0) {
+
+                if (strJSONSources.length() > 0) {
+                  strJSONSources += ",";
+                }
+
                 strJSONSources += "{\"name\":";
                 strJSONSources += json::CJSONEntry::quoteValue(source_name);
                 strJSONSources += "}";
