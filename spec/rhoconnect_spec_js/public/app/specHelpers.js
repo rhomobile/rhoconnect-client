@@ -43,3 +43,25 @@ var buildErrorMessage = function(data) {
     {"source-error": data}
   ]
 }
+var ormSpecHelper = {
+find: function(){
+    var args = Array.prototype.slice.call(arguments);
+    if(args[0].fixed_schema){
+      return args[0];
+    }
+    else{
+      if (args[2] == undefined)
+        args[2] = "";
+      if (args[3] == undefined)
+        args[3] = [];
+      if (args[4] == undefined)
+        args[4] = {};
+      if (args[5] == undefined)
+        args[5] = [];
+      if(args[1]!="all" && args[1]!="first" && args[1]!="count")
+        return args[0].findObjectsPropertyBagByCondArray(args[1],args[2],args[3],args[4],args[5])[0];
+      return args[0].findObjectsPropertyBagByCondArray(args[1],args[2],args[3],args[4],args[5]);
+    }
+  }
+};
+
