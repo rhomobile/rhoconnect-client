@@ -4,6 +4,7 @@
 //
 //  Created by evgeny vovchenko on 8/19/10.
 //  Copyright RhoMobile 2010. All rights reserved.
+//  Copyright Symbol Technologies 2011-2016. All rights reserved.
 //
 
 #import "SyncClientTestAppDelegate.h"

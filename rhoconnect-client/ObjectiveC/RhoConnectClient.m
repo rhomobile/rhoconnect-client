@@ -4,6 +4,7 @@
 //
 //  Created by evgeny vovchenko on 8/23/10.
 //  Copyright 2010 RhoMobile. All rights reserved.
+//  Copyright 2011-2016 Symbol Technologies. All rights reserved.
 //
 
 #import "RhoConnectClient.h"

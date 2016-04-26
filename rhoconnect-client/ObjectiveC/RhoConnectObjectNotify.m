@@ -4,6 +4,7 @@
 //
 //  Created by evgeny vovchenko on 4/22/11.
 //  Copyright 2011 RhoMobile. All rights reserved.
+//  Copyright 2011-2016 Symbol Technologies. All rights reserved.
 //
 
 #import "RhoConnectObjectNotify.h"
