@@ -156,12 +156,14 @@ namespace "gem" do
     mkdir_p './tmp'
     File.open("./tmp/Manifest.txt", 'w') {|f| f.write(out)}
 
-    puts "Loading gemspec"
-    require 'rubygems'
-    spec = Gem::Specification.load('rhoconnect-client.gemspec')
+    #puts "Loading gemspec"
+    #require 'rubygems'
+    #spec = Gem::Specification.load('rhoconnect-client.gemspec')
 
     puts "Building gem"
-    gemfile = Gem::Builder.new(spec).build
+    #gemfile = Gem::Builder.new(spec).build
+     Jake.run3('gem build rhoconnect-client.gemspec')
+
 
   end
 end
