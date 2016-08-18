@@ -102,8 +102,11 @@ CSyncThread::CSyncThread() : CThreadQueue()
     LOG(INFO) + "sync_poll_interval: " + pollInterval;
     LOG(INFO) + "syncserver: " + RHOCONF().getString("syncserver");
     LOG(INFO) + "bulksync_state: " + RHOCONF().getInt("bulksync_state");
-
-    start(epLow);
+#ifdef OS_WINCE
+    start(epCritical);
+#else
+	start(epLow);
+#endif
 }
 
 CSyncThread::~CSyncThread(void)
