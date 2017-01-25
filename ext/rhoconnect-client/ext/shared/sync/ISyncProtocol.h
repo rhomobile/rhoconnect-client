@@ -68,7 +68,7 @@ struct ISyncProtocol
     virtual String getClientCreateUrl() = 0;
 
     virtual String getClientRegisterUrl(const String& strClientID) = 0;
-	virtual String getClientRegisterBody(const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType = "") = 0;
+	virtual String getClientRegisterBody(const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType = "", const String& strAppId = "", const String& strAppVersion = "") = 0;
 	virtual String getClientAnsRegisterBody(const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID ) = 0;
 
     virtual const char* getClientResetMethod() = 0;
