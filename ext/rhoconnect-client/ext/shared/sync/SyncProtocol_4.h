@@ -142,8 +142,8 @@ struct CSyncProtocol_4 : public ISyncProtocol
             ",\"device_port\":" + json::CJSONEntry::quoteValue(strPort) +
             ",\"device_type\":" + json::CJSONEntry::quoteValue(strType) +
             ",\"device_push_type\":" + json::CJSONEntry::quoteValue(strDevicePushType) +
-            ",\"app_id\":" + json::CJSONEntry::quoteValue(strAppId) +
-            ",\"app_version\":" + json::CJSONEntry::quoteValue(strAppVersion) +
+            ",\"device_app_id\":" + json::CJSONEntry::quoteValue(strAppId) +
+            ",\"device_app_version\":" + json::CJSONEntry::quoteValue(strAppVersion) +
             "}";
     }
 
