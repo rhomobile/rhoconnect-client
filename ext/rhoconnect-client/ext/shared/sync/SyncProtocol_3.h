@@ -98,7 +98,7 @@ struct CSyncProtocol_3 : public ISyncProtocol
         return RHOCONF().getPath("syncserver") + "clientregister";
     }
 
-    String getClientRegisterBody( const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType)
+    String getClientRegisterBody( const String& strClientID, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType, const String&, const String&)
     {
         return "{\"client_id\":" + json::CJSONEntry::quoteValue(strClientID) + 
             ",\"device_pin\":" + json::CJSONEntry::quoteValue(strPin) +

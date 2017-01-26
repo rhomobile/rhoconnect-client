@@ -239,9 +239,12 @@ String CClientRegister::getRegisterBody(const String& strClientID)
 
     int port = RHOCONF().getInt("push_port");
 
+    String appId = RHOCONF().getString("rho_app_id");
+    String appVer = RHOCONF().getString("app_version");
+
 	String body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, m_strDevicePin,
 		port > 0 ? port : DEFAULT_PUSH_PORT, rho_rhodesapp_getplatform(), rho::System::getPhoneId(),
-		                strPushType);
+		                strPushType, appId, appVer);
 
 	LOG(INFO)+"getRegisterBody() BODY is: " + body;
 	return body;
@@ -249,7 +252,7 @@ String CClientRegister::getRegisterBody(const String& strClientID)
     
 String CClientRegister::getUnregisterBody(const String& strClientID)
 {    
-	String body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, "", 0, "", "", "" );
+	String body = CSyncThread::getSyncEngine().getProtocol().getClientRegisterBody( strClientID, "", 0, "", "", "", "", "" );
 	LOG(INFO)+"getUnregisterBody() BODY is: " + body;
 	return body;
 }

@@ -121,7 +121,16 @@ struct CSyncProtocol_4 : public ISyncProtocol
         return RHOCONF().getPath("syncserver") + getClientNamespaceUrl() + strClientID + "/register";
     }
 
-    String getClientRegisterBody( const String& /*strClientID*/, const String& strPin, int nPort, const String& strType, const String& strPhoneID, const String& strDevicePushType)
+    String getClientRegisterBody( 
+        const String& /*strClientID*/, 
+        const String& strPin, 
+        int nPort, 
+        const String& strType, 
+        const String& strPhoneID, 
+        const String& strDevicePushType,
+        const String& strAppId,
+        const String& strAppVersion
+    )
     {
         String strPort = "";
         if (nPort != 0) {
@@ -133,6 +142,8 @@ struct CSyncProtocol_4 : public ISyncProtocol
             ",\"device_port\":" + json::CJSONEntry::quoteValue(strPort) +
             ",\"device_type\":" + json::CJSONEntry::quoteValue(strType) +
             ",\"device_push_type\":" + json::CJSONEntry::quoteValue(strDevicePushType) +
+            ",\"app_id\":" + json::CJSONEntry::quoteValue(strAppId) +
+            ",\"app_version\":" + json::CJSONEntry::quoteValue(strAppVersion) +
             "}";
     }
 
