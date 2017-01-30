@@ -282,19 +282,21 @@ boolean CClientRegister::doRegister(CSyncEngine& oSync)
         LOG(WARNING)+"Sync client_id is empty, do register later";
 		return false;
 	}
-    
-    IDBResult res = CDBAdapter::getUserDB().executeSQL("SELECT token,token_sent from client_info");
-    if ( !res.isEnd() ) {
-		String token = res.getStringByIdx(0); 
-		int token_sent = res.getIntByIdx(1) && !RHOCONF().getBool("register_push_at_startup");
-                
-		if ( m_strDevicePin.compare(token) == 0 && token_sent > 0 ) 
-		{
-			//token in db same as new one and it was already send to the server
-			//so we do nothing
+    {
+        // IDBResult hold mutex of DB - we should free it ASAP
+        IDBResult res = CDBAdapter::getUserDB().executeSQL("SELECT token,token_sent from client_info");
+        if ( !res.isEnd() ) {
+            String token = res.getStringByIdx(0);
+            int token_sent = res.getIntByIdx(1) && !RHOCONF().getBool("register_push_at_startup");
             
-			return true; 
-		}
+            if ( m_strDevicePin.compare(token) == 0 && token_sent > 0 )
+            {
+                //token in db same as new one and it was already send to the server
+                //so we do nothing
+                
+                return true; 
+            }
+        }
     }
     
 	String strBody = getRegisterBody(client_id);
