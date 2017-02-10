@@ -327,7 +327,13 @@ void CSyncSource::doSyncClientChanges()
     int i = 0;
 
     getDB().Lock();
+    
+    // add file.blob attrib_type for blob attribs in changed_values
+    getDB().updateAllBlobAttribChanges();
+    
+    // unpack object in changed_values with update_type==create to set of objects's attribs
     getDB().updateAllAttribChanges();
+    
     checkIgnorePushObjects();
     if ( getSync().getSourceOptions().getBoolProperty(getID(), "full_update") )
         getDB().updateFullUpdateChanges( getID() );
