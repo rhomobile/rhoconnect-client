@@ -1653,7 +1653,7 @@ boolean CSyncSource::downloadBlob(CAttrValue& value)//throws Exception
 	LOG(TRACE) + "Download blob: " + url + " => " + fName;
 
 	const char* nQuest = strchr(url.c_str(),'?');
-	if ( nQuest > 0 )
+	if ( nQuest != NULL )
 		url += "&";
 	else
 		url += "?";
