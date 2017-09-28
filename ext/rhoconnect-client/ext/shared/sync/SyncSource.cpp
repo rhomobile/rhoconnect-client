@@ -664,7 +664,7 @@ void CSyncSource::syncServerChanges()
             continue;
         }
 
-        const char* szData = null;
+        const char* szData = 0;
         String strTestResp = getSync().getSourceOptions().getProperty(getID(), "rho_server_response");
         if ( strTestResp.length() > 0 )
         {
@@ -700,10 +700,10 @@ void CSyncSource::processServerErrors(CJSONEntry& oCmds)
 {
     Hashtable<String, String> errors;
 
-    const char* arErrTypes[] = {"source-error", "search-error", "create-error", "update-error", "delete-error", "update-rollback", null};
+    const char* arErrTypes[] = {"source-error", "search-error", "create-error", "update-error", "delete-error", "update-rollback", 0};
     for( int i = 0; ; i++ )
     {
-        if ( arErrTypes[i] == null )
+        if ( arErrTypes[i] == 0 )
             break;
         if ( !oCmds.hasName(arErrTypes[i]) )
             continue;
@@ -1154,7 +1154,7 @@ void CSyncSource::processAssociations(const String& strOldObject, const String& 
     for ( int i = 0; i < (int)m_arAssociations.size(); i++ )
     {
         CSyncSource* pSrc = getSync().findSourceByName(m_arAssociations.elementAt(i).m_strSrcName);
-        if ( pSrc != null )
+        if ( pSrc != 0 )
             pSrc->updateAssociation(strOldObject, strNewObject, m_arAssociations.elementAt(i).m_strAttrib);
     }
 }
@@ -1659,7 +1659,7 @@ boolean CSyncSource::downloadBlob(CAttrValue& value)//throws Exception
 		url += "?";
 	url += "client_id=" + getSync().getClientID();
 
-    NetResponse resp = getNet().pullFile(url, fName, &getSync(), null, true, false);
+    NetResponse resp = getNet().pullFile(url, fName, &getSync(), 0, true, false);
     if ( !resp.isOK() )
     {
         CRhoFile::deleteFile(fName.c_str());

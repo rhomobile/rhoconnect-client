@@ -73,7 +73,7 @@ void CSyncNotify::addObjectNotify(int nSrcID, const String& strObject)
     synchronized(m_mxObjectNotify)
     {
         Hashtable<String,int>* phashObject = m_hashSrcIDAndObject.get(nSrcID);
-        if ( phashObject == null )
+        if ( phashObject == 0 )
         {
             phashObject = new Hashtable<String,int>();
             m_hashSrcIDAndObject.put( nSrcID, phashObject );
@@ -198,7 +198,7 @@ void CSyncNotify::onObjectChanged(int nSrcID, const String& strObject, int nType
         processSingleObject();
 
         Hashtable<String,int>* phashObject = m_hashSrcIDAndObject.get(nSrcID);
-        if ( phashObject == null )
+        if ( phashObject == 0 )
             return;
 
         Hashtable<String,int>& hashObject = *phashObject;
@@ -212,7 +212,7 @@ void CSyncNotify::addCreateObjectError(int nSrcID, const String& strObject, cons
     synchronized(m_mxObjectNotify)
     {
         Hashtable<String,String>* phashErrors = m_hashCreateObjectErrors.get(nSrcID);
-        if ( phashErrors == null )
+        if ( phashErrors == 0 )
         {
             phashErrors = new Hashtable<String,String>();
             m_hashCreateObjectErrors.put( nSrcID, phashErrors );
@@ -232,7 +232,7 @@ void CSyncNotify::appendCreateObjectErrorInfo(int nSrcID, Hashtable< String, Has
         Hashtable<String,String>* phashErrors = m_hashCreateObjectErrors.get(nSrcID);
 		
 		
-        if ( phashErrors == null )
+        if ( phashErrors == 0 )
             return ;
 
         Hashtable<String,String>& hashErrors = *phashErrors;
@@ -266,7 +266,7 @@ void CSyncNotify::onSyncSourceEnd( int nSrc, VectorPtr<CSyncSource*>& sources )
 /*    if ( getSync().getState() == CSyncEngine::esStop && src.m_nErrCode != RhoAppAdapter.ERR_NONE )
     {
 		CSyncNotification* pSN = getSyncNotifyBySrc(&src);
-		if ( pSN != null )
+		if ( pSN != 0 )
 			fireSyncNotification(&src, true, src.m_nErrCode, "");
 		else
 			fireAllSyncNotifications(true, src.m_nErrCode, src.m_strError, "" );
@@ -297,7 +297,7 @@ void CSyncNotify::setSyncNotification(int source_id, CSyncNotification* pNotify 
 }
 
 CSyncNotification::CSyncNotification(const apiGenerator::CMethodResult& callbackData, boolean bRemoveAfterFire) :
-    m_callbackData(callbackData), m_cCallback(null), m_cCallbackData(null), m_bRemoveAfterFire(bRemoveAfterFire)
+    m_callbackData(callbackData), m_cCallback(0), m_cCallbackData(0), m_bRemoveAfterFire(bRemoveAfterFire)
 {
 //    if ( m_callbackData.strUrl.length() > 0 )
 //        m_callbackData.strUrl = RHODESAPPBASE().canonicalizeRhoUrl(m_callbackData.strUrl);
@@ -322,7 +322,7 @@ String CSyncNotification::toString()const
 }
     
 CObjectNotification::CObjectNotification(const apiGenerator::CMethodResult& callbackData) :
-   m_callbackData(callbackData), m_cCallback(null), m_cCallbackData(null)
+   m_callbackData(callbackData), m_cCallback(0), m_cCallbackData(0)
 {
 }
 
@@ -366,7 +366,7 @@ void CSyncNotify::reportSyncStatus(String status, int error, String strDetails)
 {
 	synchronized(m_mxSyncNotifications)
 	{    	
-    	if (/*m_syncStatusListener != null && */(isReportingEnabled() || error == RhoAppAdapter.ERR_SYNCVERSION) ) {
+    	if (/*m_syncStatusListener != 0 && */(isReportingEnabled() || error == RhoAppAdapter.ERR_SYNCVERSION) ) {
     		
     		if ( error == RhoAppAdapter.ERR_SYNCVERSION )
             {
@@ -402,7 +402,7 @@ void CSyncNotify::fireBulkSyncNotification( boolean bFinish, String status, Stri
 	params.put("bulk_status",status);
 	params.put("sync_type","bulk");
 
-    doFireSyncNotification( null, bFinish, nErrCode, "", &params, 0 );
+    doFireSyncNotification( 0, bFinish, nErrCode, "", &params, 0 );
 }
 
 
@@ -413,9 +413,9 @@ void CSyncNotify::fireAllSyncNotifications( boolean bFinish, int nErrCode, Strin
 
     synchronized(m_mxSyncNotifications)
     {
-        CSyncNotification* pSN = getSyncNotifyBySrc(null);    
-        if ( pSN != null )
-            doFireSyncNotification( null, bFinish, nErrCode, strError, 0, 0/*strServerError*/ );
+        CSyncNotification* pSN = getSyncNotifyBySrc(0);    
+        if ( pSN != 0 )
+            doFireSyncNotification( 0, bFinish, nErrCode, strError, 0, 0/*strServerError*/ );
     }
 }
 
@@ -429,10 +429,10 @@ void CSyncNotify::fireSyncNotification( CSyncSource* src, boolean bFinish, int n
 	{
 		if ( !getSync().isSearch() )
         {
-			if ( src != null && strMessage.length() == 0 )
+			if ( src != 0 && strMessage.length() == 0 )
 				strMessage = RhoAppAdapter.getMessageText("sync_failed_for") + (*src).getName() + ".";
 			
-            reportSyncStatus(strMessage,nErrCode, (src != null ? (*src).m_strError : "") );
+            reportSyncStatus(strMessage,nErrCode, (src != 0 ? (*src).m_strError : "") );
         }
 	}
 
@@ -441,22 +441,22 @@ void CSyncNotify::fireSyncNotification( CSyncSource* src, boolean bFinish, int n
 
 CSyncNotification* CSyncNotify::getSyncNotifyBySrc(CSyncSource* src)
 {
-    CSyncNotification* pSN = null;
+    CSyncNotification* pSN = 0;
 	if ( getSync().isSearch() )
 		pSN = m_pSearchNotification;
 	else
     {
-        if ( src != null )
+        if ( src != 0 )
 		    pSN = m_mapSyncNotifications.get( (*src).getID());
 
-        if ( pSN == null )
+        if ( pSN == 0 )
             pSN = m_pAllNotification;
     }
 
-	if ( pSN == null && !getSync().isNoThreadedMode() )
-        return null;
+	if ( pSN == 0 && !getSync().isNoThreadedMode() )
+        return 0;
 
-    return pSN != null ? pSN : &m_emptyNotify;
+    return pSN != 0 ? pSN : &m_emptyNotify;
 }
 
 void CSyncNotify::fireSyncNotification2( CSyncSource* src, boolean bFinish, int nErrCode, const Hashtable<String,String>& serverErrors)
@@ -479,7 +479,7 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
         synchronized(m_mxSyncNotifications)
         {
             pSN = getSyncNotifyBySrc(src);
-	        if ( pSN == null )
+	        if ( pSN == 0 )
                 return;
 			
 			if ( params != 0 ) {
@@ -488,7 +488,7 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
 				result.put("sync_type","incremental");
 			}
 
-            if ( src != null )
+            if ( src != 0 )
             {
 				result.put("total_count", convertToStringA( (*src).getTotalCount()));
 				result.put("processed_count", convertToStringA( (*src).getTotalCount()));
@@ -505,7 +505,7 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
                     if ( getSync().isSchemaChanged() )
                         status = "schema_changed";
                     else
-                        status = (src == null && ( (params==0) || params->size()==0 ) ) ? "complete" : "ok";
+                        status = (src == 0 && ( (params==0) || params->size()==0 ) ) ? "complete" : "ok";
                 }
 	            else
 	            {
@@ -519,7 +519,7 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
 					String error;
 					if ( strError.length() > 0 ) {
                         error = strError;
-					} else if ( src != null ) {
+					} else if ( src != 0 ) {
                         error = (*src).m_strError;
 					}
 					
@@ -530,7 +530,7 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
 					}
 				}
 
-                if ( src != null ) {
+                if ( src != 0 ) {
                     appendCreateObjectErrorInfo( (*src).getID(), errorsL2 );
 				}
             } else {
@@ -542,7 +542,7 @@ void CSyncNotify::doFireSyncNotification( CSyncSource* src, boolean bFinish, int
             bRemoveAfterFire = bRemoveAfterFire && pSN->m_bRemoveAfterFire;
         }
     }
-    LOG(INFO) + "Fire notification. Source : " + (src != null ? (*src).getName():"") + "; " + pSN->toString();
+    LOG(INFO) + "Fire notification. Source : " + (src != 0 ? (*src).getName():"") + "; " + pSN->toString();
 	
     if ( callNotify(*pSN, result, &errorsL2 ) || bRemoveAfterFire)
         clearNotification(src);
@@ -660,13 +660,13 @@ boolean CSyncNotify::callNotify(const CSyncNotification& oNotify, const Hashtabl
 
 void CSyncNotify::clearNotification(CSyncSource* src)
 {
-    LOG(INFO) + "Clear notification. Source : " + (src != null ? (*src).getName() : "");
+    LOG(INFO) + "Clear notification. Source : " + (src != 0 ? (*src).getName() : "");
 
     synchronized(m_mxSyncNotifications)
     {
         if ( getSync().isSearch() )
-            m_pSearchNotification = null;
-        else if ( src != null )
+            m_pSearchNotification = 0;
+        else if ( src != 0 )
             m_mapSyncNotifications.remove( (*src).getID());
     }
 }
@@ -678,7 +678,7 @@ void CSyncNotify::clearSyncNotification(int source_id)
     synchronized(m_mxSyncNotifications)
     {
         if ( source_id == -1 )//Clear all
-            m_pAllNotification = null;
+            m_pAllNotification = 0;
         else
             m_mapSyncNotifications.remove(source_id);
     }
