@@ -134,7 +134,7 @@ CClientRegister::CClientRegister() : m_nPollInterval(POLL_INTERVAL_SECONDS), m_s
 CClientRegister::~CClientRegister()
 {
     doStop();
-    m_pInstance = null;
+    m_pInstance = 0;
 }
 void CClientRegister::setRhoconnectCredentials(const String& user, const String& pass, const String& session)
 {
@@ -209,7 +209,7 @@ void CClientRegister::run()
 	{
         i++;
         LOG(INFO)+"Try to (un)register: " + i;
-        if ( CSyncThread::getInstance() != null )
+        if ( CSyncThread::getInstance() != 0 )
 		{
             EnState state = getState();
 			if ( (stRegister==state) && doRegister(CSyncThread::getSyncEngine()) )

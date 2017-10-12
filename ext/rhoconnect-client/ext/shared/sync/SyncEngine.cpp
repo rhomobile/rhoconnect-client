@@ -124,14 +124,14 @@ void CSyncEngine::CSourceOptions::setProperty(int nSrcID, const char* szPropName
     synchronized(m_mxSrcOptions)
     {
         Hashtable<String,String>* phashOptions = m_hashSrcOptions.get(nSrcID);
-        if ( phashOptions == null )
+        if ( phashOptions == 0 )
         {
             phashOptions = new Hashtable<String,String>();
             m_hashSrcOptions.put( nSrcID, phashOptions );
         }
 
         Hashtable<String,String>& hashOptions = *phashOptions;
-        hashOptions.put(szPropName,szPropValue!=null?szPropValue:"");
+        hashOptions.put(szPropName,szPropValue!=0?szPropValue:"");
     }
 }
 
@@ -141,7 +141,7 @@ String CSyncEngine::CSourceOptions::getProperty(int nSrcID, const char* szPropNa
     synchronized(m_mxSrcOptions)
     {
         Hashtable<String,String>* phashOptions = m_hashSrcOptions.get(nSrcID);
-        if ( phashOptions != null )
+        if ( phashOptions != 0 )
         {
             Hashtable<String,String>& hashOptions = *phashOptions;
             res = hashOptions.get(szPropName);
@@ -198,11 +198,11 @@ void CSyncEngine::prepareSync(ESyncState eState, const CSourceID* oSrcID)
     }else
         m_nErrCode = RhoAppAdapter.ERR_CLIENTISNOTLOGGEDIN;
 
-    CSyncSource* src = null;
-    if ( oSrcID != null )
+    CSyncSource* src = 0;
+    if ( oSrcID != 0 )
     	src = findSource(*oSrcID);
 
-	if ( src != null )
+	if ( src != 0 )
 	{
         src->m_nErrCode = m_nErrCode;
         src->m_strError = m_strError;
@@ -217,7 +217,7 @@ void CSyncEngine::prepareSync(ESyncState eState, const CSourceID* oSrcID)
 
 void CSyncEngine::doSyncAllSources(const String& strQueryParams, boolean bSyncOnlyChangedSources)
 {
-    prepareSync(esSyncAllSources, null);
+    prepareSync(esSyncAllSources, 0);
 
     if ( isContinueSync() )
     {
@@ -304,7 +304,7 @@ bool CSyncEngine::recoverSearch(const String& strUrl, const String& strBody, int
 
         String strSrcName = oSrcArr.getCurItem().getString("source");
         CSyncSource* pSrc = findSourceByName(strSrcName);
-        if ( pSrc == null )
+        if ( pSrc == 0 )
         {
             LOG(ERROR) + "Sync server send search data for unknown source name:" + strSrcName;
             errorCode = RhoAppAdapter.ERR_UNEXPECTEDSERVERRESPONSE;
@@ -323,7 +323,7 @@ bool CSyncEngine::recoverSearch(const String& strUrl, const String& strBody, int
 
 void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams, const String& strFrom, boolean bSearchSyncChanges, int nProgressStep)
 {
-    prepareSync(esSearch, null);
+    prepareSync(esSearch, 0);
     if ( !isContinueSync() )
     {
         if ( getState() != esExit )
@@ -339,7 +339,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
         for ( int i = 0; i < (int)arSources.size(); i++ )
         {
             CSyncSource* pSrc = findSourceByName(arSources.elementAt(i));
-            if ( pSrc != null )
+            if ( pSrc != 0 )
                 pSrc->syncClientChanges();
         }
     }
@@ -374,7 +374,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
         for ( int i = 0; i < (int)arSources.size(); i++ )
         {
             CSyncSource* pSrc = findSourceByName(arSources.elementAt(i));
-            if ( pSrc != null )
+            if ( pSrc != 0 )
             {
                 String source_token;
                 if ( !pSrc->isTokenFromDB() && pSrc->getToken() > 1 )
@@ -416,7 +416,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
             continue;
         }
 
-        const char* szData = null;
+        const char* szData = 0;
         if ( strTestResp.length() > 0 )
         {
             szData = strTestResp.c_str();
@@ -466,7 +466,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
 
             String strSrcName = oSrcArr.getCurItem().getString("source");
             CSyncSource* pSrc = findSourceByName(strSrcName);
-            if ( pSrc == null )
+            if ( pSrc == 0 )
             {
                 LOG(ERROR) + "Sync server send search data for unknown source name:" + strSrcName;
                 stopSync();
@@ -487,7 +487,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
             for ( int i = 0; i < (int)arSources.size(); i++ )
             {
                 CSyncSource* pSrc = findSourceByName(arSources.elementAt(i));
-                if ( pSrc != null )
+                if ( pSrc != 0 )
                     pSrc->processToken(0);
             }
 
@@ -506,7 +506,7 @@ void CSyncEngine::doSearch(rho::Vector<rho::String>& arSources, String strParams
     for ( int i = 0; i < (int)arSources.size(); i++ )
     {
         CSyncSource* pSrc = findSourceByName(arSources.elementAt(i));
-        if ( pSrc == null )
+        if ( pSrc == 0 )
             continue;
         CSyncSource& oSrc = *pSrc;
         oSrc.getDB().executeSQL("UPDATE sources set last_updated=?,last_inserted_size=?,last_deleted_size=?, \
@@ -529,7 +529,7 @@ void CSyncEngine::doSyncSource(const CSourceID& oSrcID, const String& strQueryPa
     if ( isContinueSync() )
     {
         CSyncSource* pSrc = findSource(oSrcID);
-        if ( pSrc != null )
+        if ( pSrc != 0 )
         {
             CSyncSource& src = *pSrc;
             LOG(INFO) +"Started synchronization of the data source: " + src.getName();
@@ -564,7 +564,7 @@ CSyncSource* CSyncEngine::findSource(const CSourceID& oSrcID)
             return &src;
     }
 
-    return null;
+    return 0;
 }
 
 CSyncSource* CSyncEngine::findSourceByName(const String& strSrcName)
@@ -581,7 +581,7 @@ CSyncSource* CSyncEngine::findSourceById(int srcId)
             return &src;
     }
 
-    return null;
+    return 0;
 }
 
 
@@ -609,7 +609,7 @@ void CSyncEngine::loadAllSources()
             RhoAppAdapter.loadAllSyncSources();
         else
         {
-            NetResponse resp = getNet().pushData( getNet().resolveUrl("/system/loadallsyncsources"), "", null );
+            NetResponse resp = getNet().pushData( getNet().resolveUrl("/system/loadallsyncsources"), "", 0 );
         }
     }else
         RhoAppAdapter.loadAllSyncSources();
@@ -748,7 +748,7 @@ void CSyncEngine::processServerSources(String strSources)
                 RhoAppAdapter.loadServerSources(strSources);
             else
             {
-                NetResponse resp = getNet().pushData( getNet().resolveUrl("/system/loadserversources"), strSources, null );
+                NetResponse resp = getNet().pushData( getNet().resolveUrl("/system/loadserversources"), strSources, 0 );
             }
         }else
             RhoAppAdapter.loadServerSources(strSources);
@@ -762,7 +762,7 @@ void CSyncEngine::processServerSources(String strSources)
 boolean CSyncEngine::resetClientIDByNet(const String& strClientID)//throws Exception
 {
     NetResponse resp = getNetClientID().doRequest(getProtocol().getClientResetMethod(),
-        getProtocol().getClientResetUrl(strClientID), getProtocol().getClientResetBody(), this, null );
+        getProtocol().getClientResetUrl(strClientID), getProtocol().getClientResetBody(), this, 0 );
     if ( !resp.isOK() )
     {
         m_nErrCode = RhoAppAdapter.getErrorFromResponse(resp);
@@ -777,8 +777,8 @@ String CSyncEngine::requestClientIDByNet()
 {
     String clientCreateBody;
     NetResponse resp = getNetClientID().doRequest(getProtocol().getClientCreateMethod(),
-        getProtocol().getClientCreateUrl(), "", this, null);
-    if ( resp.isOK() && resp.getCharData() != null )
+        getProtocol().getClientCreateUrl(), "", this, 0);
+    if ( resp.isOK() && resp.getCharData() != 0 )
     {
         const char* szData = resp.getCharData();
 
@@ -906,7 +906,7 @@ void CSyncEngine::loadBulkPartition(const String& strPartition )
         reqHeaders.put(getProtocol().getClientIDHeader(), getClientID());
         NetResponse resp = getNet().doRequest(getProtocol().getServerBulkDataMethod(), strUrl, strBody, this, &reqHeaders);
         const char* szData = resp.getCharData();
-        if ( !resp.isOK() || szData == null || *szData == 0)
+        if ( !resp.isOK() || szData == 0 || *szData == 0)
         {
     	    LOG(ERROR) + "Bulk sync failed: server return an error.";
     	    stopSync();
@@ -950,7 +950,7 @@ void CSyncEngine::loadBulkPartition(const String& strPartition )
     String strSqlDataUrl = CFilePath::join(getHostFromUrl(serverUrl), strDataUrl) +strZip;
     LOG(INFO) + "Bulk sync: download data from server: " + strSqlDataUrl;
     {
-        NetResponse resp1 = getNet().pullFile(strSqlDataUrl, fDataName+strZip, this, null, true, false);
+        NetResponse resp1 = getNet().pullFile(strSqlDataUrl, fDataName+strZip, this, 0, true, false);
         if ( !resp1.isOK() )
         {
 	        LOG(ERROR) + "Bulk sync failed: cannot download database file.";
@@ -1057,7 +1057,7 @@ void CSyncEngine::syncAllSources(const String& strQueryParams, boolean bSyncOnly
     }
 
     if ( !isSchemaChanged() && getState() != CSyncEngine::esStop )
-    	getNotify().fireSyncNotification(null, true, RhoAppAdapter.ERR_NONE, RhoAppAdapter.getMessageText("sync_completed"));
+    	getNotify().fireSyncNotification(0, true, RhoAppAdapter.ERR_NONE, RhoAppAdapter.getMessageText("sync_completed"));
 }
 
 void CSyncEngine::login(String name, String password, const CSyncNotification& oNotify)
@@ -1121,7 +1121,7 @@ void CSyncEngine::login(String name, String password, const CSyncNotification& o
                         RhoAppAdapter.resetDBOnSyncUserChanged();
                     else
                     {
-                        NetResponse resp = getNet().pushData( getNet().resolveUrl("/system/resetDBOnSyncUserChanged"), "", null );
+                        NetResponse resp = getNet().pushData( getNet().resolveUrl("/system/resetDBOnSyncUserChanged"), "", 0 );
                     }
                 }
             }
