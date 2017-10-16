@@ -72,9 +72,9 @@ end
 
 puts "$rho_root is #{$rho_root}"
 
-require File.join($rho_root,'lib','build','jake.rb')
+#require File.join($rho_root,'lib','build','jake.rb')
 
-load File.join($rho_root,'Rakefile')
+#load File.join($rho_root,'Rakefile')
 
 #$app_basedir = pwd
 #$curr_project = "rhowebkit"
@@ -117,6 +117,10 @@ namespace "gem" do
 
 
   task :make_gem => "gem:build:config"  do
+
+    require File.dirname(__FILE__) + "/lib/build/jakercc.rb"
+
+
     puts "Removing old gem"
     rm_rf Dir.glob("rhoelements*.gem")
     puts "Copying Rakefile"
@@ -162,7 +166,7 @@ namespace "gem" do
 
     puts "Building gem"
     #gemfile = Gem::Builder.new(spec).build
-     Jake.run3('gem build rhoconnect-client.gemspec')
+     JakeRCC.run3('gem build rhoconnect-client.gemspec')
 
 
   end
@@ -175,7 +179,8 @@ namespace "run" do
 
     namespace "rhoconnect_spec" do
       task :device do
-	      require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+        load File.join($rho_root,'Rakefile')
+        require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
         $device = 'device'
         run_rhoconnect_spec('android','rhoconnect_spec', { :ruby => true } )
         unless $dont_exit_on_failure
@@ -185,7 +190,8 @@ namespace "run" do
       end
 
       task :emulator do
-	      require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
+        load File.join($rho_root,'Rakefile')
+        require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
         $device = 'emulator'
         run_rhoconnect_spec('android','rhoconnect_spec', { :ruby => true } )
         unless $dont_exit_on_failure
@@ -197,6 +203,7 @@ namespace "run" do
 
     namespace "rhoconnect_spec_js" do
       task :device do
+        load File.join($rho_root,'Rakefile')
         require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
         $device = 'device'
         run_rhoconnect_spec('android','rhoconnect_spec_js', { :js => true } )
@@ -207,6 +214,7 @@ namespace "run" do
       end
 
       task :emulator do
+        load File.join($rho_root,'Rakefile')
         require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
         $device = 'emulator'
         run_rhoconnect_spec('android','rhoconnect_spec_js', { :js => true } )
@@ -221,12 +229,14 @@ namespace "run" do
 
   namespace "iphone" do
     task :rhoconnect_spec do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
       $device = 'emulator'
       run_rhoconnect_spec('iphone','rhoconnect_spec', { :ruby => true } )
     end
 
     task :rhoconnect_spec_js do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
       $device = 'emulator'
       run_rhoconnect_spec('iphone','rhoconnect_spec_js', { :js => true } )
@@ -236,6 +246,7 @@ namespace "run" do
 
   namespace "wm" do
     task :rhoconnect_spec do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
       run_rhoconnect_spec('wm','rhoconnect_spec', { :ruby => true } )
@@ -244,6 +255,7 @@ namespace "run" do
     end
 
     task :rhoconnect_spec_js do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
       run_rhoconnect_spec('wm','rhoconnect_spec_js', { :js => true } )
@@ -254,6 +266,7 @@ namespace "run" do
 
   namespace "win32" do
     task :rhoconnect_spec do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
       run_rhoconnect_spec('win32','rhoconnect_spec', { :ruby => true } )
@@ -262,6 +275,7 @@ namespace "run" do
     end
 
     task :rhoconnect_spec_js do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
       run_rhoconnect_spec('win32','rhoconnect_spec_js', { :js => true } )
@@ -272,6 +286,7 @@ namespace "run" do
 
   namespace "wp8" do
     task :rhoconnect_spec do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
       run_rhoconnect_spec('wp8','rhoconnect_spec', { :ruby => true } )
@@ -280,6 +295,7 @@ namespace "run" do
     end
 
     task :rhoconnect_spec_js do
+      load File.join($rho_root,'Rakefile')
       require File.dirname(__FILE__) + "/lib/build/run_rhoconnect_spec.rb"
 
       run_rhoconnect_spec('wp8','rhoconnect_spec_js', { :js => true } )
