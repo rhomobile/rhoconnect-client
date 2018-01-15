@@ -365,7 +365,7 @@ bool rhom_method_name_isreserved(const String& strName)
     return reserved_names.get(strName) != 0;
 }
 
-void db_insert_into_table( db::CDBAdapter& db, const String& table, Hashtable<String, String>& hashObject, const char* excludes = null)
+void db_insert_into_table( db::CDBAdapter& db, const String& table, Hashtable<String, String>& hashObject, const char* excludes = NULL)
 {
     String cols = "";
     String quests = "";
@@ -1259,52 +1259,52 @@ void rho_connectclient_free_syncnotify(RHO_CONNECT_NOTIFY* pNotify)
     if (!pNotify)
         return;
     
-    if ( pNotify->source_name != null )
+    if ( pNotify->source_name != NULL )
         free(pNotify->source_name);
     
-    if ( pNotify->sync_type != null )
+    if ( pNotify->sync_type != NULL )
         free(pNotify->sync_type);
 
-    if ( pNotify->bulk_status != null )
+    if ( pNotify->bulk_status != NULL )
         free(pNotify->bulk_status);
 
-    if ( pNotify->partition != null )
+    if ( pNotify->partition != NULL )
         free(pNotify->partition);
 
-    if ( pNotify->status != null )
+    if ( pNotify->status != NULL )
         free(pNotify->status);
     
-    if ( pNotify->error_message != null )
+    if ( pNotify->error_message != NULL )
         free(pNotify->error_message);
     
-    if ( pNotify->callback_params != null )
+    if ( pNotify->callback_params != NULL )
         free(pNotify->callback_params);
 
-    if ( pNotify->create_errors_messages != null )
+    if ( pNotify->create_errors_messages != NULL )
         rho_connectclient_hash_delete(pNotify->create_errors_messages);
 
-    if ( pNotify->update_errors_obj != null )
+    if ( pNotify->update_errors_obj != NULL )
         rho_connectclient_strarray_delete(pNotify->update_errors_obj);
 
-    if ( pNotify->update_errors_attrs != null )
+    if ( pNotify->update_errors_attrs != NULL )
         rho_connectclient_strhasharray_delete(pNotify->update_errors_attrs);
     
-    if ( pNotify->update_errors_messages != null )
+    if ( pNotify->update_errors_messages != NULL )
         rho_connectclient_hash_delete(pNotify->update_errors_messages);
 
-    if ( pNotify->update_rollback_obj != null )
+    if ( pNotify->update_rollback_obj != NULL )
         rho_connectclient_strarray_delete(pNotify->update_rollback_obj);
 
-    if ( pNotify->update_rollback_attrs != null )
+    if ( pNotify->update_rollback_attrs != NULL )
         rho_connectclient_strhasharray_delete(pNotify->update_rollback_attrs);
 
-    if ( pNotify->delete_errors_obj != null )
+    if ( pNotify->delete_errors_obj != NULL )
         rho_connectclient_strarray_delete(pNotify->delete_errors_obj);
 
-    if ( pNotify->delete_errors_attrs != null )
+    if ( pNotify->delete_errors_attrs != NULL )
         rho_connectclient_strhasharray_delete(pNotify->delete_errors_attrs);
     
-    if ( pNotify->delete_errors_messages != null )
+    if ( pNotify->delete_errors_messages != NULL )
         rho_connectclient_hash_delete(pNotify->delete_errors_messages);
 
     memset( pNotify, 0, sizeof(RHO_CONNECT_NOTIFY) );
@@ -1391,16 +1391,16 @@ void rho_connectclient_free_sync_objectnotify(RHO_CONNECT_OBJECT_NOTIFY* pNotify
     if (!pNotify)
         return;
     
-    if ( pNotify->deleted_source_ids != null )
+    if ( pNotify->deleted_source_ids != NULL )
         free(pNotify->deleted_source_ids);
 
-    if ( pNotify->updated_source_ids != null )
+    if ( pNotify->updated_source_ids != NULL )
         free(pNotify->updated_source_ids);
 
-    if ( pNotify->created_source_ids != null )
+    if ( pNotify->created_source_ids != NULL )
         free(pNotify->created_source_ids);
     
-    if ( pNotify->deleted_objects != null )
+    if ( pNotify->deleted_objects != NULL )
     {
         for(int i = 0; i < pNotify->deleted_count; i++)
             free(pNotify->deleted_objects[i]);
@@ -1408,7 +1408,7 @@ void rho_connectclient_free_sync_objectnotify(RHO_CONNECT_OBJECT_NOTIFY* pNotify
         free(pNotify->deleted_objects);
     }
 
-    if ( pNotify->updated_objects != null )
+    if ( pNotify->updated_objects != NULL )
     {
         for(int i = 0; i < pNotify->updated_count; i++)
             free(pNotify->updated_objects[i]);
@@ -1416,7 +1416,7 @@ void rho_connectclient_free_sync_objectnotify(RHO_CONNECT_OBJECT_NOTIFY* pNotify
         free(pNotify->updated_objects);
     }
 
-    if ( pNotify->created_objects != null )
+    if ( pNotify->created_objects != NULL )
     {
         for(int i = 0; i < pNotify->created_count; i++)
             free(pNotify->created_objects[i]);
@@ -1507,14 +1507,14 @@ void rho_connectclient_hash_delete(unsigned long hash)
 const char* rho_connectclient_hash_get(unsigned long hash, const char* szKey)
 {
     if (!hash)
-        return null;
+        return NULL;
 
     Hashtable<String, String>& hashThis = *((Hashtable<String, String>*)hash);
 
     if ( hashThis.containsKey(szKey) )
         return hashThis[szKey].c_str();
 
-    return null;
+    return NULL;
 }
 
 int rho_connectclient_hash_equal(unsigned long hash1, unsigned long hash2)
@@ -1569,7 +1569,7 @@ namespace rho {
 		return String(); //TODO?
 	}
 	
-	/*static*/ int  _CRhoAppAdapter::getErrorFromResponse(NetResponse& resp)
+	/*static*/ int  _CRhoAppAdapter::getErrorFromResponse(const NetResponse& resp)
 	{
 		if ( !resp.isResponseRecieved())
 			return ERR_NETWORK;
