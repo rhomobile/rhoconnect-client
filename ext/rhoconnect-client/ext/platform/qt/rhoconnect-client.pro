@@ -1,5 +1,10 @@
 QT -= core
 
+equals(QT_VERSION, 5.6.2) {
+	DEFINES += OS_SAILFISH OS_LINUX
+	QT += core
+}
+
 TARGET = rhoconnect-client
 TEMPLATE = lib
 
@@ -19,6 +24,7 @@ $$RHODES_ROOT/platform/shared/sync\
 $$RHODES_ROOT/platform/shared\
 ../../shared\
 ../../shared/sync
+
 
 macx {
   DESTDIR = $$RHODES_ROOT/platform/osx/bin/extensions
@@ -56,6 +62,28 @@ win32 {
   QMAKE_CFLAGS_RELEASE += /O2
   QMAKE_CXXFLAGS_RELEASE += /O2
 }
+
+unix:!macx {
+  OBJECTS_DIR = $$RHODES_ROOT/platform/linux/bin/extensions/rhoconnect-client
+  INCLUDEPATH += $$RHODES_ROOT/platform/shared/ruby/linux
+
+
+  contains(DEFINES, OS_LINUX)  {
+      DESTDIR = $$RHODES_ROOT/platform/linux/bin/extensions
+  }
+
+  contains(DEFINES, OS_SAILFISH)  {
+      INCLUDEPATH += $$RHODES_ROOT/platform/shared/qt/sailfish/src
+      INCLUDEPATH += $$RHODES_ROOT/platform/shared/qt/sailfish
+  }
+
+
+  DEFINES += HAVE_CONFIG_H OS_LINUX
+  QMAKE_CFLAGS += -fvisibility=hidden
+  QMAKE_CXXFLAGS += -fvisibility=hidden
+
+}
+
 
 HEADERS += \
 ../../shared/RhoConnectClientImpl.h\
