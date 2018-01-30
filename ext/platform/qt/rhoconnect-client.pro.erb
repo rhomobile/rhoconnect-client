@@ -1,0 +1,84 @@
+QT -= core
+
+equals(QT_VERSION, 5.6.2) {
+	DEFINES += OS_SAILFISH OS_LINUX
+	QT += core
+}
+
+TARGET = rhoconnect-client
+TEMPLATE = lib
+
+CONFIG += staticlib warn_on
+
+INCLUDEPATH += \
+<%= @rhoRoot %>/lib/commonAPI/coreapi/ext/shared\
+<%= @rhoRoot %>/platform/shared/common\
+<%= @rhoRoot %>/platform/shared/rubyext\
+<%= @rhoRoot %>/platform/shared/ruby/include\
+<%= @rhoRoot %>/platform/shared\
+<%= @rhoRoot %>/platform/shared/sync\
+<%= @rhoRoot %>/platform/shared\
+<%= @extRoot %>/ext/shared\
+<%= @extRoot %>/ext/shared/sync
+
+DEFINES += RHODES_QT_PLATFORM _XOPEN_SOURCE _DARWIN_C_SOURCE
+
+!isEmpty(RHOSIMULATOR_BUILD) {
+  DEFINES += RHODES_EMULATOR
+}
+
+!win32 {
+  QMAKE_CFLAGS_WARN_ON += -Wno-extra -Wno-unused -Wno-sign-compare -Wno-format -Wno-parentheses
+  QMAKE_CXXFLAGS_WARN_ON += -Wno-extra -Wno-unused -Wno-sign-compare -Wno-format -Wno-parentheses
+  # QMAKE_CFLAGS += -fvisibility=hidden
+  # QMAKE_CXXFLAGS += -fvisibility=hidden
+}
+
+unix:!macx {
+  OBJECTS_DIR = $$PWD/bin/tmp
+  INCLUDEPATH += <%= @rhoRoot %>/platform/shared/ruby/linux
+
+  contains(DEFINES, OS_LINUX)  {
+      DESTDIR = $$PWD/../extensions
+  }
+
+  contains(DEFINES, OS_SAILFISH)  {
+      INCLUDEPATH += <%= @rhoRoot %>/platform/shared/qt/sailfish/src
+      INCLUDEPATH += <%= @rhoRoot %>/platform/shared/qt/sailfish
+  }
+
+  DEFINES += HAVE_CONFIG_H OS_LINUX
+  QMAKE_CFLAGS += -fvisibility=hidden
+  QMAKE_CXXFLAGS += -fvisibility=hidden
+}
+
+
+HEADERS += \
+<%= @extRoot %>/ext/shared/RhoConnectClientImpl.h\
+<%= @extRoot %>/ext/shared/RhoConnectClientSingletonImpl.h\
+<%= @extRoot %>/ext/shared/generated/cpp/IRhoConnectClient.h\
+<%= @extRoot %>/ext/shared/generated/cpp/RhoConnectClientBase.h\
+<%= @extRoot %>/ext/shared/sync/ClientRegister.h\
+<%= @extRoot %>/ext/shared/sync/ISyncProtocol.h\
+<%= @extRoot %>/ext/shared/sync/SyncEngine.h\
+<%= @extRoot %>/ext/shared/sync/SyncNotify.h\
+<%= @extRoot %>/ext/shared/sync/SyncProtocol_3.h\
+<%= @extRoot %>/ext/shared/sync/SyncProtocol_4.h\
+<%= @extRoot %>/ext/shared/sync/SyncSource.h\
+<%= @extRoot %>/ext/shared/sync/SyncThread.h
+
+SOURCES += \
+<%= @extRoot %>/ext/shared/RhoConnectClientImpl.cpp\
+<%= @extRoot %>/ext/shared/initRhoconnectClient.cpp\
+<%= @extRoot %>/ext/shared/rhoconnectclient.c\
+<%= @extRoot %>/ext/shared/generated/rhoconnectclient_api_init.cpp\
+<%= @extRoot %>/ext/shared/generated/rhoconnectclient_js_api.cpp\
+<%= @extRoot %>/ext/shared/generated/rhoconnectclient_ruby_api.c\
+<%= @extRoot %>/ext/shared/generated/cpp/RhoConnectClientBase.cpp\
+<%= @extRoot %>/ext/shared/generated/cpp/RhoConnectClient_js_wrap.cpp\
+<%= @extRoot %>/ext/shared/generated/cpp/RhoConnectClient_ruby_wrap.cpp\
+<%= @extRoot %>/ext/shared/sync/ClientRegister.cpp\
+<%= @extRoot %>/ext/shared/sync/SyncEngine.cpp\
+<%= @extRoot %>/ext/shared/sync/SyncNotify.cpp\
+<%= @extRoot %>/ext/shared/sync/SyncSource.cpp\
+<%= @extRoot %>/ext/shared/sync/SyncThread.cpp
