@@ -231,7 +231,11 @@ void CClientRegister::run()
 
 String CClientRegister::getRegisterBody(const String& strClientID)
 {
+#ifndef OS_SAILFISH
     String strPushType = rho::push::CPushManager::getInstance()->getDefaultID();
+#else
+    String strPushType = "";
+#endif
     if(strPushType == "rhoconnect")
     {
         strPushType = "rhoconnect_push";
