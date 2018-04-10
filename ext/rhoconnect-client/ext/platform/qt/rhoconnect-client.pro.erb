@@ -36,10 +36,7 @@ unix:!macx {
   OBJECTS_DIR = $$PWD/bin/tmp
   INCLUDEPATH += <%= @rhoRoot %>/platform/shared/ruby/linux
 
-  contains(DEFINES, OS_LINUX)  {
-      DESTDIR = $$PWD/../extensions
-  }
-
+  DESTDIR = $$PWD/../extensions
   contains(DEFINES, OS_SAILFISH)  {
       INCLUDEPATH += <%= @rhoRoot %>/platform/shared/qt/sailfish/src
       INCLUDEPATH += <%= @rhoRoot %>/platform/shared/qt/sailfish
