@@ -1685,7 +1685,10 @@ void CSyncSource::processToken(uint64 token)
 	}else
     {
         setToken( token );
+        
+        getDB().Lock();
         getDB().executeSQL("UPDATE sources SET token=? where source_id=?", token, getID() );
+        getDB().Unlock();
 	}
 
 }
