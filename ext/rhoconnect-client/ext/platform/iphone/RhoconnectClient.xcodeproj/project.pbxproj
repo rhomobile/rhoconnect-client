@@ -266,6 +266,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = c99;
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -276,7 +277,7 @@
 					"$(RHO_ROOT)/platform/shared/ruby/iphone",
 					"$(RHO_ROOT)/platform/shared",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = iphonesimulator4.1;
@@ -288,6 +289,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = c99;
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -297,7 +299,7 @@
 					"$(RHO_ROOT)/platform/shared/ruby/iphone",
 					"$(RHO_ROOT)/platform/shared",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
 				SDKROOT = iphonesimulator4.1;
@@ -311,6 +313,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = "/tmp/Rhoconnect-client.dst";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -329,7 +332,7 @@
 					../../shared/sync,
 				);
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "Rhoconnect-client";
 				SDKROOT = iphoneos;
@@ -343,6 +346,7 @@
 				DSTROOT = "/tmp/Rhoconnect-client.dst";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_PREFIX_HEADER = RhoconnectClient_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(RHO_ROOT)/platform/shared/common",
@@ -356,7 +360,7 @@
 					../../shared/sync,
 				);
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "Rhoconnect-client";
 				SDKROOT = iphoneos;
