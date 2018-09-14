@@ -69,7 +69,7 @@ win32 {
 
 unix:!macx {
   OBJECTS_DIR = $$RHODES_ROOT/platform/linux/bin/extensions/rhoconnect-client
-  INCLUDEPATH += $$RHODES_ROOT/platform/shared/ruby/linux
+  INCLUDEPATH += $$RHODES_ROOT/platform/shared/ruby/sailfish
 
 
   contains(DEFINES, OS_LINUX)  {

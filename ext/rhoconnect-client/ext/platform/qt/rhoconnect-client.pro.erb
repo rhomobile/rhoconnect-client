@@ -34,7 +34,7 @@ DEFINES += RHODES_QT_PLATFORM _XOPEN_SOURCE _DARWIN_C_SOURCE
 
 unix:!macx {
   OBJECTS_DIR = $$PWD/bin/tmp
-  INCLUDEPATH += <%= @rhoRoot %>/platform/shared/ruby/linux
+  INCLUDEPATH += <%= @rhoRoot %>/platform/shared/ruby/sailfish
 
   DESTDIR = $$PWD/../extensions
   contains(DEFINES, OS_SAILFISH)  {
