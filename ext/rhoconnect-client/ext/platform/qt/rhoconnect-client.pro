@@ -68,23 +68,20 @@ win32 {
 }
 
 unix:!macx {
-  OBJECTS_DIR = $$RHODES_ROOT/platform/linux/bin/extensions/rhoconnect-client
-  INCLUDEPATH += $$RHODES_ROOT/platform/shared/ruby/sailfish
+    DEFINES += OS_LINUX
+    OBJECTS_DIR = $$RHODES_ROOT/platform/linux/bin/extensions/rhoconnect-client
+    DESTDIR = $$RHODES_ROOT/platform/linux/bin/extensions
+    INCLUDEPATH += $$RHODES_ROOT/platform/shared/ruby/linux
 
+    contains(DEFINES, OS_SAILFISH)  {
+        INCLUDEPATH += $$RHODES_ROOT/platform/shared/qt/sailfish/src
+        INCLUDEPATH += $$RHODES_ROOT/platform/shared/qt/sailfish
+        INCLUDEPATH += $$RHODES_ROOT/platform/shared/ruby/sailfish
+    }
 
-  contains(DEFINES, OS_LINUX)  {
-      DESTDIR = $$RHODES_ROOT/platform/linux/bin/extensions
-  }
-
-  contains(DEFINES, OS_SAILFISH)  {
-      INCLUDEPATH += $$RHODES_ROOT/platform/shared/qt/sailfish/src
-      INCLUDEPATH += $$RHODES_ROOT/platform/shared/qt/sailfish
-  }
-
-
-  DEFINES += HAVE_CONFIG_H OS_LINUX
-  QMAKE_CFLAGS += -fvisibility=hidden
-  QMAKE_CXXFLAGS += -fvisibility=hidden
+    DEFINES += HAVE_CONFIG_H OS_LINUX
+    QMAKE_CFLAGS += -fvisibility=hidden
+    QMAKE_CXXFLAGS += -fvisibility=hidden
 
 }
 
