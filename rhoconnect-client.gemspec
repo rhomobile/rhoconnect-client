@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 	s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
 	s.require_paths = ["lib"]
 	s.rubyforge_project = %q{rhoconnect-client}
-
+	s.extensions << './ext/extconf-chmod.rb'
 	s.summary = %q{RhoConnect client in the form of a Rhodes/RhoElements native extension.}
 end
 
