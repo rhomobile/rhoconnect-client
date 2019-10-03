@@ -1111,7 +1111,7 @@ void CSyncEngine::login(String name, String password, const CSyncNotification& o
     if ( RHOCONF().isExist("rho_sync_user") )
     {
         String strOldUser = RHOCONF().getString("rho_sync_user");
-        if ( name.compare(strOldUser) != 0 )
+        if ( strOldUser.compare('') == 0 && name.compare(strOldUser) != 0 ) // Only reset client DB if user changed.
         {
             if ( !RhoAppAdapter.callCallbackOnSyncUserChanged())
             {
