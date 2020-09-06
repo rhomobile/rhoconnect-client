@@ -1078,7 +1078,18 @@ void CSyncEngine::login(String name, String password, const CSyncNotification& o
 	//try {
     loadAllSources();
 
-    NetResponse resp = getNet().pullCookies( getProtocol().getLoginUrl(), getProtocol().getLoginBody(name, password), this );
+    Hashtable<String,String> reqHeaders;
+    alterRequestHeaders(reqHeaders);
+    NetResponse resp = getNet().doRequest( "POST", getProtocol().getLoginUrl(), getProtocol().getLoginBody(name,password), this, &reqHeaders );
+
+    String strSession = "";
+
+    if ( resp.getRespCode() == 200 )
+    {
+        strSession = resp.getCookies().c_str();
+    }
+
+
     int nErrCode = RhoAppAdapter.getErrorFromResponse(resp);
     if ( nErrCode != RhoAppAdapter.ERR_NONE )
     {
@@ -1086,7 +1097,6 @@ void CSyncEngine::login(String name, String password, const CSyncNotification& o
         return;
     }
 
-    String strSession = resp.getCharData();
     if ( strSession.length() == 0 )
     {
     	LOG(ERROR) + "Return empty session.";
@@ -1201,6 +1211,16 @@ void CSyncEngine::setSyncServer(const char* syncserver)
 
 String CSyncEngine::getSyncServer() const {
     return RHOCONF().getString("syncserver");
+}
+
+void CSyncEngine::alterRequestHeaders( Hashtable<String,String>& headers )
+{
+    if ( m_protocolExtras.containsKey("headers") ) {
+        const Hashtable<String,String>& extraHeaders = m_protocolExtras.get("headers");
+        for ( auto it = extraHeaders.begin(); it != extraHeaders.end(); ++it ) {
+            headers.put(it->first,it->second);
+        }
+    }
 }
 
 
