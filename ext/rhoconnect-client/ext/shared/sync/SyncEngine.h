@@ -93,6 +93,8 @@ public:
 		void clearProperties();
     };
 
+    typedef rho::Hashtable< rho::String, rho::Hashtable< rho::String, rho::String >> ProtocolExtras;
+
 private:
     VectorPtr<CSyncSource*> m_sources;
     NetRequest m_NetRequest, m_NetRequestClientID;
@@ -111,6 +113,8 @@ private:
     static CSourceOptions m_oSourceOptions;
 
     net::CNetRequestWrapper getNetClientID(){ return getNetRequest(&m_NetRequestClientID); }
+
+    ProtocolExtras m_protocolExtras;
 
 public:
     CSyncEngine();
@@ -185,6 +189,10 @@ public:
     void setNonThreadedMode(boolean b){m_bNoThreaded = b;}
 
     void applyChangedValues(db::CDBAdapter& db);
+
+    void setProtocolExtras( const ProtocolExtras& e ) { m_protocolExtras = e; }
+    void alterRequestHeaders( Hashtable<String,String>& headers );
+
 private:
     
     bool recoverSearch( const String& strUrl, const String& strBody, int& errorCode, String& strError, int nProgressStep );

@@ -191,6 +191,30 @@ void RhoConnectClientImpl::login( const rho::String& login,  const rho::String& 
 	
 	handleSyncResult(oResult);	
 }
+
+void RhoConnectClientImpl::setProtocolExtras( const rho::Hashtable<rho::String, rho::String>& extras, rho::apiGenerator::CMethodResult& oResult) {
+
+    rho::sync::CSyncEngine::ProtocolExtras parsedExtras;
+
+    for ( auto it = extras.begin(); it != extras.end(); ++it ) {
+
+        rho::Hashtable< rho::String, rho::String > parsedExtra;
+
+        rho::json::CJSONEntry json( it->second.c_str() );
+        if ( json.isObject() ) {
+            for( rho::json::CJSONStructIterator jobj( json ); !jobj.isEnd(); jobj.next()) {
+                if ( jobj.getCurValue().isString()) {
+                    parsedExtra.put( jobj.getCurKey(), jobj.getCurString() );
+                }
+            }
+        }
+
+        parsedExtras.put( it->first, parsedExtra );
+
+    }
+
+    getSyncThread()->addQueueCommand(new sync::CSyncThread::CSyncSetProtoExtrasCommand( parsedExtras ));
+}	
 	
 void RhoConnectClientImpl::handleSyncResult(rho::apiGenerator::CMethodResult& oResult) {
 	if ( getSyncEngine().isNoThreadedMode() ) {

@@ -307,6 +307,18 @@ Be sure to review the [Ruby API Usage](/guide/api_ruby) guide for important info
             </PARAMS>
             <RETURN type="STRING"/>
         </METHOD>
+
+        <METHOD name="setProtocolExtras" generateDoc="false">
+            <DESC>Sets extras to be added to protocol requests.</DESC>
+                <PARAMS>
+                    <PARAM name="extras" type="HASH">
+                        <DESC>Hash of extras</DESC>
+                        <PARAM name="extra" type="HASH">
+                        </PARAM>
+                </PARAM>
+            </PARAMS>
+        </METHOD>
+
     </METHODS>
 
     <VER_INTRODUCED>1.0.0</VER_INTRODUCED>

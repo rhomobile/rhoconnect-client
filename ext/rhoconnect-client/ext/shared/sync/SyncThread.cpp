@@ -184,35 +184,37 @@ void CSyncThread::checkShowStatus(CSyncCommand& oSyncCmd)
 void CSyncThread::processCommand(IQueueCommand* pCmd)
 {
     CSyncCommand& oSyncCmd = *((CSyncCommand*)pCmd);
-    switch(oSyncCmd.m_nCmdCode)
+    checkShowStatus(oSyncCmd);
+    oSyncCmd.executeForSyncEngine( m_oSyncEngine );
+}
+
+void CSyncThread::CSyncCommand::executeForSyncEngine( CSyncEngine& sync )
+{
+    switch(m_nCmdCode)
     {
     case scSyncAll:
-        checkShowStatus(oSyncCmd);
-        m_oSyncEngine.doSyncAllSources(oSyncCmd.m_strQueryParams,oSyncCmd.m_bSyncOnlyChangedSources);
+        sync.doSyncAllSources(m_strQueryParams,m_bSyncOnlyChangedSources);
         break;
-    case scSyncOne:
-        {
-			checkShowStatus(oSyncCmd);
-            m_oSyncEngine.doSyncSource(CSyncEngine::CSourceID(oSyncCmd.m_nCmdParam,oSyncCmd.m_strCmdParam), oSyncCmd.m_strQueryParams );
-        }
-        break;
-    case scSearchOne:
-        {
-			checkShowStatus(oSyncCmd);
-            m_oSyncEngine.doSearch( ((CSyncSearchCommand&)oSyncCmd).m_arSources, oSyncCmd.m_strCmdParam, ((CSyncSearchCommand&)oSyncCmd).m_strFrom,
-                ((CSyncSearchCommand&)oSyncCmd).m_bSyncChanges,
-                oSyncCmd.m_nCmdParam);
-        }
-        break;
-    case scLogin:
-    	{
-    		CSyncLoginCommand& oLoginCmd = (CSyncLoginCommand&)oSyncCmd;
 
-            checkShowStatus(oSyncCmd);
-            m_oSyncEngine.login(oLoginCmd.m_strName, oLoginCmd.m_strPassword, *oLoginCmd.m_pNotify );
-    	}
+    case scSyncOne:
+        sync.doSyncSource(CSyncEngine::CSourceID(m_nCmdParam,m_strCmdParam), m_strQueryParams );
         break;
     }
+}
+
+void CSyncThread::CSyncSearchCommand::executeForSyncEngine(CSyncEngine &sync)
+{
+    sync.doSearch( m_arSources, m_strCmdParam, m_strFrom, m_bSyncChanges, m_nCmdParam);
+}
+
+void CSyncThread::CSyncLoginCommand::executeForSyncEngine(CSyncEngine &sync)
+{
+    sync.login(m_strName, m_strPassword, *m_pNotify );
+}
+
+void CSyncThread::CSyncSetProtoExtrasCommand::executeForSyncEngine(CSyncEngine &sync)
+{
+    sync.setProtocolExtras( m_extras );
 }
 
 void CSyncThread::setPollInterval(int nInterval)
@@ -272,6 +274,8 @@ String CSyncThread::CSyncCommand::toString()
         return "Login";
     case scSearchOne:
         return "Search";
+    case scSetProtoExtras:
+        return "SetProtoExtras";
     }
 
     return "Unknown; Code : " + convertToStringA(m_nCmdCode);
