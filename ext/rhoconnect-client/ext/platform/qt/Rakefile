@@ -1,6 +1,6 @@
 def build_extension(name)
   require File.join($rootdir, 'lib/build/jake.rb')
-  args = ['-o', 'Makefile', '-r', '-spec', $qmake_spec, "#{name}.pro", 'CONFIG-=debug', 'CONFIG+=release', 'CONFIG+=no_fixpath', "RHODES_ROOT='#{$rootdir}'", $qmakevars]
+  args = ['-o', 'Makefile', '-r', '-spec', $qmake_spec, "#{name}.pro", 'CONFIG-=debug', 'CONFIG+=release', 'CONFIG+=no_fixpath', "RHODES_ROOT='#{$rootdir}'  -early QMAKE_DEFAULT_LIBDIRS=$(xcrun -show-sdk-path)/usr/lib ", $qmakevars]
   puts Jake.run($qmake,args)
   fail "[qmake #{name}.pro]" unless $? == 0
   #puts Jake.run($make, ['clean'])
