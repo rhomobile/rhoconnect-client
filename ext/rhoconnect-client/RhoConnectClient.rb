@@ -103,7 +103,13 @@ class RhoConnectClient
 		nil
 	end
 
-
+	def self.setOIDCToken( token )
+		setProtocolExtras( 
+		{
+			'headers' => { 'Authorization' => "Bearer #{token}" }
+		}
+	)
+	end
 
 #	vvv DEPRECATED vvv
 

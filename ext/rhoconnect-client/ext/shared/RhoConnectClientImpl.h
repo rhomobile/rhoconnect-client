@@ -45,6 +45,7 @@ public:
     virtual void getLastSyncObjectCount( const rho::String& sourceName, rho::apiGenerator::CMethodResult& oResult);
     virtual void setSourceProperty( const rho::String& sourceName,  const rho::String& propertyName,  const rho::String& propertyValue, rho::apiGenerator::CMethodResult& oResult);
     virtual void getSourceProperty( const rho::String& sourceName,  const rho::String& propertyName, rho::apiGenerator::CMethodResult& oResult);
+    virtual void setProtocolExtras( const rho::Hashtable<rho::String, rho::String>& extras, rho::apiGenerator::CMethodResult& oResult);
 	
 private:
 	void handleSyncResult(rho::apiGenerator::CMethodResult& oResult);
