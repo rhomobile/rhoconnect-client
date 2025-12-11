@@ -123,7 +123,7 @@ end
     old_file = item.image_uri
     item.image_uri = file_name
     item.save
-    File.exists?(old_file).should == false
+    File.exist?(old_file).should == false
     
     getBlobTest.sync( "/app/Settings/sync_notify")
     sleep(2) #wait till sync server update data

@@ -84,7 +84,7 @@ def num_cpus
 end
 
 def setup_sdk(sdkpath, api_level)
-    unless File.exists? sdkpath
+    unless File.exist? sdkpath
       puts "Missing or invalid 'android' section in rhobuild.yml: '#{sdkpath}'"
       exit 1
     end
@@ -171,7 +171,7 @@ end
 def setup_ndk(ndkpath, apilevel)
   puts "setup_ndk(#{ndkpath}, #{apilevel})" if USE_TRACES
 
-  unless File.exists? ndkpath
+  unless File.exist? ndkpath
     puts "Invalid 'android-ndk' section in rhobuild.yml: '#{ndkpath}'"
     exit 1
   end
@@ -250,7 +250,7 @@ def setup_ndk(ndkpath, apilevel)
   if $have_rlim_t.nil?
     $have_rlim_t = false
     resource_h = File.join(ndkpath, 'build', 'platforms', "android-#{apilevel}", "arch-arm", "usr", "include", "sys", "resource.h")
-    if File.exists? resource_h
+    if File.exist? resource_h
       File.open(resource_h, 'r') do |f|
         while line = f.gets
           if line =~ /^\s*typedef\b.*\brlim_t\s*;\s*$/
@@ -319,7 +319,7 @@ end
 def cc_deps(filename, objdir, additional)
   #puts "Check #{filename}..."
   depfile = File.join objdir, File.basename(filename).gsub(/\.[cC]([cC]|[xXpP][xXpP])?$/, ".d")
-  if File.exists? depfile
+  if File.exist? depfile
     if FileUtils.uptodate? depfile, File.read(depfile).gsub(/(^\s+|\s+$)/, '').split(/\s+/)
       return []
     end
@@ -513,7 +513,7 @@ end
 
 def cc_clean(name)
   [$objdir[name], $libname[name]].each do |x|
-    rm_rf x if File.exists? x
+    rm_rf x if File.exist? x
   end
 end
 

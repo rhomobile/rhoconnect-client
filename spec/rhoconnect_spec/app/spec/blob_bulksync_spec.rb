@@ -62,7 +62,7 @@ end
 	  file_name = File.join(Rho::RhoApplication::get_model_path('app',dir),filename)
 	  copy_file(file_name, Rho::RhoApplication::get_blob_folder() )
 	  file_name = File.join(Rho::RhoApplication::get_blob_folder(), filename)
-	  File.exists?(file_name).should == true
+	  File.exist?(file_name).should == true
 	  if !defined?(RHO_WP7)
 			file_size = File.size(file_name)
 	  end
@@ -73,16 +73,16 @@ end
 	  item.image_uri = file_name
 	  item.save
 
-	  File.exists?(file_name).should == true
+	  File.exist?(file_name).should == true
 
 	  res =  model.sync( "/app/Settings/sync_notify")
 	  res['status'].should == 'ok'
 	  res['error_code'].to_i.should == ::Rho::RhoError::ERR_NONE
 
-	  if (File.exists?(file_name))
+	  if (File.exist?(file_name))
 			File.delete(file_name)
 	  end
-	  File.exists?(file_name).should == false
+	  File.exist?(file_name).should == false
 
 	  return file_size,file_content
   end
@@ -108,7 +108,7 @@ end
 
 		items[0].image_uri.should_not == old_filename
 		new_file_name = File.join(Rho::RhoApplication::get_blob_path(items[0].image_uri))
-		File.exists?(new_file_name).should == true
+		File.exist?(new_file_name).should == true
 		if !defined?(RHO_WP7)
 	  	File.size(new_file_name).should == size
 		end
@@ -160,7 +160,7 @@ end
 	# 	items.each do |item|
 	# 		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
 	# 		puts "item = #{item.inspect}, path = #{path}"
-	# 		File.exists?(path).should == true
+	# 		File.exist?(path).should == true
 	# 	end
 	# 	items = BlobBulkTest_s.find(:all)
 	# 	items.size.should_not == 0
@@ -168,12 +168,12 @@ end
 	# 	items.each do |item|
 	# 		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
 	# 		puts "item = #{item.inspect}, path = #{path}"
-	# 		File.exists?(path).should == true
+	# 		File.exist?(path).should == true
 	# 	end
 
 	# 	exportPath = ::Rhom::Rhom.database_export('user')
 	# 	exportPath.should_not be_nil
-	# 	File.exists?(exportPath).should == true
+	# 	File.exist?(exportPath).should == true
 	# 	File.size(exportPath).should_not == 0
 
 	# 	Rhom::Rhom.database_full_reset
@@ -200,7 +200,7 @@ end
 	# 	items.each do |item|
 	# 		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
 	# 		puts "item = #{item.inspect}, path = #{path}"
-	# 		File.exists?(path).should == true
+	# 		File.exist?(path).should == true
 	# 	end
 
 	# 	items = BlobBulkTest.find(:all)
@@ -208,11 +208,11 @@ end
 	# 	items.each do |item|
 	# 		path = File.join(Rho::RhoApplication::get_blob_path(item.image_uri))
 	# 		puts "item = #{item.inspect}, path = #{path}"
-	# 		File.exists?(path).should == true
+	# 		File.exist?(path).should == true
 	# 	end
 
 	# 	File.delete(exportPath)
-	# 	File.exists?(exportPath).should == false
+	# 	File.exist?(exportPath).should == false
 	# end
 
 end

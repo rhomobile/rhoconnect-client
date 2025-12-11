@@ -132,7 +132,7 @@ namespace "gem" do
 
     dirs.uniq!
     dirs.each_with_index do |extdir, i|
-      next unless File.exists?(extdir)
+      next unless File.exist?(extdir)
       Dir.chdir(extdir)
 
       Dir.glob("**/{*,.*}") do |fname|
