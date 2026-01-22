@@ -62,7 +62,7 @@ namespace sync {
 class CSyncThread : public common::CThreadQueue
 {
 public:
-    enum ESyncCommands{ scNone = 0, scSyncAll, scSyncOne, scLogin, scSearchOne};
+    enum ESyncCommands{ scNone = 0, scSyncAll, scSyncOne, scLogin, scSearchOne, scSetProtoExtras };
 
 private:
 
@@ -126,6 +126,8 @@ public:
 
         virtual String toString();
 
+        virtual void executeForSyncEngine( CSyncEngine& sync );
+
     };
 
     class CSyncLoginCommand : public CSyncCommand
@@ -140,6 +142,8 @@ public:
 		    m_strPassword = password;
 			m_pNotify = pNotify;
 	    }
+
+        virtual void executeForSyncEngine( CSyncEngine& sync );
     };
 	
     class CSyncSearchCommand : public CSyncCommand
@@ -149,12 +153,29 @@ public:
         boolean m_bSyncChanges;
         rho::Vector<rho::String> m_arSources;
 
-        CSyncSearchCommand(String from, String params, const rho::Vector<rho::String>& arSources, boolean sync_changes, int nProgressStep) : CSyncCommand(CSyncThread::scSearchOne,params,nProgressStep, false, "")
+        CSyncSearchCommand(String from, String params, const rho::Vector<rho::String>& arSources, boolean sync_changes, int nProgressStep) :
+            CSyncCommand(CSyncThread::scSearchOne,params,nProgressStep, false, "")
 	    {
 		    m_strFrom = from;
             m_bSyncChanges = sync_changes;
             m_arSources = arSources;
 	    }
+
+        virtual void executeForSyncEngine( CSyncEngine& sync );
+    };
+
+    class CSyncSetProtoExtrasCommand : public CSyncCommand
+    {
+        CSyncEngine::ProtocolExtras m_extras;
+    public:
+        CSyncSetProtoExtrasCommand( const CSyncEngine::ProtocolExtras& extras ) :
+            CSyncCommand(CSyncThread::scSetProtoExtras,"",false,"",false),
+            m_extras(extras)
+        {
+
+        }
+
+        virtual void executeForSyncEngine( CSyncEngine& sync );
     };
 
 private:

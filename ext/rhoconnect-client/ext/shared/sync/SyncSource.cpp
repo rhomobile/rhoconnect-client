@@ -391,6 +391,8 @@ void CSyncSource::doSyncClientChanges()
         {
             Hashtable<String, String> reqHeaders;
             reqHeaders.put(getProtocol().getClientIDHeader(), getSync().getClientID());
+            getSync().alterRequestHeaders(reqHeaders);
+
             if ( m_arMultipartItems.size() > 0 )
             {
                 CMultipartItem* pItem = new CMultipartItem();
@@ -644,6 +646,7 @@ void CSyncSource::syncServerChanges()
         String strUrl = getProtocol().getServerQueryUrl(getName(), getSync().getClientID(), getSync().getSyncPageSize());
         Hashtable<String, String> reqHeaders;
         reqHeaders.put(getProtocol().getClientIDHeader(), getSync().getClientID());
+        getSync().alterRequestHeaders(reqHeaders);
 
         if ( !m_bTokenFromDB && getToken() > 1 )
             strUrl += "&token=" + convertToStringA(getToken());
