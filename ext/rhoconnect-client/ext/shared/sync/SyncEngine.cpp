@@ -978,7 +978,7 @@ void CSyncEngine::loadBulkPartition(const String& strPartition )
 	LOG(INFO) + "Bulk sync: start change db";
    	getNotify().fireBulkSyncNotification(false, "change_db", strPartition, RhoAppAdapter.ERR_NONE);
 
-#ifdef OS_ANDROID
+#if defined(OS_ANDROID) && defined(RHO_DB_IMPORT_RETURNS_BOOL)
     if (!dbPartition.setBulkSyncDB(fDataName, strCryptKey))
     {
         LOG(ERROR) + "Bulk sync failed: database validation or replacement failed.";

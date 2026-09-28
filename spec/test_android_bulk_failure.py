@@ -8,8 +8,9 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize("android", [False, True])
-def test_bulk_replacement_error_does_not_report_success(tmp_path, android):
+@pytest.mark.parametrize("android,new_sdk", [(False, True), (True, False), (True, True)],
+                         ids=["non-Android", "Android-legacy-void-SDK", "Android-new-bool-SDK"])
+def test_bulk_replacement_error_does_not_report_success(tmp_path, android, new_sdk):
     source = (ROOT / "ext/rhoconnect-client/ext/shared/sync/SyncEngine.cpp").read_text()
     start = source.index('LOG(INFO) + "Bulk sync: start change db";')
     end = source.index("\nString CSyncEngine::makeBulkDataFileName", start)
@@ -23,7 +24,7 @@ struct Logger { Logger operator+(const char*) { return {}; } };
 struct Errors { int ERR_NONE=0, ERR_UNEXPECTEDSERVERRESPONSE=4; } RhoAppAdapter;
 struct Database {
     bool accept=false;
-#ifdef OS_ANDROID
+#ifdef RHO_DB_IMPORT_RETURNS_BOOL
     bool setBulkSyncDB(String, String) { return accept; }
 #else
     void setBulkSyncDB(String, String) {}
@@ -52,7 +53,7 @@ struct Engine {
 };
 int main() {
     Engine rejected; rejected.change();
-#ifdef OS_ANDROID
+#if defined(OS_ANDROID) && defined(RHO_DB_IMPORT_RETURNS_BOOL)
     assert(rejected.stops == 1 && rejected.notify.errors == 1);
     assert(rejected.notify.successes == 0 && rejected.options.clears == 0 && rejected.metadata == 0);
 #else
@@ -70,5 +71,6 @@ int main() {
     binary = tmp_path / ("boundary.exe" if os.name == "nt" else "boundary")
     command = [cxx, "-std=c++11", str(path), "-o", str(binary)]
     if android: command.append("-DOS_ANDROID")
+    if new_sdk: command.append("-DRHO_DB_IMPORT_RETURNS_BOOL=1")
     subprocess.run(command, env=env, check=True)
     subprocess.run([str(binary)], env=env, check=True)
