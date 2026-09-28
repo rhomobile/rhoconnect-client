@@ -978,7 +978,17 @@ void CSyncEngine::loadBulkPartition(const String& strPartition )
 	LOG(INFO) + "Bulk sync: start change db";
    	getNotify().fireBulkSyncNotification(false, "change_db", strPartition, RhoAppAdapter.ERR_NONE);
 
+#ifdef OS_ANDROID
+    if (!dbPartition.setBulkSyncDB(fDataName, strCryptKey))
+    {
+        LOG(ERROR) + "Bulk sync failed: database validation or replacement failed.";
+        stopSync();
+        getNotify().fireBulkSyncNotification(true, "", strPartition, RhoAppAdapter.ERR_UNEXPECTEDSERVERRESPONSE);
+        return;
+    }
+#else
     dbPartition.setBulkSyncDB(fDataName, strCryptKey);
+#endif
 	getSourceOptions().clearProperties();
     processServerSources(String("{\"partition\":\"") + strPartition + "\"}");
 
